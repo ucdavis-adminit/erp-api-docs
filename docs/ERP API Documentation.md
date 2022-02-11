@@ -352,10 +352,10 @@ Below are some examples of responses from the API.  Successful response data is 
 
 #### General Ledger
 
-* [`glChartSegmentsValidate`](3.2.2%20Data%20Requests/glDataRequests.md) (**IN PROGRESS**)
+* [`glValidateChartSegments`](3.2.2%20Data%20Requests/glDataRequests.md) (**IN PROGRESS**)
   * Given a set of segment values, validate if they will be accepted by Oracle.
   * This does not include situational correctness.  E.g., use of a labor account on a recharge journal or payable.
-* [`glChartstringValidate`](3.2.2%20Data%20Requests/glDataRequests.md) (**IN PROGRESS**)
+* [`glValidateChartstring`](3.2.2%20Data%20Requests/glDataRequests.md) (**IN PROGRESS**)
   * Given a complete GL Chartstring, validate if it will be accepted by Oracle.
   * This does not include situational correctness.  E.g., use of a labor account on a recharge journal or payable.
 
@@ -2820,7 +2820,7 @@ It accepts the same data structure as is used on a number of action requests to 
 
 #### Operations
 
-##### `glChartSegmentsValidate`
+##### `glValidateChartSegments`
 
 > Validates that the given set of GL chartstring segments are most likely valid for posting
 > to the financial system general ledger.  Individual non-blank elements will be checked
@@ -2841,9 +2841,9 @@ It accepts the same data structure as is used on a number of action requests to 
 |                | `segments`     | `GlSegmentInput!`                |                                         |
 |                | `validateCVRs` | `Boolean`                        | Whether to run the full CVR Validation. |
 | **Returns**    |                |                                  |                                         |
-|                |                | `GlChartSegmentsValidateOutput!` |                                         |
+|                |                | `GlValidateChartSegmentsOutput!` |                                         |
 
-##### `glChartstringValidate`
+##### `glValidateChartstring`
 
 > Validates that the given GL chartstring is most likely valid for posting
 > to the financial system general ledger.  The input string format is strongly typed
@@ -2862,7 +2862,7 @@ It accepts the same data structure as is used on a number of action requests to 
 |                | `segmentString` | `GlSegmentString!`               | Custom scalar to enforce pattern        |
 |                | `validateCVRs`  | `Boolean`                        | Whether to run the full CVR Validation. |
 | **Returns**    |                 |                                  |                                         |
-|                |                 | `GlChartSegmentsValidateOutput!` |                                         |
+|                |                 | `GlValidateChartSegmentsOutput!` |                                         |
 
 ```graphql
 """
@@ -2903,7 +2903,7 @@ The operation will complete any missing segments with their defaults and return 
 The `codeCombinationId` is an informational property only.  If populated, it indicates that the validated combination of segment values was previously known to the financial system.  Validity still needs to be checked, as chartstrings can be disabled or expire.  However, segments which match an existing valid combination can not fail validation when posted to the financial system.
 
 ```graphql
-type GlChartSegmentsValidateOutput {
+type GlValidateChartSegmentsOutput {
   "Validation result and error messages, if any."
   result: ValidationResponse!
   "Fully populated object with the GL segments combination that was validated."
@@ -3760,8 +3760,8 @@ Other operations which should be used to pre-validate chartstring segments are b
 
 For validating combinations, the following two operations are provided, differing only in their input format.
 
-* [`glChartSegmentsValidate`]({{Queries.glChartSegmentsValidate}})
-* [`glChartstringValidate`]({{Queries.glChartstringValidate}})
+* [`glValidateChartSegments`]({{Queries.glValidateChartSegments}})
+* [`glValidateChartstring`]({{Queries.glValidateChartstring}})
 
 #### Managed Project Cost Entries (PPM/POET)
 
@@ -4796,7 +4796,7 @@ On sponsored projects, these fields are required.  Within your application, you 
 
 ##### GL / PPM Segment Validation
 
-The validations performed on the GL and PPM segments will be much more limited (and any errors less specific) than those validations provided by the API.  You will have a greater likelihood of failing Oracle's validation unless you utilize the `glChartSegmentsValidate` and `ppmSegmentsValidate` operations on each combination before sending through the file.
+The validations performed on the GL and PPM segments will be much more limited (and any errors less specific) than those validations provided by the API.  You will have a greater likelihood of failing Oracle's validation unless you utilize the `glValidateChartSegments` and `ppmSegmentsValidate` operations on each combination before sending through the file.
 
 ##### Generation of PPM Offset Transactions
 

@@ -28,8 +28,8 @@ Other operations which should be used to pre-validate chartstring segments are b
 
 For validating combinations, the following two operations are provided, differing only in their input format.
 
-* [`glChartSegmentsValidate`]({{Queries.glChartSegmentsValidate}})
-* [`glChartstringValidate`]({{Queries.glChartstringValidate}})
+* [`glValidateChartSegments`]({{Queries.glValidateChartSegments}})
+* [`glValidateChartstring`]({{Queries.glValidateChartstring}})
 
 #### Managed Project Cost Entries (PPM/POET)
 

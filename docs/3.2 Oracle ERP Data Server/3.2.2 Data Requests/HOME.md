@@ -17,7 +17,7 @@ It accepts the same data structure as is used on a number of action requests to 
 
 #### Operations
 
-##### `glChartSegmentsValidate`
+##### `glValidateChartSegments`
 
 > Validates that the given set of GL chartstring segments are most likely valid for posting
 > to the financial system general ledger.  Individual non-blank elements will be checked
@@ -38,9 +38,9 @@ It accepts the same data structure as is used on a number of action requests to 
 |                | `segments`     | `GlSegmentInput!`                |                                         |
 |                | `validateCVRs` | `Boolean`                        | Whether to run the full CVR Validation. |
 | **Returns**    |                |                                  |                                         |
-|                |                | `GlChartSegmentsValidateOutput!` |                                         |
+|                |                | `GlValidateChartSegmentsOutput!` |                                         |
 
-##### `glChartstringValidate`
+##### `glValidateChartstring`
 
 > Validates that the given GL chartstring is most likely valid for posting
 > to the financial system general ledger.  The input string format is strongly typed
@@ -59,7 +59,7 @@ It accepts the same data structure as is used on a number of action requests to 
 |                | `segmentString` | `GlSegmentString!`               | Custom scalar to enforce pattern        |
 |                | `validateCVRs`  | `Boolean`                        | Whether to run the full CVR Validation. |
 | **Returns**    |                 |                                  |                                         |
-|                |                 | `GlChartSegmentsValidateOutput!` |                                         |
+|                |                 | `GlValidateChartSegmentsOutput!` |                                         |
 
 ```graphql
 """
@@ -100,7 +100,7 @@ The operation will complete any missing segments with their defaults and return 
 The `codeCombinationId` is an informational property only.  If populated, it indicates that the validated combination of segment values was previously known to the financial system.  Validity still needs to be checked, as chartstrings can be disabled or expire.  However, segments which match an existing valid combination can not fail validation when posted to the financial system.
 
 ```graphql
-type GlChartSegmentsValidateOutput {
+type GlValidateChartSegmentsOutput {
   "Validation result and error messages, if any."
   result: ValidationResponse!
   "Fully populated object with the GL segments combination that was validated."

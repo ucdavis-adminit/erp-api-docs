@@ -28,7 +28,7 @@ On sponsored projects, these fields are required.  Within your application, you 
 
 ##### GL / PPM Segment Validation
 
-The validations performed on the GL and PPM segments will be much more limited (and any errors less specific) than those validations provided by the API.  You will have a greater likelihood of failing Oracle's validation unless you utilize the `glChartSegmentsValidate` and `ppmSegmentsValidate` operations on each combination before sending through the file.
+The validations performed on the GL and PPM segments will be much more limited (and any errors less specific) than those validations provided by the API.  You will have a greater likelihood of failing Oracle's validation unless you utilize the `glValidateChartSegments` and `ppmSegmentsValidate` operations on each combination before sending through the file.
 
 ##### Generation of PPM Offset Transactions
 

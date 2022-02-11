@@ -250,10 +250,10 @@ Below are some examples of responses from the API.  Successful response data is 
 
 #### General Ledger
 
-* [`glChartSegmentsValidate`](3.2.2%20Data%20Requests/glDataRequests.md) (**IN PROGRESS**)
+* [`glValidateChartSegments`](3.2.2%20Data%20Requests/glDataRequests.md) (**IN PROGRESS**)
   * Given a set of segment values, validate if they will be accepted by Oracle.
   * This does not include situational correctness.  E.g., use of a labor account on a recharge journal or payable.
-* [`glChartstringValidate`](3.2.2%20Data%20Requests/glDataRequests.md) (**IN PROGRESS**)
+* [`glValidateChartstring`](3.2.2%20Data%20Requests/glDataRequests.md) (**IN PROGRESS**)
   * Given a complete GL Chartstring, validate if it will be accepted by Oracle.
   * This does not include situational correctness.  E.g., use of a labor account on a recharge journal or payable.
 
