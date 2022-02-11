@@ -1,0 +1,43 @@
+/* https://jhildenbiddle.github.io/docsify-themeable/#/customization */
+:root {
+  --content-max-width: 100%;
+
+  --heading-color: #355B85;
+  --heading-h1-border-style: solid;
+  --heading-h1-border-width: 0 0 4px 0;
+  --heading-h1-font-size: var(--font-size-xxl);
+  --heading-h2-border-style: solid;
+  --heading-h2-border-width: 2px 0 2px 0;
+  --heading-h2-font-size: var(--font-size-xl);
+
+  --heading-h3-border-style: solid;
+  --heading-h3-border-width: 2px 0 2px 0;
+  --heading-h3-font-size: var(--font-size-xl);
+
+  --heading-h4-font-size: var(--font-size-l);
+
+  --sidebar-background: #FFF9E5;
+  --sidebar-name-color: #022851;
+  --sidebar-name-font-weight: bold;
+  --sidebar-width: 25rem;
+  --sidebar-nav-link-color: #022851;
+  --sidebar-nav-link-color--active: #79242F;
+  --sidebar-nav-link-background-color--active: #E5E5E5;
+  --sidebar-nav-link-color--hover: #355B85;
+  --sidebar-nav-link-font-weight--active: bold;
+
+  --search-input-background-color: #CDD6E0;
+
+  --table-cell-padding: 0.5em 0.5em;
+  --table-row-odd-background: #FFF9E5;
+}
+
+.markdown-section h1 code,
+.markdown-section h2 code,
+.markdown-section h3 code,
+.markdown-section h4 code,
+.markdown-section h5 code,
+.markdown-section h6 code {
+  font-size: inherit;
+  font-weight: bold;
+}

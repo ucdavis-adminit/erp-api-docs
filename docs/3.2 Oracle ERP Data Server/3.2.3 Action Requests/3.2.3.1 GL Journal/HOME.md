@@ -401,56 +401,9 @@ As with the KFS ledger, journal payloads must balance.  (debit = credits)  Each 
 }
 ```
 
-##### Use of Defaults
-
-> Use of the defaults allows for data to not need to be repeated on every journal line.  Entity (for example) is a value which will generally  not vary within a single journal batch.
-
-```jsonc
-{
-  // general request tracking information
-  "header": {
-    "consumerTrackingId": "5A314F00-C308-48FF-BF85-C8AF7FD43199", // unique ID assigned by boundary app
-    "consumerReferenceId":  "ORDER_12345",       // reference number used to pull multiple requests related to it
-    "consumerNotes": "July Order from Xxxxxxx",  // free-form description to include in later status checks
-    "boundaryApplicationName": "My Boundary App" // name of the source boundary application
-  },
-  "payload": {
-    "journalSourceName": "BOUNDARY_APP_1",         // Assigned journal source ID from the Finance department
-    "journalCategoryName": "INTERCOMPANY_REVENUE", // Allowed journal category name for the types of expenses
-    "journalName": "MySystem Recharges for July 2023",
-    "journalReference":  "ORDER_12345",
-    // GL date, will be used to derive or must fall within the given accounting period
-    "accountingDate": "2023-07-31",
-    "accountingPeriodName": "Jul-23",
-    // Array of accounting lines to post
-    "journalLines": [
-      {
-        "glSegments": {
-          "entity": "1311",
-          "fund": "99100",
-          "department": "9300051",
-          "purpose": "68",
-          "account": "390000"
-        },
-        "debitAmount": 100.00,
-        "externalSystemIdentifier": "ITEMX"
-      },
-      {
-        "glSegments": {
-          "entity": "1311",
-          "fund": "99100",
-          "department": "1203456",
-          "account": "000060"
-        },
-        "creditAmount": 100.00,
-        "externalSystemIdentifier": "ITEMX"
-      },
-    ]
-  },
-}
-```
-
 ##### Use of Aliases
+
+> NOTE: Aliases are centrally managed within Oracle and not available to all campus boundary systems.
 
 **TODO**
 
