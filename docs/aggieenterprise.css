@@ -12,8 +12,10 @@
   --ucd-accent-merlot: #79242F;
 
   --heading-color: var(--ucd-blue-70);
+
   --heading-h1-border-style: solid;
   --heading-h1-border-width: 0 0 4px 0;
+
   --heading-h2-border-style: solid;
   --heading-h2-border-width: 2px 0 2px 0;
 
@@ -41,9 +43,10 @@
   --sidebar-nav-link-background-color--active: var(--ucd-black-10);
   --sidebar-nav-link-font-weight--active: bold;
 
-  --toc-width: 18rem;
-
   --search-input-background-color: var(--ucd-blue-10);
+
+  /* right TOC sidebar */
+  --toc-width: 18rem;
 
   --table-cell-padding: 0.5em 0.5em;
   --table-row-odd-background: var(--ucd-gold-10);
@@ -60,10 +63,7 @@
   --code-theme-variable: #e90;
 }
 
-/* .markdown-section {
-  padding: 0;
-} */
-
+/* Right TOC Sidebar */
 .page_toc div.lv3 {
   font-size: var(--font-size-s);
   font-weight: bold;
@@ -73,6 +73,7 @@
   font-size: var(--font-size-xs);
 }
 
+/* Code highlighting */
 .token.description {
   color: var(--code-theme-comment);
 }
@@ -86,6 +87,7 @@
   color: var(--code-theme-tag);
 }
 
+/* Change handling of fixed width in headings */
 .markdown-section h1 code,
 .markdown-section h2 code,
 .markdown-section h3 code,
