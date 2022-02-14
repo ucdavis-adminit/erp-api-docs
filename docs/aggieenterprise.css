@@ -5,16 +5,18 @@
   --heading-color: #355B85;
   --heading-h1-border-style: solid;
   --heading-h1-border-width: 0 0 4px 0;
-  --heading-h1-font-size: var(--font-size-xxl);
   --heading-h2-border-style: solid;
   --heading-h2-border-width: 2px 0 2px 0;
-  --heading-h2-font-size: var(--font-size-xl);
 
   --heading-h3-border-style: solid;
   --heading-h3-border-width: 2px 0 2px 0;
-  --heading-h3-font-size: var(--font-size-xl);
 
+  --heading-h1-font-size: var(--font-size-xxl);
+  --heading-h2-font-size: var(--font-size-xl);
+  --heading-h3-font-size: var(--font-size-xl);
   --heading-h4-font-size: var(--font-size-l);
+  --heading-h5-font-size: var(--font-size-m);
+  --heading-h6-font-size: var(--font-size-s);
 
   --sidebar-background: #FFF9E5;
   --sidebar-name-color: #022851;
