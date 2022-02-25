@@ -3,7 +3,15 @@
 <!--BREAK-->
 ### Data Object: PpmAward
 
+The Award Number identifies the number assigned to an award containing funding activities.
 
+**Roll-up relationship to the new Chart of Accounts in the General Ledger:**
+
+* The Award Number value will NOT roll up to the Chart of Accounts. Award Number values will only be maintained in the PPM module.
+
+**Examples:**
+
+* Award Number values will be Oracle-generated
 
 #### Access Controls
 
@@ -108,7 +116,19 @@
 <!--BREAK-->
 ### Data Object: PpmExpenditureType
 
+The Expenditure Type identifies the natural classification of the expense transaction being recorded.
 
+**Roll-up relationship to the Chart of Accounts in the General Ledger:**
+
+* The Expenditure Type value will roll up to the (Natural) Account segment in the Chart of Accounts.
+* The first 6 characters of the Expenditure Type value will correspond with the (Natural) Account value it rolls up to.
+
+**Examples:**
+
+* Salary
+* Fringe Benefits
+* Consulting Services
+* Travel
 
 #### Access Controls
 
@@ -202,7 +222,18 @@
 <!--BREAK-->
 ### Data Object: PpmFundingSource
 
+The Funding Source identifies the name of the sponsor for the external funding source.
 
+**Roll-up relationship to the new Chart of Accounts in the General Ledger:**
+
+* Funding Source values will only be used in the PPM module.
+* The Funding Source will map to the correct value for the Fund segment in the CoA
+  * (i.e In the examples below, NIH and USAID would map to the Federal Fund value in the Chart of Accounts)
+
+**Examples:**
+
+* National Institute of Health (NIH)
+* U.S. Agency for International Development (USAID)
 
 #### Access Controls
 
@@ -232,10 +263,10 @@
 | fundingSourceTypeCode | String                    |                |                 |               | The code of the funding source type. |
 | lastUpdateDateTime    | DateTime!                 |                |        Y        |               | The date when the funding source was last updated. |
 | lastUpdatedBy         | ErpUserId                 |                |                 |               | The user that last updated the funding source. |
-| eligibleForUse        | Boolean!                  |                |                 |               | Returns whether this PpmFundingSource is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmFundingSource must:<br/>- Have a projectStatusCode of ACTIVE<br/>- Not be a templateProject<br/>- Have a fundingSourceFromDate and fundingSourceToDate range which includes the given accountingDate |
+| eligibleForUse        | Boolean!                  |                |                 |               | Returns whether this PpmFundingSource is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmFundingSource must:<br/>- Have a fundingSourceFromDate and fundingSourceToDate range which includes the given accountingDate |
 
 * `eligibleForUse` : `Boolean!`
-  * Returns whether this PpmFundingSource is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmFundingSource must:<br/>- Have a projectStatusCode of ACTIVE<br/>- Not be a templateProject<br/>- Have a fundingSourceFromDate and fundingSourceToDate range which includes the given accountingDate
+  * Returns whether this PpmFundingSource is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmFundingSource must:<br/>- Have a fundingSourceFromDate and fundingSourceToDate range which includes the given accountingDate
   * Arguments:
     * `accountingDate` : `LocalDate`
 
@@ -290,7 +321,16 @@
 <!--BREAK-->
 ### Data Object: PpmOrganization
 
+The Expenditure Organization identifies the organization that is incurring the expense and revenue. This may NOT be the same as the organization that owns the project.
 
+**Roll-up relationship to the new Chart of Accounts in the General Ledger:**
+
+* The Expenditure Organization value will roll up to the Financial Department segment of the Chart of Accounts.
+
+**Examples:**
+
+* Computer Science
+* Plant Sciences
 
 #### Access Controls
 
@@ -311,7 +351,7 @@
 
 | Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
 | ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| id                 | Long!                     |       Y        |        Y        |               | Organization ID: Unique identifier of the Organization. |
+| id                 | Long!                     |       Y        |        Y        |               | Organization ID: Unique identifier of the Organization.  Internal to Oracle. |
 | name               | NonEmptyTrimmedString100! |                |        Y        |               | Organization Name: Name of the Organization |
 | effectiveStartDate | LocalDate!                |                |                 |               | Effective Start Date: Start date of Organization |
 | effectiveEndDate   | LocalDate                 |                |                 |               | Effective End Date: End date of Organization |
@@ -378,7 +418,18 @@
 <!--BREAK-->
 ### Data Object: PpmProject
 
+The Project identifies the planned work or activity to be completed over a period of time and intended to achieve a particular goal.
 
+**Roll-up relationship to the new Chart of Accounts (CoA) in the General Ledger:**
+
+* The POET(AF) Project value will roll up to the Project segment of the Chart of Accounts.
+* PPM Project values and CoA Project segment values will be the same
+
+**Examples:**
+
+* Capital Projects
+* Sponsored Projects
+* Faculty Projects
 
 #### Access Controls
 
@@ -418,8 +469,8 @@
 
 | Property Name              | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
 | -------------------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| id                         | Long!                     |       Y        |                 |               | Project ID: Unique identifier of the project. |
-| projectNumber              | PpmProjectNumber!         |                |        Y        |               | Project Number: Number of the project that is being created. |
+| id                         | Long!                     |       Y        |                 |               | Project ID: Unique identifier of the project.  Internal to Oracle. |
+| projectNumber              | PpmProjectNumber!         |                |        Y        |               | Project Number: Number of the project that is being created.  This will match the GL Project used to record costs to the ledger. |
 | name                       | NonEmptyTrimmedString240! |                |        Y        |               | Project Name: Name of the project that is being created. |
 | description                | String                    |                |                 |               | Project Description: A description about the project. This might include high-level information about the work being performed. |
 | projectStartDate           | LocalDate!                |                |        Y        |               | Project Start Date: The date that work or information tracking begins on a project. |
@@ -441,8 +492,8 @@
 | lastUpdateUserId           | ErpUserId                 |                |                 |               | User ID of the person who last updated this record. |
 | tasks                      | [PpmTask!]                |                |                 |               | Tasks: The Task resource includes the attributes that are used to store values while creating or updating project tasks. Tasks are units of project work assigned or performed as part of the duties of a resource. Tasks can be a portion of project work to be performed within a defined period by a specific resource or multiple resources.<br/><br/>By default, this will only list tasks which are allowed to be assigned costs.  If you need to see all tasks, set the property argument to false. |
 | awards                     | [PpmAward!]               |                |                 |               |  |
-| defaultAwardNumber         | PpmAwardNumber            |                |                 |               |  |
-| defaultFundingSourceNumber | PpmFundingSourceNumber    |                |                 |               |  |
+| defaultAwardNumber         | PpmAwardNumber            |                |                 |               | For sponsored projects, the default award number that will be expensed if left off of the journal line or distribution. |
+| defaultFundingSourceNumber | PpmFundingSourceNumber    |                |                 |               | For sponsored projects, the default funding source that will be expensed if left off of the journal line or distribution. |
 | eligibleForUse             | Boolean!                  |                |                 |               | Returns whether this PpmProject is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmProject must:<br/>- Have a projectStatusCode of ACTIVE<br/>- Not be a templateProject<br/>- Have a projectStartDate and projectCompletionDate range which includes the given accountingDate |
 
 * `tasks` : `[PpmTask!]`
@@ -450,7 +501,7 @@
   * Arguments:
     * `chargeableOnly` : `Boolean` = true
   * Description of `PpmTask`:
-    * Represents a component of work within the project.
+    * The Task identifies the activities used to further breakdown a PPM project. Every project MUST have at least one Task.  The number of tasks will vary by type of project.<br/><br/>--Roll-up relationship to the new Chart of Accounts in the General Ledger:--<br/><br/>- The Task value will NOT roll up to the Chart of Accounts. Task values will only be used in the PPM module.<br/>- Internal rules within the Oracle PPM module will be used to map the task to components of the GL Chart of Accounts which are not directly mapped to other components of the POET(AF) segments.<br/><br/>--Examples:--<br/><br/>- Design<br/>- Construction<br/>- Data Gathering & Analysis
 * `eligibleForUse` : `Boolean!`
   * Returns whether this PpmProject is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmProject must:<br/>- Have a projectStatusCode of ACTIVE<br/>- Not be a templateProject<br/>- Have a projectStartDate and projectCompletionDate range which includes the given accountingDate
   * Arguments:
@@ -507,7 +558,18 @@
 <!--BREAK-->
 ### Data Object: PpmTask
 
-Represents a component of work within the project.
+The Task identifies the activities used to further breakdown a PPM project. Every project MUST have at least one Task.  The number of tasks will vary by type of project.
+
+**Roll-up relationship to the new Chart of Accounts in the General Ledger:**
+
+* The Task value will NOT roll up to the Chart of Accounts. Task values will only be used in the PPM module.
+* Internal rules within the Oracle PPM module will be used to map the task to components of the GL Chart of Accounts which are not directly mapped to other components of the POET(AF) segments.
+
+**Examples:**
+
+* Design
+* Construction
+* Data Gathering & Analysis
 
 #### Access Controls
 
@@ -542,10 +604,10 @@ Represents a component of work within the project.
 | topTaskId                | Long                      |                |                 |               | Top Task ID: Identifier of the top task to which the task rolls up. If the task is a top task, the identifier of the top task is same as the identifier of the task. |
 | lastUpdateDateTime       | DateTime!                 |                |        Y        |               | The date when the task was last updated. |
 | lastUpdatedBy            | ErpUserId                 |                |                 |               | The user that last updated the task. |
-| eligibleForUse           | Boolean!                  |                |                 |               | Returns whether this PpmTask is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmTask must:<br/>- Be chargeable<br/>- Ba a lowestLevelTask<br/>- Have a taskStartDate and taskFinishDate range which includes the given accountingDate |
+| eligibleForUse           | Boolean!                  |                |                 |               | Returns whether this PpmTask is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmTask must:<br/>- Be chargeable<br/>- Be a lowestLevelTask<br/>- Have a taskStartDate and taskFinishDate range which includes the given accountingDate |
 
 * `eligibleForUse` : `Boolean!`
-  * Returns whether this PpmTask is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmTask must:<br/>- Be chargeable<br/>- Ba a lowestLevelTask<br/>- Have a taskStartDate and taskFinishDate range which includes the given accountingDate
+  * Returns whether this PpmTask is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmTask must:<br/>- Be chargeable<br/>- Be a lowestLevelTask<br/>- Have a taskStartDate and taskFinishDate range which includes the given accountingDate
   * Arguments:
     * `accountingDate` : `LocalDate`
 

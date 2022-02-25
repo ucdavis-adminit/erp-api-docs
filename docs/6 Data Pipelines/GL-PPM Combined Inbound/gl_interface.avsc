@@ -1,0 +1,431 @@
+{
+  "type": "record",
+  "namespace": "edu.ucdavis.adminit",
+  "name": "GL_INTERFACE",
+  "fields": [
+    {
+      "name": "STATUS",
+      "type": "string",
+      "default": "NEW"
+    },
+    {
+      "name": "LEDGER_ID",
+      "type": "null"
+    },
+    {
+      "name": "ACCOUNTING_DATE",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "USER_JE_SOURCE_NAME",
+      "type": "string"
+    },
+    {
+      "name": "USER_JE_CATEGORY_NAME",
+      "type": "string"
+    },
+    {
+      "name": "CURRENCY_CODE",
+      "type": "string",
+      "default": "USD"
+    },
+    {
+      "name": "DATE_CREATED",
+      "type": "string"
+    },
+    {
+      "name": "ACTUAL_FLAG",
+      "type": "string",
+      "default": "A"
+    },
+    {
+      "name": "SEGMENT1",
+      "type": "string",
+      "default": "0000",
+      "doc": "Entity"
+    },
+    {
+      "name": "SEGMENT2",
+      "type": "string",
+      "default": "00000",
+      "doc": "Fund"
+    },
+    {
+      "name": "SEGMENT3",
+      "type": "string",
+      "default": "0000000",
+      "doc": "Department"
+    },
+    {
+      "name": "SEGMENT4",
+      "type": "string",
+      "default": "000000",
+      "doc": "Account"
+    },
+    {
+      "name": "SEGMENT5",
+      "type": "string",
+      "default": "00",
+      "doc": "Purpose"
+    },
+    {
+      "name": "SEGMENT6",
+      "type": "string",
+      "default": "000",
+      "doc": "Program"
+    },
+    {
+      "name": "SEGMENT7",
+      "type": "string",
+      "default": "0000000000",
+      "doc": "Project"
+    },
+    {
+      "name": "SEGMENT8",
+      "type": "string",
+      "default": "000000",
+      "doc": "Activity"
+    },
+    {
+      "name": "SEGMENT9",
+      "type": "string",
+      "default": "0000",
+      "doc": "InterEntity"
+    },
+    {
+      "name": "SEGMENT10",
+      "type": "string",
+      "default": "000000",
+      "doc": "Flex1"
+    },
+    {
+      "name": "SEGMENT11",
+      "type": "string",
+      "default": "000000",
+      "doc": "Flex2"
+    },
+    {
+      "name": "SEGMENT12",
+      "type": "null"
+    },
+    {
+      "name": "SEGMENT13",
+      "type": "null"
+    },
+    {
+      "name": "SEGMENT14",
+      "type": "null"
+    },
+    {
+      "name": "SEGMENT15",
+      "type": "null"
+    },
+    {
+      "name": "SEGMENT16",
+      "type": "null"
+    },
+    {
+      "name": "SEGMENT17",
+      "type": "null"
+    },
+    {
+      "name": "SEGMENT18",
+      "type": "null"
+    },
+    {
+      "name": "SEGMENT19",
+      "type": "null"
+    },
+    {
+      "name": "SEGMENT20",
+      "type": "null"
+    },
+    {
+      "name": "SEGMENT21",
+      "type": "null"
+    },
+    {
+      "name": "SEGMENT22",
+      "type": "null"
+    },
+    {
+      "name": "SEGMENT23",
+      "type": "null"
+    },
+    {
+      "name": "SEGMENT24",
+      "type": "null"
+    },
+    {
+      "name": "SEGMENT25",
+      "type": "null"
+    },
+    {
+      "name": "SEGMENT26",
+      "type": "null"
+    },
+    {
+      "name": "SEGMENT27",
+      "type": "null"
+    },
+    {
+      "name": "SEGMENT28",
+      "type": "null"
+    },
+    {
+      "name": "SEGMENT29",
+      "type": "null"
+    },
+    {
+      "name": "SEGMENT30",
+      "type": "null"
+    },
+    {
+      "name": "ENTERED_DR",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "ENTERED_CR",
+      "type": [
+        "null",
+        "double"
+      ]
+    },
+    {
+      "name": "ACCOUNTED_DR",
+      "type": "null"
+    },
+    {
+      "name": "ACCOUNTED_CR",
+      "type": "null"
+    },
+    {
+      "name": "REFERENCE1",
+      "type": "null"
+    },
+    {
+      "name": "REFERENCE2",
+      "type": "null"
+    },
+    {
+      "name": "REFERENCE3",
+      "type": "null"
+    },
+    {
+      "name": "REFERENCE4",
+      "type": "string"
+    },
+    {
+      "name": "REFERENCE5",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "REFERENCE6",
+      "type": "string"
+    },
+    {
+      "name": "REFERENCE7",
+      "type": "null"
+    },
+    {
+      "name": "REFERENCE8",
+      "type": "null"
+    },
+    {
+      "name": "REFERENCE9",
+      "type": "null"
+    },
+    {
+      "name": "REFERENCE10",
+      "type": "string"
+    },
+    {
+      "name": "REFERENCE21",
+      "type": "null"
+    },
+    {
+      "name": "REFERENCE22",
+      "type": "null"
+    },
+    {
+      "name": "REFERENCE23",
+      "type": "null"
+    },
+    {
+      "name": "REFERENCE24",
+      "type": "null"
+    },
+    {
+      "name": "REFERENCE25",
+      "type": "null"
+    },
+    {
+      "name": "REFERENCE26",
+      "type": "null"
+    },
+    {
+      "name": "REFERENCE27",
+      "type": "null"
+    },
+    {
+      "name": "REFERENCE28",
+      "type": "null"
+    },
+    {
+      "name": "REFERENCE29",
+      "type": "null"
+    },
+    {
+      "name": "REFERENCE30",
+      "type": "null"
+    },
+    {
+      "name": "STAT_AMOUNT",
+      "type": "null"
+    },
+    {
+      "name": "USER_CURRENCY_CONVERSION_TYPE",
+      "type": "null"
+    },
+    {
+      "name": "CURRENCY_CONVERSION_DATE",
+      "type": "null"
+    },
+    {
+      "name": "CURRENCY_CONVERSION_RATE",
+      "type": "null"
+    },
+    {
+      "name": "GROUP_ID",
+      "type": "null"
+    },
+    {
+      "name": "ATTRIBUTE_CATEGORY",
+      "type": "string"
+    },
+    {
+      "name": "ATTRIBUTE1",
+      "type": "string"
+    },
+    {
+      "name": "ATTRIBUTE2",
+      "type": [
+        "null",
+        "string"
+      ]
+    },
+    {
+      "name": "ATTRIBUTE3",
+      "type": "null"
+    },
+    {
+      "name": "ATTRIBUTE4",
+      "type": "null"
+    },
+    {
+      "name": "ATTRIBUTE5",
+      "type": "null"
+    },
+    {
+      "name": "ATTRIBUTE6",
+      "type": "null"
+    },
+    {
+      "name": "ATTRIBUTE7",
+      "type": "null"
+    },
+    {
+      "name": "ATTRIBUTE8",
+      "type": "null"
+    },
+    {
+      "name": "ATTRIBUTE9",
+      "type": "null"
+    },
+    {
+      "name": "ATTRIBUTE10",
+      "type": "null"
+    },
+    {
+      "name": "ATTRIBUTE11",
+      "type": "null"
+    },
+    {
+      "name": "ATTRIBUTE12",
+      "type": "null"
+    },
+    {
+      "name": "ATTRIBUTE13",
+      "type": "null"
+    },
+    {
+      "name": "ATTRIBUTE14",
+      "type": "null"
+    },
+    {
+      "name": "ATTRIBUTE15",
+      "type": "null"
+    },
+    {
+      "name": "ATTRIBUTE16",
+      "type": "null"
+    },
+    {
+      "name": "ATTRIBUTE17",
+      "type": "null"
+    },
+    {
+      "name": "ATTRIBUTE18",
+      "type": "null"
+    },
+    {
+      "name": "ATTRIBUTE19",
+      "type": "null"
+    },
+    {
+      "name": "ATTRIBUTE20",
+      "type": "null"
+    },
+    {
+      "name": "ATTRIBUTE_CATEGORY3",
+      "type": "null"
+    },
+    {
+      "name": "AVERAGE_JOURNAL_FLAG",
+      "type": "null"
+    },
+    {
+      "name": "ORIGINATING_BAL_SEG_VALUE",
+      "type": "null"
+    },
+    {
+      "name": "LEDGER_NAME",
+      "type": "string",
+      "default": "UCD Primary Ledger"
+    },
+    {
+      "name": "ENCUMBRANCE_TYPE_ID",
+      "type": "null"
+    },
+    {
+      "name": "JGZZ_RECON_REF",
+      "type": "null"
+    },
+    {
+      "name": "PERIOD_NAME",
+      "type": [
+        "null",
+        "string"
+      ]
+    }
+  ]
+}

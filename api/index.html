@@ -21,9 +21,12 @@
         <nav id="nav" role="navigation">
           <h5>Introduction</h5>
           <a href="#introduction">Welcome</a>
-          <a data-traverse-ignore="" href="https://aggieenterprise.ucdavis.edu/">Aggie Enterprise Home Page</a>
-          <a data-traverse-ignore="" href="https://financeandbusiness.ucdavis.edu/aggie-enterprise/chart-of-accounts/redesign">Chart of Accounts Resign Home</a>
-          <a data-traverse-ignore="" href="TBD">API Feedback</a>
+          <a data-traverse-ignore="" href="https://aggieenterprise.ucdavis.edu/">Aggie Enterprise Site</a>
+          <a data-traverse-ignore="" href="https://financeandbusiness.ucdavis.edu/aggie-enterprise/chart-of-accounts/redesign">CoA Redesign Home</a>
+          <a data-traverse-ignore="" href="https://financeandbusiness.ucdavis.edu/aggie-enterprise/business-transformation/project-portfolio">Project Portfolio Management (PPM) Home</a>
+          <a href="#intro-item-3">Slack Channel</a>
+          <a href="#intro-item-4">API Feedback</a>
+          <a href="#intro-item-5">Obtaining Access</a>
           <h5>Operations</h5>
           <section>
             <a href="#tag-Queries">Queries</a>
@@ -134,12 +137,6 @@
                 <a href="#operation-glaccountingperiodsearch-Queries"> glAccountingPeriodSearch </a>
               </li>
               <li>
-                <a href="#operation-glchartsegmentsvalidate-Queries"> glChartSegmentsValidate </a>
-              </li>
-              <li>
-                <a href="#operation-glchartstringvalidate-Queries"> glChartstringValidate </a>
-              </li>
-              <li>
                 <a href="#operation-gljournalcategory-Queries"> glJournalCategory </a>
               </li>
               <li>
@@ -165,6 +162,12 @@
               </li>
               <li>
                 <a href="#operation-gljournalsourcesearch-Queries"> glJournalSourceSearch </a>
+              </li>
+              <li>
+                <a href="#operation-glvalidatechartsegments-Queries"> glValidateChartSegments </a>
+              </li>
+              <li>
+                <a href="#operation-glvalidatechartstring-Queries"> glValidateChartstring </a>
               </li>
               <li>
                 <a href="#operation-kfsconvertaccount-Queries"> kfsConvertAccount </a>
@@ -345,7 +348,6 @@
           <a href="#definition-GlAccountingPeriod"> GlAccountingPeriod </a>
           <a href="#definition-GlAccountingPeriodFilterInput"> GlAccountingPeriodFilterInput </a>
           <a href="#definition-GlAccountingPeriodSearchResults"> GlAccountingPeriodSearchResults </a>
-          <a href="#definition-GlChartSegmentsValidateOutput"> GlChartSegmentsValidateOutput </a>
           <a href="#definition-GlCostCenterSegments"> GlCostCenterSegments </a>
           <a href="#definition-GlDescriptionField40"> GlDescriptionField40 </a>
           <a href="#definition-GlJournalCategory"> GlJournalCategory </a>
@@ -365,6 +367,7 @@
           <a href="#definition-GlSegmentInput"> GlSegmentInput </a>
           <a href="#definition-GlSegmentString"> GlSegmentString </a>
           <a href="#definition-GlSegments"> GlSegments </a>
+          <a href="#definition-GlValidateChartSegmentsOutput"> GlValidateChartSegmentsOutput </a>
           <a href="#definition-Int"> Int </a>
           <a href="#definition-IntFilterInput"> IntFilterInput </a>
           <a href="#definition-InvoiceType"> InvoiceType </a>
@@ -455,17 +458,61 @@
           <div id="introduction" data-traverse-target="introduction">
             <div class="doc-row">
               <div class="doc-copy">
-                <p>API endpoints to access Oracle Financials data resources</p>
+                <p>This server is responsible for exposing data from a local copy of the Oracle ERP data through a GraphQL API. It will connect directly to a local database as needed to retrieve the data. This database will be populated regularly from the Oracle ERP. Retrievals from the database will be cached within the server for a configured period of time.</p>
+                <p>It will also provide operations for &quot;Action Requests&quot; for sending updates into Oracle. Action Requests are asynchronous in that the request will not be sent to Oracle during the initial call. The request will be recorded and queued for submission to the ERP system. Each request will be assigned a unique identifier, and the caller given a location to call back to check on the status and obtain results of the call once it has completed.</p>
+                <h5 id="using-the-api-in-progress">Using the API (IN PROGRESS)</h5>
+                <p>The ERP data and operations are exposed to boundary systems via a GraphQL API. GraphQL is a specification for executing queries and mutations in a standard manner. The underlying technology is just JSON over HTTP. GraphQL is a specification for the contents of the JSON messages. GraphQL allows us to tightly define the data model and the allowed contents within fields of the data model. As such it is (almost) impossible to send incorrectly formatted data to the API when using a GraphQL-aware tool.</p>
+                <p>See:
+                  <a href="https://graphql.org/">https://graphql.org/</a>
+                </p>
+                <p>This document will contain the system-specific payload specifications and examples of sending those payloads. However, describing the full specification of GraphQL is out of scope for this document and you should refer to the above URL for more information.</p>
+                <h5 id="connecting">Connecting</h5>
+                <p>For connecting to the API, you will be provided with an URL as the endpoint. You use the same URL for all calls to the API. GraphQL uses a single <code>https://&lt;host name&gt;/graphql</code> endpoint. To that URL, you will sent HTTP post operations using the required JSON payload to execute the needed operation. Authentication will be accepted in the form of a token in an HTTP header. The nature of the token is still under development, but plan for it to be a JWT token, as that is the largest token option we are considering.</p>
+                <p>Once connected, your access roles will be determined. They will identify what operations you have permissions to execute and what data elements you are able to retrieve.</p>
               </div>
               <div class="doc-examples">
                 <section>
-                  <h5>API Endpoints</h5> <pre><code>Local Development Server:
-http://localhost:3503/graphql
+                  <h5>API Endpoints</h5> <pre><code>Development Testing Server Endpoint:
+https://graphql-data-server-erp-uat.aws.ait.ucdavis.edu/graphql
 </code></pre>
                   <h5>Version:
                     <span>0.9.0</span>
                   </h5>
                 </section>
+              </div>
+            </div>
+            <div id="intro-item-3" data-traverse-target="intro-item-3">
+              <div class="doc-row">
+                <h5 class="doc-intro-item">Slack Channel</h5>
+                <div class="doc-copy">
+                  <p>Ad-Hoc Questions can be asked on the <code>#ae-boundary-apps-tech-community</code> channel in UCDavis slack.</p>
+                </div>
+                <div class="doc-examples"> </div>
+              </div>
+            </div>
+            <div id="intro-item-4" data-traverse-target="intro-item-4">
+              <div class="doc-row">
+                <h5 class="doc-intro-item">API Feedback</h5>
+                <div class="doc-copy">
+                  <p>Please provide API feedback or questions via our
+                    <a href="https://app.smartsheet.com/b/form/2f3c246d0a714fd89e71f23c29fd7ff2">SmartSheet form</a>. Questions posted to the form are logged and assigned to appropriate team members to provide a response. Questions posted to Slack (above) are answered on a time available basis.</p>
+                </div>
+                <div class="doc-examples"> </div>
+              </div>
+            </div>
+            <div id="intro-item-5" data-traverse-target="intro-item-5">
+              <div class="doc-row">
+                <h5 class="doc-intro-item">Obtaining Access</h5>
+                <div class="doc-copy">
+                  <p>You can request access to the test API server via our IMT SmartSheet here:
+                    <a href="https://dynamicview.smartsheet.com/views/102ca36a-e430-43e5-9502-3be24c87dbf6">Boundary Application Integration Management Tool</a>
+                  </p>
+                  <p>Update the line <code>Integration Environment Access Request</code> on the IMT for you application to <code>Request Development Server Access</code> and save the changes. We will send the needed token via email to the email of the person who requested the access in the SmartSheet. It will have a 30 day time limit. If we do not have the API Gateway for the testing environment up by the expiration of your token, you will be able to re-request for additional time.</p>
+                  <p>
+                    <em>Note: This authentication method is not the production method, but will be available at least until SIT1 testing.</em>
+                  </p>
+                </div>
+                <div class="doc-examples"> </div>
               </div>
             </div>
           </div>
@@ -536,7 +583,7 @@ http://localhost:3503/graphql
                   <h5>Variables</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"code"</span>: <span class="hljs-string">"xyz789"</span>}
+                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"code"</span>: <span class="hljs-string">"abc123"</span>}
 </code></pre> </body>
                   </html>
                 </section>
@@ -558,7 +605,7 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">false</span>,
       <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">LocalDate</span>,
       <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">LocalDate</span>,
-      <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">false</span>,
       <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">true</span>,
       <span class="hljs-attr">"sortOrder"</span>: <span class="hljs-number">123</span>,
       <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
@@ -566,7 +613,7 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"parentCode"</span>: <span class="hljs-string">"508210"</span>,
       <span class="hljs-attr">"parent"</span>: <span class="hljs-string">ErpAccount</span>,
       <span class="hljs-attr">"children"</span>: [<span class="hljs-string">ErpAccount</span>],
-      <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">123</span>,
+      <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">987</span>,
       <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"xyz789"</span>,
       <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>,
       <span class="hljs-attr">"purposeRequired"</span>: <span class="hljs-literal">false</span>
@@ -673,21 +720,21 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"code"</span>: <span class="hljs-string">"508210"</span>,
         <span class="hljs-attr">"id"</span>: <span class="hljs-string">"300000002763626"</span>,
         <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Some String"</span>,
-        <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">true</span>,
         <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">LocalDate</span>,
         <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">LocalDate</span>,
-        <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">false</span>,
-        <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">false</span>,
         <span class="hljs-attr">"sortOrder"</span>: <span class="hljs-number">123</span>,
         <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
         <span class="hljs-attr">"lastUpdateUserId"</span>: <span class="hljs-string">"auserid"</span>,
         <span class="hljs-attr">"parentCode"</span>: <span class="hljs-string">"508210"</span>,
         <span class="hljs-attr">"parent"</span>: <span class="hljs-string">ErpAccount</span>,
         <span class="hljs-attr">"children"</span>: [<span class="hljs-string">ErpAccount</span>],
-        <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">123</span>,
+        <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">987</span>,
         <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"xyz789"</span>,
-        <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>,
-        <span class="hljs-attr">"purposeRequired"</span>: <span class="hljs-literal">true</span>
+        <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">"purposeRequired"</span>: <span class="hljs-literal">false</span>
       }
     ]
   }
@@ -792,10 +839,10 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"code"</span>: <span class="hljs-string">"508210"</span>,
         <span class="hljs-attr">"id"</span>: <span class="hljs-string">"300000002763626"</span>,
         <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Some String"</span>,
-        <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">true</span>,
         <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">LocalDate</span>,
         <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">LocalDate</span>,
-        <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">true</span>,
         <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">false</span>,
         <span class="hljs-attr">"sortOrder"</span>: <span class="hljs-number">123</span>,
         <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
@@ -982,7 +1029,7 @@ http://localhost:3503/graphql
                   <h5>Variables</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"code"</span>: <span class="hljs-string">"abc123"</span>}
+                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"code"</span>: <span class="hljs-string">"xyz789"</span>}
 </code></pre> </body>
                   </html>
                 </section>
@@ -1005,7 +1052,7 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">LocalDate</span>,
       <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">LocalDate</span>,
       <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">false</span>,
-      <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">false</span>,
       <span class="hljs-attr">"sortOrder"</span>: <span class="hljs-number">123</span>,
       <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
       <span class="hljs-attr">"lastUpdateUserId"</span>: <span class="hljs-string">"auserid"</span>,
@@ -1013,7 +1060,7 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"parent"</span>: <span class="hljs-string">ErpActivity</span>,
       <span class="hljs-attr">"children"</span>: [<span class="hljs-string">ErpActivity</span>],
       <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">987</span>,
-      <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"abc123"</span>,
+      <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"xyz789"</span>,
       <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
     }
   }
@@ -1097,7 +1144,7 @@ http://localhost:3503/graphql
                   <h5>Variables</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"code"</span>: <span class="hljs-string">"abc123"</span>}
+                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"code"</span>: <span class="hljs-string">"xyz789"</span>}
 </code></pre> </body>
                   </html>
                 </section>
@@ -1128,7 +1175,7 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"parentCode"</span>: <span class="hljs-string">"510139"</span>,
         <span class="hljs-attr">"parent"</span>: <span class="hljs-string">ErpActivity</span>,
         <span class="hljs-attr">"children"</span>: [<span class="hljs-string">ErpActivity</span>],
-        <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">123</span>,
+        <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">987</span>,
         <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"xyz789"</span>,
         <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
       }
@@ -1306,7 +1353,7 @@ http://localhost:3503/graphql
                   <h5>Variables</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"code"</span>: <span class="hljs-string">"abc123"</span>}
+                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"code"</span>: <span class="hljs-string">"xyz789"</span>}
 </code></pre> </body>
                   </html>
                 </section>
@@ -1325,7 +1372,7 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"code"</span>: <span class="hljs-string">"1311"</span>,
       <span class="hljs-attr">"id"</span>: <span class="hljs-string">"300000002763626"</span>,
       <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Some String"</span>,
-      <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">false</span>,
+      <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">true</span>,
       <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">LocalDate</span>,
       <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">LocalDate</span>,
       <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">false</span>,
@@ -1336,7 +1383,7 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"parentCode"</span>: <span class="hljs-string">"1311"</span>,
       <span class="hljs-attr">"parent"</span>: <span class="hljs-string">ErpEntity</span>,
       <span class="hljs-attr">"children"</span>: [<span class="hljs-string">ErpEntity</span>],
-      <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">123</span>,
+      <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">987</span>,
       <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"abc123"</span>,
       <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
     }
@@ -1444,7 +1491,7 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">true</span>,
         <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">LocalDate</span>,
         <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">LocalDate</span>,
-        <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">false</span>,
         <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">false</span>,
         <span class="hljs-attr">"sortOrder"</span>: <span class="hljs-number">123</span>,
         <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
@@ -1453,8 +1500,8 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"parent"</span>: <span class="hljs-string">ErpEntity</span>,
         <span class="hljs-attr">"children"</span>: [<span class="hljs-string">ErpEntity</span>],
         <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">987</span>,
-        <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"abc123"</span>,
-        <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
+        <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"xyz789"</span>,
+        <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
       }
     ]
   }
@@ -1570,8 +1617,8 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"parent"</span>: <span class="hljs-string">ErpEntity</span>,
         <span class="hljs-attr">"children"</span>: [<span class="hljs-string">ErpEntity</span>],
         <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">987</span>,
-        <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"xyz789"</span>,
-        <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
+        <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"abc123"</span>,
+        <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
       }
     ]
   }
@@ -1749,7 +1796,7 @@ http://localhost:3503/graphql
                   <h5>Variables</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"code"</span>: <span class="hljs-string">"abc123"</span>}
+                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"code"</span>: <span class="hljs-string">"xyz789"</span>}
 </code></pre> </body>
                   </html>
                 </section>
@@ -1768,11 +1815,11 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"code"</span>: <span class="hljs-string">"9300051"</span>,
       <span class="hljs-attr">"id"</span>: <span class="hljs-string">"300000002763626"</span>,
       <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Some String"</span>,
-      <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">false</span>,
       <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">LocalDate</span>,
       <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">LocalDate</span>,
       <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">true</span>,
-      <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">false</span>,
+      <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">true</span>,
       <span class="hljs-attr">"sortOrder"</span>: <span class="hljs-number">123</span>,
       <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
       <span class="hljs-attr">"lastUpdateUserId"</span>: <span class="hljs-string">"auserid"</span>,
@@ -1783,7 +1830,7 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"xyz789"</span>,
       <span class="hljs-attr">"departmentType"</span>: <span class="hljs-string">ErpDepartmentTypeCode</span>,
       <span class="hljs-attr">"fiscalOfficerName"</span>: <span class="hljs-string">"Some String"</span>,
-      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
+      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
     }
   }
 }
@@ -1868,7 +1915,7 @@ http://localhost:3503/graphql
                   <h5>Variables</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"sort"</span>: [<span class="hljs-string">"xyz789"</span>]}
+                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"sort"</span>: [<span class="hljs-string">"abc123"</span>]}
 </code></pre> </body>
                   </html>
                 </section>
@@ -1891,16 +1938,16 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">false</span>,
         <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">LocalDate</span>,
         <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">LocalDate</span>,
-        <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">false</span>,
-        <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">true</span>,
         <span class="hljs-attr">"sortOrder"</span>: <span class="hljs-number">123</span>,
         <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
         <span class="hljs-attr">"lastUpdateUserId"</span>: <span class="hljs-string">"auserid"</span>,
         <span class="hljs-attr">"parentCode"</span>: <span class="hljs-string">"9300051"</span>,
         <span class="hljs-attr">"parent"</span>: <span class="hljs-string">ErpFinancialDepartment</span>,
         <span class="hljs-attr">"children"</span>: [<span class="hljs-string">ErpFinancialDepartment</span>],
-        <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">987</span>,
-        <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"abc123"</span>,
+        <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">123</span>,
+        <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"xyz789"</span>,
         <span class="hljs-attr">"departmentType"</span>: <span class="hljs-string">ErpDepartmentTypeCode</span>,
         <span class="hljs-attr">"fiscalOfficerName"</span>: <span class="hljs-string">"Some String"</span>,
         <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
@@ -1989,7 +2036,7 @@ http://localhost:3503/graphql
                   <h5>Variables</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"code"</span>: <span class="hljs-string">"abc123"</span>}
+                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"code"</span>: <span class="hljs-string">"xyz789"</span>}
 </code></pre> </body>
                   </html>
                 </section>
@@ -2009,10 +2056,10 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"code"</span>: <span class="hljs-string">"9300051"</span>,
         <span class="hljs-attr">"id"</span>: <span class="hljs-string">"300000002763626"</span>,
         <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Some String"</span>,
-        <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">false</span>,
         <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">LocalDate</span>,
         <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">LocalDate</span>,
-        <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">true</span>,
         <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">false</span>,
         <span class="hljs-attr">"sortOrder"</span>: <span class="hljs-number">123</span>,
         <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
@@ -2021,7 +2068,7 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"parent"</span>: <span class="hljs-string">ErpFinancialDepartment</span>,
         <span class="hljs-attr">"children"</span>: [<span class="hljs-string">ErpFinancialDepartment</span>],
         <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">123</span>,
-        <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"xyz789"</span>,
+        <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"abc123"</span>,
         <span class="hljs-attr">"departmentType"</span>: <span class="hljs-string">ErpDepartmentTypeCode</span>,
         <span class="hljs-attr">"fiscalOfficerName"</span>: <span class="hljs-string">"Some String"</span>,
         <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
@@ -2201,7 +2248,7 @@ http://localhost:3503/graphql
                   <h5>Variables</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"code"</span>: <span class="hljs-string">"abc123"</span>}
+                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"code"</span>: <span class="hljs-string">"xyz789"</span>}
 </code></pre> </body>
                   </html>
                 </section>
@@ -2223,7 +2270,7 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">false</span>,
       <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">LocalDate</span>,
       <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">LocalDate</span>,
-      <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">false</span>,
       <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">true</span>,
       <span class="hljs-attr">"sortOrder"</span>: <span class="hljs-number">123</span>,
       <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
@@ -2231,10 +2278,10 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"parentCode"</span>: <span class="hljs-string">"63031"</span>,
       <span class="hljs-attr">"parent"</span>: <span class="hljs-string">ErpFund</span>,
       <span class="hljs-attr">"children"</span>: [<span class="hljs-string">ErpFund</span>],
-      <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">987</span>,
+      <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">123</span>,
       <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"abc123"</span>,
       <span class="hljs-attr">"budgeted"</span>: <span class="hljs-literal">false</span>,
-      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
+      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
     }
   }
 }
@@ -2338,10 +2385,10 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"code"</span>: <span class="hljs-string">"63031"</span>,
         <span class="hljs-attr">"id"</span>: <span class="hljs-string">"300000002763626"</span>,
         <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Some String"</span>,
-        <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">true</span>,
         <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">LocalDate</span>,
         <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">LocalDate</span>,
-        <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">true</span>,
         <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">true</span>,
         <span class="hljs-attr">"sortOrder"</span>: <span class="hljs-number">123</span>,
         <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
@@ -2349,7 +2396,7 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"parentCode"</span>: <span class="hljs-string">"63031"</span>,
         <span class="hljs-attr">"parent"</span>: <span class="hljs-string">ErpFund</span>,
         <span class="hljs-attr">"children"</span>: [<span class="hljs-string">ErpFund</span>],
-        <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">123</span>,
+        <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">987</span>,
         <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"abc123"</span>,
         <span class="hljs-attr">"budgeted"</span>: <span class="hljs-literal">true</span>,
         <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
@@ -2528,7 +2575,7 @@ http://localhost:3503/graphql
                   <h5>Variables</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"code"</span>: <span class="hljs-string">"abc123"</span>}
+                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"code"</span>: <span class="hljs-string">"xyz789"</span>}
 </code></pre> </body>
                   </html>
                 </section>
@@ -2547,7 +2594,7 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"code"</span>: <span class="hljs-string">"G29"</span>,
       <span class="hljs-attr">"id"</span>: <span class="hljs-string">"300000002763626"</span>,
       <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Some String"</span>,
-      <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">false</span>,
       <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">LocalDate</span>,
       <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">LocalDate</span>,
       <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">false</span>,
@@ -2560,7 +2607,7 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"children"</span>: [<span class="hljs-string">ErpProgram</span>],
       <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">987</span>,
       <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"abc123"</span>,
-      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
+      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
     }
   }
 }
@@ -2643,7 +2690,7 @@ http://localhost:3503/graphql
                   <h5>Variables</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"code"</span>: <span class="hljs-string">"xyz789"</span>}
+                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"code"</span>: <span class="hljs-string">"abc123"</span>}
 </code></pre> </body>
                   </html>
                 </section>
@@ -2663,10 +2710,10 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"code"</span>: <span class="hljs-string">"G29"</span>,
         <span class="hljs-attr">"id"</span>: <span class="hljs-string">"300000002763626"</span>,
         <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Some String"</span>,
-        <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">true</span>,
         <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">LocalDate</span>,
         <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">LocalDate</span>,
-        <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">false</span>,
         <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">true</span>,
         <span class="hljs-attr">"sortOrder"</span>: <span class="hljs-number">123</span>,
         <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
@@ -2675,8 +2722,8 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"parent"</span>: <span class="hljs-string">ErpProgram</span>,
         <span class="hljs-attr">"children"</span>: [<span class="hljs-string">ErpProgram</span>],
         <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">123</span>,
-        <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"abc123"</span>,
-        <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
+        <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"xyz789"</span>,
+        <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
       }
     ]
   }
@@ -2856,7 +2903,7 @@ http://localhost:3503/graphql
                   <h5>Variables</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"code"</span>: <span class="hljs-string">"xyz789"</span>}
+                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"code"</span>: <span class="hljs-string">"abc123"</span>}
 </code></pre> </body>
                   </html>
                 </section>
@@ -2875,9 +2922,9 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"code"</span>: <span class="hljs-string">"CM00000039"</span>,
       <span class="hljs-attr">"id"</span>: <span class="hljs-string">"300000002763626"</span>,
       <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Some String"</span>,
-      <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">false</span>,
-      <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">"2021-08-11T16:13:22.744Z"</span>,
-      <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">"2022-02-11T17:13:22.744Z"</span>,
+      <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">"2021-08-25T17:33:06.876Z"</span>,
+      <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">"2022-02-25T18:33:06.876Z"</span>,
       <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">true</span>,
       <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">false</span>,
       <span class="hljs-attr">"sortOrder"</span>: <span class="hljs-number">123</span>,
@@ -2886,8 +2933,8 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"parentCode"</span>: <span class="hljs-string">"CM00000039"</span>,
       <span class="hljs-attr">"parent"</span>: <span class="hljs-string">ErpProject</span>,
       <span class="hljs-attr">"children"</span>: [<span class="hljs-string">ErpProject</span>],
-      <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">123</span>,
-      <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"abc123"</span>,
+      <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">987</span>,
+      <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"xyz789"</span>,
       <span class="hljs-attr">"isPpmProject"</span>: <span class="hljs-literal">true</span>,
       <span class="hljs-attr">"ppmProject"</span>: <span class="hljs-string">PpmProject</span>,
       <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
@@ -2998,8 +3045,8 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"id"</span>: <span class="hljs-string">"300000002763626"</span>,
         <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Some String"</span>,
         <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">false</span>,
-        <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">"2022-02-11T17:13:22.744Z"</span>,
-        <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">"2021-08-11T16:13:22.744Z"</span>,
+        <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">"2022-02-25T18:33:06.876Z"</span>,
+        <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">"2022-02-25T18:33:06.876Z"</span>,
         <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">true</span>,
         <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">false</span>,
         <span class="hljs-attr">"sortOrder"</span>: <span class="hljs-number">123</span>,
@@ -3009,10 +3056,10 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"parent"</span>: <span class="hljs-string">ErpProject</span>,
         <span class="hljs-attr">"children"</span>: [<span class="hljs-string">ErpProject</span>],
         <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">123</span>,
-        <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"xyz789"</span>,
-        <span class="hljs-attr">"isPpmProject"</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"abc123"</span>,
+        <span class="hljs-attr">"isPpmProject"</span>: <span class="hljs-literal">true</span>,
         <span class="hljs-attr">"ppmProject"</span>: <span class="hljs-string">PpmProject</span>,
-        <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
+        <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
       }
     ]
   }
@@ -3218,7 +3265,7 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"parentCode"</span>: <span class="hljs-string">"44"</span>,
       <span class="hljs-attr">"parent"</span>: <span class="hljs-string">ErpPurpose</span>,
       <span class="hljs-attr">"children"</span>: [<span class="hljs-string">ErpPurpose</span>],
-      <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">987</span>,
+      <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">123</span>,
       <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"xyz789"</span>,
       <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
     }
@@ -3303,7 +3350,7 @@ http://localhost:3503/graphql
                   <h5>Variables</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"sort"</span>: [<span class="hljs-string">"xyz789"</span>]}
+                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"sort"</span>: [<span class="hljs-string">"abc123"</span>]}
 </code></pre> </body>
                   </html>
                 </section>
@@ -3323,7 +3370,7 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"code"</span>: <span class="hljs-string">"44"</span>,
         <span class="hljs-attr">"id"</span>: <span class="hljs-string">"300000002763626"</span>,
         <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Some String"</span>,
-        <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">false</span>,
         <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">LocalDate</span>,
         <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">LocalDate</span>,
         <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">false</span>,
@@ -3335,8 +3382,8 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"parent"</span>: <span class="hljs-string">ErpPurpose</span>,
         <span class="hljs-attr">"children"</span>: [<span class="hljs-string">ErpPurpose</span>],
         <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">123</span>,
-        <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"xyz789"</span>,
-        <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
+        <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"abc123"</span>,
+        <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
       }
     ]
   }
@@ -3420,7 +3467,7 @@ http://localhost:3503/graphql
                   <h5>Variables</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"code"</span>: <span class="hljs-string">"abc123"</span>}
+                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"code"</span>: <span class="hljs-string">"xyz789"</span>}
 </code></pre> </body>
                   </html>
                 </section>
@@ -3443,16 +3490,16 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">false</span>,
         <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">LocalDate</span>,
         <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">LocalDate</span>,
-        <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">true</span>,
-        <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">true</span>,
         <span class="hljs-attr">"sortOrder"</span>: <span class="hljs-number">123</span>,
         <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
         <span class="hljs-attr">"lastUpdateUserId"</span>: <span class="hljs-string">"auserid"</span>,
         <span class="hljs-attr">"parentCode"</span>: <span class="hljs-string">"44"</span>,
         <span class="hljs-attr">"parent"</span>: <span class="hljs-string">ErpPurpose</span>,
         <span class="hljs-attr">"children"</span>: [<span class="hljs-string">ErpPurpose</span>],
-        <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">123</span>,
-        <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"abc123"</span>,
+        <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">987</span>,
+        <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"xyz789"</span>,
         <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
       }
     ]
@@ -3638,13 +3685,13 @@ http://localhost:3503/graphql
     <span class="hljs-attr">"glAccountAlias"</span>: {
       <span class="hljs-attr">"aliasCode"</span>: <span class="hljs-string">"xyz789"</span>,
       <span class="hljs-attr">"name"</span>: <span class="hljs-string">"xyz789"</span>,
-      <span class="hljs-attr">"description"</span>: <span class="hljs-string">"xyz789"</span>,
+      <span class="hljs-attr">"description"</span>: <span class="hljs-string">"abc123"</span>,
       <span class="hljs-attr">"combinationCodeId"</span>: <span class="hljs-string">"300000002763626"</span>,
       <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">false</span>,
-      <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">"2022-02-11T17:13:22.744Z"</span>,
-      <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">"2021-08-11T16:13:22.744Z"</span>,
+      <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">"2021-08-25T17:33:06.876Z"</span>,
+      <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">"2022-02-25T18:33:06.876Z"</span>,
       <span class="hljs-attr">"lastUpdateDate"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
-      <span class="hljs-attr">"lastUpdateUser"</span>: <span class="hljs-string">"abc123"</span>,
+      <span class="hljs-attr">"lastUpdateUser"</span>: <span class="hljs-string">"xyz789"</span>,
       <span class="hljs-attr">"glSegments"</span>: {
         <span class="hljs-attr">"entity"</span>: <span class="hljs-string">"1311"</span>,
         <span class="hljs-attr">"fund"</span>: <span class="hljs-string">"63031"</span>,
@@ -4052,11 +4099,11 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"periodYear"</span>: <span class="hljs-number">123</span>,
       <span class="hljs-attr">"periodNumber"</span>: <span class="hljs-number">123</span>,
       <span class="hljs-attr">"periodStatus"</span>: <span class="hljs-string">"O"</span>,
-      <span class="hljs-attr">"adjustmentPeriod"</span>: <span class="hljs-literal">false</span>,
-      <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">"2022-02-11T17:13:22.744Z"</span>,
-      <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">"2021-08-11T16:13:22.744Z"</span>,
-      <span class="hljs-attr">"yearStartDate"</span>: <span class="hljs-string">"2021-08-11T16:13:22.744Z"</span>,
-      <span class="hljs-attr">"quarterStartDate"</span>: <span class="hljs-string">"2022-02-11T17:13:22.744Z"</span>,
+      <span class="hljs-attr">"adjustmentPeriod"</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">"2022-02-25T18:33:06.876Z"</span>,
+      <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">"2021-08-25T17:33:06.876Z"</span>,
+      <span class="hljs-attr">"yearStartDate"</span>: <span class="hljs-string">"2021-08-25T17:33:06.876Z"</span>,
+      <span class="hljs-attr">"quarterStartDate"</span>: <span class="hljs-string">"2021-08-25T17:33:06.876Z"</span>,
       <span class="hljs-attr">"quarterNumber"</span>: <span class="hljs-number">123</span>,
       <span class="hljs-attr">"effectivePeriodNumber"</span>: <span class="hljs-number">123</span>,
       <span class="hljs-attr">"lastUpdateUserId"</span>: <span class="hljs-string">"auserid"</span>
@@ -4133,7 +4180,7 @@ http://localhost:3503/graphql
                   <h5>Variables</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"accountingDate"</span>: <span class="hljs-string">"2021-08-11T16:13:22.744Z"</span>}
+                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"accountingDate"</span>: <span class="hljs-string">"2022-02-25T18:33:06.876Z"</span>}
 </code></pre> </body>
                   </html>
                 </section>
@@ -4153,11 +4200,11 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"periodYear"</span>: <span class="hljs-number">123</span>,
       <span class="hljs-attr">"periodNumber"</span>: <span class="hljs-number">123</span>,
       <span class="hljs-attr">"periodStatus"</span>: <span class="hljs-string">"O"</span>,
-      <span class="hljs-attr">"adjustmentPeriod"</span>: <span class="hljs-literal">false</span>,
-      <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">"2021-08-11T16:13:22.744Z"</span>,
-      <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">"2021-08-11T16:13:22.744Z"</span>,
-      <span class="hljs-attr">"yearStartDate"</span>: <span class="hljs-string">"2021-08-11T16:13:22.744Z"</span>,
-      <span class="hljs-attr">"quarterStartDate"</span>: <span class="hljs-string">"2022-02-11T17:13:22.744Z"</span>,
+      <span class="hljs-attr">"adjustmentPeriod"</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">"2021-08-25T17:33:06.876Z"</span>,
+      <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">"2022-02-25T18:33:06.876Z"</span>,
+      <span class="hljs-attr">"yearStartDate"</span>: <span class="hljs-string">"2021-08-25T17:33:06.876Z"</span>,
+      <span class="hljs-attr">"quarterStartDate"</span>: <span class="hljs-string">"2022-02-25T18:33:06.876Z"</span>,
       <span class="hljs-attr">"quarterNumber"</span>: <span class="hljs-number">123</span>,
       <span class="hljs-attr">"effectivePeriodNumber"</span>: <span class="hljs-number">123</span>,
       <span class="hljs-attr">"lastUpdateUserId"</span>: <span class="hljs-string">"auserid"</span>
@@ -4253,235 +4300,6 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"totalResultCount"</span>: <span class="hljs-number">250</span>
       },
       <span class="hljs-attr">"data"</span>: [<span class="hljs-string">GlAccountingPeriod</span>]
-    }
-  }
-}
-</code></pre> </body>
-                  </html>
-                </section>
-              </div>
-            </div>
-          </div>
-          <div id="operation-glchartsegmentsvalidate-Queries" class="operation panel" data-traverse-target="operation-glchartsegmentsvalidate-Queries">
-            <!-- <section class="operation-tags row"> -->
-            <!-- <div class="doc-copy"> -->
-            <div class="operation-tags">
-              <a class="label" href="#tag-Queries">Queries</a>
-              <!---->
-            </div>
-            <!-- </div> -->
-            <!-- </section> -->
-            <h2 class="operation-name "> <code>glChartSegmentsValidate</code> </h2>
-            <div class="doc-row">
-              <div class="doc-copy">
-                <section class="swagger-operation-description operation-description">
-                  <p>Validates that the given set of GL chartstring segments are most likely valid for posting to the financial system general ledger. Individual non-blank elements will be checked for current validity.</p>
-                  <p>If validateCVRs is true, certain combinations of attributes will be sanity checked.</p>
-                  <p>This operation will return a fully populated set of segments, including defaults in both individual segment and full chartstring form.</p>
-                  <p>If the combination was previously known/used in the financial system, its unique ID will be included.</p>
-                </section>
-              </div>
-            </div>
-            <div class="doc-row">
-              <div class="doc-copy">
-                <section class="swagger-request-body"> </section>
-                <section class="swagger-responses"> Returns a
-                  <a href="#definition-GlChartSegmentsValidateOutput"><code>GlChartSegmentsValidateOutput!</code></a>
-                </section>
-                <br>
-                <section class="swagger-request-params">
-                  <table>
-                    <tr>
-                      <th>Name</th>
-                      <th>Description</th>
-                    </tr>
-                    <tr>
-                      <td><code>segments</code> -
-                        <a href="#definition-GlSegmentInput"><code>GlSegmentInput!</code></a>
-                      </td>
-                      <td> </td>
-                    </tr>
-                    <tr>
-                      <td><code>validateCVRs</code> -
-                        <a href="#definition-Boolean"><code>Boolean</code></a>
-                      </td>
-                      <td> </td>
-                    </tr>
-                  </table>
-                </section>
-              </div>
-              <div class="doc-examples">
-                <section>
-                  <h4>Example</h4>
-                  <h5>Query</h5>
-                  <html>
-                  <head></head>
-                  <body><pre><code class="hljs language-gql"><span class="hljs-symbol"><span class="hljs-keyword">query</span> glChartSegmentsValidate<span class="hljs-tag">(<span class="hljs-code">$segments</span>:<span class="hljs-type"> GlSegmentInput!</span>, <span class="hljs-code">$validateCVRs</span>:<span class="hljs-type"> Boolean)</span> {
-  glChartSegmentsValidate(segments: <span class="hljs-code">$segments</span>, validateCVRs: <span class="hljs-code">$validateCVRs</span>)</span> <span class="hljs-tag">{
-    <span class="hljs-symbol">validationResponse <span class="hljs-tag">{
-      <span class="hljs-type">...ValidationResponseFragment</span>
-    }</span></span>
-    <span class="hljs-symbol">segments <span class="hljs-tag">{
-      <span class="hljs-type">...GlSegmentsFragment</span>
-    }</span></span>
-    <span class="hljs-symbol">completeChartstring</span>
-    <span class="hljs-symbol">codeCombinationId</span>
-  }</span></span>
-}
-</code></pre> </body>
-                  </html>
-                  <h5>Variables</h5>
-                  <html>
-                  <head></head>
-                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"segments"</span>: <span class="hljs-string">GlSegmentInput</span>, <span class="hljs-attr">"validateCVRs"</span>: <span class="hljs-literal">true</span>}
-</code></pre> </body>
-                  </html>
-                </section>
-              </div>
-            </div>
-            <div class="doc-row">
-              <div class="doc-copy"> </div>
-              <div class="doc-examples">
-                <section>
-                  <h5>Response </h5>
-                  <html>
-                  <head></head>
-                  <body><pre><code class="hljs language-json">{
-  <span class="hljs-attr">"data"</span>: {
-    <span class="hljs-attr">"glChartSegmentsValidate"</span>: {
-      <span class="hljs-attr">"validationResponse"</span>: {
-        <span class="hljs-attr">"valid"</span>: <span class="hljs-literal">false</span>,
-        <span class="hljs-attr">"errorMessages"</span>: [
-          <span class="hljs-string">"Net Position Accounts are not allowed"</span>
-        ],
-        <span class="hljs-attr">"messageProperties"</span>: [
-          <span class="hljs-string">"journalLines[2].glSegments.account"</span>
-        ]
-      },
-      <span class="hljs-attr">"segments"</span>: {
-        <span class="hljs-attr">"entity"</span>: <span class="hljs-string">"1311"</span>,
-        <span class="hljs-attr">"fund"</span>: <span class="hljs-string">"63031"</span>,
-        <span class="hljs-attr">"department"</span>: <span class="hljs-string">"9300051"</span>,
-        <span class="hljs-attr">"account"</span>: <span class="hljs-string">"508210"</span>,
-        <span class="hljs-attr">"purpose"</span>: <span class="hljs-string">"44"</span>
-      },
-      <span class="hljs-attr">"completeChartstring"</span>: <span class="hljs-string">"1311-63031-9300051-508210-44-G29-CM00000039-510139-0000-000000-000000"</span>,
-      <span class="hljs-attr">"codeCombinationId"</span>: <span class="hljs-string">"300000002763626"</span>
-    }
-  }
-}
-</code></pre> </body>
-                  </html>
-                </section>
-              </div>
-            </div>
-          </div>
-          <div id="operation-glchartstringvalidate-Queries" class="operation panel" data-traverse-target="operation-glchartstringvalidate-Queries">
-            <!-- <section class="operation-tags row"> -->
-            <!-- <div class="doc-copy"> -->
-            <div class="operation-tags">
-              <a class="label" href="#tag-Queries">Queries</a>
-              <!---->
-            </div>
-            <!-- </div> -->
-            <!-- </section> -->
-            <h2 class="operation-name "> <code>glChartstringValidate</code> </h2>
-            <div class="doc-row">
-              <div class="doc-copy">
-                <section class="swagger-operation-description operation-description">
-                  <p>Validates that the given GL chartstring is most likely valid for posting to the financial system general ledger. The input string format is strongly typed and will reject the call if not structured properly. Please see the definition of the
-                    <a href="#definition-GlSegmentString">GlSegmentString</a> for format information.</p>
-                  <p>If validateCVRs is true, certain combinations of attributes will be sanity checked if the string format is accepted.</p>
-                  <p>This operation will return the validation result and the segments as parsed out into their component fields.</p>
-                  <p>If the combination was previously known/used in the financial system, its unique ID will be included.</p>
-                </section>
-              </div>
-            </div>
-            <div class="doc-row">
-              <div class="doc-copy">
-                <section class="swagger-request-body"> </section>
-                <section class="swagger-responses"> Returns a
-                  <a href="#definition-GlChartSegmentsValidateOutput"><code>GlChartSegmentsValidateOutput!</code></a>
-                </section>
-                <br>
-                <section class="swagger-request-params">
-                  <table>
-                    <tr>
-                      <th>Name</th>
-                      <th>Description</th>
-                    </tr>
-                    <tr>
-                      <td><code>segmentString</code> -
-                        <a href="#definition-GlSegmentString"><code>GlSegmentString!</code></a>
-                      </td>
-                      <td> </td>
-                    </tr>
-                    <tr>
-                      <td><code>validateCVRs</code> -
-                        <a href="#definition-Boolean"><code>Boolean</code></a>
-                      </td>
-                      <td> </td>
-                    </tr>
-                  </table>
-                </section>
-              </div>
-              <div class="doc-examples">
-                <section>
-                  <h4>Example</h4>
-                  <h5>Query</h5>
-                  <html>
-                  <head></head>
-                  <body><pre><code class="hljs language-gql"><span class="hljs-symbol"><span class="hljs-keyword">query</span> glChartstringValidate<span class="hljs-tag">(<span class="hljs-code">$segmentString</span>:<span class="hljs-type"> GlSegmentString!</span>, <span class="hljs-code">$validateCVRs</span>:<span class="hljs-type"> Boolean)</span> {
-  glChartstringValidate(segmentString: <span class="hljs-code">$segmentString</span>, validateCVRs: <span class="hljs-code">$validateCVRs</span>)</span> <span class="hljs-tag">{
-    <span class="hljs-symbol">validationResponse <span class="hljs-tag">{
-      <span class="hljs-type">...ValidationResponseFragment</span>
-    }</span></span>
-    <span class="hljs-symbol">segments <span class="hljs-tag">{
-      <span class="hljs-type">...GlSegmentsFragment</span>
-    }</span></span>
-    <span class="hljs-symbol">completeChartstring</span>
-    <span class="hljs-symbol">codeCombinationId</span>
-  }</span></span>
-}
-</code></pre> </body>
-                  </html>
-                  <h5>Variables</h5>
-                  <html>
-                  <head></head>
-                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"segmentString"</span>: <span class="hljs-string">GlSegmentString</span>, <span class="hljs-attr">"validateCVRs"</span>: <span class="hljs-literal">false</span>}
-</code></pre> </body>
-                  </html>
-                </section>
-              </div>
-            </div>
-            <div class="doc-row">
-              <div class="doc-copy"> </div>
-              <div class="doc-examples">
-                <section>
-                  <h5>Response </h5>
-                  <html>
-                  <head></head>
-                  <body><pre><code class="hljs language-json">{
-  <span class="hljs-attr">"data"</span>: {
-    <span class="hljs-attr">"glChartstringValidate"</span>: {
-      <span class="hljs-attr">"validationResponse"</span>: {
-        <span class="hljs-attr">"valid"</span>: <span class="hljs-literal">false</span>,
-        <span class="hljs-attr">"errorMessages"</span>: [
-          <span class="hljs-string">"Net Position Accounts are not allowed"</span>
-        ],
-        <span class="hljs-attr">"messageProperties"</span>: [
-          <span class="hljs-string">"journalLines[2].glSegments.account"</span>
-        ]
-      },
-      <span class="hljs-attr">"segments"</span>: {
-        <span class="hljs-attr">"entity"</span>: <span class="hljs-string">"1311"</span>,
-        <span class="hljs-attr">"fund"</span>: <span class="hljs-string">"63031"</span>,
-        <span class="hljs-attr">"department"</span>: <span class="hljs-string">"9300051"</span>,
-        <span class="hljs-attr">"account"</span>: <span class="hljs-string">"508210"</span>,
-        <span class="hljs-attr">"purpose"</span>: <span class="hljs-string">"44"</span>
-      },
-      <span class="hljs-attr">"completeChartstring"</span>: <span class="hljs-string">"1311-63031-9300051-508210-44-G29-CM00000039-510139-0000-000000-000000"</span>,
-      <span class="hljs-attr">"codeCombinationId"</span>: <span class="hljs-string">"300000002763626"</span>
     }
   }
 }
@@ -4815,7 +4633,7 @@ http://localhost:3503/graphql
                   <h5>Variables</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"requestId"</span>: <span class="hljs-string">"xyz789"</span>}
+                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"requestId"</span>: <span class="hljs-string">"abc123"</span>}
 </code></pre> </body>
                   </html>
                 </section>
@@ -4912,7 +4730,7 @@ http://localhost:3503/graphql
                   <h5>Variables</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"consumerReferenceId"</span>: <span class="hljs-string">"xyz789"</span>}
+                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"consumerReferenceId"</span>: <span class="hljs-string">"abc123"</span>}
 </code></pre> </body>
                   </html>
                 </section>
@@ -5189,7 +5007,7 @@ http://localhost:3503/graphql
                   <h5>Variables</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"sort"</span>: [<span class="hljs-string">"xyz789"</span>]}
+                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"sort"</span>: [<span class="hljs-string">"abc123"</span>]}
 </code></pre> </body>
                   </html>
                 </section>
@@ -5312,6 +5130,235 @@ http://localhost:3503/graphql
               </div>
             </div>
           </div>
+          <div id="operation-glvalidatechartsegments-Queries" class="operation panel" data-traverse-target="operation-glvalidatechartsegments-Queries">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Queries">Queries</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
+            <h2 class="operation-name "> <code>glValidateChartSegments</code> </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-description operation-description">
+                  <p>Validates that the given set of GL chartstring segments are most likely valid for posting to the financial system general ledger. Individual non-blank elements will be checked for current validity.</p>
+                  <p>If validateCVRs is true, certain combinations of attributes will be sanity checked.</p>
+                  <p>This operation will return a fully populated set of segments, including defaults in both individual segment and full chartstring form.</p>
+                  <p>If the combination was previously known/used in the financial system, its unique ID will be included.</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-body"> </section>
+                <section class="swagger-responses"> Returns a
+                  <a href="#definition-GlValidateChartSegmentsOutput"><code>GlValidateChartSegmentsOutput!</code></a>
+                </section>
+                <br>
+                <section class="swagger-request-params">
+                  <table>
+                    <tr>
+                      <th>Name</th>
+                      <th>Description</th>
+                    </tr>
+                    <tr>
+                      <td><code>segments</code> -
+                        <a href="#definition-GlSegmentInput"><code>GlSegmentInput!</code></a>
+                      </td>
+                      <td> </td>
+                    </tr>
+                    <tr>
+                      <td><code>validateCVRs</code> -
+                        <a href="#definition-Boolean"><code>Boolean</code></a>
+                      </td>
+                      <td> </td>
+                    </tr>
+                  </table>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h4>Example</h4>
+                  <h5>Query</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-gql"><span class="hljs-symbol"><span class="hljs-keyword">query</span> glValidateChartSegments<span class="hljs-tag">(<span class="hljs-code">$segments</span>:<span class="hljs-type"> GlSegmentInput!</span>, <span class="hljs-code">$validateCVRs</span>:<span class="hljs-type"> Boolean)</span> {
+  glValidateChartSegments(segments: <span class="hljs-code">$segments</span>, validateCVRs: <span class="hljs-code">$validateCVRs</span>)</span> <span class="hljs-tag">{
+    <span class="hljs-symbol">validationResponse <span class="hljs-tag">{
+      <span class="hljs-type">...ValidationResponseFragment</span>
+    }</span></span>
+    <span class="hljs-symbol">segments <span class="hljs-tag">{
+      <span class="hljs-type">...GlSegmentsFragment</span>
+    }</span></span>
+    <span class="hljs-symbol">completeChartstring</span>
+    <span class="hljs-symbol">codeCombinationId</span>
+  }</span></span>
+}
+</code></pre> </body>
+                  </html>
+                  <h5>Variables</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"segments"</span>: <span class="hljs-string">GlSegmentInput</span>, <span class="hljs-attr">"validateCVRs"</span>: <span class="hljs-literal">true</span>}
+</code></pre> </body>
+                  </html>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy"> </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Response </h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">"data"</span>: {
+    <span class="hljs-attr">"glValidateChartSegments"</span>: {
+      <span class="hljs-attr">"validationResponse"</span>: {
+        <span class="hljs-attr">"valid"</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">"errorMessages"</span>: [
+          <span class="hljs-string">"Net Position Accounts are not allowed"</span>
+        ],
+        <span class="hljs-attr">"messageProperties"</span>: [
+          <span class="hljs-string">"journalLines[2].glSegments.account"</span>
+        ]
+      },
+      <span class="hljs-attr">"segments"</span>: {
+        <span class="hljs-attr">"entity"</span>: <span class="hljs-string">"1311"</span>,
+        <span class="hljs-attr">"fund"</span>: <span class="hljs-string">"63031"</span>,
+        <span class="hljs-attr">"department"</span>: <span class="hljs-string">"9300051"</span>,
+        <span class="hljs-attr">"account"</span>: <span class="hljs-string">"508210"</span>,
+        <span class="hljs-attr">"purpose"</span>: <span class="hljs-string">"44"</span>
+      },
+      <span class="hljs-attr">"completeChartstring"</span>: <span class="hljs-string">"1311-63031-9300051-508210-44-G29-CM00000039-510139-0000-000000-000000"</span>,
+      <span class="hljs-attr">"codeCombinationId"</span>: <span class="hljs-string">"300000002763626"</span>
+    }
+  }
+}
+</code></pre> </body>
+                  </html>
+                </section>
+              </div>
+            </div>
+          </div>
+          <div id="operation-glvalidatechartstring-Queries" class="operation panel" data-traverse-target="operation-glvalidatechartstring-Queries">
+            <!-- <section class="operation-tags row"> -->
+            <!-- <div class="doc-copy"> -->
+            <div class="operation-tags">
+              <a class="label" href="#tag-Queries">Queries</a>
+              <!---->
+            </div>
+            <!-- </div> -->
+            <!-- </section> -->
+            <h2 class="operation-name "> <code>glValidateChartstring</code> </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-operation-description operation-description">
+                  <p>Validates that the given GL chartstring is most likely valid for posting to the financial system general ledger. The input string format is strongly typed and will reject the call if not structured properly. Please see the definition of the
+                    <a href="#definition-GlSegmentString">GlSegmentString</a> for format information.</p>
+                  <p>If validateCVRs is true, certain combinations of attributes will be sanity checked if the string format is accepted.</p>
+                  <p>This operation will return the validation result and the segments as parsed out into their component fields.</p>
+                  <p>If the combination was previously known/used in the financial system, its unique ID will be included.</p>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="swagger-request-body"> </section>
+                <section class="swagger-responses"> Returns a
+                  <a href="#definition-GlValidateChartSegmentsOutput"><code>GlValidateChartSegmentsOutput!</code></a>
+                </section>
+                <br>
+                <section class="swagger-request-params">
+                  <table>
+                    <tr>
+                      <th>Name</th>
+                      <th>Description</th>
+                    </tr>
+                    <tr>
+                      <td><code>segmentString</code> -
+                        <a href="#definition-GlSegmentString"><code>GlSegmentString!</code></a>
+                      </td>
+                      <td> </td>
+                    </tr>
+                    <tr>
+                      <td><code>validateCVRs</code> -
+                        <a href="#definition-Boolean"><code>Boolean</code></a>
+                      </td>
+                      <td> </td>
+                    </tr>
+                  </table>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h4>Example</h4>
+                  <h5>Query</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-gql"><span class="hljs-symbol"><span class="hljs-keyword">query</span> glValidateChartstring<span class="hljs-tag">(<span class="hljs-code">$segmentString</span>:<span class="hljs-type"> GlSegmentString!</span>, <span class="hljs-code">$validateCVRs</span>:<span class="hljs-type"> Boolean)</span> {
+  glValidateChartstring(segmentString: <span class="hljs-code">$segmentString</span>, validateCVRs: <span class="hljs-code">$validateCVRs</span>)</span> <span class="hljs-tag">{
+    <span class="hljs-symbol">validationResponse <span class="hljs-tag">{
+      <span class="hljs-type">...ValidationResponseFragment</span>
+    }</span></span>
+    <span class="hljs-symbol">segments <span class="hljs-tag">{
+      <span class="hljs-type">...GlSegmentsFragment</span>
+    }</span></span>
+    <span class="hljs-symbol">completeChartstring</span>
+    <span class="hljs-symbol">codeCombinationId</span>
+  }</span></span>
+}
+</code></pre> </body>
+                  </html>
+                  <h5>Variables</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"segmentString"</span>: <span class="hljs-string">GlSegmentString</span>, <span class="hljs-attr">"validateCVRs"</span>: <span class="hljs-literal">true</span>}
+</code></pre> </body>
+                  </html>
+                </section>
+              </div>
+            </div>
+            <div class="doc-row">
+              <div class="doc-copy"> </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Response </h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">"data"</span>: {
+    <span class="hljs-attr">"glValidateChartstring"</span>: {
+      <span class="hljs-attr">"validationResponse"</span>: {
+        <span class="hljs-attr">"valid"</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">"errorMessages"</span>: [
+          <span class="hljs-string">"Net Position Accounts are not allowed"</span>
+        ],
+        <span class="hljs-attr">"messageProperties"</span>: [
+          <span class="hljs-string">"journalLines[2].glSegments.account"</span>
+        ]
+      },
+      <span class="hljs-attr">"segments"</span>: {
+        <span class="hljs-attr">"entity"</span>: <span class="hljs-string">"1311"</span>,
+        <span class="hljs-attr">"fund"</span>: <span class="hljs-string">"63031"</span>,
+        <span class="hljs-attr">"department"</span>: <span class="hljs-string">"9300051"</span>,
+        <span class="hljs-attr">"account"</span>: <span class="hljs-string">"508210"</span>,
+        <span class="hljs-attr">"purpose"</span>: <span class="hljs-string">"44"</span>
+      },
+      <span class="hljs-attr">"completeChartstring"</span>: <span class="hljs-string">"1311-63031-9300051-508210-44-G29-CM00000039-510139-0000-000000-000000"</span>,
+      <span class="hljs-attr">"codeCombinationId"</span>: <span class="hljs-string">"300000002763626"</span>
+    }
+  }
+}
+</code></pre> </body>
+                  </html>
+                </section>
+              </div>
+            </div>
+          </div>
           <div id="operation-kfsconvertaccount-Queries" class="operation panel" data-traverse-target="operation-kfsconvertaccount-Queries">
             <!-- <section class="operation-tags row"> -->
             <!-- <div class="doc-copy"> -->
@@ -5403,7 +5450,7 @@ http://localhost:3503/graphql
                   <body><pre><code class="hljs language-json">{
   <span class="hljs-attr">"data"</span>: {
     <span class="hljs-attr">"kfsConvertAccount"</span>: {
-      <span class="hljs-attr">"accountFound"</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">"accountFound"</span>: <span class="hljs-literal">false</span>,
       <span class="hljs-attr">"chart"</span>: <span class="hljs-string">KfsChartCode</span>,
       <span class="hljs-attr">"account"</span>: <span class="hljs-string">KfsAccountNumber</span>,
       <span class="hljs-attr">"costCenterType"</span>: <span class="hljs-string">ErpCostCenterType</span>,
@@ -5615,7 +5662,7 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"lastUpdateDate"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
       <span class="hljs-attr">"lastUpdatedBy"</span>: <span class="hljs-string">"auserid"</span>,
       <span class="hljs-attr">"awardFundingSource"</span>: [<span class="hljs-string">PpmFundingSource</span>],
-      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
+      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
     }
   }
 }
@@ -5717,7 +5764,7 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"projectId"</span>: <span class="hljs-string">"300000002763626"</span>,
         <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">LocalDate</span>,
         <span class="hljs-attr">"closeDate"</span>: <span class="hljs-string">LocalDate</span>,
-        <span class="hljs-attr">"awardOwningOrganizationName"</span>: <span class="hljs-string">"xyz789"</span>,
+        <span class="hljs-attr">"awardOwningOrganizationName"</span>: <span class="hljs-string">"abc123"</span>,
         <span class="hljs-attr">"awardPurpose"</span>: <span class="hljs-string">"Some String"</span>,
         <span class="hljs-attr">"awardType"</span>: <span class="hljs-string">"Some String"</span>,
         <span class="hljs-attr">"businessUnitName"</span>: <span class="hljs-string">"Some String"</span>,
@@ -5805,7 +5852,7 @@ http://localhost:3503/graphql
                   <h5>Variables</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"projectId"</span>: <span class="hljs-string">"abc123"</span>}
+                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"projectId"</span>: <span class="hljs-string">"xyz789"</span>}
 </code></pre> </body>
                   </html>
                 </section>
@@ -5939,7 +5986,7 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"projectId"</span>: <span class="hljs-string">"300000002763626"</span>,
         <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">LocalDate</span>,
         <span class="hljs-attr">"closeDate"</span>: <span class="hljs-string">LocalDate</span>,
-        <span class="hljs-attr">"awardOwningOrganizationName"</span>: <span class="hljs-string">"abc123"</span>,
+        <span class="hljs-attr">"awardOwningOrganizationName"</span>: <span class="hljs-string">"xyz789"</span>,
         <span class="hljs-attr">"awardPurpose"</span>: <span class="hljs-string">"Some String"</span>,
         <span class="hljs-attr">"awardType"</span>: <span class="hljs-string">"Some String"</span>,
         <span class="hljs-attr">"businessUnitName"</span>: <span class="hljs-string">"Some String"</span>,
@@ -5947,7 +5994,7 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"lastUpdateDate"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
         <span class="hljs-attr">"lastUpdatedBy"</span>: <span class="hljs-string">"auserid"</span>,
         <span class="hljs-attr">"awardFundingSource"</span>: [<span class="hljs-string">PpmFundingSource</span>],
-        <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
+        <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
       }
     ]
   }
@@ -6109,7 +6156,7 @@ http://localhost:3503/graphql
                   <h5>Variables</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"id"</span>: <span class="hljs-string">"abc123"</span>}
+                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"id"</span>: <span class="hljs-string">"xyz789"</span>}
 </code></pre> </body>
                   </html>
                 </section>
@@ -6200,7 +6247,7 @@ http://localhost:3503/graphql
                   <h5>Variables</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"name"</span>: <span class="hljs-string">"xyz789"</span>}
+                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"name"</span>: <span class="hljs-string">"abc123"</span>}
 </code></pre> </body>
                   </html>
                 </section>
@@ -6416,7 +6463,7 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"revenueCategoryCode"</span>: <span class="hljs-string">"Some String"</span>,
       <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
       <span class="hljs-attr">"lastUpdatedBy"</span>: <span class="hljs-string">"auserid"</span>,
-      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
+      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
     }
   }
 }
@@ -6516,7 +6563,7 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"revenueCategoryCode"</span>: <span class="hljs-string">"Some String"</span>,
       <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
       <span class="hljs-attr">"lastUpdatedBy"</span>: <span class="hljs-string">"auserid"</span>,
-      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
+      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
     }
   }
 }
@@ -6606,14 +6653,14 @@ http://localhost:3503/graphql
     <span class="hljs-attr">"ppmExpenditureTypeByName"</span>: {
       <span class="hljs-attr">"id"</span>: <span class="hljs-string">"300000002763626"</span>,
       <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Some String"</span>,
-      <span class="hljs-attr">"description"</span>: <span class="hljs-string">"xyz789"</span>,
+      <span class="hljs-attr">"description"</span>: <span class="hljs-string">"abc123"</span>,
       <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">LocalDate</span>,
       <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">LocalDate</span>,
       <span class="hljs-attr">"expenditureCategory"</span>: <span class="hljs-string">"Some String"</span>,
       <span class="hljs-attr">"revenueCategoryCode"</span>: <span class="hljs-string">"Some String"</span>,
       <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
       <span class="hljs-attr">"lastUpdatedBy"</span>: <span class="hljs-string">"auserid"</span>,
-      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
+      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
     }
   }
 }
@@ -6802,7 +6849,7 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"fundingSourceTypeCode"</span>: <span class="hljs-string">"abc123"</span>,
       <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
       <span class="hljs-attr">"lastUpdatedBy"</span>: <span class="hljs-string">"auserid"</span>,
-      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
+      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
     }
   }
 }
@@ -6897,7 +6944,7 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Some String"</span>,
         <span class="hljs-attr">"fundingSourceFromDate"</span>: <span class="hljs-string">LocalDate</span>,
         <span class="hljs-attr">"fundingSourceToDate"</span>: <span class="hljs-string">LocalDate</span>,
-        <span class="hljs-attr">"fundingSourceTypeCode"</span>: <span class="hljs-string">"abc123"</span>,
+        <span class="hljs-attr">"fundingSourceTypeCode"</span>: <span class="hljs-string">"xyz789"</span>,
         <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
         <span class="hljs-attr">"lastUpdatedBy"</span>: <span class="hljs-string">"auserid"</span>,
         <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
@@ -6973,7 +7020,7 @@ http://localhost:3503/graphql
                   <h5>Variables</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"fundingSourceNumber"</span>: <span class="hljs-string">"abc123"</span>}
+                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"fundingSourceNumber"</span>: <span class="hljs-string">"xyz789"</span>}
 </code></pre> </body>
                   </html>
                 </section>
@@ -6995,10 +7042,10 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Some String"</span>,
       <span class="hljs-attr">"fundingSourceFromDate"</span>: <span class="hljs-string">LocalDate</span>,
       <span class="hljs-attr">"fundingSourceToDate"</span>: <span class="hljs-string">LocalDate</span>,
-      <span class="hljs-attr">"fundingSourceTypeCode"</span>: <span class="hljs-string">"xyz789"</span>,
+      <span class="hljs-attr">"fundingSourceTypeCode"</span>: <span class="hljs-string">"abc123"</span>,
       <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
       <span class="hljs-attr">"lastUpdatedBy"</span>: <span class="hljs-string">"auserid"</span>,
-      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
+      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
     }
   }
 }
@@ -7181,7 +7228,7 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"effectiveEndDate"</span>: <span class="hljs-string">LocalDate</span>,
       <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
       <span class="hljs-attr">"lastUpdatedBy"</span>: <span class="hljs-string">"auserid"</span>,
-      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
+      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
     }
   }
 }
@@ -7366,7 +7413,7 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"effectiveEndDate"</span>: <span class="hljs-string">LocalDate</span>,
       <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
       <span class="hljs-attr">"lastUpdatedBy"</span>: <span class="hljs-string">"auserid"</span>,
-      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
+      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
     }
   }
 }
@@ -7569,7 +7616,7 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"id"</span>: <span class="hljs-string">"300000002763626"</span>,
       <span class="hljs-attr">"projectNumber"</span>: <span class="hljs-string">"SP20000018"</span>,
       <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Some String"</span>,
-      <span class="hljs-attr">"description"</span>: <span class="hljs-string">"abc123"</span>,
+      <span class="hljs-attr">"description"</span>: <span class="hljs-string">"xyz789"</span>,
       <span class="hljs-attr">"projectStartDate"</span>: <span class="hljs-string">LocalDate</span>,
       <span class="hljs-attr">"projectCompletionDate"</span>: <span class="hljs-string">LocalDate</span>,
       <span class="hljs-attr">"projectStatus"</span>: <span class="hljs-string">"Some String"</span>,
@@ -7582,16 +7629,16 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"sourceProjectReference"</span>: <span class="hljs-string">"Some String"</span>,
       <span class="hljs-attr">"projectCategory"</span>: <span class="hljs-string">"Some String"</span>,
       <span class="hljs-attr">"sponsoredProject"</span>: <span class="hljs-literal">false</span>,
-      <span class="hljs-attr">"billingEnabled"</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">"billingEnabled"</span>: <span class="hljs-literal">false</span>,
       <span class="hljs-attr">"capitalizationEnabled"</span>: <span class="hljs-literal">false</span>,
-      <span class="hljs-attr">"templateProject"</span>: <span class="hljs-literal">false</span>,
+      <span class="hljs-attr">"templateProject"</span>: <span class="hljs-literal">true</span>,
       <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
       <span class="hljs-attr">"lastUpdateUserId"</span>: <span class="hljs-string">"auserid"</span>,
       <span class="hljs-attr">"tasks"</span>: [<span class="hljs-string">PpmTask</span>],
       <span class="hljs-attr">"awards"</span>: [<span class="hljs-string">PpmAward</span>],
       <span class="hljs-attr">"defaultAwardNumber"</span>: <span class="hljs-string">"123456789"</span>,
       <span class="hljs-attr">"defaultFundingSourceNumber"</span>: <span class="hljs-string">"123456789"</span>,
-      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
+      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
     }
   }
 }
@@ -7703,7 +7750,7 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"id"</span>: <span class="hljs-string">"300000002763626"</span>,
         <span class="hljs-attr">"projectNumber"</span>: <span class="hljs-string">"SP20000018"</span>,
         <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Some String"</span>,
-        <span class="hljs-attr">"description"</span>: <span class="hljs-string">"xyz789"</span>,
+        <span class="hljs-attr">"description"</span>: <span class="hljs-string">"abc123"</span>,
         <span class="hljs-attr">"projectStartDate"</span>: <span class="hljs-string">LocalDate</span>,
         <span class="hljs-attr">"projectCompletionDate"</span>: <span class="hljs-string">LocalDate</span>,
         <span class="hljs-attr">"projectStatus"</span>: <span class="hljs-string">"Some String"</span>,
@@ -7716,8 +7763,8 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"sourceProjectReference"</span>: <span class="hljs-string">"Some String"</span>,
         <span class="hljs-attr">"projectCategory"</span>: <span class="hljs-string">"Some String"</span>,
         <span class="hljs-attr">"sponsoredProject"</span>: <span class="hljs-literal">true</span>,
-        <span class="hljs-attr">"billingEnabled"</span>: <span class="hljs-literal">true</span>,
-        <span class="hljs-attr">"capitalizationEnabled"</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">"billingEnabled"</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">"capitalizationEnabled"</span>: <span class="hljs-literal">true</span>,
         <span class="hljs-attr">"templateProject"</span>: <span class="hljs-literal">false</span>,
         <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
         <span class="hljs-attr">"lastUpdateUserId"</span>: <span class="hljs-string">"auserid"</span>,
@@ -7725,7 +7772,7 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"awards"</span>: [<span class="hljs-string">PpmAward</span>],
         <span class="hljs-attr">"defaultAwardNumber"</span>: <span class="hljs-string">"123456789"</span>,
         <span class="hljs-attr">"defaultFundingSourceNumber"</span>: <span class="hljs-string">"123456789"</span>,
-        <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
+        <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
       }
     ]
   }
@@ -7849,9 +7896,9 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"sourceApplicationCode"</span>: <span class="hljs-string">"Some String"</span>,
       <span class="hljs-attr">"sourceProjectReference"</span>: <span class="hljs-string">"Some String"</span>,
       <span class="hljs-attr">"projectCategory"</span>: <span class="hljs-string">"Some String"</span>,
-      <span class="hljs-attr">"sponsoredProject"</span>: <span class="hljs-literal">true</span>,
-      <span class="hljs-attr">"billingEnabled"</span>: <span class="hljs-literal">true</span>,
-      <span class="hljs-attr">"capitalizationEnabled"</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">"sponsoredProject"</span>: <span class="hljs-literal">false</span>,
+      <span class="hljs-attr">"billingEnabled"</span>: <span class="hljs-literal">false</span>,
+      <span class="hljs-attr">"capitalizationEnabled"</span>: <span class="hljs-literal">false</span>,
       <span class="hljs-attr">"templateProject"</span>: <span class="hljs-literal">true</span>,
       <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
       <span class="hljs-attr">"lastUpdateUserId"</span>: <span class="hljs-string">"auserid"</span>,
@@ -8158,7 +8205,7 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"taskStartDate"</span>: <span class="hljs-string">LocalDate</span>,
       <span class="hljs-attr">"taskFinishDate"</span>: <span class="hljs-string">LocalDate</span>,
       <span class="hljs-attr">"billable"</span>: <span class="hljs-literal">true</span>,
-      <span class="hljs-attr">"chargeable"</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">"chargeable"</span>: <span class="hljs-literal">false</span>,
       <span class="hljs-attr">"taskLevel"</span>: <span class="hljs-number">123</span>,
       <span class="hljs-attr">"executionDisplaySequence"</span>: <span class="hljs-number">123</span>,
       <span class="hljs-attr">"lowestLevelTask"</span>: <span class="hljs-literal">true</span>,
@@ -8166,7 +8213,7 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"topTaskId"</span>: <span class="hljs-string">"300000002763626"</span>,
       <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
       <span class="hljs-attr">"lastUpdatedBy"</span>: <span class="hljs-string">"auserid"</span>,
-      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
+      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
     }
   }
 }
@@ -8267,7 +8314,7 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"description"</span>: <span class="hljs-string">"xyz789"</span>,
         <span class="hljs-attr">"taskStartDate"</span>: <span class="hljs-string">LocalDate</span>,
         <span class="hljs-attr">"taskFinishDate"</span>: <span class="hljs-string">LocalDate</span>,
-        <span class="hljs-attr">"billable"</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">"billable"</span>: <span class="hljs-literal">false</span>,
         <span class="hljs-attr">"chargeable"</span>: <span class="hljs-literal">true</span>,
         <span class="hljs-attr">"taskLevel"</span>: <span class="hljs-number">123</span>,
         <span class="hljs-attr">"executionDisplaySequence"</span>: <span class="hljs-number">123</span>,
@@ -8276,7 +8323,7 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"topTaskId"</span>: <span class="hljs-string">"300000002763626"</span>,
         <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
         <span class="hljs-attr">"lastUpdatedBy"</span>: <span class="hljs-string">"auserid"</span>,
-        <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
+        <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
       }
     ]
   }
@@ -8377,8 +8424,8 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"description"</span>: <span class="hljs-string">"xyz789"</span>,
       <span class="hljs-attr">"taskStartDate"</span>: <span class="hljs-string">LocalDate</span>,
       <span class="hljs-attr">"taskFinishDate"</span>: <span class="hljs-string">LocalDate</span>,
-      <span class="hljs-attr">"billable"</span>: <span class="hljs-literal">false</span>,
-      <span class="hljs-attr">"chargeable"</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">"billable"</span>: <span class="hljs-literal">true</span>,
+      <span class="hljs-attr">"chargeable"</span>: <span class="hljs-literal">false</span>,
       <span class="hljs-attr">"taskLevel"</span>: <span class="hljs-number">123</span>,
       <span class="hljs-attr">"executionDisplaySequence"</span>: <span class="hljs-number">123</span>,
       <span class="hljs-attr">"lowestLevelTask"</span>: <span class="hljs-literal">false</span>,
@@ -8386,7 +8433,7 @@ http://localhost:3503/graphql
       <span class="hljs-attr">"topTaskId"</span>: <span class="hljs-string">"300000002763626"</span>,
       <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
       <span class="hljs-attr">"lastUpdatedBy"</span>: <span class="hljs-string">"auserid"</span>,
-      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
+      <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
     }
   }
 }
@@ -8598,8 +8645,8 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"description"</span>: <span class="hljs-string">"xyz789"</span>,
         <span class="hljs-attr">"taskStartDate"</span>: <span class="hljs-string">LocalDate</span>,
         <span class="hljs-attr">"taskFinishDate"</span>: <span class="hljs-string">LocalDate</span>,
-        <span class="hljs-attr">"billable"</span>: <span class="hljs-literal">false</span>,
-        <span class="hljs-attr">"chargeable"</span>: <span class="hljs-literal">false</span>,
+        <span class="hljs-attr">"billable"</span>: <span class="hljs-literal">true</span>,
+        <span class="hljs-attr">"chargeable"</span>: <span class="hljs-literal">true</span>,
         <span class="hljs-attr">"taskLevel"</span>: <span class="hljs-number">123</span>,
         <span class="hljs-attr">"executionDisplaySequence"</span>: <span class="hljs-number">123</span>,
         <span class="hljs-attr">"lowestLevelTask"</span>: <span class="hljs-literal">false</span>,
@@ -8607,7 +8654,7 @@ http://localhost:3503/graphql
         <span class="hljs-attr">"topTaskId"</span>: <span class="hljs-string">"300000002763626"</span>,
         <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
         <span class="hljs-attr">"lastUpdatedBy"</span>: <span class="hljs-string">"auserid"</span>,
-        <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
+        <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
       }
     ]
   }
@@ -8753,23 +8800,24 @@ http://localhost:3503/graphql
                   <p>For validating combinations, the following two operations are provided, differing only in their input format.</p>
                   <ul>
                     <li>
-                      <a href="#operation-glchartsegmentsvalidate-Queries"><code>glChartSegmentsValidate</code></a>
+                      <a href="#operation-glvalidatechartsegments-Queries"><code>glValidateChartSegments</code></a>
                     </li>
                     <li>
-                      <a href="#operation-glchartstringvalidate-Queries"><code>glChartstringValidate</code></a>
+                      <a href="#operation-glvalidatechartstring-Queries"><code>glValidateChartstring</code></a>
                     </li>
                   </ul>
                   <h4 id="managed-project-cost-entries-ppmpoet">Managed Project Cost Entries (PPM/POET)</h4>
                   <p>In addition to the standard GL-type of transaction which aligns with the KFS general ledger, Oracle Financials also utilizes a sub-ledger for tracking costs against managed projects. This loosely matches contracts and grants (award-based) accounts from KFS, but PPM (Project and Portfolio Management) encompasses more than that.</p>
                   <p>For expenses (or income) which are to be recorded against these managed projects, the expense must be recorded in the sub-ledger first, using a different set of chartstring values. This interface allows you to provide both GL and PPM sub-ledger transactions in the same payload. (Any attempt to record transactions against a managed project directly (using GL segments) will be rejected.)</p>
-                  <p>For PPM, you must use a different set of input strings on the journal line, utilizing the 4 fields below:</p>
+                  <p>For PPM, you must use a different set of input strings on the journal line, utilizing the 4 fields below (all required):</p>
                   <ul>
                     <li><code>p</code>roject</li>
-                    <li><code>o</code>rganization (same as financial department)</li>
-                    <li><code>e</code>xpenditureType</li>
+                    <li><code>o</code>rganization (same values as <code>ErpFinancialDepartment</code>)</li>
+                    <li><code>e</code>xpenditureType (same values as <code>ErpAccount</code>)</li>
                     <li><code>t</code>ask</li>
                   </ul>
-                  <p>There are also the following two. For API-based use, the framework will pull the correct award and funding source for any sponsored projects. For file-based submissions, the default values must be included by querying from the `ppmProject</p>
+                  <p>Tasks are child records to each project. You can obtain the list of valid tasks for any project by referencing the <code>PpmProject.tasks</code> property.</p>
+                  <p>There are also the two segments listed below. For API-based use, the framework will pull the correct award and funding source for any sponsored projects. For file-based submissions, the default values must be included by querying from the <code>ppmProject</code> operation. You can check whether you need to include these by referencing the <code>sponsoredProject</code> property on the <code>PpmProject</code>.</p>
                   <ul>
                     <li>award (only for sponsored projects)</li>
                     <li>fundingSource (only for sponsored projects)</li>
@@ -8793,6 +8841,19 @@ http://localhost:3503/graphql
                   <p>Unlike the use of the KFS ledger, the Oracle Financials general ledger will be a thin ledger. This means that the level of detail that is allowed to be loaded into the ledger will be limited to summary level information. It is required that you summarize data down as much as possible to the chartstring segments while being able to retain a link to the source of the transactions. (E.g., an order number, batch number, or a transaction date) Submitting lines for each source line item in an external billing system will not be allowed. Failure to summarize data to an acceptable level will result in loss of API or journal upload access.</p>
                   <h4 id="journal-balancing">Journal Balancing</h4>
                   <p>As with the KFS ledger, journal payloads must balance. (debit = credits) Each API payload is a single journal (document number in KFS).</p>
+                  <p>While lines with <code>glSegments</code> and <code>ppmSegments</code> are posted to different ledgers, we can balance across them when creating journals. Offset entries are required by Oracle to keep the GL in balance until sub-ledger accounting processes execute. These will be created by the integration framework for you and applied to a central clearing location outside of your department&#39;s cost center.</p>
+                  <h4 id="basic-use">Basic Use</h4>
+                  <ol>
+                    <li>Call the operation (<code>glJournalRequest</code>) providing a data payload with the proper structure. (See
+                      <a href="#definition-GlJournalRequestInput"><code>GlJournalRequestInput</code></a>)</li>
+                    <li>GraphQL Server will validate content format and reject if invalid.</li>
+                    <li>API Server will perform request-specific validation against a local copy of Oracle ERP data.</li>
+                    <li>A failure in either of these initial validations will result in an error response with no request being generated.</li>
+                    <li>Passing validation will save the request to allow for pickup by the integration platform for processing.</li>
+                    <li>A request tracking ID will be generated and returned to allow for the consumer to check on the status of the request and obtain results when completed.</li>
+                    <li>At a later time, use the generated request tracking ID against the
+                      <a href="#operation-gljournalrequeststatus-Queries"><code>glJournalRequestStatus</code></a> operation to determine if the request was processed successfully</li>
+                  </ol>
                 </section>
               </div>
             </div>
@@ -9106,7 +9167,7 @@ http://localhost:3503/graphql
                   <html>
                   <head></head>
                   <body><pre><code class="hljs language-json">{
-  <span class="hljs-attr">"requestId"</span>: <span class="hljs-string">"5898891a-9cf1-4209-b4f7-4bede1a3c5a9"</span>,
+  <span class="hljs-attr">"requestId"</span>: <span class="hljs-string">"8bfbf94e-5297-4efa-ae9f-20f32abdfe24"</span>,
   <span class="hljs-attr">"consumerId"</span>: <span class="hljs-string">"Some String"</span>,
   <span class="hljs-attr">"consumerTrackingId"</span>: <span class="hljs-string">"Some String"</span>,
   <span class="hljs-attr">"consumerReferenceId"</span>: <span class="hljs-string">"Some String"</span>,
@@ -9225,7 +9286,7 @@ http://localhost:3503/graphql
                   <h5>Example</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-gql"><span class="hljs-symbol"><span class="hljs-literal">true</span></span>
+                  <body><pre><code class="hljs language-gql"><span class="hljs-symbol"><span class="hljs-literal">false</span></span>
 </code></pre> </body>
                   </html>
                 </section>
@@ -9380,7 +9441,7 @@ http://localhost:3503/graphql
                   <h5>Example</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-gql"><span class="hljs-symbol">2021-08-11T16:13:22.744Z</span>
+                  <body><pre><code class="hljs language-gql"><span class="hljs-symbol">2021-08-25T17:33:06.876Z</span>
 </code></pre> </body>
                   </html>
                 </section>
@@ -9471,13 +9532,13 @@ http://localhost:3503/graphql
                   <html>
                   <head></head>
                   <body><pre><code class="hljs language-json">{
-  <span class="hljs-attr">"eq"</span>: <span class="hljs-string">"2022-02-11T17:13:22.744Z"</span>,
-  <span class="hljs-attr">"ne"</span>: <span class="hljs-string">"2022-02-11T17:13:22.744Z"</span>,
-  <span class="hljs-attr">"le"</span>: <span class="hljs-string">"2021-08-11T16:13:22.744Z"</span>,
-  <span class="hljs-attr">"lt"</span>: <span class="hljs-string">"2022-02-11T17:13:22.744Z"</span>,
-  <span class="hljs-attr">"ge"</span>: <span class="hljs-string">"2022-02-11T17:13:22.744Z"</span>,
-  <span class="hljs-attr">"gt"</span>: <span class="hljs-string">"2022-02-11T17:13:22.744Z"</span>,
-  <span class="hljs-attr">"between"</span>: [<span class="hljs-string">"2021-08-11T16:13:22.744Z"</span>]
+  <span class="hljs-attr">"eq"</span>: <span class="hljs-string">"2022-02-25T18:33:06.876Z"</span>,
+  <span class="hljs-attr">"ne"</span>: <span class="hljs-string">"2021-08-25T17:33:06.876Z"</span>,
+  <span class="hljs-attr">"le"</span>: <span class="hljs-string">"2022-02-25T18:33:06.876Z"</span>,
+  <span class="hljs-attr">"lt"</span>: <span class="hljs-string">"2022-02-25T18:33:06.876Z"</span>,
+  <span class="hljs-attr">"ge"</span>: <span class="hljs-string">"2022-02-25T18:33:06.876Z"</span>,
+  <span class="hljs-attr">"gt"</span>: <span class="hljs-string">"2021-08-25T17:33:06.876Z"</span>,
+  <span class="hljs-attr">"between"</span>: [<span class="hljs-string">"2021-08-25T17:33:06.876Z"</span>]
 }
 </code></pre> </body>
                   </html>
@@ -9706,18 +9767,18 @@ http://localhost:3503/graphql
   <span class="hljs-attr">"code"</span>: <span class="hljs-string">"508210"</span>,
   <span class="hljs-attr">"id"</span>: <span class="hljs-string">"300000002763626"</span>,
   <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Some String"</span>,
-  <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">true</span>,
   <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">LocalDate</span>,
   <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">LocalDate</span>,
   <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">true</span>,
-  <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">true</span>,
   <span class="hljs-attr">"sortOrder"</span>: <span class="hljs-number">123</span>,
   <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
   <span class="hljs-attr">"lastUpdateUserId"</span>: <span class="hljs-string">"auserid"</span>,
   <span class="hljs-attr">"parentCode"</span>: <span class="hljs-string">"508210"</span>,
   <span class="hljs-attr">"parent"</span>: <span class="hljs-string">ErpAccount</span>,
   <span class="hljs-attr">"children"</span>: [<span class="hljs-string">ErpAccount</span>],
-  <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">123</span>,
+  <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">987</span>,
   <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"xyz789"</span>,
   <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>,
   <span class="hljs-attr">"purposeRequired"</span>: <span class="hljs-literal">true</span>
@@ -10123,11 +10184,11 @@ http://localhost:3503/graphql
   <span class="hljs-attr">"code"</span>: <span class="hljs-string">"510139"</span>,
   <span class="hljs-attr">"id"</span>: <span class="hljs-string">"300000002763626"</span>,
   <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Some String"</span>,
-  <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">false</span>,
   <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">LocalDate</span>,
   <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">LocalDate</span>,
-  <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">true</span>,
-  <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">true</span>,
   <span class="hljs-attr">"sortOrder"</span>: <span class="hljs-number">123</span>,
   <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
   <span class="hljs-attr">"lastUpdateUserId"</span>: <span class="hljs-string">"auserid"</span>,
@@ -10694,7 +10755,7 @@ http://localhost:3503/graphql
   <span class="hljs-attr">"code"</span>: <span class="hljs-string">"1311"</span>,
   <span class="hljs-attr">"id"</span>: <span class="hljs-string">"300000002763626"</span>,
   <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Some String"</span>,
-  <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">true</span>,
   <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">LocalDate</span>,
   <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">LocalDate</span>,
   <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">true</span>,
@@ -10707,7 +10768,7 @@ http://localhost:3503/graphql
   <span class="hljs-attr">"children"</span>: [<span class="hljs-string">ErpEntity</span>],
   <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">123</span>,
   <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"xyz789"</span>,
-  <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
+  <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
 }
 </code></pre> </body>
                   </html>
@@ -11086,10 +11147,10 @@ http://localhost:3503/graphql
   <span class="hljs-attr">"code"</span>: <span class="hljs-string">"9300051"</span>,
   <span class="hljs-attr">"id"</span>: <span class="hljs-string">"300000002763626"</span>,
   <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Some String"</span>,
-  <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">true</span>,
   <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">LocalDate</span>,
   <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">LocalDate</span>,
-  <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">true</span>,
   <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">true</span>,
   <span class="hljs-attr">"sortOrder"</span>: <span class="hljs-number">123</span>,
   <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
@@ -11097,11 +11158,11 @@ http://localhost:3503/graphql
   <span class="hljs-attr">"parentCode"</span>: <span class="hljs-string">"9300051"</span>,
   <span class="hljs-attr">"parent"</span>: <span class="hljs-string">ErpFinancialDepartment</span>,
   <span class="hljs-attr">"children"</span>: [<span class="hljs-string">ErpFinancialDepartment</span>],
-  <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">123</span>,
+  <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">987</span>,
   <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"xyz789"</span>,
   <span class="hljs-attr">"departmentType"</span>: <span class="hljs-string">ErpDepartmentTypeCode</span>,
   <span class="hljs-attr">"fiscalOfficerName"</span>: <span class="hljs-string">"Some String"</span>,
-  <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
+  <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
 }
 </code></pre> </body>
                   </html>
@@ -11488,10 +11549,10 @@ http://localhost:3503/graphql
   <span class="hljs-attr">"code"</span>: <span class="hljs-string">"63031"</span>,
   <span class="hljs-attr">"id"</span>: <span class="hljs-string">"300000002763626"</span>,
   <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Some String"</span>,
-  <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">true</span>,
   <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">LocalDate</span>,
   <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">LocalDate</span>,
-  <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">false</span>,
   <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">true</span>,
   <span class="hljs-attr">"sortOrder"</span>: <span class="hljs-number">123</span>,
   <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
@@ -11807,8 +11868,8 @@ http://localhost:3503/graphql
   <span class="hljs-attr">"addressLine2"</span>: <span class="hljs-string">ScmAddressLine</span>,
   <span class="hljs-attr">"addressLine3"</span>: <span class="hljs-string">ScmAddressLine</span>,
   <span class="hljs-attr">"addressLine4"</span>: <span class="hljs-string">ScmAddressLine</span>,
-  <span class="hljs-attr">"addressPurposeOrdering"</span>: <span class="hljs-literal">true</span>,
-  <span class="hljs-attr">"addressPurposeRemitTo"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">"addressPurposeOrdering"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">"addressPurposeRemitTo"</span>: <span class="hljs-literal">true</span>,
   <span class="hljs-attr">"city"</span>: <span class="hljs-string">CityName</span>,
   <span class="hljs-attr">"postalCode"</span>: <span class="hljs-string">ErpPostalCode</span>,
   <span class="hljs-attr">"countryName"</span>: <span class="hljs-string">"Some String"</span>,
@@ -12116,10 +12177,10 @@ http://localhost:3503/graphql
   <span class="hljs-attr">"code"</span>: <span class="hljs-string">"G29"</span>,
   <span class="hljs-attr">"id"</span>: <span class="hljs-string">"300000002763626"</span>,
   <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Some String"</span>,
-  <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">true</span>,
   <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">LocalDate</span>,
   <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">LocalDate</span>,
-  <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">true</span>,
   <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">false</span>,
   <span class="hljs-attr">"sortOrder"</span>: <span class="hljs-number">123</span>,
   <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
@@ -12127,8 +12188,8 @@ http://localhost:3503/graphql
   <span class="hljs-attr">"parentCode"</span>: <span class="hljs-string">"G29"</span>,
   <span class="hljs-attr">"parent"</span>: <span class="hljs-string">ErpProgram</span>,
   <span class="hljs-attr">"children"</span>: [<span class="hljs-string">ErpProgram</span>],
-  <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">987</span>,
-  <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"abc123"</span>,
+  <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">123</span>,
+  <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"xyz789"</span>,
   <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
 }
 </code></pre> </body>
@@ -12509,11 +12570,11 @@ http://localhost:3503/graphql
   <span class="hljs-attr">"code"</span>: <span class="hljs-string">"CM00000039"</span>,
   <span class="hljs-attr">"id"</span>: <span class="hljs-string">"300000002763626"</span>,
   <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Some String"</span>,
-  <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">true</span>,
-  <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">"2021-08-11T16:13:22.744Z"</span>,
-  <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">"2022-02-11T17:13:22.744Z"</span>,
-  <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">false</span>,
-  <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">"2022-02-25T18:33:06.876Z"</span>,
+  <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">"2021-08-25T17:33:06.876Z"</span>,
+  <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">true</span>,
   <span class="hljs-attr">"sortOrder"</span>: <span class="hljs-number">123</span>,
   <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
   <span class="hljs-attr">"lastUpdateUserId"</span>: <span class="hljs-string">"auserid"</span>,
@@ -12521,10 +12582,10 @@ http://localhost:3503/graphql
   <span class="hljs-attr">"parent"</span>: <span class="hljs-string">ErpProject</span>,
   <span class="hljs-attr">"children"</span>: [<span class="hljs-string">ErpProject</span>],
   <span class="hljs-attr">"hierarchyDepth"</span>: <span class="hljs-number">987</span>,
-  <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"abc123"</span>,
+  <span class="hljs-attr">"hierarchyLevel"</span>: <span class="hljs-string">"xyz789"</span>,
   <span class="hljs-attr">"isPpmProject"</span>: <span class="hljs-literal">false</span>,
   <span class="hljs-attr">"ppmProject"</span>: <span class="hljs-string">PpmProject</span>,
-  <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
+  <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
 }
 </code></pre> </body>
                   </html>
@@ -12872,11 +12933,11 @@ http://localhost:3503/graphql
   <span class="hljs-attr">"code"</span>: <span class="hljs-string">"44"</span>,
   <span class="hljs-attr">"id"</span>: <span class="hljs-string">"300000002763626"</span>,
   <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Some String"</span>,
-  <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">false</span>,
   <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">LocalDate</span>,
   <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">LocalDate</span>,
-  <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">true</span>,
-  <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"summaryOnly"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">"securityEnabled"</span>: <span class="hljs-literal">false</span>,
   <span class="hljs-attr">"sortOrder"</span>: <span class="hljs-number">123</span>,
   <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
   <span class="hljs-attr">"lastUpdateUserId"</span>: <span class="hljs-string">"auserid"</span>,
@@ -13121,7 +13182,7 @@ http://localhost:3503/graphql
                   <h5>Example</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-gql"><span class="hljs-symbol">123.45</span>
+                  <body><pre><code class="hljs language-gql"><span class="hljs-symbol">987.65</span>
 </code></pre> </body>
                   </html>
                 </section>
@@ -13205,13 +13266,13 @@ http://localhost:3503/graphql
                   <head></head>
                   <body><pre><code class="hljs language-json">{
   <span class="hljs-attr">"eq"</span>: <span class="hljs-number">987.65</span>,
-  <span class="hljs-attr">"ne"</span>: <span class="hljs-number">123.45</span>,
-  <span class="hljs-attr">"le"</span>: <span class="hljs-number">987.65</span>,
-  <span class="hljs-attr">"lt"</span>: <span class="hljs-number">123.45</span>,
+  <span class="hljs-attr">"ne"</span>: <span class="hljs-number">987.65</span>,
+  <span class="hljs-attr">"le"</span>: <span class="hljs-number">123.45</span>,
+  <span class="hljs-attr">"lt"</span>: <span class="hljs-number">987.65</span>,
   <span class="hljs-attr">"ge"</span>: <span class="hljs-number">987.65</span>,
   <span class="hljs-attr">"gt"</span>: <span class="hljs-number">123.45</span>,
-  <span class="hljs-attr">"between"</span>: [<span class="hljs-number">987.65</span>],
-  <span class="hljs-attr">"in"</span>: [<span class="hljs-number">123.45</span>]
+  <span class="hljs-attr">"between"</span>: [<span class="hljs-number">123.45</span>],
+  <span class="hljs-attr">"in"</span>: [<span class="hljs-number">987.65</span>]
 }
 </code></pre> </body>
                   </html>
@@ -13310,13 +13371,13 @@ http://localhost:3503/graphql
                   <body><pre><code class="hljs language-json">{
   <span class="hljs-attr">"aliasCode"</span>: <span class="hljs-string">"abc123"</span>,
   <span class="hljs-attr">"name"</span>: <span class="hljs-string">"xyz789"</span>,
-  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"abc123"</span>,
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"xyz789"</span>,
   <span class="hljs-attr">"combinationCodeId"</span>: <span class="hljs-string">"300000002763626"</span>,
-  <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">false</span>,
-  <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">"2021-08-11T16:13:22.744Z"</span>,
-  <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">"2022-02-11T17:13:22.744Z"</span>,
+  <span class="hljs-attr">"enabled"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">"2022-02-25T18:33:06.876Z"</span>,
+  <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">"2022-02-25T18:33:06.876Z"</span>,
   <span class="hljs-attr">"lastUpdateDate"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
-  <span class="hljs-attr">"lastUpdateUser"</span>: <span class="hljs-string">"xyz789"</span>,
+  <span class="hljs-attr">"lastUpdateUser"</span>: <span class="hljs-string">"abc123"</span>,
   <span class="hljs-attr">"glSegments"</span>: {
     <span class="hljs-attr">"entity"</span>: <span class="hljs-string">"1311"</span>,
     <span class="hljs-attr">"fund"</span>: <span class="hljs-string">"63031"</span>,
@@ -13887,10 +13948,10 @@ http://localhost:3503/graphql
   <span class="hljs-attr">"periodNumber"</span>: <span class="hljs-number">123</span>,
   <span class="hljs-attr">"periodStatus"</span>: <span class="hljs-string">"O"</span>,
   <span class="hljs-attr">"adjustmentPeriod"</span>: <span class="hljs-literal">true</span>,
-  <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">"2021-08-11T16:13:22.744Z"</span>,
-  <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">"2022-02-11T17:13:22.744Z"</span>,
-  <span class="hljs-attr">"yearStartDate"</span>: <span class="hljs-string">"2021-08-11T16:13:22.744Z"</span>,
-  <span class="hljs-attr">"quarterStartDate"</span>: <span class="hljs-string">"2022-02-11T17:13:22.744Z"</span>,
+  <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">"2021-08-25T17:33:06.876Z"</span>,
+  <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">"2022-02-25T18:33:06.876Z"</span>,
+  <span class="hljs-attr">"yearStartDate"</span>: <span class="hljs-string">"2021-08-25T17:33:06.876Z"</span>,
+  <span class="hljs-attr">"quarterStartDate"</span>: <span class="hljs-string">"2021-08-25T17:33:06.876Z"</span>,
   <span class="hljs-attr">"quarterNumber"</span>: <span class="hljs-number">123</span>,
   <span class="hljs-attr">"effectivePeriodNumber"</span>: <span class="hljs-number">123</span>,
   <span class="hljs-attr">"lastUpdateUserId"</span>: <span class="hljs-string">"auserid"</span>
@@ -14052,85 +14113,6 @@ http://localhost:3503/graphql
     <span class="hljs-attr">"totalResultCount"</span>: <span class="hljs-number">250</span>
   },
   <span class="hljs-attr">"data"</span>: [<span class="hljs-string">GlAccountingPeriod</span>]
-}
-</code></pre> </body>
-                  </html>
-                </section>
-              </div>
-            </div>
-          </div>
-          <div id="definition-GlChartSegmentsValidateOutput" class="definition panel" data-traverse-target="definition-GlChartSegmentsValidateOutput">
-            <div class="definition-tags">
-              <a class="label" href="#tag-types">Types</a>
-            </div>
-            <h2 class="panel-title">
-              <a name="/definitions/GlChartSegmentsValidateOutput"></a>
-              <p><code>GlChartSegmentsValidateOutput</code></p>
-            </h2>
-            <div class="doc-row">
-              <div class="doc-copy">
-                <section class="json-schema-description">
-                  <p>Return data structure when validating a set of GL segment values.</p>
-                  <p>The &quot;result&quot; property will contain the overall validation result and any error messages encountered during validation. If any errors occur during data parsing (formats/required values), that will be returned as a GraphQL error per the specification in a top-level &quot;errors&quot; property.</p>
-                  <p>The operation will complete any missing segments with their defaults and return them populated in the &quot;segments&quot; property as well as the &quot;completeChartstring&quot; property. Both of these are structured such that (if all properties requested) they could be included as accounting line or distribution data in other operations.</p>
-                </section>
-                <section class="json-schema-properties-blank">
-                  <table>
-                    <tr>
-                      <th>Field Name</th>
-                      <th>Description</th>
-                    </tr>
-                    <tr>
-                      <td data-property-name="validationResponse"> <code>validationResponse</code> -
-                        <a href="#definition-ValidationResponse"><code>ValidationResponse!</code></a>
-                      </td>
-                      <td> Validation result and error messages, if any. </td>
-                    </tr>
-                    <tr>
-                      <td data-property-name="segments"> <code>segments</code> -
-                        <a href="#definition-GlSegments"><code>GlSegments!</code></a>
-                      </td>
-                      <td> Fully populated object with the GL segments combination that was validated. </td>
-                    </tr>
-                    <tr>
-                      <td data-property-name="completeChartstring"> <code>completeChartstring</code> -
-                        <a href="#definition-GlSegmentString"><code>GlSegmentString</code></a>
-                      </td>
-                      <td> Full chartstring with the GL segments combination that was validated. </td>
-                    </tr>
-                    <tr>
-                      <td data-property-name="codeCombinationId"> <code>codeCombinationId</code> -
-                        <a href="#definition-Long"><code>Long</code></a>
-                      </td>
-                      <td> The "codeCombinationId" is an informational property only. If populated, it indicates that the validated combination of segment values was previously known to the financial system. Validity still needs to be checked, as chartstrings can be disabled or expire. However, segments which match an existing valid combination can not fail validation when posted to the financial system. </td>
-                    </tr>
-                  </table>
-                </section>
-              </div>
-              <div class="doc-examples">
-                <section>
-                  <h5>Example</h5>
-                  <html>
-                  <head></head>
-                  <body><pre><code class="hljs language-json">{
-  <span class="hljs-attr">"validationResponse"</span>: {
-    <span class="hljs-attr">"valid"</span>: <span class="hljs-literal">false</span>,
-    <span class="hljs-attr">"errorMessages"</span>: [
-      <span class="hljs-string">"Net Position Accounts are not allowed"</span>
-    ],
-    <span class="hljs-attr">"messageProperties"</span>: [
-      <span class="hljs-string">"journalLines[2].glSegments.account"</span>
-    ]
-  },
-  <span class="hljs-attr">"segments"</span>: {
-    <span class="hljs-attr">"entity"</span>: <span class="hljs-string">"1311"</span>,
-    <span class="hljs-attr">"fund"</span>: <span class="hljs-string">"63031"</span>,
-    <span class="hljs-attr">"department"</span>: <span class="hljs-string">"9300051"</span>,
-    <span class="hljs-attr">"account"</span>: <span class="hljs-string">"508210"</span>,
-    <span class="hljs-attr">"purpose"</span>: <span class="hljs-string">"44"</span>
-  },
-  <span class="hljs-attr">"completeChartstring"</span>: <span class="hljs-string">"1311-63031-9300051-508210-44-G29-CM00000039-510139-0000-000000-000000"</span>,
-  <span class="hljs-attr">"codeCombinationId"</span>: <span class="hljs-string">"300000002763626"</span>
 }
 </code></pre> </body>
                   </html>
@@ -15332,6 +15314,85 @@ http://localhost:3503/graphql
               </div>
             </div>
           </div>
+          <div id="definition-GlValidateChartSegmentsOutput" class="definition panel" data-traverse-target="definition-GlValidateChartSegmentsOutput">
+            <div class="definition-tags">
+              <a class="label" href="#tag-types">Types</a>
+            </div>
+            <h2 class="panel-title">
+              <a name="/definitions/GlValidateChartSegmentsOutput"></a>
+              <p><code>GlValidateChartSegmentsOutput</code></p>
+            </h2>
+            <div class="doc-row">
+              <div class="doc-copy">
+                <section class="json-schema-description">
+                  <p>Return data structure when validating a set of GL segment values.</p>
+                  <p>The &quot;result&quot; property will contain the overall validation result and any error messages encountered during validation. If any errors occur during data parsing (formats/required values), that will be returned as a GraphQL error per the specification in a top-level &quot;errors&quot; property.</p>
+                  <p>The operation will complete any missing segments with their defaults and return them populated in the &quot;segments&quot; property as well as the &quot;completeChartstring&quot; property. Both of these are structured such that (if all properties requested) they could be included as accounting line or distribution data in other operations.</p>
+                </section>
+                <section class="json-schema-properties-blank">
+                  <table>
+                    <tr>
+                      <th>Field Name</th>
+                      <th>Description</th>
+                    </tr>
+                    <tr>
+                      <td data-property-name="validationResponse"> <code>validationResponse</code> -
+                        <a href="#definition-ValidationResponse"><code>ValidationResponse!</code></a>
+                      </td>
+                      <td> Validation result and error messages, if any. </td>
+                    </tr>
+                    <tr>
+                      <td data-property-name="segments"> <code>segments</code> -
+                        <a href="#definition-GlSegments"><code>GlSegments!</code></a>
+                      </td>
+                      <td> Fully populated object with the GL segments combination that was validated. </td>
+                    </tr>
+                    <tr>
+                      <td data-property-name="completeChartstring"> <code>completeChartstring</code> -
+                        <a href="#definition-GlSegmentString"><code>GlSegmentString</code></a>
+                      </td>
+                      <td> Full chartstring with the GL segments combination that was validated. </td>
+                    </tr>
+                    <tr>
+                      <td data-property-name="codeCombinationId"> <code>codeCombinationId</code> -
+                        <a href="#definition-Long"><code>Long</code></a>
+                      </td>
+                      <td> The "codeCombinationId" is an informational property only. If populated, it indicates that the validated combination of segment values was previously known to the financial system. Validity still needs to be checked, as chartstrings can be disabled or expire. However, segments which match an existing valid combination can not fail validation when posted to the financial system. </td>
+                    </tr>
+                  </table>
+                </section>
+              </div>
+              <div class="doc-examples">
+                <section>
+                  <h5>Example</h5>
+                  <html>
+                  <head></head>
+                  <body><pre><code class="hljs language-json">{
+  <span class="hljs-attr">"validationResponse"</span>: {
+    <span class="hljs-attr">"valid"</span>: <span class="hljs-literal">false</span>,
+    <span class="hljs-attr">"errorMessages"</span>: [
+      <span class="hljs-string">"Net Position Accounts are not allowed"</span>
+    ],
+    <span class="hljs-attr">"messageProperties"</span>: [
+      <span class="hljs-string">"journalLines[2].glSegments.account"</span>
+    ]
+  },
+  <span class="hljs-attr">"segments"</span>: {
+    <span class="hljs-attr">"entity"</span>: <span class="hljs-string">"1311"</span>,
+    <span class="hljs-attr">"fund"</span>: <span class="hljs-string">"63031"</span>,
+    <span class="hljs-attr">"department"</span>: <span class="hljs-string">"9300051"</span>,
+    <span class="hljs-attr">"account"</span>: <span class="hljs-string">"508210"</span>,
+    <span class="hljs-attr">"purpose"</span>: <span class="hljs-string">"44"</span>
+  },
+  <span class="hljs-attr">"completeChartstring"</span>: <span class="hljs-string">"1311-63031-9300051-508210-44-G29-CM00000039-510139-0000-000000-000000"</span>,
+  <span class="hljs-attr">"codeCombinationId"</span>: <span class="hljs-string">"300000002763626"</span>
+}
+</code></pre> </body>
+                  </html>
+                </section>
+              </div>
+            </div>
+          </div>
           <div id="definition-Int" class="definition panel" data-traverse-target="definition-Int">
             <div class="definition-tags">
               <a class="label" href="#tag-types">Types</a>
@@ -15351,7 +15412,7 @@ http://localhost:3503/graphql
                   <h5>Example</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-gql"><span class="hljs-symbol">123</span>
+                  <body><pre><code class="hljs language-gql"><span class="hljs-symbol">987</span>
 </code></pre> </body>
                   </html>
                 </section>
@@ -15434,11 +15495,11 @@ http://localhost:3503/graphql
                   <html>
                   <head></head>
                   <body><pre><code class="hljs language-json">{
-  <span class="hljs-attr">"eq"</span>: <span class="hljs-number">987</span>,
+  <span class="hljs-attr">"eq"</span>: <span class="hljs-number">123</span>,
   <span class="hljs-attr">"ne"</span>: <span class="hljs-number">123</span>,
-  <span class="hljs-attr">"le"</span>: <span class="hljs-number">987</span>,
-  <span class="hljs-attr">"lt"</span>: <span class="hljs-number">123</span>,
-  <span class="hljs-attr">"ge"</span>: <span class="hljs-number">123</span>,
+  <span class="hljs-attr">"le"</span>: <span class="hljs-number">123</span>,
+  <span class="hljs-attr">"lt"</span>: <span class="hljs-number">987</span>,
+  <span class="hljs-attr">"ge"</span>: <span class="hljs-number">987</span>,
   <span class="hljs-attr">"gt"</span>: <span class="hljs-number">123</span>,
   <span class="hljs-attr">"between"</span>: [<span class="hljs-number">1</span>, <span class="hljs-number">100</span>],
   <span class="hljs-attr">"in"</span>: [<span class="hljs-number">123</span>]
@@ -15634,7 +15695,7 @@ http://localhost:3503/graphql
                   <html>
                   <head></head>
                   <body><pre><code class="hljs language-json">{
-  <span class="hljs-attr">"accountFound"</span>: <span class="hljs-literal">true</span>,
+  <span class="hljs-attr">"accountFound"</span>: <span class="hljs-literal">false</span>,
   <span class="hljs-attr">"chart"</span>: <span class="hljs-string">KfsChartCode</span>,
   <span class="hljs-attr">"account"</span>: <span class="hljs-string">KfsAccountNumber</span>,
   <span class="hljs-attr">"costCenterType"</span>: <span class="hljs-string">ErpCostCenterType</span>,
@@ -16471,6 +16532,21 @@ http://localhost:3503/graphql
             </h2>
             <div class="doc-row">
               <div class="doc-copy">
+                <section class="json-schema-description">
+                  <p>The Award Number identifies the number assigned to an award containing funding activities.</p>
+                  <p>
+                    <strong>Roll-up relationship to the new Chart of Accounts in the General Ledger:</strong>
+                  </p>
+                  <ul>
+                    <li>The Award Number value will NOT roll up to the Chart of Accounts. Award Number values will only be maintained in the PPM module.</li>
+                  </ul>
+                  <p>
+                    <strong>Examples:</strong>
+                  </p>
+                  <ul>
+                    <li>Award Number values will be Oracle-generated</li>
+                  </ul>
+                </section>
                 <section class="json-schema-properties-blank">
                   <table>
                     <tr>
@@ -16742,6 +16818,9 @@ http://localhost:3503/graphql
             </h2>
             <div class="doc-row">
               <div class="doc-copy">
+                <section class="json-schema-description">
+                  <p>Wrapper object for search results for PpmAward</p>
+                </section>
                 <section class="json-schema-properties-blank">
                   <table>
                     <tr>
@@ -17076,6 +17155,25 @@ http://localhost:3503/graphql
             </h2>
             <div class="doc-row">
               <div class="doc-copy">
+                <section class="json-schema-description">
+                  <p>The Expenditure Type identifies the natural classification of the expense transaction being recorded.</p>
+                  <p>
+                    <strong>Roll-up relationship to the Chart of Accounts in the General Ledger:</strong>
+                  </p>
+                  <ul>
+                    <li>The Expenditure Type value will roll up to the (Natural) Account segment in the Chart of Accounts.</li>
+                    <li>The first 6 characters of the Expenditure Type value will correspond with the (Natural) Account value it rolls up to.</li>
+                  </ul>
+                  <p>
+                    <strong>Examples:</strong>
+                  </p>
+                  <ul>
+                    <li>Salary</li>
+                    <li>Fringe Benefits</li>
+                    <li>Consulting Services</li>
+                    <li>Travel</li>
+                  </ul>
+                </section>
                 <section class="json-schema-properties-blank">
                   <table>
                     <tr>
@@ -17171,14 +17269,14 @@ http://localhost:3503/graphql
                   <body><pre><code class="hljs language-json">{
   <span class="hljs-attr">"id"</span>: <span class="hljs-string">"300000002763626"</span>,
   <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Some String"</span>,
-  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"xyz789"</span>,
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"abc123"</span>,
   <span class="hljs-attr">"startDate"</span>: <span class="hljs-string">LocalDate</span>,
   <span class="hljs-attr">"endDate"</span>: <span class="hljs-string">LocalDate</span>,
   <span class="hljs-attr">"expenditureCategory"</span>: <span class="hljs-string">"Some String"</span>,
   <span class="hljs-attr">"revenueCategoryCode"</span>: <span class="hljs-string">"Some String"</span>,
   <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
   <span class="hljs-attr">"lastUpdatedBy"</span>: <span class="hljs-string">"auserid"</span>,
-  <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
+  <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
 }
 </code></pre> </body>
                   </html>
@@ -17373,6 +17471,27 @@ http://localhost:3503/graphql
             </h2>
             <div class="doc-row">
               <div class="doc-copy">
+                <section class="json-schema-description">
+                  <p>The Funding Source identifies the name of the sponsor for the external funding source.</p>
+                  <p>
+                    <strong>Roll-up relationship to the new Chart of Accounts in the General Ledger:</strong>
+                  </p>
+                  <ul>
+                    <li>Funding Source values will only be used in the PPM module.</li>
+                    <li>The Funding Source will map to the correct value for the Fund segment in the CoA
+                      <ul>
+                        <li>(i.e In the examples below, NIH and USAID would map to the Federal Fund value in the Chart of Accounts)</li>
+                      </ul>
+                    </li>
+                  </ul>
+                  <p>
+                    <strong>Examples:</strong>
+                  </p>
+                  <ul>
+                    <li>National Institute of Health (NIH)</li>
+                    <li>U.S. Agency for International Development (USAID)</li>
+                  </ul>
+                </section>
                 <section class="json-schema-properties-blank">
                   <table>
                     <tr>
@@ -17441,8 +17560,6 @@ http://localhost:3503/graphql
                         <p>Returns whether this PpmFundingSource is valid to use on transactional documents for the given accounting date. If not provided, the date will be defaulted to the current date.</p>
                         <p>To be eligible for use, the PpmFundingSource must:</p>
                         <ul>
-                          <li>Have a projectStatusCode of ACTIVE</li>
-                          <li>Not be a templateProject</li>
                           <li>Have a fundingSourceFromDate and fundingSourceToDate range which includes the given accountingDate</li>
                         </ul>
                       </td>
@@ -17474,10 +17591,10 @@ http://localhost:3503/graphql
   <span class="hljs-attr">"description"</span>: <span class="hljs-string">"Some String"</span>,
   <span class="hljs-attr">"fundingSourceFromDate"</span>: <span class="hljs-string">LocalDate</span>,
   <span class="hljs-attr">"fundingSourceToDate"</span>: <span class="hljs-string">LocalDate</span>,
-  <span class="hljs-attr">"fundingSourceTypeCode"</span>: <span class="hljs-string">"xyz789"</span>,
+  <span class="hljs-attr">"fundingSourceTypeCode"</span>: <span class="hljs-string">"abc123"</span>,
   <span class="hljs-attr">"lastUpdateDateTime"</span>: <span class="hljs-string">"2016-10-07T01:08:03.420Z"</span>,
   <span class="hljs-attr">"lastUpdatedBy"</span>: <span class="hljs-string">"auserid"</span>,
-  <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">false</span>
+  <span class="hljs-attr">"eligibleForUse"</span>: <span class="hljs-literal">true</span>
 }
 </code></pre> </body>
                   </html>
@@ -17597,6 +17714,9 @@ http://localhost:3503/graphql
             </h2>
             <div class="doc-row">
               <div class="doc-copy">
+                <section class="json-schema-description">
+                  <p>Wrapper object for search results for PpmFundingSource</p>
+                </section>
                 <section class="json-schema-properties-blank">
                   <table>
                     <tr>
@@ -17650,6 +17770,22 @@ http://localhost:3503/graphql
             </h2>
             <div class="doc-row">
               <div class="doc-copy">
+                <section class="json-schema-description">
+                  <p>The Expenditure Organization identifies the organization that is incurring the expense and revenue. This may NOT be the same as the organization that owns the project.</p>
+                  <p>
+                    <strong>Roll-up relationship to the new Chart of Accounts in the General Ledger:</strong>
+                  </p>
+                  <ul>
+                    <li>The Expenditure Organization value will roll up to the Financial Department segment of the Chart of Accounts.</li>
+                  </ul>
+                  <p>
+                    <strong>Examples:</strong>
+                  </p>
+                  <ul>
+                    <li>Computer Science</li>
+                    <li>Plant Sciences</li>
+                  </ul>
+                </section>
                 <section class="json-schema-properties-blank">
                   <table>
                     <tr>
@@ -17660,7 +17796,7 @@ http://localhost:3503/graphql
                       <td data-property-name="id"> <code>id</code> -
                         <a href="#definition-Long"><code>Long!</code></a>
                       </td>
-                      <td> Organization ID: Unique identifier of the Organization. </td>
+                      <td> Organization ID: Unique identifier of the Organization. Internal to Oracle. </td>
                     </tr>
                     <tr>
                       <td data-property-name="name"> <code>name</code> -
@@ -17872,6 +18008,24 @@ http://localhost:3503/graphql
             </h2>
             <div class="doc-row">
               <div class="doc-copy">
+                <section class="json-schema-description">
+                  <p>The Project identifies the planned work or activity to be completed over a period of time and intended to achieve a particular goal.</p>
+                  <p>
+                    <strong>Roll-up relationship to the new Chart of Accounts (CoA) in the General Ledger:</strong>
+                  </p>
+                  <ul>
+                    <li>The POET(AF) Project value will roll up to the Project segment of the Chart of Accounts.</li>
+                    <li>PPM Project values and CoA Project segment values will be the same</li>
+                  </ul>
+                  <p>
+                    <strong>Examples:</strong>
+                  </p>
+                  <ul>
+                    <li>Capital Projects</li>
+                    <li>Sponsored Projects</li>
+                    <li>Faculty Projects</li>
+                  </ul>
+                </section>
                 <section class="json-schema-properties-blank">
                   <table>
                     <tr>
@@ -17882,13 +18036,13 @@ http://localhost:3503/graphql
                       <td data-property-name="id"> <code>id</code> -
                         <a href="#definition-Long"><code>Long!</code></a>
                       </td>
-                      <td> Project ID: Unique identifier of the project. </td>
+                      <td> Project ID: Unique identifier of the project. Internal to Oracle. </td>
                     </tr>
                     <tr>
                       <td data-property-name="projectNumber"> <code>projectNumber</code> -
                         <a href="#definition-PpmProjectNumber"><code>PpmProjectNumber!</code></a>
                       </td>
-                      <td> Project Number: Number of the project that is being created. </td>
+                      <td> Project Number: Number of the project that is being created. This will match the GL Project used to record costs to the ledger. </td>
                     </tr>
                     <tr>
                       <td data-property-name="name"> <code>name</code> -
@@ -18037,13 +18191,13 @@ http://localhost:3503/graphql
                       <td data-property-name="defaultAwardNumber"> <code>defaultAwardNumber</code> -
                         <a href="#definition-PpmAwardNumber"><code>PpmAwardNumber</code></a>
                       </td>
-                      <td> </td>
+                      <td> For sponsored projects, the default award number that will be expensed if left off of the journal line or distribution. </td>
                     </tr>
                     <tr>
                       <td data-property-name="defaultFundingSourceNumber"> <code>defaultFundingSourceNumber</code> -
                         <a href="#definition-PpmFundingSourceNumber"><code>PpmFundingSourceNumber</code></a>
                       </td>
-                      <td> </td>
+                      <td> For sponsored projects, the default funding source that will be expensed if left off of the journal line or distribution. </td>
                     </tr>
                     <tr>
                       <td data-property-name="eligibleForUse"> <code>eligibleForUse</code> -
@@ -18095,7 +18249,7 @@ http://localhost:3503/graphql
   <span class="hljs-attr">"sourceApplicationCode"</span>: <span class="hljs-string">"Some String"</span>,
   <span class="hljs-attr">"sourceProjectReference"</span>: <span class="hljs-string">"Some String"</span>,
   <span class="hljs-attr">"projectCategory"</span>: <span class="hljs-string">"Some String"</span>,
-  <span class="hljs-attr">"sponsoredProject"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">"sponsoredProject"</span>: <span class="hljs-literal">true</span>,
   <span class="hljs-attr">"billingEnabled"</span>: <span class="hljs-literal">true</span>,
   <span class="hljs-attr">"capitalizationEnabled"</span>: <span class="hljs-literal">true</span>,
   <span class="hljs-attr">"templateProject"</span>: <span class="hljs-literal">false</span>,
@@ -18568,7 +18722,22 @@ http://localhost:3503/graphql
             <div class="doc-row">
               <div class="doc-copy">
                 <section class="json-schema-description">
-                  <p>Represents a component of work within the project.</p>
+                  <p>The Task identifies the activities used to further breakdown a PPM project. Every project MUST have at least one Task. The number of tasks will vary by type of project.</p>
+                  <p>
+                    <strong>Roll-up relationship to the new Chart of Accounts in the General Ledger:</strong>
+                  </p>
+                  <ul>
+                    <li>The Task value will NOT roll up to the Chart of Accounts. Task values will only be used in the PPM module.</li>
+                    <li>Internal rules within the Oracle PPM module will be used to map the task to components of the GL Chart of Accounts which are not directly mapped to other components of the POET(AF) segments.</li>
+                  </ul>
+                  <p>
+                    <strong>Examples:</strong>
+                  </p>
+                  <ul>
+                    <li>Design</li>
+                    <li>Construction</li>
+                    <li>Data Gathering &amp; Analysis</li>
+                  </ul>
                 </section>
                 <section class="json-schema-properties-blank">
                   <table>
@@ -18675,7 +18844,7 @@ http://localhost:3503/graphql
                         <p>To be eligible for use, the PpmTask must:</p>
                         <ul>
                           <li>Be chargeable</li>
-                          <li>Ba a lowestLevelTask</li>
+                          <li>Be a lowestLevelTask</li>
                           <li>Have a taskStartDate and taskFinishDate range which includes the given accountingDate</li>
                         </ul>
                       </td>
@@ -18704,11 +18873,11 @@ http://localhost:3503/graphql
   <span class="hljs-attr">"id"</span>: <span class="hljs-string">"300000002763626"</span>,
   <span class="hljs-attr">"taskNumber"</span>: <span class="hljs-string">"Some String"</span>,
   <span class="hljs-attr">"name"</span>: <span class="hljs-string">"Some String"</span>,
-  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"abc123"</span>,
+  <span class="hljs-attr">"description"</span>: <span class="hljs-string">"xyz789"</span>,
   <span class="hljs-attr">"taskStartDate"</span>: <span class="hljs-string">LocalDate</span>,
   <span class="hljs-attr">"taskFinishDate"</span>: <span class="hljs-string">LocalDate</span>,
   <span class="hljs-attr">"billable"</span>: <span class="hljs-literal">false</span>,
-  <span class="hljs-attr">"chargeable"</span>: <span class="hljs-literal">false</span>,
+  <span class="hljs-attr">"chargeable"</span>: <span class="hljs-literal">true</span>,
   <span class="hljs-attr">"taskLevel"</span>: <span class="hljs-number">123</span>,
   <span class="hljs-attr">"executionDisplaySequence"</span>: <span class="hljs-number">123</span>,
   <span class="hljs-attr">"lowestLevelTask"</span>: <span class="hljs-literal">true</span>,
@@ -19083,7 +19252,7 @@ http://localhost:3503/graphql
   <span class="hljs-attr">"sort"</span>: [<span class="hljs-string">"xyz789"</span>],
   <span class="hljs-attr">"limit"</span>: <span class="hljs-number">123</span>,
   <span class="hljs-attr">"startIndex"</span>: <span class="hljs-number">123</span>,
-  <span class="hljs-attr">"includeTotalResultCount"</span>: <span class="hljs-literal">true</span>
+  <span class="hljs-attr">"includeTotalResultCount"</span>: <span class="hljs-literal">false</span>
 }
 </code></pre> </body>
                   </html>
@@ -19155,7 +19324,7 @@ http://localhost:3503/graphql
                   <html>
                   <head></head>
                   <body><pre><code class="hljs language-json">{
-  <span class="hljs-attr">"sort"</span>: [<span class="hljs-string">"abc123"</span>],
+  <span class="hljs-attr">"sort"</span>: [<span class="hljs-string">"xyz789"</span>],
   <span class="hljs-attr">"limit"</span>: <span class="hljs-number">123</span>,
   <span class="hljs-attr">"returnedResultCount"</span>: <span class="hljs-number">123</span>,
   <span class="hljs-attr">"startIndex"</span>: <span class="hljs-number">123</span>,
@@ -19284,21 +19453,21 @@ http://localhost:3503/graphql
                   <html>
                   <head></head>
                   <body><pre><code class="hljs language-json">{
-  <span class="hljs-attr">"eq"</span>: <span class="hljs-string">"xyz789"</span>,
-  <span class="hljs-attr">"ne"</span>: <span class="hljs-string">"xyz789"</span>,
-  <span class="hljs-attr">"le"</span>: <span class="hljs-string">"xyz789"</span>,
+  <span class="hljs-attr">"eq"</span>: <span class="hljs-string">"abc123"</span>,
+  <span class="hljs-attr">"ne"</span>: <span class="hljs-string">"abc123"</span>,
+  <span class="hljs-attr">"le"</span>: <span class="hljs-string">"abc123"</span>,
   <span class="hljs-attr">"lt"</span>: <span class="hljs-string">"abc123"</span>,
-  <span class="hljs-attr">"ge"</span>: <span class="hljs-string">"abc123"</span>,
+  <span class="hljs-attr">"ge"</span>: <span class="hljs-string">"xyz789"</span>,
   <span class="hljs-attr">"gt"</span>: <span class="hljs-string">"xyz789"</span>,
   <span class="hljs-attr">"beginsWith"</span>: <span class="hljs-string">"abc123"</span>,
   <span class="hljs-attr">"endsWith"</span>: <span class="hljs-string">"abc123"</span>,
-  <span class="hljs-attr">"contains"</span>: <span class="hljs-string">"xyz789"</span>,
-  <span class="hljs-attr">"notContains"</span>: <span class="hljs-string">"xyz789"</span>,
+  <span class="hljs-attr">"contains"</span>: <span class="hljs-string">"abc123"</span>,
+  <span class="hljs-attr">"notContains"</span>: <span class="hljs-string">"abc123"</span>,
   <span class="hljs-attr">"between"</span>: [
     <span class="hljs-string">"A"</span>,
     <span class="hljs-string">"Z"</span>
   ],
-  <span class="hljs-attr">"in"</span>: [<span class="hljs-string">"xyz789"</span>]
+  <span class="hljs-attr">"in"</span>: [<span class="hljs-string">"abc123"</span>]
 }
 </code></pre> </body>
                   </html>
@@ -19353,7 +19522,7 @@ http://localhost:3503/graphql
                   <h5>Example</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-gql"><span class="hljs-symbol">"3c50d2fc-e2ac-4626-ac01-2829b95828b3"</span>
+                  <body><pre><code class="hljs language-gql"><span class="hljs-symbol">"cebd4778-4a49-4136-be2b-e36cb54acebc"</span>
 </code></pre> </body>
                   </html>
                 </section>
@@ -19405,7 +19574,7 @@ http://localhost:3503/graphql
                   <h5>Example</h5>
                   <html>
                   <head></head>
-                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"valid"</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">"errorMessages"</span>: [<span class="hljs-string">"xyz789"</span>], <span class="hljs-attr">"messageProperties"</span>: [<span class="hljs-string">"abc123"</span>]}
+                  <body><pre><code class="hljs language-json">{<span class="hljs-attr">"valid"</span>: <span class="hljs-literal">false</span>, <span class="hljs-attr">"errorMessages"</span>: [<span class="hljs-string">"abc123"</span>], <span class="hljs-attr">"messageProperties"</span>: [<span class="hljs-string">"abc123"</span>]}
 </code></pre> </body>
                   </html>
                 </section>

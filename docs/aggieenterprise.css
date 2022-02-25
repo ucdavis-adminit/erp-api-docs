@@ -64,6 +64,22 @@
 }
 
 /* Right TOC Sidebar */
+.page_toc div[class^="lv"] a {
+  color: var(--ucd-blue-100);
+  text-decoration: none;
+  font-weight: inherit;
+  line-height: 1.6em;
+}
+
+.page_toc p.title {
+  color: var(--ucd-blue-100);
+  border-bottom: var(--ucd-blue-100) solid 2px;
+  margin: revert;
+  padding-bottom: revert;
+  font-weight: 600;
+  font-size: 1.2em;
+}
+
 .page_toc div.lv3 {
   font-size: var(--font-size-s);
   font-weight: bold;

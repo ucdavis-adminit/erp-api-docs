@@ -856,6 +856,8 @@ Due to significant variations in how departments track projects in KFS, it is no
   * The ErpProject which is the immediate parent of this one.<br/>Will be undefined if the ErpProject has no parent.
 * `ppmProject` : `PpmProject`
   * If a project code represents a PPM Project, this property will be a reference to that project.
+  * Description of `PpmProject`:
+    * The Project identifies the planned work or activity to be completed over a period of time and intended to achieve a particular goal.<br/><br/>--Roll-up relationship to the new Chart of Accounts (CoA) in the General Ledger:--<br/><br/>- The POET(AF) Project value will roll up to the Project segment of the Chart of Accounts.<br/>- PPM Project values and CoA Project segment values will be the same<br/><br/>--Examples:--<br/><br/>- Capital Projects<br/>- Sponsored Projects<br/>- Faculty Projects
 * `eligibleForUse` : `Boolean!`
   * Returns whether this ErpProject is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the ErpProject must:<br/>- Be enabled<br/>- Not be summaryOnly<br/>- Have a parentCode of GL0000000A (parent of all GL-only projects)<br/>- Have a startDate and endDate range which includes the given accountingDate
   * Arguments:
