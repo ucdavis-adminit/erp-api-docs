@@ -1,1 +1,0 @@
-# BICC Data Extract
