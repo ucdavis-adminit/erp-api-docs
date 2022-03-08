@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentScriptType="application/ecmascript" contentStyleType="text/css" height="989px" preserveAspectRatio="none" style="width:1071px;height:989px;background:#FFFFFF;" version="1.1" viewBox="0 0 1071 989" width="1071px" zoomAndPan="magnify"><defs><filter height="300%" id="fvhv2ahh6kddv" width="300%" x="-1" y="-1"><feGaussianBlur result="blurOut" stdDeviation="2.0"/><feColorMatrix in="blurOut" result="blurOut2" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .4 0"/><feOffset dx="4.0" dy="4.0" in="blurOut2" result="blurOut3"/><feBlend in="SourceGraphic" in2="blurOut3" mode="normal"/></filter></defs><g><text fill="#000000" font-family="Avenir" font-size="18" lengthAdjust="spacing" textLength="323" x="370.75" y="30">Action Request Flow Sequence Diagram</text><rect fill="#FFE599" filter="url(#fvhv2ahh6kddv)" height="181.77" style="stroke:#1D4776;stroke-width:1.0;" width="10" x="296.5" y="266.012"/><rect fill="#FFE599" filter="url(#fvhv2ahh6kddv)" height="96.64" style="stroke:#1D4776;stroke-width:1.0;" width="10" x="296.5" y="767.506"/><rect fill="#FFE599" filter="url(#fvhv2ahh6kddv)" height="142.496" style="stroke:#1D4776;stroke-width:1.0;" width="10" x="889.5" y="550.226"/><rect fill="#FFE599" filter="url(#fvhv2ahh6kddv)" height="27.66" style="stroke:#1D4776;stroke-width:1.0;" width="10" x="1016.5" y="637.402"/><line style="stroke:#1D4776;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="135" x2="135" y1="129.712" y2="882.146"/><line style="stroke:#1D4776;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="301" x2="301" y1="129.712" y2="882.146"/><line style="stroke:#1D4776;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="533.5" x2="533.5" y1="129.712" y2="882.146"/><line style="stroke:#1D4776;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="731" x2="731" y1="129.712" y2="882.146"/><line style="stroke:#1D4776;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="894.5" x2="894.5" y1="129.712" y2="882.146"/><line style="stroke:#1D4776;stroke-width:1.0;stroke-dasharray:5.0,5.0;" x1="1021.5" x2="1021.5" y1="129.712" y2="882.146"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="91" x="87" y="124.588">API Consumer</text><ellipse cx="135.5" cy="53.588" fill="#FFE599" filter="url(#fvhv2ahh6kddv)" rx="8" ry="8" style="stroke:#033266;stroke-width:2.0;"/><path d="M135.5,61.588 L135.5,88.588 M122.5,69.588 L148.5,69.588 M135.5,88.588 L122.5,103.588 M135.5,88.588 L148.5,103.588 " fill="none" filter="url(#fvhv2ahh6kddv)" style="stroke:#033266;stroke-width:2.0;"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="91" x="87" y="895.146">API Consumer</text><ellipse cx="135.5" cy="910.27" fill="#FFE599" filter="url(#fvhv2ahh6kddv)" rx="8" ry="8" style="stroke:#033266;stroke-width:2.0;"/><path d="M135.5,918.27 L135.5,945.27 M122.5,926.27 L148.5,926.27 M135.5,945.27 L122.5,960.27 M135.5,945.27 L148.5,960.27 " fill="none" filter="url(#fvhv2ahh6kddv)" style="stroke:#033266;stroke-width:2.0;"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="67" x="265" y="124.588">API Server</text><ellipse cx="301.5" cy="94.588" fill="#FFE599" filter="url(#fvhv2ahh6kddv)" rx="12" ry="12" style="stroke:#000000;stroke-width:2.0;"/><polygon fill="#000000" points="297.5,82.588,303.5,77.588,301.5,82.588,303.5,87.588,297.5,82.588" style="stroke:#000000;stroke-width:1.0;"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="67" x="265" y="895.146">API Server</text><ellipse cx="301.5" cy="916.27" fill="#FFE599" filter="url(#fvhv2ahh6kddv)" rx="12" ry="12" style="stroke:#000000;stroke-width:2.0;"/><polygon fill="#000000" points="297.5,904.27,303.5,899.27,301.5,904.27,303.5,909.27,297.5,904.27" style="stroke:#000000;stroke-width:1.0;"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="90" x="485.5" y="124.588">Request Store</text><path d="M515.5,74.588 C515.5,64.588 533.5,64.588 533.5,64.588 C533.5,64.588 551.5,64.588 551.5,74.588 L551.5,100.588 C551.5,110.588 533.5,110.588 533.5,110.588 C533.5,110.588 515.5,110.588 515.5,100.588 L515.5,74.588 " fill="#FFE599" filter="url(#fvhv2ahh6kddv)" style="stroke:#000000;stroke-width:1.5;"/><path d="M515.5,74.588 C515.5,84.588 533.5,84.588 533.5,84.588 C533.5,84.588 551.5,84.588 551.5,74.588 " fill="none" style="stroke:#000000;stroke-width:1.5;"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="90" x="485.5" y="895.146">Request Store</text><path d="M515.5,910.27 C515.5,900.27 533.5,900.27 533.5,900.27 C533.5,900.27 551.5,900.27 551.5,910.27 L551.5,936.27 C551.5,946.27 533.5,946.27 533.5,946.27 C533.5,946.27 515.5,946.27 515.5,936.27 L515.5,910.27 " fill="#FFE599" filter="url(#fvhv2ahh6kddv)" style="stroke:#000000;stroke-width:1.5;"/><path d="M515.5,910.27 C515.5,920.27 533.5,920.27 533.5,920.27 C533.5,920.27 551.5,920.27 551.5,910.27 " fill="none" style="stroke:#000000;stroke-width:1.5;"/><path d="M682,100.588 L781,100.588 C786,100.588 786,115.15 786,115.15 C786,115.15 786,129.712 781,129.712 L682,129.712 C677,129.712 677,115.15 677,115.15 C677,115.15 677,100.588 682,100.588 " fill="#FFE599" filter="url(#fvhv2ahh6kddv)" style="stroke:#000000;stroke-width:2.0;"/><path d="M781,100.588 C776,100.588 776,115.15 776,115.15 C776,129.712 781,129.712 781,129.712 " fill="none" style="stroke:#000000;stroke-width:2.0;"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="89" x="682" y="119.588">Action Queue</text><path d="M682,881.146 L781,881.146 C786,881.146 786,895.708 786,895.708 C786,895.708 786,910.27 781,910.27 L682,910.27 C677,910.27 677,895.708 677,895.708 C677,895.708 677,881.146 682,881.146 " fill="#FFE599" filter="url(#fvhv2ahh6kddv)" style="stroke:#000000;stroke-width:2.0;"/><path d="M781,881.146 C776,881.146 776,895.708 776,895.708 C776,910.27 781,910.27 781,910.27 " fill="none" style="stroke:#000000;stroke-width:2.0;"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="89" x="682" y="900.146">Action Queue</text><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="112" x="835.5" y="124.588">Action Processors</text><ellipse cx="894.5" cy="94.588" fill="#FFE599" filter="url(#fvhv2ahh6kddv)" rx="12" ry="12" style="stroke:#000000;stroke-width:2.0;"/><polygon fill="#000000" points="890.5,82.588,896.5,77.588,894.5,82.588,896.5,87.588,890.5,82.588" style="stroke:#000000;stroke-width:1.0;"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="112" x="835.5" y="895.146">Action Processors</text><ellipse cx="894.5" cy="916.27" fill="#FFE599" filter="url(#fvhv2ahh6kddv)" rx="12" ry="12" style="stroke:#000000;stroke-width:2.0;"/><polygon fill="#000000" points="890.5,904.27,896.5,899.27,894.5,904.27,896.5,909.27,890.5,904.27" style="stroke:#000000;stroke-width:1.0;"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="70" x="983.5" y="124.588">Oracle ERP</text><ellipse cx="1021.5" cy="94.588" fill="#FFE599" filter="url(#fvhv2ahh6kddv)" rx="12" ry="12" style="stroke:#000000;stroke-width:2.0;"/><line style="stroke:#000000;stroke-width:2.0;" x1="1009.5" x2="1033.5" y1="108.588" y2="108.588"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="70" x="983.5" y="895.146">Oracle ERP</text><ellipse cx="1021.5" cy="916.27" fill="#FFE599" filter="url(#fvhv2ahh6kddv)" rx="12" ry="12" style="stroke:#000000;stroke-width:2.0;"/><line style="stroke:#000000;stroke-width:2.0;" x1="1009.5" x2="1033.5" y1="930.27" y2="930.27"/><rect fill="#FFE599" filter="url(#fvhv2ahh6kddv)" height="181.77" style="stroke:#1D4776;stroke-width:1.0;" width="10" x="296.5" y="266.012"/><rect fill="#FFE599" filter="url(#fvhv2ahh6kddv)" height="96.64" style="stroke:#1D4776;stroke-width:1.0;" width="10" x="296.5" y="767.506"/><rect fill="#FFE599" filter="url(#fvhv2ahh6kddv)" height="142.496" style="stroke:#1D4776;stroke-width:1.0;" width="10" x="889.5" y="550.226"/><rect fill="#FFE599" filter="url(#fvhv2ahh6kddv)" height="27.66" style="stroke:#1D4776;stroke-width:1.0;" width="10" x="1016.5" y="637.402"/><path d="M5,144.712 L5,189.712 L429,189.712 L429,154.712 L419,144.712 L5,144.712 " fill="#CDD6E0" filter="url(#fvhv2ahh6kddv)" style="stroke:#1D4776;stroke-width:1.0;"/><path d="M419,144.712 L419,154.712 L429,154.712 L419,144.712 " fill="#CDD6E0" style="stroke:#1D4776;stroke-width:1.0;"/><text fill="#000000" font-family="Avenir" font-size="13" lengthAdjust="spacing" textLength="364" x="11" y="162.712">Consumer has previously been provided with an authentication</text><text fill="#000000" font-family="Avenir" font-size="13" lengthAdjust="spacing" textLength="403" x="11" y="180.47">token and provides their authentication header in every HTTP request.</text><rect fill="#CDD6E0" filter="url(#fvhv2ahh6kddv)" height="3" style="stroke:#CDD6E0;stroke-width:1.0;" width="1064.5" x="0" y="221.79"/><line style="stroke:#002851;stroke-width:1.0;" x1="0" x2="1064.5" y1="221.79" y2="221.79"/><line style="stroke:#002851;stroke-width:1.0;" x1="0" x2="1064.5" y1="224.79" y2="224.79"/><rect fill="#CDD6E0" filter="url(#fvhv2ahh6kddv)" height="27.124" style="stroke:#002851;stroke-width:2.0;" width="152" x="456.25" y="209.228"/><text fill="#000000" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="134" x="462.25" y="227.228">Initial Action Request</text><polygon fill="#002851" points="284.5,262.012,294.5,266.012,284.5,270.012,288.5,266.012" style="stroke:#002851;stroke-width:1.0;"/><line style="stroke:#002851;stroke-width:2.0;" x1="135.5" x2="290.5" y1="266.012" y2="266.012"/><text fill="#4C4C4C" font-family="Avenir" font-size="10" font-weight="bold" lengthAdjust="spacing" textLength="12" x="142.5" y="260.352">1 :</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="100" x="161.5" y="260.352">GraphQL API Request</text><path d="M168,279.012 L168,377.012 L431,377.012 L431,289.012 L421,279.012 L168,279.012 " fill="#CDD6E0" filter="url(#fvhv2ahh6kddv)" style="stroke:#1D4776;stroke-width:1.0;"/><path d="M421,279.012 L421,289.012 L431,289.012 L421,279.012 " fill="#CDD6E0" style="stroke:#1D4776;stroke-width:1.0;"/><ellipse cx="179.5" cy="294.27" fill="#000000" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:0.0;"/><text fill="#000000" font-family="Avenir" font-size="13" lengthAdjust="spacing" textLength="113" x="186" y="297.012">Validates X-API-Key</text><ellipse cx="179.5" cy="312.028" fill="#000000" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:0.0;"/><text fill="#000000" font-family="Avenir" font-size="13" lengthAdjust="spacing" textLength="193" x="186" y="314.77">Obtains Consumer's GraphQL ID</text><ellipse cx="179.5" cy="329.786" fill="#000000" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:0.0;"/><text fill="#000000" font-family="Avenir" font-size="13" lengthAdjust="spacing" textLength="230" x="186" y="332.528">Obtains and Applies Consumer's AuthZ</text><ellipse cx="179.5" cy="347.544" fill="#000000" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:0.0;"/><text fill="#000000" font-family="Avenir" font-size="13" lengthAdjust="spacing" textLength="130" x="186" y="350.286">Validates request data</text><ellipse cx="179.5" cy="365.302" fill="#000000" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:0.0;"/><text fill="#000000" font-family="Avenir" font-size="13" lengthAdjust="spacing" textLength="172" x="186" y="368.044">Assigns unique ID to Request</text><polygon fill="#002851" points="521.5,402.462,531.5,406.462,521.5,410.462,525.5,406.462" style="stroke:#002851;stroke-width:1.0;"/><line style="stroke:#002851;stroke-width:2.0;" x1="306.5" x2="527.5" y1="406.462" y2="406.462"/><text fill="#4C4C4C" font-family="Avenir" font-size="10" font-weight="bold" lengthAdjust="spacing" textLength="12" x="313.5" y="400.802">2 :</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="184" x="332.5" y="400.802">Submits request to queue for processing</text><polygon fill="#002851" points="146.5,443.782,136.5,447.782,146.5,451.782,142.5,447.782" style="stroke:#002851;stroke-width:1.0;"/><line style="stroke:#002851;stroke-width:2.0;stroke-dasharray:2.0,2.0;" x1="140.5" x2="300.5" y1="447.782" y2="447.782"/><text fill="#4C4C4C" font-family="Avenir" font-size="10" font-weight="bold" lengthAdjust="spacing" textLength="12" x="152.5" y="435.292">3 :</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="112" x="171.5" y="428.462">Returns response with ID</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="95" x="171.5" y="442.122">and status check info</text><rect fill="#CDD6E0" filter="url(#fvhv2ahh6kddv)" height="3" style="stroke:#CDD6E0;stroke-width:1.0;" width="1064.5" x="0" y="478.344"/><line style="stroke:#002851;stroke-width:1.0;" x1="0" x2="1064.5" y1="478.344" y2="478.344"/><line style="stroke:#002851;stroke-width:1.0;" x1="0" x2="1064.5" y1="481.344" y2="481.344"/><rect fill="#CDD6E0" filter="url(#fvhv2ahh6kddv)" height="27.124" style="stroke:#002851;stroke-width:2.0;" width="146" x="459.25" y="465.782"/><text fill="#000000" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="128" x="465.25" y="483.782">Message Processing</text><polygon fill="#002851" points="719.5,518.566,729.5,522.566,719.5,526.566,723.5,522.566" style="stroke:#002851;stroke-width:1.0;"/><line style="stroke:#002851;stroke-width:2.0;" x1="533.5" x2="725.5" y1="522.566" y2="522.566"/><text fill="#4C4C4C" font-family="Avenir" font-size="10" font-weight="bold" lengthAdjust="spacing" textLength="12" x="540.5" y="516.906">4 :</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="155" x="559.5" y="516.906">Pulls pending requests into queue</text><polygon fill="#002851" points="877.5,546.226,887.5,550.226,877.5,554.226,881.5,550.226" style="stroke:#002851;stroke-width:1.0;"/><line style="stroke:#002851;stroke-width:2.0;" x1="731.5" x2="883.5" y1="550.226" y2="550.226"/><text fill="#4C4C4C" font-family="Avenir" font-size="10" font-weight="bold" lengthAdjust="spacing" textLength="12" x="738.5" y="544.566">5 :</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="120" x="757.5" y="544.566">Processor picks up request</text><path d="M763,563.226 L763,608.226 L1022,608.226 L1022,573.226 L1012,563.226 L763,563.226 " fill="#CDD6E0" filter="url(#fvhv2ahh6kddv)" style="stroke:#1D4776;stroke-width:1.0;"/><path d="M1012,563.226 L1012,573.226 L1022,573.226 L1012,563.226 " fill="#CDD6E0" style="stroke:#1D4776;stroke-width:1.0;"/><ellipse cx="774.5" cy="578.484" fill="#000000" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:0.0;"/><text fill="#000000" font-family="Avenir" font-size="13" lengthAdjust="spacing" textLength="88" x="781" y="581.226">Data validation</text><ellipse cx="774.5" cy="596.242" fill="#000000" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:0.0;"/><text fill="#000000" font-family="Avenir" font-size="13" lengthAdjust="spacing" textLength="226" x="781" y="598.984">Formats request for submission to ERP</text><polygon fill="#002851" points="1004.5,633.402,1014.5,637.402,1004.5,641.402,1008.5,637.402" style="stroke:#002851;stroke-width:1.0;"/><line style="stroke:#002851;stroke-width:2.0;" x1="899.5" x2="1010.5" y1="637.402" y2="637.402"/><text fill="#4C4C4C" font-family="Avenir" font-size="10" font-weight="bold" lengthAdjust="spacing" textLength="12" x="906.5" y="631.742">6 :</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="76" x="925.5" y="631.742">Submits Request</text><polygon fill="#002851" points="910.5,661.062,900.5,665.062,910.5,669.062,906.5,665.062" style="stroke:#002851;stroke-width:1.0;"/><line style="stroke:#002851;stroke-width:2.0;stroke-dasharray:2.0,2.0;" x1="904.5" x2="1020.5" y1="665.062" y2="665.062"/><text fill="#4C4C4C" font-family="Avenir" font-size="10" font-weight="bold" lengthAdjust="spacing" textLength="12" x="916.5" y="659.402">7 :</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="74" x="935.5" y="659.402">Receives Results</text><polygon fill="#002851" points="544.5,688.722,534.5,692.722,544.5,696.722,540.5,692.722" style="stroke:#002851;stroke-width:1.0;"/><line style="stroke:#002851;stroke-width:2.0;" x1="538.5" x2="893.5" y1="692.722" y2="692.722"/><text fill="#4C4C4C" font-family="Avenir" font-size="10" font-weight="bold" lengthAdjust="spacing" textLength="12" x="550.5" y="687.062">8 :</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="156" x="569.5" y="687.062">Updates Request status and results</text><rect fill="#CDD6E0" filter="url(#fvhv2ahh6kddv)" height="3" style="stroke:#CDD6E0;stroke-width:1.0;" width="1064.5" x="0" y="723.284"/><line style="stroke:#002851;stroke-width:1.0;" x1="0" x2="1064.5" y1="723.284" y2="723.284"/><line style="stroke:#002851;stroke-width:1.0;" x1="0" x2="1064.5" y1="726.284" y2="726.284"/><rect fill="#CDD6E0" filter="url(#fvhv2ahh6kddv)" height="27.124" style="stroke:#002851;stroke-width:2.0;" width="180" x="442.25" y="710.722"/><text fill="#000000" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="162" x="448.25" y="728.722">Action Request Response</text><polygon fill="#002851" points="284.5,763.506,294.5,767.506,284.5,771.506,288.5,767.506" style="stroke:#002851;stroke-width:1.0;"/><line style="stroke:#002851;stroke-width:2.0;" x1="135.5" x2="290.5" y1="767.506" y2="767.506"/><text fill="#4C4C4C" font-family="Avenir" font-size="10" font-weight="bold" lengthAdjust="spacing" textLength="12" x="142.5" y="761.846">9 :</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="100" x="161.5" y="761.846">GraphQL API Request</text><polygon fill="#002851" points="521.5,791.166,531.5,795.166,521.5,799.166,525.5,795.166" style="stroke:#002851;stroke-width:1.0;"/><line style="stroke:#002851;stroke-width:2.0;" x1="306.5" x2="527.5" y1="795.166" y2="795.166"/><text fill="#4C4C4C" font-family="Avenir" font-size="10" font-weight="bold" lengthAdjust="spacing" textLength="18" x="313.5" y="789.506">10 :</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="111" x="338.5" y="789.506">Looks up Request Status</text><polygon fill="#002851" points="317.5,818.826,307.5,822.826,317.5,826.826,313.5,822.826" style="stroke:#002851;stroke-width:1.0;"/><line style="stroke:#002851;stroke-width:2.0;stroke-dasharray:2.0,2.0;" x1="311.5" x2="532.5" y1="822.826" y2="822.826"/><text fill="#4C4C4C" font-family="Avenir" font-size="10" font-weight="bold" lengthAdjust="spacing" textLength="18" x="323.5" y="817.166">11 :</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="110" x="348.5" y="817.166">Receives Request Status</text><polygon fill="#002851" points="146.5,860.146,136.5,864.146,146.5,868.146,142.5,864.146" style="stroke:#002851;stroke-width:1.0;"/><line style="stroke:#002851;stroke-width:2.0;stroke-dasharray:2.0,2.0;" x1="140.5" x2="300.5" y1="864.146" y2="864.146"/><text fill="#4C4C4C" font-family="Avenir" font-size="10" font-weight="bold" lengthAdjust="spacing" textLength="18" x="152.5" y="851.656">12 :</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="112" x="177.5" y="844.826">Returns response with ID</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="95" x="177.5" y="858.486">and status check info</text><text fill="#888888" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="154" x="455.25" y="981.27">Author: Jonathan Keller 2/1/2022</text><!--MD5=[9edf67bc9a59edc0563a144c69aefce2]
+@startuml action-request-flow
+
+!include ucd_style.iuml
+
+title Action Request Flow Sequence Diagram
+center footer Author: Jonathan Keller 2/1/2022
+
+actor    "API Consumer"        as Consumer
+control  "API Server"          as dataserver
+database "Request Store"       as db
+queue    "Action Queue"        as kafka
+control  "Action Processors"   as processor
+entity   "Oracle ERP"          as erp
+
+note over Consumer, dataserver
+  Consumer has previously been provided with an authentication
+  token and provides their authentication header in every HTTP request.
+end note
+== Initial Action Request ==
+
+autonumber 1 1 "<b>## : </b>"
+Consumer -> dataserver ++ : GraphQL API Request
+note over dataserver
+  * Validates X-API-Key
+  * Obtains Consumer's GraphQL ID
+  * Obtains and Applies Consumer's AuthZ
+  * Validates request data
+  * Assigns unique ID to Request
+end note
+dataserver -> db : Submits request to queue for processing
+dataserver - -> Consumer - - : Returns response with ID\nand status check info
+
+== Message Processing ==
+
+db -> kafka : Pulls pending requests into queue
+' group Process Action Request Topic [For Each]
+  kafka -> processor ++ : Processor picks up request
+  note over processor
+    * Data validation
+    * Formats request for submission to ERP
+  end note
+  processor -> erp ++ : Submits Request
+  erp - -> processor - - : Receives Results
+  processor -> db - - : Updates Request status and results
+  ' group If Callback URL Provided
+  '   processor -> kafka - - : Submits callback action to queue
+  ' end group
+' end group
+
+== Action Request Response ==
+
+' alt If Provided Callback URL
+'   group Process Callback Submit Topic [For Each]
+'     kafka -> processor ++ : Picks up Request
+'     processor -> Consumer : Sends results to callback URL
+'     processor -> db - - : Updates Request Status
+'   end group
+' else If No Callback URL
+  Consumer -> dataserver ++ : GraphQL API Request
+
+  dataserver -> db : Looks up Request Status
+  db - -> dataserver : Receives Request Status
+
+  dataserver - -> Consumer - - : Returns response with ID\nand status check info
+' end alt
+
+@enduml
+
+@startuml action-request-flow
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+skinparam DefaultFontName Avenir
+
+skinparam activity {
+    BackgroundColor #FFE599
+    BorderColor #033266
+    StartColor #266041
+    FontColor black
+    EndColor #79242F
+}
+
+skinparam actor {
+    BackgroundColor #FFE599
+    BorderColor #033266
+    FontColor #002851
+    FontStyle bold
+}
+
+skinparam arrow {
+    Color #002851
+    FontSize 10
+    FontColor #4C4C4C
+}
+
+skinparam box {
+    Padding 10
+}
+
+skinparam boundary {
+    BorderColor black
+    BackgroundColor #FFE599
+    FontColor #002851
+    FontStyle bold
+}
+
+skinparam cloud {
+    BackgroundColor #6FCFEB
+    BorderColor #003A5D
+}
+
+skinparam collections {
+    BackgroundColor #FFE599
+    BorderColor black
+}
+
+skinparam component {
+    Style uml2
+    FontColor #002851
+    BackgroundColor #CDD6E0
+    BorderColor #002851
+}
+
+skinparam control {
+    BackgroundColor #FFE599
+    BorderColor black
+    FontColor #002851
+    FontStyle bold
+}
+
+skinparam database {
+    BackgroundColor #FFE599
+    BorderColor black
+    FontColor #002851
+    FontStyle bold
+}
+
+skinparam entity {
+    BackgroundColor #FFE599
+    BorderColor black
+    FontColor #002851
+    FontStyle bold
+}
+
+skinparam interface {
+    BackgroundColor black
+    BorderColor #FFBF00
+}
+
+skinparam note {
+    BackgroundColor #CDD6E0
+    BorderColor #1D4776
+}
+
+skinparam package {
+    BackgroundColor #FFF2CC
+}
+
+skinparam participant {
+    BackgroundColor #FFE599
+    BorderColor black
+    Padding 10
+    FontColor #002851
+    FontStyle bold
+}
+
+skinparam queue {
+    BackgroundColor #FFE599
+    BorderColor black
+    FontColor #002851
+    FontStyle bold
+}
+
+skinparam sequence {
+    DividerBorderColor #033266
+    group {
+      BackgroundColor #FFF9E5
+      FontColor #002851
+      BorderColor #1D4776
+    }
+    LifeLineBorderColor #1D4776
+    LifeLineBackgroundColor #FFE599
+    ArrowThickness 2
+    box {
+      FontColor #002851
+      FontStyle bold
+      FontSize 18
+      BackgroundColor #FFF9E5
+      BorderColor black
+    }
+    divider {
+      FontColor black
+      FontStyle bold
+      FontSize 14
+      BackgroundColor #CDD6E0
+      BorderColor #002851
+    }
+}
+
+skinparam swimlane {
+    BorderColor #FFBF00
+    TitleFontStyle bold
+}
+
+title Action Request Flow Sequence Diagram
+center footer Author: Jonathan Keller 2/1/2022
+
+actor    "API Consumer"        as Consumer
+control  "API Server"          as dataserver
+database "Request Store"       as db
+queue    "Action Queue"        as kafka
+control  "Action Processors"   as processor
+entity   "Oracle ERP"          as erp
+
+note over Consumer, dataserver
+  Consumer has previously been provided with an authentication
+  token and provides their authentication header in every HTTP request.
+end note
+== Initial Action Request ==
+
+autonumber 1 1 "<b>## : </b>"
+Consumer -> dataserver ++ : GraphQL API Request
+note over dataserver
+  * Validates X-API-Key
+  * Obtains Consumer's GraphQL ID
+  * Obtains and Applies Consumer's AuthZ
+  * Validates request data
+  * Assigns unique ID to Request
+end note
+dataserver -> db : Submits request to queue for processing
+dataserver - -> Consumer - - : Returns response with ID\nand status check info
+
+== Message Processing ==
+
+db -> kafka : Pulls pending requests into queue
+  kafka -> processor ++ : Processor picks up request
+  note over processor
+    * Data validation
+    * Formats request for submission to ERP
+  end note
+  processor -> erp ++ : Submits Request
+  erp - -> processor - - : Receives Results
+  processor -> db - - : Updates Request status and results
+
+== Action Request Response ==
+
+  Consumer -> dataserver ++ : GraphQL API Request
+
+  dataserver -> db : Looks up Request Status
+  db - -> dataserver : Receives Request Status
+
+  dataserver - -> Consumer - - : Returns response with ID\nand status check info
+
+@enduml
+
+PlantUML version 1.2021.12(Tue Oct 05 09:01:58 PDT 2021)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>
