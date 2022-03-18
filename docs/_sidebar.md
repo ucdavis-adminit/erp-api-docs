@@ -10,3 +10,7 @@
       * [3.2.3.1 GL Journal](3.2%20Oracle%20ERP%20Data%20Server/3.2.3%20Action%20Requests/3.2.3.1%20GL%20Journal/HOME)
     * [3.2.5 File Based Action Requests](3.2%20Oracle%20ERP%20Data%20Server/3.2.5%20File%20Based%20Action%20Requests/HOME)
       * [3.2.5.1 GL Journal File Submission](3.2%20Oracle%20ERP%20Data%20Server/3.2.5%20File%20Based%20Action%20Requests/3.2.5.1%20GL%20Journal%20File%20Submission/HOME)
+  * [C Oracle Web Service Reference](C%20Oracle%20Web%20Service%20Reference/HOME)
+    * [C.1 Universal Content Manager](C%20Oracle%20Web%20Service%20Reference/C.1%20Universal%20Content%20Manager/HOME)
+    * [C.2 ERP REST Operations](C%20Oracle%20Web%20Service%20Reference/C.2%20ERP%20REST%20Operations/HOME)
+    * [C.3 ERP SOAP Operations](C%20Oracle%20Web%20Service%20Reference/C.3%20ERP%20SOAP%20Operations/HOME)

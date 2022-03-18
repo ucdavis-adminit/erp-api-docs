@@ -192,7 +192,7 @@ At the time of writing, the common filter input data types were defined as:
 * `DateInputFilter`
 
 ```gql
-"Generic string filter criteria object, only one of these properties should be set"
+"String filter criteria object, only one of this object's properties should be set.  Except as noted in the properties below, all comparisons are case-sensitive."
 input StringFilterInput {
   "Test if property is equal to the given value"
   eq: String
@@ -206,13 +206,13 @@ input StringFilterInput {
   ge: String
   "Test if property is greater than the given value"
   gt: String
-  "Test if property begins with the given value"
+  "Test if property begins with the given value.  Case-insensitive."
   beginsWith: String
-  "Test if property ends with the given value"
+  "Test if property ends with the given value.  Case-insensitive."
   endsWith: String
-  "Test if property contains the given value"
+  "Test if property contains the given value.  Case-insensitive."
   contains: String
-  "Test if property does not contain the given value"
+  "Test if property does not contain the given value.  Case-insensitive."
   notContains: String
   "Test if property is between the first 2 elements in the array"
   between: [String!]
