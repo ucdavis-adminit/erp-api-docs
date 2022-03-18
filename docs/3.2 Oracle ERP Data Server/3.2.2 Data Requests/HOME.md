@@ -214,7 +214,7 @@ type ValidationResponse {
 
 These operations are to support the transitional period when clients may be providing their old KFS strings (or utilizing stored KFS strings after the Oracle Financials go-live date.)  They will use the information built during the data conversion process to provide a probable mapping of the given information to the matching Oracle values.
 
-Data pulled from these services should be manually reviewed, as it will be based on the automated conversion datasets which will not reflect manual corrections performed after go-live.
+_Data pulled from these services should be manually reviewed_, as it will be based on the automated conversion datasets which will not reflect manual corrections performed after go-live.
 
 
 #### Basic Use
@@ -228,20 +228,20 @@ Data pulled from these services should be manually reviewed, as it will be based
 
 ##### `kfsConvertAccount`
 
-> Accepts a chart and account which was converted as part of cutover and returns the cost center portion with matching GL or POET segments needed to record a transaction.
->
-> In the case of a POET segment response, an array of tasks will be returned.  The data conversion mapping does not contain that information.  At cutover, there will be only one task per project.  But, additional tasks will be added as part of use after go-live.
->
-> No mapping will be performed to the Oracle GL Program, Project, or Activity segments through this API, as those may be context-specific.
+> Accepts a chart and account (and optionally a sub account and/or project code) which was converted as part of cutover and returns the cost center portion with matching GL or POET segments needed to record a transaction.  If no match is found when a sub account or project code is provided, the conversion will revert to only using the chart and account.  The attributes used for the returned converted values will be included in the response.
+
+> In the case of a POET segment response, an array of tasks will be returned.  The data conversion mapping does not contain that information.  At cutover, there will be only one task per project.  However, additional tasks will be added as part of use after go-live.
 
 
-|                | Name      | Type                       | Notes |
-| -------------- | --------- | -------------------------- | ----- |
-| **Parameters** |           |                            |       |
-|                | `chart`   | `KfsChartCode!`            |       |
-|                | `account` | `KfsAccountNumber!`        |       |
-| **Returns**    |           |                            |       |
-|                |           | `KfsConvertAccountOutput!` |       |
+|                | Name         | Type                       | Notes |
+| -------------- | ------------ | -------------------------- | ----- |
+| **Parameters** |              |                            |       |
+|                | `chart`      | `KfsChartCode!`            |       |
+|                | `account`    | `KfsAccountNumber!`        |       |
+|                | `subAccount` | `KfsSubAccountNumber!`     |       |
+|                | `kfsProject` | `KfsProjectCode!`          |       |
+| **Returns**    |              |                            |       |
+|                |              | `KfsConvertAccountOutput!` |       |
 
 ###### Returns
 
@@ -312,11 +312,16 @@ query {
       fund
       department
       purpose
+      project
+      activity
+      program
     }
     ppmSegments {
       project
       organization
       task
+      award
+      fundingSource
     }
   }
 }
@@ -330,7 +335,7 @@ query {
 {
     "operationName": null,
     "variables": {},
-    "query": "{\n  kfsConvertAccount(chart: \"3\", account: \"6620011\") {\n    accountFound\n    chart\n    account\n    costCenterType\n    glSegments {\n      entity\n      fund\n      department\n      purpose\n    }\n    ppmSegments {\n      project\n      organization\n      task\n    }\n  }\n}\n"
+    "query": "{\n  kfsConvertAccount(chart: \"3\", account: \"6620011\") {\n    mappingFound\n    chart\n    account\n    costCenterType\n    glSegments {\n      entity\n      fund\n      department\n      purpose\n    }\n    ppmSegments {\n      project\n      organization\n      task\n    }\n  }\n}\n"
 }
 ```
 
@@ -343,16 +348,17 @@ query {
 * Format checks are unnecessary as the GraphQL scalar types will reject badly formatted data before resolver executes.
 * Look up the account in the mapping table.
 * Always put the requested chart/account into the response.
-* If no record is found, set accountFound to false and leave response properties undefined.
-* Otherwise, set accountFound to true and continue.
-* If the erp_project is populated, it will be a POET cost center.  Populate the `costCenterType` as appropriate.
+* If no record is found, set mappingFound to false and leave response properties undefined.
+* Otherwise, set mappingFound to true and continue.
+* **VERIFY:** If the erp_project is populated in the mapping table, it will be a POET cost center.  Populate the `costCenterType` as appropriate.
 * Leave the segments object for the "other" type undefined.
 * If GL:
   * Populate any fields for which we have non-blank, non-all-zero values in the mapping table.
 * If POET:
   * Populate the project from the erp_project.
   * Populate the organization from the erp_fin_dept
-  * Run a lookup on the project number to return an array of all the chargeable task names.
+  * Run a lookup on the project number in the local integration database to return an array of all the chargeable task names.
+  * If a sponsored project, pull in the default award and funding source as per the logic in the PpmProject resolvers.
 
 ##### `kfsConvertOrgCode`
 
