@@ -26,6 +26,7 @@ The Award Number identifies the number assigned to an award containing funding a
   * System: Oracle BICC
   * Extract Objects:
     * file_fscmtopmodelam_gmsawardam_awardheaderviewpvo-batch316123518-20220126_234329
+    * batch316123518-20220126_234328
   * Underlying Database Objects:
     * GMS_AWARD_HEADERS_B
     * GMS_AWARD_HEADERS_TL
@@ -39,6 +40,7 @@ The Award Number identifies the number assigned to an award containing funding a
 | name                        | NonEmptyTrimmedString240 |                |        Y        |               | Award Name: Name of the award. |
 | description                 | NonEmptyTrimmedString240 |                |                 |               | Description: Brief description of the award. |
 | projectId                   | Long!                    |                |        Y        |               | Project ID: Project Identifier for award. |
+| startDate                   | LocalDate                |                |                 |               | Start Date: Start date of the award. |
 | endDate                     | LocalDate                |                |                 |               | End Date: End date of the award. |
 | closeDate                   | LocalDate                |                |                 |               | Close Date: Date past the end date of the award. Transactions for the award can be entered up to this date. |
 | awardOwningOrganizationName | String                   |                |                 |               | Award Owning Organization: An organization that owns awards within an enterprise. An organizing unit in the internal or external structure of your enterprise. Organization structures provide the framework for performing legal reporting, financial control, and management reporting for the award. |
@@ -49,6 +51,7 @@ The Award Number identifies the number assigned to an award containing funding a
 | lastUpdateDate              | DateTime!                |                |                 |               | The date when the award was last updated. |
 | lastUpdatedBy               | ErpUserId                |                |                 |               | The user that last updated the award. |
 | awardFundingSource          | [PpmFundingSource!]      |                |                 |               | Award Funding Sources: The Award Funding Sources resource is used to view the attributes used to create or update a funding source for the award. |
+| defaultFundingSourceNumber  | PpmFundingSourceNumber   |                |                 |               |  |
 | eligibleForUse              | Boolean!                 |                |                 |               | Returns whether this PpmAward is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmAward must:<br/>- Have closeDate after the given accountingDate |
 
 * `eligibleForUse` : `Boolean!`
@@ -82,21 +85,21 @@ The Award Number identifies the number assigned to an award containing funding a
 
 ##### `ppmAwardByProjectId`
 
-> Gets PpmAwards by project.  Returns empty list if none are found
+> Gets PpmAwards by project.  Returns empty  if not found
 
 * **Parameters**
   * `projectId : String!`
 * **Returns**
   * `[PpmAward!]!`
 
-##### `ppmAwardByProjectNumber`
+##### `ppmAwardByNumber`
 
-> Gets PpmAwards by project number.  Returns empty list if none are found
+> Gets undefineds by number.  Returns empty if not found
 
 * **Parameters**
-  * `projectNumber : PpmProjectNumber!`
+  * `number : String!`
 * **Returns**
-  * `[PpmAward!]!`
+  * `PpmAward`
 
 ##### `ppmAwardSearch`
 
@@ -179,7 +182,7 @@ The Expenditure Type identifies the natural classification of the expense transa
 > Use the ppmExpenditureTypeByName or ppmExpenditureTypeByAccount operations to pull by a unique identifier.
 
 * **Parameters**
-  * `id : Long!`
+  * `id : String!`
 * **Returns**
   * `PpmExpenditureType`
 
@@ -245,7 +248,7 @@ The Funding Source identifies the name of the sponsor for the external funding s
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
-    * View Object:file_fscmtopmodelam_prjextractam_gmsbiccextractam_fundingsourceextractpvo-batch
+    * View Object:gmsawardam_awardfundingsourcepvo-batch316123518-20220126_234421
   * Underlying Database Objects:
     * GMS_FUNDING_SOURCES_B
     * GMS_FUNDING_SOURCES_TL
@@ -263,6 +266,7 @@ The Funding Source identifies the name of the sponsor for the external funding s
 | fundingSourceTypeCode | String                    |                |                 |               | The code of the funding source type. |
 | lastUpdateDateTime    | DateTime!                 |                |        Y        |               | The date when the funding source was last updated. |
 | lastUpdatedBy         | ErpUserId                 |                |                 |               | The user that last updated the funding source. |
+| awardId               | Long                      |                |                 |               | The award id linked to the funding Source |
 | eligibleForUse        | Boolean!                  |                |                 |               | Returns whether this PpmFundingSource is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmFundingSource must:<br/>- Have a fundingSourceFromDate and fundingSourceToDate range which includes the given accountingDate |
 
 * `eligibleForUse` : `Boolean!`
@@ -604,6 +608,7 @@ The Task identifies the activities used to further breakdown a PPM project. Ever
 | topTaskId                | Long                      |                |                 |               | Top Task ID: Identifier of the top task to which the task rolls up. If the task is a top task, the identifier of the top task is same as the identifier of the task. |
 | lastUpdateDateTime       | DateTime!                 |                |        Y        |               | The date when the task was last updated. |
 | lastUpdatedBy            | ErpUserId                 |                |                 |               | The user that last updated the task. |
+| projectId                | Long                      |                |                 |               | The project that the task is linked to |
 | eligibleForUse           | Boolean!                  |                |                 |               | Returns whether this PpmTask is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmTask must:<br/>- Be chargeable<br/>- Be a lowestLevelTask<br/>- Have a taskStartDate and taskFinishDate range which includes the given accountingDate |
 
 * `eligibleForUse` : `Boolean!`
@@ -619,10 +624,10 @@ The Task identifies the activities used to further breakdown a PPM project. Ever
 
 ##### `ppmTask`
 
-> Get a single PpmTask by id.  Returns undefined if does not exist
+> Get a single PpmTask by id.  Returns undefined if it does not exist
 
 * **Parameters**
-  * `id : Long!`
+  * `id : String!`
 * **Returns**
   * `PpmTask`
 
@@ -649,7 +654,7 @@ The Task identifies the activities used to further breakdown a PPM project. Ever
 > Gets PpmTasks by project.  Returns empty list if none are found
 
 * **Parameters**
-  * `projectId : Long!`
+  * `projectId : String!`
 * **Returns**
   * `[PpmTask!]!`
 

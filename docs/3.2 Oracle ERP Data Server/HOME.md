@@ -237,7 +237,6 @@ Below are some examples of responses from the API.  Successful response data is 
 | ---------------------------- | ----------- |
 | `Boolean`                    | The `Boolean` scalar type represents `true` or `false`. |
 | `CityName`                   | Oracle City Name, 60-character limit |
-| `CountryCode`                | Oracle Country Code.  ISO-3601-1 alpha-2 |
 | `Currency`                   | A field whose value is a Currency: https://en.wikipedia.org/wiki/ISO_4217. |
 | `Date`                       | A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. |
 | `DateTime`                   | A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. |
@@ -245,6 +244,7 @@ Below are some examples of responses from the API.  Successful response data is 
 | `ErpAccountCode`             | Oracle GL Account Segment Code<br/><br/>- All values are exactly 6 characters matching the regex pattern: `[0-9]{5}[0-9A-EX]`<br/>- Validated against the [`ErpAccount`]({{Types.ErpAccount}}) object. |
 | `ErpAccountingPeriodName`    | Oracle Accounting Period Name<br/><br/>- Validated against the `periodName` of the [`GlAccountingPeriod`]({{Types.GlAccountingPeriod}}).<br/>   |
 | `ErpActivityCode`            | Oracle GL Activity Segment Code<br/><br/>- All values are exactly 6 characters matching the regex pattern: `[0-9X]{5}[0-9AB]`<br/>- Validated against the [`ErpActivity`]({{Types.ErpActivity}}) object. |
+| `ErpCountryCode`             | Oracle Country Code.  ISO-3601-1 alpha-2 |
 | `ErpDepartmentCode`          | Oracle GL Financial Department Segment Code<br/><br/>- All values are exactly 7 characters matching the regex pattern: `[0-9P][0-9]{5}[0-9A-F]`<br/>- Validated against the [`ErpFinancialDepartment`]({{Types.ErpFinancialDepartment}}) object. |
 | `ErpDepartmentTypeCode`      | ERP Financial Department Type Code |
 | `ErpDescriptionField240`     | Up to 240-character description field limited to letters, numbers, hyphen, underscore, spaces, and periods. |
@@ -271,9 +271,12 @@ Below are some examples of responses from the API.  Successful response data is 
 | `KfsAccountNumber`           | 7-character KFS Account Number, upper-case letters and digits only |
 | `KfsChartCode`               | 1-character KFS Chart Code.  Must be one of 3, L, H, S, P, M, N |
 | `KfsOrgCode`                 | 4-character KFS Org Code, upper-case letters and digits only |
+| `KfsProjectCode`             | 10-character KFS Project Code, upper-case letters and digits only |
+| `KfsSubAccountNumber`        | 5-character KFS Sub Account Number, upper-case letters and digits only |
 | `LocalDate`                  | A local date string (i.e., with no associated timezone) in `YYYY-MM-DD` format, e.g. `2020-01-01`. |
 | `Long`                       | The `BigInt` scalar type represents non-fractional signed whole numeric values. |
 | `NonEmptyString`             | A string that cannot be passed as an empty value |
+| `NonEmptyTrimmedString1`     | String limited to 1 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString10`    | String limited to 10 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString100`   | String limited to 100 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString15`    | String limited to 15 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
@@ -285,10 +288,12 @@ Below are some examples of responses from the API.  Successful response data is 
 | `NonEmptyTrimmedString25`    | String limited to 25 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString250`   | String limited to 250 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString255`   | String limited to 255 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
+| `NonEmptyTrimmedString3`     | String limited to 3 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString30`    | Trimmed String limited to 30 characters. |
 | `NonEmptyTrimmedString32`    | String limited to 32 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString320`   | String limited to 320 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString360`   | String limited to 360 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
+| `NonEmptyTrimmedString4`     | String limited to 4 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString40`    | String limited to 40 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString50`    | String limited to 50 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString60`    | String limited to 60 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
@@ -305,6 +310,7 @@ Below are some examples of responses from the API.  Successful response data is 
 | `PpmTaskName`                | Oracle PPM Project Task |
 | `ScmAddressLine`             | Oracle SCM Address Line, 240 Character Limit |
 | `ScmName`                    | Oracle SCM Name |
+| `ScmUnitOfMeasureCode`       | Oracle SCM Unit Of Measure Code |
 | `String`                     | The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text. |
 | `URL`                        | A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt. |
 | `UUID`                       | A field whose value is a generic Universally Unique Identifier: https://en.wikipedia.org/wiki/Universally_unique_identifier. |
@@ -368,13 +374,13 @@ Hierarchy Level Codes used in the financial chartstring structures.
 
 | Enum Value | Description |
 | ---------- | ----------- |
-| `A`        | Top Level, Defined by UCOP |
-| `B`        | Second Level, often defined by UCOP for segments with many values. |
-| `C`        | Third Level, campus-specific, but may be UCOP defined. |
-| `D`        | Fourth Level: Usually campus-defined values here and below. |
-| `E`        | Fifth Level |
-| `F`        | Sixth Level |
-| `G`        | Seventh Level |
+| `A`        | Second Level, often defined by UCOP for segments with many values. |
+| `B`        | Third Level, campus-specific, but may be UCOP defined. |
+| `C`        | Fourth Level: Usually campus-defined values here and below. |
+| `D`        | Fifth Level |
+| `E`        | Sixth Level |
+| `F`        | Seventh Level |
+| `X`        | Top Level, Defined by UCOP |
 
 ##### `ErpCostCenterType`
 

@@ -248,14 +248,18 @@ Data pulled from these services should be manually reviewed, as it will be based
 The operation returns an object per the definition below.  The `result` property will contain the overall validation result and any error messages encountered during validation.  If any errors occur during data parsing (formats/required values), that will be returned as a GraphQL error per the specification in a top-level `errors` property.
 
 ```graphql
-"""
-Return type for a KFS Account segment mapping.
-"""
 type KfsConvertAccountOutput {
   "Whether the account was found in the mapping table"
-  accountFound:   Boolean!
+  mappingFound:   Boolean!
+  "The chart code used when mapping."
   chart:          KfsChartCode!
+  "The account number used when mapping."
   account:        KfsAccountNumber!
+  "The sub account number used when mapping.  Will be undefined if no mapping using the sub account was found."
+  subAccount:     KfsSubAccountNumber
+  "The KFS project code used when mapping.  Will be undefined if no mapping using the project code was found."
+  kfsProject:     KfsProjectCode
+
   "The type of cost center this maps to in Oracle.  Determines which of glSegments and ppmSegments are populated."
   costCenterType: ErpCostCenterType
   "If a GL cost center, the segments which could be derived from the given chart-account."
@@ -272,17 +276,19 @@ enum ErpCostCenterType {
   POET
 }
 
-"Cost-center components of Oracle GL Segments which can be derived from the KFS Chart-Account."
+"Cost-center components of Oracle GL Segments which can be derived from the KFS Chart-Account-Sub Account-Project."
 type GlCostCenterSegments {
   entity:      ErpEntityCode!
   fund:        ErpFundCode!
   department:  ErpDepartmentCode!
   purpose:     ErpPurposeCode
+
+  project:     ErpProjectCode
   program:     ErpProgramCode
   activity:    ErpActivityCode
 }
 
-"Cost-center components of the POET Segments which can be derived from the KFS Chart-Account."
+"Cost-center components of the POET Segments which can be derived from the KFS Chart-Account-Sub Account-Project."
 type PpmCostCenterSegments {
   project:       PpmProjectNumber!
   organization:  PpmExpenseOrganizationCode!
@@ -297,7 +303,7 @@ type PpmCostCenterSegments {
 ```graphql
 query {
   kfsConvertAccount(chart:"3", account:"6620011") {
-    accountFound
+    mappingFound
     chart
     account
     costCenterType
