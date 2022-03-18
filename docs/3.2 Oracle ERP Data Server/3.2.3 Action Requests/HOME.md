@@ -10,11 +10,12 @@
 
 | Property Name           | Type                     | Notes                                                                                                                                                               |
 | ----------------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| callbackURL             | URL                      | URL for which to send back results when this journal is processed.                                                                                                  |
 | consumerTrackingId      | NonEmptyTrimmedString80  | For ID internal to consumer system to allow tracking. Will not be transmitted to Oracle.                                                                            |
 | consumerReferenceId     | NonEmptyTrimmedString80! | Identifier provided by the consumer which usually references the source record within their system.  Does not need to be unique. Will not be transmitted to Oracle. |
 | consumerNotes           | NonEmptyTrimmedString240 | Consumer text which will be stored in the API system. Will not be transmitted to Oracle.                                                                            |
 | boundaryApplicationName | NonEmptyTrimmedString80! | Identifier for the boundary application originating the request.                                                                                                    |
+
+<!-- | callbackURL             | URL                      | URL for which to send back results when this journal is processed.                                                                                                  | -->
 
 
 #### Support Types
