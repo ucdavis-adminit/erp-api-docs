@@ -104,18 +104,27 @@ Represents one record per fusion system user
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
-    * CrmAnalyticsAM.UserAM.UserPVO 
+    * CrmAnalyticsAM.UserAM.UserPVO
+    * FscmTopModelAM.PersonAM.GlobalPersonPVOViewAll
   * Underlying Database Objects:
     * PER_USERS
     * PER_USER_HISTORY
+    * PER_ALL_USERS_F
 
 ##### Properties
 
 | Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
 | ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| userId             | Long!                     |                |        Y        |               | Mandatory Primary Key. |
-| userName           | NonEmptyTrimmedString100! |                |        Y        |               | The latest principal username of the user |
+| id                 | Long!                     |                |        Y        |               | Mandatory Primary Key. |
+| userId             | NonEmptyTrimmedString100! |                |        Y        |               | The latest principal username of the user |
 | personId           | Long!                     |                |        Y        |               | The description of the journal category associated with the row. |
+| firstName          | NonEmptyTrimmedString150! |                |                 |               | Person's First name. |
+| lastName           | NonEmptyTrimmedString150! |                |        Y        |               | Person's Last name. |
+| displayName        | NonEmptyTrimmedString360  |                |        Y        |               | Peron's Display name. |
+| fullName           | NonEmptyTrimmedString360  |                |                 |               | Person's Full name. |
+| email              | ErpEmailAddress           |                |                 |               | E-mail address. |
+| assignmentStatus   | NonEmptyTrimmedString30   |                |                 |               | Unique code representing the status. |
+| assignmentType     | NonEmptyTrimmedString30   |                |                 |               | Identifies the type of record: employee, CWK, applicant or non-workers |
 | active             | Boolean                   |                |                 |               | Flag to mark when a user record that has been deleted in LDAP. |
 | startDate          | Date                      |                |                 |               | The date that the user is active from. |
 | endDate            | Date                      |                |                 |               | The date that the user ceases to be active in fusion. |
@@ -130,19 +139,19 @@ Represents one record per fusion system user
 
 ##### `erpUser`
 
-> Get a single ErpUser by userId.  Returns undefined if does not exist
+> Get a single ErpUser by id.  Returns undefined if does not exist
 
 * **Parameters**
-  * `userId : String!`
+  * `id : String!`
 * **Returns**
   * `ErpUser`
 
-##### `erpUserByUserName`
+##### `erpUserByUserId`
 
-> Get a single ErpUser by user name.  Returns undefined if does not exist
+> Get a single ErpUser by user id.  Returns undefined if does not exist
 
 * **Parameters**
-  * `userName : String!`
+  * `userId : String!`
 * **Returns**
   * `ErpUser`
 

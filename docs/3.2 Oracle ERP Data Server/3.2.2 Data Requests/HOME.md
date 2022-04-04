@@ -292,7 +292,7 @@ type GlCostCenterSegments {
 type PpmCostCenterSegments {
   project:       PpmProjectNumber!
   organization:  PpmExpenseOrganizationCode!
-  task:          [PpmTaskName!]!
+  task:          [PpmTaskNumber!]!
   award:         PpmAwardNumber
   fundingSource: PpmFundingSourceNumber
 }
@@ -475,7 +475,7 @@ input PpmSegmentInput {
   "Required: Managed Project Number"
   project:          PpmProjectNumber!
   "Required: Task ID.  Must belong to Project and be a chargeable task"
-  task:             PpmTaskName!
+  task:             PpmTaskNumber!
   "Required: Organization for which the expense is being incurred.  Aligns with the GL Financial Department segment."
   organization:     PpmExpenseOrganizationCode!
   "Required: Type of expense being charged to the project.  Aligns with the GL Account segment."
@@ -518,7 +518,7 @@ type PpmSegments {
   "Required: Managed Project Number"
   project:          PpmProjectNumber!
   "Required: Task ID.  Must belong to Project and be a chargeable task"
-  task:             PpmTaskName!
+  task:             PpmTaskNumber!
   "Required: Organization for which the expense is being incurred.  Aligns with the GL Financial Department segment."
   organization:     PpmExpenseOrganizationCode!
   "Required: Type of expense being charged to the project.  Aligns with the GL Account segment."

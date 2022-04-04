@@ -127,6 +127,10 @@ GL,"UCD Primary Ledger",Jul-20,2021,1,O,N,2020-07-01T00:00:00.000+00:00,2020-07-
 
 > Need to extract the SearchResults field from the XML via XQuery:
 > `//*[local-name()='ResultSet'][@name='SearchResults']`
+> If there are no results, then the above will fail to retrieve anything.  Oracle appears to put a field into the result which can be found via:
+> `//*[local-name()='Field'][@name='EmptyResult']`
+> With a value of `1`
+
 
 ```txt
 ------=_Part_18213_431452231.1647364911712

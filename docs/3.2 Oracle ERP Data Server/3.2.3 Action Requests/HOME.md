@@ -44,7 +44,7 @@
 | project         | PpmProjectNumber!       |       |
 | organization    | PpmOrganizationCode!    |       |
 | expenditureType | PpmExpenditureTypeCode! |       |
-| task            | PpmTaskName!            |       |
+| task            | PpmTaskNumber!          |       |
 | award           | PpmAwardNumber          |       |
 | fundingSource   | PpmFundingSourceNumber  |       |
 
