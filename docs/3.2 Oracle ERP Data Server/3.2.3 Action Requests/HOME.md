@@ -1,5 +1,33 @@
 # 3.2.3 Action Requests
 
+<!--BREAK-->
+### Action Requests Supported
+
+#### Common Operations
+
+* [Common Types](3.2.3%20Action%20Requests/1_CommonTypes.md)
+  * Input and output types common across ERP Action Requests.
+* [Common Operations](3.2.3%20Action%20Requests/2_CommonOperations.md)
+  * Action Request-related operations not specific to a particular type.
+
+#### General Ledger
+
+* [`GlJournal`](3.2.3%20Action%20Requests/GlJournal-1-summary.md) (**IN PROGRESS**)
+  * Combined GL/PPM Journal import
+
+#### Supply Chain Management / PTP
+
+* [`ScmRequisition`](3.2.3%20Action%20Requests/ScmRequisition-1-summary.md) (**IN PROGRESS**)
+  * Creation of new purchasing requisitions
+* [`ScmInvoicePayment`](3.2.3%20Action%20Requests/ScmInvoicePayment-1-summary.md) (**IN PROGRESS**)
+  * Creation of PO Invoice and Non PO Payment Requests
+
+#### Accounts Receivable
+
+* [`ArInvoice`](3.2.3%20Action%20Requests/ArInvoice-1-summary.md) (**IN PROGRESS**)
+  * AR Invoices
+
+
 ### Common Action Request Data Types
 
 #### Input Types

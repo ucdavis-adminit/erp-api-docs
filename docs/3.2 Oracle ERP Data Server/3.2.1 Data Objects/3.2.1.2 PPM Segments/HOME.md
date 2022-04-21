@@ -26,7 +26,6 @@ The Award Number identifies the number assigned to an award containing funding a
   * System: Oracle BICC
   * Extract Objects:
     * file_fscmtopmodelam_gmsawardam_awardheaderviewpvo-batch316123518-20220126_234329
-    * batch316123518-20220126_234328
   * Underlying Database Objects:
     * GMS_AWARD_HEADERS_B
     * GMS_AWARD_HEADERS_TL
@@ -154,6 +153,7 @@ The Expenditure Type identifies the natural classification of the expense transa
 | ------------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
 | id                  | Long!                     |       Y        |        Y        |               | Expenditure Type ID: Unique identifier of the expenditure type. |
 | name                | NonEmptyTrimmedString240! |                |        Y        |               | Expenditure Type: Name of the expenditure type. |
+| code                | String!                   |                |                 |               | Expenditure Type Code: The code of the Expenditure Type. |
 | description         | String                    |                |                 |               | Expenditure Type Description: Description of the expenditure type. |
 | startDate           | LocalDate                 |                |                 |               | Expenditure Type Start Date: Start date of an expenditure type. |
 | endDate             | LocalDate                 |                |                 |               | Expenditure Type End Date: End date of an expenditure type. |
@@ -194,6 +194,15 @@ The Expenditure Type identifies the natural classification of the expense transa
   * `name : NonEmptyTrimmedString100!`
 * **Returns**
   * `PpmExpenditureType!`
+
+##### `ppmExpenditureTypeByCode`
+
+> Get a single PpmExpenditureType by code.  Returns undefined if does not exist
+
+* **Parameters**
+  * `code : String!`
+* **Returns**
+  * `PpmExpenditureType`
 
 ##### `ppmExpenditureTypeByAccount`
 
@@ -248,7 +257,7 @@ The Funding Source identifies the name of the sponsor for the external funding s
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
-    * View Object:gmsawardam_awardfundingsourcepvo-batch316123518-20220126_234421
+    * View Object:file_fscmtopmodelam_prjextractam_gmsbiccextractam_fundingsourceextractpvo-batch
   * Underlying Database Objects:
     * GMS_FUNDING_SOURCES_B
     * GMS_FUNDING_SOURCES_TL
@@ -357,6 +366,7 @@ The Expenditure Organization identifies the organization that is incurring the e
 | ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
 | id                 | Long!                     |       Y        |        Y        |               | Organization ID: Unique identifier of the Organization.  Internal to Oracle. |
 | name               | NonEmptyTrimmedString100! |                |        Y        |               | Organization Name: Name of the Organization |
+| code               | String!                   |                |                 |               | Organization Code: The code of the Organization. |
 | effectiveStartDate | LocalDate!                |                |                 |               | Effective Start Date: Start date of Organization |
 | effectiveEndDate   | LocalDate                 |                |                 |               | Effective End Date: End date of Organization |
 | lastUpdateDateTime | DateTime!                 |                |        Y        |               | The date when the organization was last updated. |
@@ -389,6 +399,15 @@ The Expenditure Organization identifies the organization that is incurring the e
 
 * **Parameters**
   * `name : String!`
+* **Returns**
+  * `PpmOrganization`
+
+##### `ppmOrganizationByCode`
+
+> Get a single PpmOrganization by code.  Returns undefined if does not exist
+
+* **Parameters**
+  * `code : String!`
 * **Returns**
   * `PpmOrganization`
 

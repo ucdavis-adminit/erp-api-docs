@@ -294,6 +294,8 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
       * If the account descends from 30000X, fail validation.
     * _PPM Offset Account is not allowed_
       * If the account == `TBD`, fail validation.
+    * _Purchases to be capitalized must be recorded on a Capital Project._
+      * If the account is a descendent of `52500B`, fail validation.
   * **Validate via Combination Code** **(TODO)**
     * Check if the combination of the 11 GL segments is a known, valid combination.
     * Using the GlAccountingCombination, check if the combination is valid is known and is active and valid for the given accounting date.  If so, CVR rules do not need to be run.  Oracle will allow any valid combination even if does not match the current CVR rules.  There is no validation failure for this rule.  This is only to short-circuit the CVR rules.
@@ -309,10 +311,6 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
       * If the fund is a descendent of 1100C, then purpose code must be 76.
     * _Purpose code 76 (Auxiliary Enterprises) must only be used with Financial Auxilary Funds (OPER_PURPOSE_FUND)_
       * If the purpose code is 76, then the fund must descend from 1100C.
-    * _Recharge Accounts must have Transfer Activity (85) Purpose (NAT_ACC_PURPOSE)_
-      * If the account descends from 70000X, then the purpose must be 85.
-    * _Transfer Activities (purpose 85) must only be used with 7xxxxx Recharge Accounts (PUR_NAT_ACC)_
-      * If the purpose code is 85, then the account must descende from 70000X.
     * _Funds held for others (Account 22700D) should only be used with Agency Fund (Fund 5000C) (AGENCY_FUND_ACCT)_
       * If the account descends from 22700D, then the fund must descend from 5000C.
     * _Sub-contract services (53300B) should only be used on Grant and Contract Funds (2000B) (SCS_ACCT_FUND)_

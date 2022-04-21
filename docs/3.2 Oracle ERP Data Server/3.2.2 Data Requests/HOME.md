@@ -1,5 +1,54 @@
 # 3.2.2 Data Requests
 
+<!--BREAK-->
+### Data Requests Supported
+
+> Data Requests are actions which request data that is not directly linked to an underlying data object or require an additional level of processing to satisfy the request.
+
+#### Data Conversion Support
+
+* [`kfsConvertAccount`](3.2.2%20Data%20Requests/kfsDataRequests.md) (**TBD**)
+  * Given a chart and account, returns the best matching Oracle accounting segments.
+  * This will be based on the data conversion rules created for cutover.
+  * These could be either glSegments or ppmSegments depending on the KFS account.
+  * For `glSegments` the response will contain the Entity, Fund, Department, and Purpose.
+  * For `ppmSegments` the response will contain the Project, Task, and Expenditure Organization.
+  * **TBD: The business need for this service is presently unknown.**
+
+* [`kfsConvertOrgCode`](3.2.2%20Data%20Requests/kfsDataRequests.md) (**TBD**)
+  * Given a KFS Organization code, returns the best matching Oracle Financial Department.
+  * This will be based on the data conversion rules created for cutover.
+  * **TBD: The business need for this service is presently unknown.**
+
+#### General Ledger
+
+* [`glValidateChartSegments`](3.2.2%20Data%20Requests/glDataRequests.md) (**IN PROGRESS**)
+  * Given a set of segment values, validate if they will be accepted by Oracle.
+  * This does not include situational correctness.  E.g., use of a labor account on a recharge journal or payable.
+* [`glValidateChartstring`](3.2.2%20Data%20Requests/glDataRequests.md) (**IN PROGRESS**)
+  * Given a complete GL Chartstring, validate if it will be accepted by Oracle.
+  * This does not include situational correctness.  E.g., use of a labor account on a recharge journal or payable.
+
+<!-- * [`erpFiscalApprover`](3.2.2%20Data%20Requests/glDataRequests.md) (**TODO**)
+  * For a given set of segment values, return the person(s) who would need to approve any transactions against that chartstring.
+  * **TBD: We do not yet know how or where approvers will be attached.** -->
+
+#### Project and Portfolio Management
+
+* [`ppmSegmentsValidate`](3.2.2%20Data%20Requests/ppmDataRequests.md) (**TODO**)
+  * Validate that the given POET segments will be accepted by Oracle.
+
+<!--
+* [`ppmCostApprover`](3.2.2%20Data%20Requests/ppmCostApprover.md) (**TODO**)
+  * For a given set of POET segment values, return the person(s) who would need to approve any transactions against that project.
+-->
+
+#### Accounts Receivable
+
+* [`arInvoiceSummary`](3.2.2%20Data%20Requests/arDataRequests.md) (**TODO**)
+  * (This may end up as a data object - but falls more into the area of a special data request since it involves transactional data.)
+
+
 ### Data Requests: GL Chart Segment Validations
 
 This data request is used to validate a set of GL chart segments a boundary system wants to ensure are correct before allowing them to be saved within their application or used on an action request.  The assumption is that this is a chartstring to which the boundary application will want to post.  Within the accounting segment definitions, certain values are flagged as summary-only values to be used for reporting only.  This API will return those strings as invalid.
@@ -189,14 +238,17 @@ type ValidationResponse {
     * If the fund is a descendent of 1100C, then purpose code must be 76.
   * _Purpose code 76 (Auxiliary Enterprises) must only be used with Financial Auxilary Funds (OPER_PURPOSE_FUND)_
     * If the purpose code is 76, then the fund must descend from 1100C.
-  * _Recharge Accounts must have Transfer Activity (85) Purpose (NAT_ACC_PURPOSE)_
-    * If the account starts with 7, then the purpose must be 85.
-  * _Transfer Activities (purpose 85) must only be used with 7xxxxx Recharge Accounts (PUR_NAT_ACC)_
-    * If the purpose code is 85, then the account must start with 7.
   * _Funds held for others (Account 22700D) should only be used with Agency Fund (Fund 5000C) (AGENCY_FUND_ACCT)_
     * If the account descends from 22700D, then the fund must descend from 5000C.
   * _Sub-contract services (53300B) should only be used on Grant and Contract Funds (2000B)_
     * If the account is a descendent of 53300B, then the fund must be descended from 2000B.
+* **Additional Checks**
+  * _Net Position Accounts are not allowed_
+    * If the account descends from 30000X, fail validation.
+  * _Purchases to be capitalized must be recorded on a Capital Project._
+    * If the account is a descendent of `52500B`, fail validation.
+
+
 
 #### Implementation Notes
 
