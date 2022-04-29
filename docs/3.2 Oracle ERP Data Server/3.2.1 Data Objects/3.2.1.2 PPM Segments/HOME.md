@@ -25,7 +25,8 @@ The Award Number identifies the number assigned to an award containing funding a
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
-    * file_fscmtopmodelam_gmsawardam_awardheaderviewpvo-batch316123518-20220126_234329
+    * View Object: FscmTopModelAM.GmsAwardAM.AwardHeaderViewPVO
+    * batch316123518-20220126_234328
   * Underlying Database Objects:
     * GMS_AWARD_HEADERS_B
     * GMS_AWARD_HEADERS_TL
@@ -46,7 +47,7 @@ The Award Number identifies the number assigned to an award containing funding a
 | awardPurpose                | NonEmptyTrimmedString80  |                |                 |               | Purpose: Name of the award purpose. |
 | awardType                   | NonEmptyTrimmedString30  |                |        Y        |               | Type: Classification of an award, for example, Federal grants or Private grants. |
 | businessUnitName            | NonEmptyTrimmedString100 |                |                 |               | Business Unit: Unit of an enterprise that performs one or many business functions that can be rolled up in a management hierarchy. An award business unit is one within which the award is created. |
-| sponsorAwardNumber          | NonEmptyTrimmedString30  |                |        Y        |               | Sponsor Award Number: Award number tracked by the sponsor. |
+| awardNumber                 | NonEmptyTrimmedString30  |                |        Y        |               |  Award Number: Award number tracked by the sponsor. |
 | lastUpdateDate              | DateTime!                |                |                 |               | The date when the award was last updated. |
 | lastUpdatedBy               | ErpUserId                |                |                 |               | The user that last updated the award. |
 | awardFundingSource          | [PpmFundingSource!]      |                |                 |               | Award Funding Sources: The Award Funding Sources resource is used to view the attributes used to create or update a funding source for the award. |
@@ -100,6 +101,16 @@ The Award Number identifies the number assigned to an award containing funding a
 * **Returns**
   * `PpmAward`
 
+##### `ppmAwardByProjectAndAwardNumber`
+
+> Gets undefineds by projectNumber and awardNumber.  Returns null if not found
+
+* **Parameters**
+  * `projectNumber : String!`
+  * `awardNumber : String!`
+* **Returns**
+  * `PpmAward`
+
 ##### `ppmAwardSearch`
 
 > Search for PpmAward objects by multiple properties.
@@ -142,7 +153,7 @@ The Expenditure Type identifies the natural classification of the expense transa
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
-    * View Object:file_fscmtopmodelam_pjfsetuptransactionsam_expendituretypeview
+    * View Object: FscmTopModelAM.PjfSetupTransactionsAM.ExpenditureTypeView
   * Underlying Database Objects:
     * PJF_EXP_TYPES_B
     * PJF_EXP_TYPES_TL
@@ -257,7 +268,7 @@ The Funding Source identifies the name of the sponsor for the external funding s
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
-    * View Object:file_fscmtopmodelam_prjextractam_gmsbiccextractam_fundingsourceextractpvo-batch
+    * View Object:FscmTopModelAM.GmsAwardAM.AwardFundingSourcePVO
   * Underlying Database Objects:
     * GMS_FUNDING_SOURCES_B
     * GMS_FUNDING_SOURCES_TL
@@ -307,6 +318,16 @@ The Funding Source identifies the name of the sponsor for the external funding s
 * **Returns**
   * `PpmFundingSource`
 
+##### `ppmFundingSourceByProjectAndFundingSourceNumber`
+
+> Get a single PpmFundingSource by project number and funding source number.  Returns null if does not exist
+
+* **Parameters**
+  * `projectNumber : String!`
+  * `fundingSourceNumber : String!`
+* **Returns**
+  * `PpmFundingSource`
+
 ##### `ppmFundingSourceByName`
 
 > Gets PpmFundingSources by exact name.  Returns empty list if none are found
@@ -326,6 +347,75 @@ The Funding Source identifies the name of the sponsor for the external funding s
   * `filter : PpmFundingSourceFilterInput!`
 * **Returns**
   * `PpmFundingSourceSearchResults!`
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
+### Data Object: PpmKeywords
+
+Cayuse support - non-segment data objects needed for submission of project and grant data
+Needed for to manage keywords for lookup table
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `PPM_KEYWORDS`
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+    * View Object: FscmTopModelAM.GmsSetupAM.KeywordViewPVO
+  * Underlying Database Objects:
+    * GMS_KEYWORDS_VL
+
+##### Properties
+
+| Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| id                 | Long!                     |                |                 |               | ID: The unique identifier of the keyword. |
+| name               | NonEmptyTrimmedString150! |                |        Y        |               | Keyword Name: The name of the keyword. |
+| description        | NonEmptyTrimmedString240  |                |        Y        |               | Keyword Description: The description for the Keyword. |
+| lastUpdateDateTime | DateTime!                 |                |        Y        |               | The date when the keyword was last updated. |
+| lastUpdatedBy      | ErpUserId                 |                |                 |               | The user that last updated the keyword. |
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+##### `ppmKeywords`
+
+> Get a single PpmKeywords by id.  Returns undefined if does not exist
+
+* **Parameters**
+  * `id : String!`
+* **Returns**
+  * `PpmKeywords`
+
+##### `ppmKeywordsByName`
+
+> Gets PpmKeywordss by exact name.  Returns empty list if none are found
+
+* **Parameters**
+  * `name : String!`
+* **Returns**
+  * `[PpmKeywords!]!`
+
+##### `ppmKeywordsSearch`
+
+> Search for PpmKeywords objects by multiple properties.
+> See
+> See the PpmKeywordsFilterInput type for options.
+
+* **Parameters**
+  * `filter : PpmKeywordsFilterInput!`
+* **Returns**
+  * `PpmKeywordsSearchResults!`
 
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
@@ -355,7 +445,7 @@ The Expenditure Organization identifies the organization that is incurring the e
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
-    * View Object: FscmTopModelAM.file_fscmtopmodelam_organizationam_projectexpenditureorganizationpvo-batch.ProjectView
+    * View Object:  FscmTopModelAM.OrganizationAM.ProjectExpenditureOrganizationPVO
   * Underlying Database Objects:
     * HR_ORG_UNIT_CLASSIFICATIONS_F
     * HR_ORGANIZATION_UNITS_F_TL
@@ -604,7 +694,7 @@ The Task identifies the activities used to further breakdown a PPM project. Ever
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
-    * View Object: file_fscmtopmodelam_prjextractam_pjfbiccextractam_taskstructureextractpvo-batch2130430018-20211110_175451
+    * View Object:   FscmTopModelAM.PrjExtractAM.PjfBiccExtractAM.TaskStructureExtractPVO
   * Underlying Database Objects:
     * PJF_TASK_XFACE
 
@@ -686,6 +776,16 @@ The Task identifies the activities used to further breakdown a PPM project. Ever
 * **Returns**
   * `[PpmTask!]!`
 
+##### `ppmTaskByProjectNumberAndTaskNumber`
+
+> Gets PpmTasks by projectNumber and taskNumber.  Returns undefined if not found
+
+* **Parameters**
+  * `projectNumber : PpmProjectNumber!`
+  * `taskNumber : PpmTaskNumber!`
+* **Returns**
+  * `PpmTask`
+
 ##### `ppmTaskSearch`
 
 > Search for PpmTask objects by multiple properties.
@@ -696,6 +796,88 @@ The Task identifies the activities used to further breakdown a PPM project. Ever
   * `filter : PpmTaskFilterInput!`
 * **Returns**
   * `PpmTaskSearchResults!`
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
+### Data Object: PpmTerms
+
+Cayuse support - non-segment data objects needed for submission of project and grant data
+Needed for to manage Terms and Conditions for lookup table
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `PPM_TERMS`
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+    * View Object: FscmTopModelAM.GmsSetupAM.TermsViewPVO
+  * Underlying Database Objects:
+    * GMS_TERMS_TL
+
+##### Properties
+
+| Property Name       | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| id                  | Long!                     |                |                 |               | ID: The unique identifier of the term. |
+| name                | NonEmptyTrimmedString150! |                |        Y        |               | Term Name: The name of the Term. |
+| description         | NonEmptyTrimmedString240  |                |        Y        |               | Term Description: The description for the Term. |
+| startDate           | LocalDate!                |                |                 |               | Term start date: Start Date of the term |
+| endDate             | LocalDate                 |                |                 |               | Term end date: End Date of the term |
+| categoryName        | NonEmptyTrimmedString150! |                |        Y        |               | Category Name: The category name of the Term |
+| categoryDescription | NonEmptyTrimmedString240  |                |                 |               | Category Description: The category description of the Term |
+| lastUpdateDateTime  | DateTime                  |                |        Y        |               | The date when the keyword was last updated. |
+| lastUpdatedBy       | ErpUserId                 |                |                 |               | The user that last updated the term. |
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+##### `ppmTerms`
+
+> Get a single PpmTerms by id.  Returns undefined if does not exist
+
+* **Parameters**
+  * `id : String!`
+* **Returns**
+  * `PpmTerms`
+
+##### `ppmTermsByName`
+
+> Gets PpmTermss by category name and name.  Returns undefined if none are found
+
+* **Parameters**
+  * `categoryName : String!`
+  * `name : String!`
+* **Returns**
+  * `PpmTerms`
+
+##### `ppmTermsCategories`
+
+> Gets PpmTermss by distinct category code.  Returns empty list if none are found
+
+* **Parameters**
+* **Returns**
+  * `[PpmTerms!]!`
+
+##### `ppmTermsSearch`
+
+> Search for PpmTerms objects by multiple properties.
+> See
+> See the PpmTermsFilterInput type for options.
+
+* **Parameters**
+  * `filter : PpmTermsFilterInput!`
+* **Returns**
+  * `PpmTermsSearchResults!`
 
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.

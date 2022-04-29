@@ -101,7 +101,6 @@ Represents one record per fusion system user
 * Local Table/View: `ERP_USER` (view)
   * Support Tables:
     * `PER_USER`
-    * `PER_ALL_PEOPLE_F`
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:

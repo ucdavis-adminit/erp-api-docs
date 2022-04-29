@@ -80,7 +80,7 @@ PpmDocumentEntry is used to store the document entries.
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
-    * View Object: file_fscmtopmodelam_prjextractam_pjfbiccextractam_transactiondocumententryextractpvo-batch1202213867-20220201_001135
+    * View Object:  FscmTopModelAM.PrjExtractAM.PjfBiccExtractAM.TransactionDocumentEntryExtractPVO
   * Underlying Database Objects:
     * PJF_TXN_DOC_ENTRY_B_PK
     * PJF_TXN_DOC_ENTRY_TL

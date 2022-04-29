@@ -24,20 +24,20 @@ The (Natural) Account segment most closely aligns with the KFS Object Code.
     * `VALUE_SET_TYPED_VALUES_PVO`
     * `VALUE_SET_TYPED_VALUES_TL_PVO`
     * `VALUE_SET_VALUES_PVO`
-    * `GL_SEG_VAL_HIER_CF`
-    * `FND_TREE_AND_VERSION_VO`
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
     * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetTypedValuesPVO
     * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetTypedValuesTLPVO
-    * View Object: FscmTopModelAM.FinExtractAM.GlBiccExtractAM.SegmentValueHierarchyExtractPVO
     * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetValuesPVO
+    * View Object: FscmTopModelAM.FinExtractAM.GlBiccExtractAM.SegmentValueHierarchyExtractPVO
+    * View Object: FscmTopModelAM.AnalyticsServiceAM.FndTreeAndVersionVO
   * Underlying Database Objects:
     * FND_VS_VALUES_B
     * GL_SEG_VAL_HIER_CF
     * FND_VS_VALUE_SETS
     * FND_VS_VALUES_TL
+    * FND_TREE_AND_VERSION_VO
 
 ##### Properties
 
@@ -164,20 +164,20 @@ Due to significant variations in how departments track activities in KFS, it is 
     * `VALUE_SET_TYPED_VALUES_PVO`
     * `VALUE_SET_TYPED_VALUES_TL_PVO`
     * `VALUE_SET_VALUES_PVO`
-    * `GL_SEG_VAL_HIER_CF`
-    * `FND_TREE_AND_VERSION_VO`
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
     * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetTypedValuesPVO
     * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetTypedValuesTLPVO
-    * View Object: FscmTopModelAM.FinExtractAM.GlBiccExtractAM.SegmentValueHierarchyExtractPVO
     * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetValuesPVO
+    * View Object: FscmTopModelAM.FinExtractAM.GlBiccExtractAM.SegmentValueHierarchyExtractPVO
+    * View Object: FscmTopModelAM.AnalyticsServiceAM.FndTreeAndVersionVO
   * Underlying Database Objects:
     * FND_VS_VALUES_B
     * GL_SEG_VAL_HIER_CF
     * FND_VS_VALUE_SETS
     * FND_VS_VALUES_TL
+    * FND_TREE_AND_VERSION_VO
 
 ##### Properties
 
@@ -249,6 +249,77 @@ Due to significant variations in how departments track activities in KFS, it is 
 
 
 <!--BREAK-->
+### Data Object: ErpContracts
+
+Cayuse support - non-segment data objects needed for submission of project and grant data
+Needed for to manage grants and contracts for lookup table
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `ERP_CONTRACTS`
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+    * View Object: FscmTopModelAM.ContractsCoreAM.ContractHeaderLinesRefP
+  * Underlying Database Objects:
+    * OKC_CONTRACT_TYPES_VL
+
+##### Properties
+
+| Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| id                 | Long!                     |                |                 |               | ID: The unique identifier of the contract. |
+| name               | NonEmptyTrimmedString150! |                |        Y        |               | Contract Name: The name of the Contract. |
+| description        | NonEmptyTrimmedString240  |                |        Y        |               | Contract Description: The description for the Contract. |
+| startDate          | LocalDate!                |                |                 |               | Contract start date: Start Date of the Contract |
+| endDate            | LocalDate                 |                |                 |               | Contract end date: End Date of the Contract |
+| lastUpdateDateTime | DateTime!                 |                |        Y        |               | The date when the keyword was last updated. |
+| lastUpdatedBy      | ErpUserId                 |                |                 |               | The user that last updated the keyword. |
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+##### `erpContracts`
+
+> Get a single ErpContracts by id.  Returns undefined if does not exist
+
+* **Parameters**
+  * `id : String!`
+* **Returns**
+  * `ErpContracts`
+
+##### `erpContractsByName`
+
+> Gets ErpContractss by exact name.  Returns empty list if none are found
+
+* **Parameters**
+  * `name : String!`
+* **Returns**
+  * `[ErpContracts!]!`
+
+##### `erpContractsSearch`
+
+> Search for ErpContracts objects by multiple properties.
+> See
+> See the ErpContractsFilterInput type for options.
+
+* **Parameters**
+  * `filter : ErpContractsFilterInput!`
+* **Returns**
+  * `ErpContractsSearchResults!`
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
 ### Data Object: ErpEntity
 
 The Entity segment identifies the major UC system organizational units. These units generally require their own complete, separately audited financial statements to comply with external, regulatory reporting requirements (e.g., external audits, tax reporting), which cannot achieve compliance by using the audited financial statements issued by the Office of the President. Entity, however, will also provide high level management and operational reports.
@@ -271,20 +342,20 @@ The Entity segment most closely aligns with the KFS Chart (e.g. 3, H, L, P).
     * `VALUE_SET_TYPED_VALUES_PVO`
     * `VALUE_SET_TYPED_VALUES_TL_PVO`
     * `VALUE_SET_VALUES_PVO`
-    * `GL_SEG_VAL_HIER_CF`
-    * `FND_TREE_AND_VERSION_VO`
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
     * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetTypedValuesPVO
     * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetTypedValuesTLPVO
-    * View Object: FscmTopModelAM.FinExtractAM.GlBiccExtractAM.SegmentValueHierarchyExtractPVO
     * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetValuesPVO
+    * View Object: FscmTopModelAM.FinExtractAM.GlBiccExtractAM.SegmentValueHierarchyExtractPVO
+    * View Object: FscmTopModelAM.AnalyticsServiceAM.FndTreeAndVersionVO
   * Underlying Database Objects:
     * FND_VS_VALUES_B
     * GL_SEG_VAL_HIER_CF
     * FND_VS_VALUE_SETS
     * FND_VS_VALUES_TL
+    * FND_TREE_AND_VERSION_VO
 
 ##### Properties
 
@@ -391,20 +462,20 @@ Due to significant variations in departments' financial structure in KFS, it is 
     * `VALUE_SET_TYPED_VALUES_PVO`
     * `VALUE_SET_TYPED_VALUES_TL_PVO`
     * `VALUE_SET_VALUES_PVO`
-    * `GL_SEG_VAL_HIER_CF`
-    * `FND_TREE_AND_VERSION_VO`
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
     * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetTypedValuesPVO
     * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetTypedValuesTLPVO
-    * View Object: FscmTopModelAM.FinExtractAM.GlBiccExtractAM.SegmentValueHierarchyExtractPVO
     * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetValuesPVO
+    * View Object: FscmTopModelAM.FinExtractAM.GlBiccExtractAM.SegmentValueHierarchyExtractPVO
+    * View Object: FscmTopModelAM.AnalyticsServiceAM.FndTreeAndVersionVO
   * Underlying Database Objects:
     * FND_VS_VALUES_B
     * GL_SEG_VAL_HIER_CF
     * FND_VS_VALUE_SETS
     * FND_VS_VALUES_TL
+    * FND_TREE_AND_VERSION_VO
 
 ##### Properties
 
@@ -510,20 +581,20 @@ The Fund segment most closely aligns with the fund attribute of the KFS Account.
     * `VALUE_SET_TYPED_VALUES_PVO`
     * `VALUE_SET_TYPED_VALUES_TL_PVO`
     * `VALUE_SET_VALUES_PVO`
-    * `GL_SEG_VAL_HIER_CF`
-    * `FND_TREE_AND_VERSION_VO`
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
     * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetTypedValuesPVO
     * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetTypedValuesTLPVO
-    * View Object: FscmTopModelAM.FinExtractAM.GlBiccExtractAM.SegmentValueHierarchyExtractPVO
     * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetValuesPVO
+    * View Object: FscmTopModelAM.FinExtractAM.GlBiccExtractAM.SegmentValueHierarchyExtractPVO
+    * View Object: FscmTopModelAM.AnalyticsServiceAM.FndTreeAndVersionVO
   * Underlying Database Objects:
     * FND_VS_VALUES_B
     * GL_SEG_VAL_HIER_CF
     * FND_VS_VALUE_SETS
     * FND_VS_VALUES_TL
+    * FND_TREE_AND_VERSION_VO
 
 ##### Properties
 
@@ -689,20 +760,20 @@ Due to significant variations in how departments track programs in KFS, it is no
     * `VALUE_SET_TYPED_VALUES_PVO`
     * `VALUE_SET_TYPED_VALUES_TL_PVO`
     * `VALUE_SET_VALUES_PVO`
-    * `GL_SEG_VAL_HIER_CF`
-    * `FND_TREE_AND_VERSION_VO`
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
     * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetTypedValuesPVO
     * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetTypedValuesTLPVO
-    * View Object: FscmTopModelAM.FinExtractAM.GlBiccExtractAM.SegmentValueHierarchyExtractPVO
     * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetValuesPVO
+    * View Object: FscmTopModelAM.FinExtractAM.GlBiccExtractAM.SegmentValueHierarchyExtractPVO
+    * View Object: FscmTopModelAM.AnalyticsServiceAM.FndTreeAndVersionVO
   * Underlying Database Objects:
     * FND_VS_VALUES_B
     * GL_SEG_VAL_HIER_CF
     * FND_VS_VALUE_SETS
     * FND_VS_VALUES_TL
+    * FND_TREE_AND_VERSION_VO
 
 ##### Properties
 
@@ -813,20 +884,20 @@ Due to significant variations in how departments track projects in KFS, it is no
     * `VALUE_SET_TYPED_VALUES_PVO`
     * `VALUE_SET_TYPED_VALUES_TL_PVO`
     * `VALUE_SET_VALUES_PVO`
-    * `GL_SEG_VAL_HIER_CF`
-    * `FND_TREE_AND_VERSION_VO`
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
     * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetTypedValuesPVO
     * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetTypedValuesTLPVO
-    * View Object: FscmTopModelAM.FinExtractAM.GlBiccExtractAM.SegmentValueHierarchyExtractPVO
     * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetValuesPVO
+    * View Object: FscmTopModelAM.FinExtractAM.GlBiccExtractAM.SegmentValueHierarchyExtractPVO
+    * View Object: FscmTopModelAM.AnalyticsServiceAM.FndTreeAndVersionVO
   * Underlying Database Objects:
     * FND_VS_VALUES_B
     * GL_SEG_VAL_HIER_CF
     * FND_VS_VALUE_SETS
     * FND_VS_VALUES_TL
+    * FND_TREE_AND_VERSION_VO
 
 ##### Properties
 
@@ -925,20 +996,20 @@ The Purpose segment most closely aligns with the HEFC (Higher Ed. Function Code)
     * `VALUE_SET_TYPED_VALUES_PVO`
     * `VALUE_SET_TYPED_VALUES_TL_PVO`
     * `VALUE_SET_VALUES_PVO`
-    * `GL_SEG_VAL_HIER_CF`
-    * `FND_TREE_AND_VERSION_VO`
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
     * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetTypedValuesPVO
     * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetTypedValuesTLPVO
-    * View Object: FscmTopModelAM.FinExtractAM.GlBiccExtractAM.SegmentValueHierarchyExtractPVO
     * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetValuesPVO
+    * View Object: FscmTopModelAM.FinExtractAM.GlBiccExtractAM.SegmentValueHierarchyExtractPVO
+    * View Object: FscmTopModelAM.AnalyticsServiceAM.FndTreeAndVersionVO
   * Underlying Database Objects:
     * FND_VS_VALUES_B
     * GL_SEG_VAL_HIER_CF
     * FND_VS_VALUE_SETS
     * FND_VS_VALUES_TL
+    * FND_TREE_AND_VERSION_VO
 
 ##### Properties
 

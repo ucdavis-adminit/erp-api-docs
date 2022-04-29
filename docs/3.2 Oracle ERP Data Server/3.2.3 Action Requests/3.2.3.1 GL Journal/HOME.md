@@ -294,7 +294,7 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
       * If the account descends from 30000X, fail validation.
     * _PPM Offset Account is not allowed_
       * If the account == `TBD`, fail validation.
-    * _Purchases to be capitalized must be recorded on a Capital Project._
+    * _Purchases to be capitalized must be recorded in PPM._
       * If the account is a descendent of `52500B`, fail validation.
   * **Validate via Combination Code** **(TODO)**
     * Check if the combination of the 11 GL segments is a known, valid combination.
