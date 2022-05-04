@@ -1,7 +1,7 @@
 # 3.2.1.4 PPM Reference Data
 
 <!--BREAK-->
-### Data Object: ErpContracts
+### Data Object: ErpContract
 
 Cayuse support - non-segment data objects needed for submission of project and grant data
 Needed for to manage grants and contracts for lookup table
@@ -19,12 +19,13 @@ Needed for to manage grants and contracts for lookup table
 | Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
 | ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
 | id                 | Long!                     |                |                 |               | ID: The unique identifier of the contract. |
+| contractNumber     | NonEmptyTrimmedString60!  |                |        Y        |               |  |
 | name               | NonEmptyTrimmedString150! |                |        Y        |               | Contract Name: The name of the Contract. |
-| description        | NonEmptyTrimmedString240  |                |        Y        |               | Contract Description: The description for the Contract. |
+| contractTypeName   | NonEmptyTrimmedString240! |                |        Y        |               | Contract Description: The description for the Contract. |
 | startDate          | LocalDate!                |                |                 |               | Contract start date: Start Date of the Contract |
 | endDate            | LocalDate                 |                |                 |               | Contract end date: End Date of the Contract |
-| lastUpdateDateTime | DateTime!                 |                |        Y        |               | The date when the keyword was last updated. |
 | lastUpdatedBy      | ErpUserId                 |                |                 |               | The user that last updated the keyword. |
+| lastUpdateDateTime | DateTime!                 |                |        Y        |               | The date when the keyword was last updated. |
 
 ##### Linked Data Objects
 
@@ -32,34 +33,34 @@ Needed for to manage grants and contracts for lookup table
 
 #### Query Operations
 
-##### `erpContracts`
+##### `erpContract`
 
-> Get a single ErpContracts by id.  Returns undefined if does not exist
+> Get a single ErpContract by id.  Returns undefined if does not exist
 
 * **Parameters**
   * `id : String!`
 * **Returns**
-  * `ErpContracts`
+  * `ErpContract`
 
-##### `erpContractsByName`
+##### `erpContractByName`
 
-> Gets ErpContractss by exact name.  Returns empty list if none are found
+> Gets ErpContracts by exact name.  Returns empty list if none are found
 
 * **Parameters**
   * `name : String!`
 * **Returns**
-  * `[ErpContracts!]!`
+  * `[ErpContract!]!`
 
-##### `erpContractsSearch`
+##### `erpContractSearch`
 
-> Search for ErpContracts objects by multiple properties.
+> Search for ErpContract objects by multiple properties.
 > See
-> See the ErpContractsFilterInput type for options.
+> See the ErpContractFilterInput type for options.
 
 * **Parameters**
-  * `filter : ErpContractsFilterInput!`
+  * `filter : ErpContractFilterInput!`
 * **Returns**
-  * `ErpContractsSearchResults!`
+  * `ErpContractSearchResults!`
 
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.

@@ -236,6 +236,7 @@ Below are some examples of responses from the API.  Successful response data is 
 | Scalar Name                  | Description |
 | ---------------------------- | ----------- |
 | `AccountNumber`              | Banking account number is a string of 5 to 17 alphanumeric values for representing an generic account number |
+| `ArUnitOfMeasureCode`        | Oracle AR Unit of Measure Code |
 | `Boolean`                    | The `Boolean` scalar type represents `true` or `false`. |
 | `CityName`                   | Oracle City Name, 60-character limit |
 | `CountryCode`                | A country code as defined by ISO 3166-1 alpha-2 |
