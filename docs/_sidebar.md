@@ -11,5 +11,6 @@
     * [3.2.3 Action Requests](3.2%20Oracle%20ERP%20Data%20Server/3.2.3%20Action%20Requests/HOME)
       * [3.2.3.1 GL Journal](3.2%20Oracle%20ERP%20Data%20Server/3.2.3%20Action%20Requests/3.2.3.1%20GL%20Journal/HOME)
       * [3.2.3.2 SCM Payment](3.2%20Oracle%20ERP%20Data%20Server/3.2.3%20Action%20Requests/3.2.3.2%20SCM%20Payment/HOME)
+      * [3.2.3.3 SCM Requisition](3.2%20Oracle%20ERP%20Data%20Server/3.2.3%20Action%20Requests/3.2.3.3%20SCM%20Requisition/HOME)
     * [3.2.5 File Based Action Requests](3.2%20Oracle%20ERP%20Data%20Server/3.2.5%20File%20Based%20Action%20Requests/HOME)
       * [3.2.5.1 GL Journal File Submission](3.2%20Oracle%20ERP%20Data%20Server/3.2.5%20File%20Based%20Action%20Requests/3.2.5.1%20GL%20Journal%20File%20Submission/HOME)

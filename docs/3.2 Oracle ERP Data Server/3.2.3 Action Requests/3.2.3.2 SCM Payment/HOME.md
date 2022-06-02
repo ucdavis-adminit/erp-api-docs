@@ -43,26 +43,25 @@ This request allows the submitting boundary application to create payment reques
 
 * Confirm if `consumerTrackingId` previously used and reject if found in the action request table.
 
-
 ##### Data Validation
 
-* Validate LineType:  LINE_TYPE_LOOKUP_CODE 
+* Validate LineType:  LINE_TYPE_LOOKUP_CODE
   * The code you enter must be ITEM, TAX, MISCELLANEOUS, or FREIGHT. Validate against lookup codes stored in the AP_LOOKUP_CODES table
-* Validate InvoiceType: INVOICE_TYPE_LOOKUP_CODE 
+* Validate InvoiceType: INVOICE_TYPE_LOOKUP_CODE
   * The value must be Credit or Standard. The invoice type must correspond to the invoice amount. For example, Credit invoices must have invoice Amounts less than zero.
 * Validate unitOfMeasureCode: this will probably be enum? `ArUnitOfMeasure`
 * Validate paymentTerms: `ScmPaymentTerm`
 * Check that Supplier is valid. Validate supplierNumber: `ScmSupplier.supplierNumber`
   * scm_supplier table
-* Ensure that the Site is valid. Validate supplierSiteCode: `ScmSupplier.supplierNumber.suppliers.supplierSiteCode` 
+* Ensure that the Site is valid. Validate supplierSiteCode: `ScmSupplier.supplierNumber.suppliers.supplierSiteCode`
   * scm_supplier_site table
 * Check that there is not a previously submitted pending or successful request with the same transaction number for the API consumer.
 * Verify transaction date within last month?
 * Verify no line was given both GL and POET segments.
 * Validate glSegment
 * Validate glSegment String
-* Validate ppmSegment: 
-  * Validate POET (Project, Organization, Expenditure, Task). 
+* Validate ppmSegment:
+  * Validate POET (Project, Organization, Expenditure, Task).
 * If submitted, verify PO Number is valid
 * If submitted, verify Project code is valid
   * Check if contact number is valid when submitted
@@ -70,12 +69,11 @@ This request allows the submitting boundary application to create payment reques
   * Check if expenditure organization is valid when submitted
   * Check if expenditure type is valid when submitted
   * Check if funding Source is valid when submitted
-  
 * Validate Invoice Number (Verify against `ap_invoices_all`).
   * If the Invoice Number already exists in the system for a given Vendor in a given Operating Unit, then another Invoice cannot be created with the same Invoice Number.Example: (<http://oraclelabs.phaniadivi.com/2017/08/oracle-payables-invoice-interface-validating-invoice-number/>)
 * Validate Vendor Name.
   * The Validation logic should check to see if a vendor already exists for that vendor number. If Yes, then an Invoice can be created for that Supplier. Else, since that Supplier doesn’t exist, Invoices cannot be created against that supplier and the validation should result in error. Example: (<http://oraclelabs.phaniadivi.com/2017/08/oracle-payables-invoice-interface-validate-vendor-number/>)
-* Validate PO number if one is provided. 
+* Validate PO number if one is provided.
 * Validate Invoice Type (Enum: STANDARD, PREPAYMENT, CREDIT, DEBIT)
 * Validate Invoice Amount
   * Validate Sum of Line Amount equals Invoice Amount
