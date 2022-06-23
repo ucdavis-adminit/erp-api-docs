@@ -235,7 +235,6 @@ Below are some examples of responses from the API.  Successful response data is 
 
 | Scalar Name                  | Description |
 | ---------------------------- | ----------- |
-| `AccountNumber`              | Banking account number is a string of 5 to 17 alphanumeric values for representing an generic account number |
 | `ArUnitOfMeasureCode`        | Oracle AR Unit of Measure Code |
 | `Boolean`                    | The `Boolean` scalar type represents `true` or `false`. |
 | `CityName`                   | Oracle City Name, 60-character limit |
@@ -277,31 +276,10 @@ Below are some examples of responses from the API.  Successful response data is 
 | `KfsProjectCode`             | 10-character KFS Project Code, upper-case letters and digits only |
 | `KfsSubAccountNumber`        | 5-character KFS Sub Account Number, upper-case letters and digits only |
 | `LocalDate`                  | A local date string (i.e., with no associated timezone) in `YYYY-MM-DD` format, e.g. `2020-01-01`. |
-| `Locale`                     | The locale in the format of a BCP 47 (RFC 5646) standard string |
 | `Long`                       | The `BigInt` scalar type represents non-fractional signed whole numeric values. |
 | `NonEmptyString`             | A string that cannot be passed as an empty value |
-| `NonEmptyTrimmedString1`     | String limited to 1 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
-| `NonEmptyTrimmedString10`    | String limited to 10 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
-| `NonEmptyTrimmedString100`   | String limited to 100 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
-| `NonEmptyTrimmedString15`    | String limited to 15 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
-| `NonEmptyTrimmedString150`   | String limited to 150 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
-| `NonEmptyTrimmedString2`     | String limited to 2 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
-| `NonEmptyTrimmedString20`    | Trimmed String limited to 20 characters. |
-| `NonEmptyTrimmedString225`   | String limited to 225 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString240`   | String limited to 240 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
-| `NonEmptyTrimmedString25`    | String limited to 25 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
-| `NonEmptyTrimmedString250`   | String limited to 250 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
-| `NonEmptyTrimmedString255`   | String limited to 255 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
-| `NonEmptyTrimmedString3`     | String limited to 3 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
-| `NonEmptyTrimmedString30`    | Trimmed String limited to 30 characters. |
-| `NonEmptyTrimmedString32`    | String limited to 32 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
-| `NonEmptyTrimmedString320`   | String limited to 320 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
-| `NonEmptyTrimmedString360`   | String limited to 360 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
-| `NonEmptyTrimmedString4`     | String limited to 4 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString40`    | String limited to 40 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
-| `NonEmptyTrimmedString50`    | String limited to 50 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
-| `NonEmptyTrimmedString60`    | String limited to 60 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
-| `NonEmptyTrimmedString80`    | String limited to 80 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonNegativeFloat`           | Floats that will have a value of 0 or more. |
 | `NonNegativeInt`             | Integers that will have a value of 0 or more. |
 | `PositiveFloat`              | Floats that will have a value greater than 0. |
@@ -311,9 +289,8 @@ Below are some examples of responses from the API.  Successful response data is 
 | `PpmExpenseTypeCode`         | Oracle PPM Expense Type<br/><br/>The PPM Expense Type will have the same values as the [`ErpAccount`]({{Types.ErpAccount}}).  The expected value by oracle is the code + " - " + name.  This API will accept the code alone by using the first 6 characters of the string and perfoming the needed lookup to obtain the value required by Oracle.<br/><br/>-*Definition:** The Expenditure Type identifies the natural classification of the expense transaction being recorded.<br/><br/>-*Roll-up relationship to the new Chart of Accounts in the General Ledger:**<br/>- The Expenditure Type value will roll up to the (Natural) Account segment in the Chart of Accounts.<br/>- The first 6 characters of the Expenditure Type value will correspond with the (Natural) Account value it rolls up to.<br/> |
 | `PpmFundingSourceNumber`     | Oracle PPM Funding Source Number<br/><br/>Only required for Sponsored Research projects (defined as a flag on the [PpmProject]({{Types.PpmProject}})), this identifies the funding to which the expenses are applied.  It will be used to derive the GL Fund segment.<br/><br/>-*FORMAT AND LENGTH OF THIS SEGMENT IS UNKNOWN AT THIS TIME (4/4/22)**<br/><br/>Normally, you will not need to provide this, as most projects will have a single funding source and this will be derived by the API.  File-based submitters will need to look up the default project number from the PpmProject and supply it when the `sponsoredProject` property is true.<br/> |
 | `PpmProjectNumber`           | Oracle Managed Project Number<br/><br/>A 10-character project code which identifies Sponsored Research, a Faculty Portfolio, or a Capital Project.  Values will generally start with a 2 character prefix which identifies their type followed by a system-assigned number.<br/><br/>-*Definition:** The Project identifies the planned work or activity to be completed over a period of time and intended to achieve a particular goal.<br/><br/>-*Roll-up relationship to the new Chart of Accounts (CoA) in the General Ledger:**<br/>- The POET(AF) Project value will roll up to the Project segment of the Chart of Accounts.<br/>- PPM Project values and GL Project segment values will be the same.<br/> |
-| `PpmSegmentString`           | Oracle PPM Combined Segments Chartstring<br/><br/>Must be populated with either the 4 required segments, or all 6 segments.  (Project-Task Number-Expense Organization-Expense Type-Award Number-Funding Source)<br/><br/>- Format Pattern (Required Only): `SP00000001-0001-0000000-000000`<br/>- Format Pattern (Sponsored Projects): `CP00000001-0001-0000000-000000-0000000-00000`<br/>- Format Regex:   `^[A-Z]{2}[0-9]{7}[0-9A-Z]-[0-9A-Z]{4}-[0-9P][0-9]{5}[0-9A-F]-[0-9]{5}[0-9A-EX](-[0-9A-Z]{7}-[0-9A-Z]{5})?$`<br/><br/>See documentation on the individual segments for more information:<br/><br/>- [PpmProjectNumber]({{Types.PpmProjectNumber}})<br/>- [PpmExpenseOrganizationCode]({{Types.PpmExpenseOrganizationCode}})<br/>- [PpmExpenseTypeCode]({{Types.PpmExpenseTypeCode}})<br/>- [PpmTaskNumber]({{Types.PpmTaskNumber}})<br/>- [PpmAwardNumber]({{Types.PpmAwardNumber}})<br/>- [PpmFundingSourceNumber]({{Types.PpmFundingSourceNumber}})<br/> |
+| `PpmSegmentString`           | Oracle PPM Combined Segments Chartstring<br/><br/>Must be populated with either the 4 required segments, or all 6 segments.  (Project-Task Number-Expense Organization-Expense Type-Award Number-Funding Source)<br/><br/>- Format Pattern (Required Only): `SP00000001-000001-0000000-000000`<br/>- Format Pattern (Sponsored Projects): `CP00000001-000001-0000000-000000-0000000-00000`<br/>- Format Regex:   `^[A-Z0-9]{10}-[0-9A-Z]{6}-[0-9A-Z]{7}-[0-9A-Z]{6}(-[0-9A-Z]{7}-[0-9A-Z]{5})?$`<br/><br/>See documentation on the individual segments for more information:<br/><br/>- [PpmProjectNumber]({{Types.PpmProjectNumber}})<br/>- [PpmExpenseOrganizationCode]({{Types.PpmExpenseOrganizationCode}})<br/>- [PpmExpenseTypeCode]({{Types.PpmExpenseTypeCode}})<br/>- [PpmTaskNumber]({{Types.PpmTaskNumber}})<br/>- [PpmAwardNumber]({{Types.PpmAwardNumber}})<br/>- [PpmFundingSourceNumber]({{Types.PpmFundingSourceNumber}})<br/> |
 | `PpmTaskNumber`              | Oracle PPM Project Task<br/><br/>The task number is a 4-character code which identifies an activity within a project.  PPM will internally map this to a combination of other segments during sub-ledger accounting processing to post to the GL.<br/><br/>-*Definition:** The Task identifies the activities used to further breakdown a PPM project. Every project MUST have at least one Task.  The number of tasks will vary by type of project.<br/><br/>-*Roll-up relationship to the new Chart of Accounts in the General Ledger:**<br/>- Task values are exclusively used in the PPM module.<br/>- For Internal Faculty Projects, the Task will identify the Program, Purpose, Fund and Activity segments in the GL, using various PPM mapping rules.<br/> |
-| `RoutingNumber`              | In the US, an ABA routing transit number (`ABA RTN`) is a nine-digit code to identify the financial institution. |
 | `ScmAddressLine`             | Oracle SCM Address Line, 240 Character Limit |
 | `ScmName`                    | Oracle SCM Name |
 | `ScmUnitOfMeasureCode`       | Oracle SCM Unit Of Measure Code |
@@ -438,7 +415,7 @@ Status options within the [ActionRequestStatus]({{Types.ActionRequestStatus}}) t
 | ----------- | ----------- |
 | `COMPLETE`  | If Callback URL Provided: Request has been processed, and the callback was successfully contacted.  Or, request has been processed, and no callback URL was provided. |
 | `ERROR`     | There was an error processing the request after it was picked up. |
-| `INPROCESS` | Request has been picked up for processing |
+| `INPROCESS` | Request has been picked up for processing. |
 | `PENDING`   | Request has been submitted to the server, but not validated or processed. |
 | `PROCESSED` | Request has been processed, but the callback has not been completed. |
 | `REJECTED`  | There was a validation error in the request payload data. |
@@ -446,7 +423,7 @@ Status options within the [ActionRequestStatus]({{Types.ActionRequestStatus}}) t
 
 ##### `ScmInvoiceType`
 
-
+Nature of the invoice when paying one for a PO.  This would drive the natural account.  Use STANDARD unless directed otherwise.
 
 | Enum Value   | Description |
 | ------------ | ----------- |
@@ -457,7 +434,7 @@ Status options within the [ActionRequestStatus]({{Types.ActionRequestStatus}}) t
 
 ##### `ScmLineType`
 
-
+Nature of the payment for this one.  In general, all lines should be ITEM.
 
 | Enum Value      | Description |
 | --------------- | ----------- |

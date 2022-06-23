@@ -770,7 +770,7 @@ Responses are structured like the following.  Successful response data is wrappe
 1. Request Validations
 
    1. Improperly formatted input data is rejected with a GraphQL Error.
-   2. Request is not processed if the user does not have authorization to use the operation.
+   2. Request is not processed if the user does not have authorization to use the operation and are rejected with an appropriate message to the consumer.
    3. Payloads with missing or blank input data are rejected with a GraphQL Error.
 
 2. Request Header Validations
@@ -807,5 +807,5 @@ Responses are structured like the following.  Successful response data is wrappe
    3. No request will be saved to the action request tracking database.
 
 6. Behaviors (once all validations passed)
-   1. When GL and PPM lines are present.  And GL Line debits do not equal credits, then offsetting GL entries are created for each PPM line using the defined GL-PPM clearing account.
+   1. When GL and PPM lines are present.  And PPM Line debits do not equal credits, then offsetting GL entries are created for each PPM line using the defined GL-PPM clearing account.
    2. The request will be stored to a tracking table.  A separate process is responsible for picking it up and processing it for Oracle.

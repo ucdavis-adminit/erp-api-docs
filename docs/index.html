@@ -50,10 +50,18 @@
 
     <script src="//unpkg.com/prismjs/components/prism-json.min.js"></script>
     <script src="//unpkg.com/prismjs/components/prism-graphql.min.js"></script>
+    <script src="//unpkg.com/prismjs/components/prism-sql.min.js"></script>
+    <script src="//unpkg.com/prismjs/components/prism-bash.min.js"></script>
+    <script src="//unpkg.com/prismjs/components/prism-docker.min.js"></script>
+    <script src="//unpkg.com/prismjs/components/prism-twig.min.js"></script>
+    <script src="//unpkg.com/prismjs/components/prism-groovy.min.js"></script>
     <script>
-      Prism.languages.jsonc = Prism.languages.json;
-      Prism.languages.avsc  = Prism.languages.json;
-      Prism.languages.gql   = Prism.languages.graphql;
+      Prism.languages.jsonc      = Prism.languages.json;
+      Prism.languages.avsc       = Prism.languages.json;
+      Prism.languages.sh         = Prism.languages.bash;
+      Prism.languages.gql        = Prism.languages.graphql;
+      Prism.languages.j2         = Prism.languages.twig;
+      Prism.languages.Dockerfile = Prism.languages.docker;
     </script>
 
     <script src="//unpkg.com/docsify-plantuml/dist/docsify-plantuml.min.js"></script>

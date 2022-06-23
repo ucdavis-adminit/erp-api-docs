@@ -79,7 +79,9 @@
 <!--BREAK-->
 ### Data Object: ScmPurchasingCategory
 
+The SCM purchasing category represent the type of item being paid for on an invoice payment.
 
+The Oracle Purchasing category is the conceptual replacement for the KFS Commodity Code.
 
 #### Access Controls
 
@@ -149,7 +151,11 @@
 <!--BREAK-->
 ### Data Object: ScmSupplier
 
+A defined supplier of goods or services in the ERP system.
 
+Each supplier may have multiple sites at which they do business.  It is necessary to identify both the supplier and site when submitting a payment.
+
+Supplier in Oracle replaces Vendor in KFS.
 
 #### Access Controls
 

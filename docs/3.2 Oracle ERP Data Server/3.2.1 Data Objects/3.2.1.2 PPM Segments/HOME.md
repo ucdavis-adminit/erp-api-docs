@@ -22,11 +22,11 @@ The Award Number identifies the number assigned to an award containing funding a
 * Local Table/View: `PPM_AWARD`
   * Support Tables:
     * `PPM_PROJECT_AWARD`
+    * `ERP_CONTRACT`
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
     * View Object: FscmTopModelAM.GmsAwardAM.AwardHeaderViewPVO
-    * batch316123518-20220126_234328
   * Underlying Database Objects:
     * GMS_AWARD_HEADERS_B
     * GMS_AWARD_HEADERS_TL
@@ -38,6 +38,8 @@ The Award Number identifies the number assigned to an award containing funding a
 | --------------------------- | ------------------------ | :------------: | :-------------: | ------------- | ----- |
 | id                          | Long!                    |       Y        |        Y        |               | Award ID: Unique identifier of the award. |
 | name                        | NonEmptyTrimmedString240 |                |        Y        |               | Award Name: Name of the award. |
+| awardNumber                 | NonEmptyTrimmedString30  |                |        Y        |               |  Award Number: Award number tracked by the sponsor. |
+| awardTypeName               | String                   |                |                 |               | The award type name associated with the award |
 | description                 | NonEmptyTrimmedString240 |                |                 |               | Description: Brief description of the award. |
 | projectId                   | Long!                    |                |        Y        |               | Project ID: Project Identifier for award. |
 | startDate                   | LocalDate                |                |                 |               | Start Date: Start date of the award. |
@@ -47,7 +49,6 @@ The Award Number identifies the number assigned to an award containing funding a
 | awardPurpose                | NonEmptyTrimmedString80  |                |                 |               | Purpose: Name of the award purpose. |
 | awardType                   | NonEmptyTrimmedString30  |                |        Y        |               | Type: Classification of an award, for example, Federal grants or Private grants. |
 | businessUnitName            | NonEmptyTrimmedString100 |                |                 |               | Business Unit: Unit of an enterprise that performs one or many business functions that can be rolled up in a management hierarchy. An award business unit is one within which the award is created. |
-| awardNumber                 | NonEmptyTrimmedString30  |                |        Y        |               |  Award Number: Award number tracked by the sponsor. |
 | lastUpdateDate              | DateTime!                |                |                 |               | The date when the award was last updated. |
 | lastUpdatedBy               | ErpUserId                |                |                 |               | The user that last updated the award. |
 | awardFundingSource          | [PpmFundingSource!]      |                |                 |               | Award Funding Sources: The Award Funding Sources resource is used to view the attributes used to create or update a funding source for the award. |
@@ -591,6 +592,7 @@ The Project identifies the planned work or activity to be completed over a perio
 | projectStatus              | NonEmptyTrimmedString80!  |                |                 |               | Project Status: An implementation-defined classification of the status of a project. Typical project statuses are Active and Closed. |
 | projectStatusCode          | NonEmptyTrimmedString30!  |                |        Y        |               | Project Status Code: The current status set on a project. A project status is an implementation-defined classification of the status of a project. Typical project status codes are ACTIVE and CLOSED. |
 | projectOrganizationName    | NonEmptyTrimmedString240  |                |                 |               | Organization: An organizing unit in the internal or external structure of the enterprise. Organization structures provide the framework for performing legal reporting, financial control, and management reporting for the project. |
+| businessUnitName           | NonEmptyTrimmedString240  |                |                 |               | Name of the component of the system that this project belongs to.  There is a separation between sponsored projects managed by CGA, and other managed projects.  The value in this field should align with the sponsoredProject flag. |
 | legalEntityName            | NonEmptyTrimmedString240  |                |                 |               | Legal Entity: Name of the legal entity associated with the project. A legal entity is a recognized party with given rights and responsibilities by legislation. Legal entities generally have the right to own property, the right to trade, the responsibility to repay debt, and the responsibility to account for themselves to company regulators, taxation authorities, and owners according to rules specified in the relevant legislation. |
 | primaryProjectManagerEmail | NonEmptyTrimmedString240  |                |        Y        |               | Project Manager Email: Email of the person who leads the project team and who has the authority and responsibility for meeting the project objectives. |
 | primaryProjectManagerName  | NonEmptyTrimmedString240  |                |                 |               | Project Manager: Name of the person who leads the project team and who has the authority and responsibility for meeting project objectives. |
@@ -710,8 +712,8 @@ The Task identifies the activities used to further breakdown a PPM project. Ever
 | taskFinishDate           | LocalDate                 |                |                 |               | Task Finish Date: Scheduled end date of the project task. |
 | billable                 | Boolean!                  |                |        Y        |               | Billable: Indicates that transactions charged to that task can be billed to customers. |
 | chargeable               | Boolean!                  |                |        Y        |               | Chargeable: Indicates that something is eligible to be charged to a task. |
-| taskLevel                | PositiveInt!              |                |                 |               | Task Level: Indicates level of the task in the WBS. |
-| executionDisplaySequence | PositiveInt!              |                |                 |               | Display Sequence: The order in which the task is displayed in the project. |
+| taskLevel                | NonNegativeInt!           |                |                 |               | Task Level: Indicates level of the task in the WBS. |
+| executionDisplaySequence | NonNegativeInt!           |                |                 |               | Display Sequence: The order in which the task is displayed in the project. |
 | lowestLevelTask          | Boolean!                  |                |        Y        |               | Lowest Level Task: Indicates the task is at the lowest level. |
 | parentTaskId             | Long                      |                |                 |               | Parent Task ID: Identifier of the parent task of the task. |
 | topTaskId                | Long                      |                |                 |               | Top Task ID: Identifier of the top task to which the task rolls up. If the task is a top task, the identifier of the top task is same as the identifier of the task. |
