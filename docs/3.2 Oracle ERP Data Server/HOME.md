@@ -407,6 +407,17 @@ Used on payment API to indicate payment type
 | `STUDENT`  |  |
 | `SUPPLIER` |  |
 
+##### `ProcessingResultStatus`
+
+Status of the pipeline request triggered from an API action request.
+
+| Enum Value  | Description |
+| ----------- | ----------- |
+| `ERROR`     | one or more of the jobs resulted in an error and was not processed |
+| `INPROCESS` | data is in pipeline for processing and all jobs have not completed |
+| `PROCESSED` | processing is complete but notifications have not been sent |
+| `SUCCESS`   | all jobs completed successfully |
+
 ##### `RequestStatus`
 
 Status options within the [ActionRequestStatus]({{Types.ActionRequestStatus}}) that reflect the states a request can be in.

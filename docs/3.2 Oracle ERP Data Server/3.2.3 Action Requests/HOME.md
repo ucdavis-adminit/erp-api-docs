@@ -111,6 +111,7 @@
 | errorMessages           | \[String!\]              | Array of error messages, if any.                                            |
 | statusRequestPayload    | JSON                     | Full JSON of the GraphQL request needed to check the status of the request. |
 | actionRequestPayload    | JSON                     | Full JSON of the original GraphQL action request.                           |
+| resultAttributes        | JSON                     | JSON object with key/value pairs containing Oracle-generated identifiers.   |
 
 ##### `ValidationResponse`
 
