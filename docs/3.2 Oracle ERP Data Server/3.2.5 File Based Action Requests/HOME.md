@@ -32,12 +32,18 @@ The naming pattern is:
 
 `<data type>.<Source Name>.<timestamp>.json`
 
-| Data Type              | Prefix        | Sample Name                                         |
-| ---------------------- | ------------- | --------------------------------------------------- |
-| Journal                | `journal`     | `journal.UCD_Boundary_System.20220202155200.json`   |
-| Payment                | `invoice`     | `invoice.UCD_Concur.20220202155200.json`            |
-| Receivables Invoice    | `receivable`  | `receivable.UCD_Stratocore.20220202155200.json`     |
-| Purchasing Requisition | `requisition` | `requisition.UCD_PrePurchasing.20220202155200.json` |
+| Data Type                    | Prefix        | Sample Name                                       |
+| ---------------------------- | ------------- | ------------------------------------------------- |
+| Journal                      | `journal`     | `journal.UCD_Boundary_System.20220701110325.json` |
+| Invoice Payment              | `invoice`     | `invoice.UCD_Concur.20220701110325.json`          |
+| Payment Request              | `payment`     | `payment.UCD_Banner.20220701110325.json`          |
+| Receivables Invoice          | `receivable`  | `receivable.UCD_Stratocore.20220701110325.json`   |
+| Purchasing Requisition       | `requisition` | `requisition.UCD_CAES.20220701110325.json`        |
+| Award                        | `award`       | `award.UCD_Cayuse.20220701110325.zip`             |
+| US Bank Credit Card Expenses | `usbank`      | `usbank.UCD_USBank.20220701110325.dat`            |
+| Concur SAE                   | `sae`         | `sae.UCD_Concur.20220701110325.dat`               |
+| UCPath I-303                 | `i303`        | `i303.UCD_UCPath.20220701110325.dat`              |
+| AggieShip FBAP               | `fbap`        | `fbap.UCD_Aggieship.20220701110325.dat`           |
 
 #### File Format
 
