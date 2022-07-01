@@ -8,6 +8,11 @@
 This request allows the submitting boundary application to create payment request in the Oracle Financials system.  It accepts the provided data for a single payment and runs validation prior to storing it for processing by the integration platform.
 
 
+#### Access Controls
+
+* Required Role: `erp:writer-payment`
+* Required Role: `erp:reader-supplier`
+
 #### Basic Use
 
 1. Consumer calls the operation providing a data payload with the proper structure.

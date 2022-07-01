@@ -8,6 +8,11 @@
 This request allows the submitting boundary application to create purchase requisition request in the Oracle Financials system.  It accepts the provided data for a single requisition and runs validation prior to storing it for processing by the integration platform.
 
 
+#### Access Controls
+
+* Required Role: `erp:writer-requisition`
+* Required Role: `erp:reader-supplier`
+
 #### Basic Use
 
 1. Consumer calls the operation providing a data payload with the proper structure.
@@ -51,15 +56,15 @@ This request allows the submitting boundary application to create purchase requi
 * Validate requesterName: ?
 * Check that Supplier is valid. Validate supplierNumber: `ScmSupplier.supplierNumber`
   * scm_supplier table
-* Ensure that the Site is valid. Validate supplierSiteCode: `ScmSupplier.supplierNumber.suppliers.supplierSiteCode` 
+* Ensure that the Site is valid. Validate supplierSiteCode: `ScmSupplier.supplierNumber.suppliers.supplierSiteCode`
   * scm_supplier_site table
 * Validate unitOfMeasureCode: this will probably be enum?  `ArUnitOfMeasure`
 * Validate deliverToTypeCode - probably just enum. What should be in it?
 * Validate deliveryToLocationCode: ? Against `ErpLocation` table assuming that all uc locations are loaded there as well?
 * Validate glSegment
 * Validate glSegment String
-* Validate ppmSegment: 
-  * Validate POET (Project, Organization, Expenditure, Task). 
+* Validate ppmSegment:
+  * Validate POET (Project, Organization, Expenditure, Task).
 * Check that `ScmPurchaseRequisitionLineInput.amount` represents sum of  `ScmPurchaseRequisitionDistributionInput.amount`
 
 

@@ -15,6 +15,10 @@ The correct values to use for chartstring segments is out of scope for this docu
 
 Please see below in this document for examples of payloads into this API.
 
+#### Access Controls
+
+* Required Role: `erp:writer-journal`
+
 #### Supporting Operations
 
 Other operations which should be used to pre-validate chartstring segments are below.  Please see <https://financeandbusiness.ucdavis.edu/aggie-enterprise/chart-of-accounts/redesign> for information about each of these segments.
