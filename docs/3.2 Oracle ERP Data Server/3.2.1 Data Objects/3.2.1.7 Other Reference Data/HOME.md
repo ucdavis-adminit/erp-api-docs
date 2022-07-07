@@ -21,6 +21,8 @@ Contains information about the ERP API server's version.
 | shortHash     | String    |                |                 |               |  |
 | branch        | String    |                |                 |               |  |
 | committedOn   | Date      |                |                 |               |  |
+| erpSchema     | String!   |                |                 |               |  |
+| apiSchema     | String!   |                |                 |               |  |
 
 ##### Linked Data Objects
 

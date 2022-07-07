@@ -970,3 +970,73 @@ The Purpose segment most closely aligns with the HEFC (Higher Ed. Function Code)
 
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
+### Data Object: ErpUnitOfMeasure
+
+
+
+#### Access Controls
+
+* Required Role: ``
+
+#### Data Source
+
+* Local Table/View: `undefined`
+
+##### Properties
+
+| Property Name   | Data Type               | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| --------------- | ----------------------- | :------------: | :-------------: | ------------- | ----- |
+| unitOfMeasureId | Long                    |       Y        |        Y        |               | Unique identifier of the Unit of Measure (UOM) |
+| uomCode         | ErpUnitOfMeasureCode    |                |        Y        |               | Unique short code assigned to a Unit of Measure (UOM) |
+| name            | NonEmptyTrimmedString25 |                |        Y        |               | Translatable Unit of Measure (UOM) name |
+| description     | NonEmptyTrimmedString50 |                |                 |               | Translatable Unit of Measure (UOM) description. |
+| baseUOM         | Boolean!                |                |                 |               | Base Unit of Measure (UOM) flag. |
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+##### `erpUnitOfMeasure`
+
+> Get a single ErpUnitOfMeasure by unitOfMeasureId.  Returns undefined if does not exist
+
+* **Parameters**
+  * `unitOfMeasureId : String!`
+* **Returns**
+  * `ErpUnitOfMeasure`
+
+##### `erpUnitOfMeasureByCode`
+
+> Get a single ErpUnitOfMeasure by uom code.  Returns undefined if does not exist
+
+* **Parameters**
+  * `uomCode : String!`
+* **Returns**
+  * `ErpUnitOfMeasure`
+
+##### `erpUnitOfMeasureByName`
+
+> Get a single ErpUnitOfMeasure by unit of measure.  Returns undefined if does not exist
+
+* **Parameters**
+  * `name : String!`
+* **Returns**
+  * `ErpUnitOfMeasure`
+
+##### `erpUnitOfMeasureSearch`
+
+> Search for ErpUnitOfMeasure objects by multiple properties.
+> See the ErpUnitOfMeasureFilterInput type for options.
+
+* **Parameters**
+  * `filter : ErpUnitOfMeasureFilterInput!`
+* **Returns**
+  * `ErpUnitOfMeasureSearchResults!`
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.

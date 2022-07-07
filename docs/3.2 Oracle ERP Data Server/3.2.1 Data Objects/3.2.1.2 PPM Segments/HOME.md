@@ -19,10 +19,11 @@ The Award Number identifies the number assigned to an award containing funding a
 
 #### Data Source
 
-* Local Table/View: `PPM_AWARD`
+* Local Table/View: `PPM_AWARD_V` (view)
   * Support Tables:
-    * `PPM_PROJECT_AWARD`
+    * `PPM_AWARD`
     * `ERP_CONTRACT`
+    * `PPM_PROJECT_AWARD`
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
