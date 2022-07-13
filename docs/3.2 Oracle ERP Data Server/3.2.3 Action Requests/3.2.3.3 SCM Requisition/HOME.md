@@ -58,7 +58,7 @@ This request allows the submitting boundary application to create purchase requi
   * scm_supplier table
 * Ensure that the Site is valid. Validate supplierSiteCode: `ScmSupplier.supplierNumber.suppliers.supplierSiteCode`
   * scm_supplier_site table
-* Validate unitOfMeasureCode: this will probably be enum?  `ArUnitOfMeasure`
+* Validate unitOfMeasureCode: this will probably be enum?  `ErpUnitOfMeasure`
 * Validate deliverToTypeCode - probably just enum. What should be in it?
 * Validate deliveryToLocationCode: ? Against `ErpLocation` table assuming that all uc locations are loaded there as well?
 * Validate glSegment
@@ -141,7 +141,7 @@ This request allows the submitting boundary application to create purchase requi
 | payload.supplierNumber                                  | scmSupplier            |                            |
 | payload.supplierSite                                    | scmSupplier            |                            |
 | payload.paymentTermsName                                | ArPaymentTerm          | name                       |
-| payload.lines.unitOfMeasureCode                         | ArUnitOfMeasure        | code                       |
+| payload.lines.unitOfMeasureCode                         | ErpUnitOfMeasure       | code                       |
 | payload.lines.distributions.glSegments.entity           | ErpEntity              | code                       |
 | payload.lines.distributions.glSegments.fund             | ErpFund                | code                       |
 | payload.lines.distributions.glSegments.department       | ErpFinancialDepartment | code                       |

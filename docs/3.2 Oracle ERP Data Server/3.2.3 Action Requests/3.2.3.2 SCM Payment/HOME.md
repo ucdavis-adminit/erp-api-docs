@@ -54,7 +54,7 @@ This request allows the submitting boundary application to create payment reques
   * The code you enter must be ITEM, TAX, MISCELLANEOUS, or FREIGHT. Validate against lookup codes stored in the AP_LOOKUP_CODES table
 * Validate InvoiceType: INVOICE_TYPE_LOOKUP_CODE
   * The value must be Credit or Standard. The invoice type must correspond to the invoice amount. For example, Credit invoices must have invoice Amounts less than zero.
-* Validate unitOfMeasureCode: this will probably be enum? `ArUnitOfMeasure`
+* Validate unitOfMeasureCode: this will probably be enum? `ErpUnitOfMeasure`
 * Validate paymentTerms: `ScmPaymentTerm`
 * Check that Supplier is valid. Validate supplierNumber: `ScmSupplier.supplierNumber`
   * scm_supplier table
@@ -118,7 +118,7 @@ This request allows the submitting boundary application to create payment reques
   * Verify number of lines `<=` 1000 (Preliminary number - should be a constant we can adjust easily via config options)
   * Verify no line was given both GL and POET segments.
   * Verify that any field provided by the consumer that has a valid list of values in Oracle contains a valid and active value.
-  * Validate unitOfMeasureCode: validate against  `ArUnitOfMeasure`
+  * Validate unitOfMeasureCode: validate against  `ErpUnitOfMeasure`
   * Validate paymentTerms: verify that term is one of the following: `ArPaymentTerm`
   * Check that Supplier is valid. Validate supplierNumber: `ScmSupplier.supplierNumber`
     * scm_supplier table
@@ -438,12 +438,12 @@ This request allows the submitting boundary application to create payment reques
 
 #### Questions
 
-> * Where can I map glSegments/ppmSegments on Rest API? 
+> * Where can I map glSegments/ppmSegments on Rest API?
 > * Is GLSegmentString '0000-00000-0000000-000000-00-000-0000000000-000000-0000-000000-000000'  mapped to distributionCombination in REST API?
-> * Where do we map ppmSegments in REST API? 
-> 
+> * Where do we map ppmSegments in REST API?
+>
 > * Where do I find Manage Payable Lookup tables?!
-> 
+>
 > * GROUP_ID where to obtain this info? VARCHAR2(80) vs input invoiceGroup VARCHAR(255)
 > * DOC_CATEGORY_CODE VARCHAR(30) vs documentCategory VARCHAR2(255). Do we need it?
 > * SOURCE VARCHAR2(80)  vs invoiceSource VARCHAR2(255).
@@ -455,9 +455,9 @@ This request allows the submitting boundary application to create payment reques
 
 #### Validations
 
-> * UNIT_OF_MEAS_LOOKUP_CODE: Validated against INV_UNITS_OF_MEASURE.UNIT_OF_MEASURE? Or perhaps ArUnitOfMeasure
+> * UNIT_OF_MEAS_LOOKUP_CODE: Validated against INV_UNITS_OF_MEASURE.UNIT_OF_MEASURE? Or perhaps ErpUnitOfMeasure
 > * Accounting Date: Date format: YYYY/MM/DD.
-> 
+>
 ##### Property Lookup Validations
 
 | GraphQL Property                                        | Local Data Object/Table | Local Data Object Property |
@@ -468,7 +468,7 @@ This request allows the submitting boundary application to create payment reques
 | payload.supplier                                        | scmSupplier             | code                       |
 | payload.supplierNumber                                  | scmSupplier             | code                       |
 | payload.supplierSite                                    | scmSupplier             | code                       |
-| payload.invoiceLines.unitOfMeasureCode                  | ArUnitOfMeasure         | code                       |
+| payload.invoiceLines.unitOfMeasureCode                  | ErpUnitOfMeasure        | code                       |
 | payload.invoiceLines.glSegments.entity                  | ErpEntity               | code                       |
 | payload.invoiceLines.glSegments.fund                    | ErpFund                 | code                       |
 | payload.invoiceLines.glSegments.department              | ErpFinancialDepartment  | code                       |
