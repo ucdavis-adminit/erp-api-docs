@@ -42,7 +42,6 @@ The Award Number identifies the number assigned to an award containing funding a
 | awardNumber                 | NonEmptyTrimmedString30  |                |        Y        |               |  Award Number: Award number tracked by the sponsor. |
 | awardTypeName               | String                   |                |                 |               | The award type name associated with the award |
 | description                 | NonEmptyTrimmedString240 |                |                 |               | Description: Brief description of the award. |
-| projectId                   | Long!                    |                |        Y        |               | Project ID: Project Identifier for award. |
 | startDate                   | LocalDate                |                |                 |               | Start Date: Start date of the award. |
 | endDate                     | LocalDate                |                |                 |               | End Date: End date of the award. |
 | closeDate                   | LocalDate                |                |                 |               | Close Date: Date past the end date of the award. Transactions for the award can be entered up to this date. |
@@ -656,6 +655,15 @@ The Project identifies the planned work or activity to be completed over a perio
 * **Returns**
   * `[PpmProject!]!`
 
+##### `ppmProjectDefaultAwardFundingSource`
+
+> Gets default award and funding source for PpmProjects by exact name.   Project Name should be unique in oracle.
+
+* **Parameters**
+  * `projectName : String!`
+* **Returns**
+  * `[PpmProject!]!`
+
 ##### `ppmProjectSearch`
 
 > Search for PpmProject objects by multiple properties.
@@ -722,6 +730,10 @@ The Task identifies the activities used to further breakdown a PPM project. Ever
 | lastUpdatedBy            | ErpUserId                 |                |                 |               | The user that last updated the task. |
 | projectId                | Long                      |                |                 |               | The project that the task is linked to |
 | eligibleForUse           | Boolean!                  |                |                 |               | Returns whether this PpmTask is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmTask must:<br/>- Be chargeable<br/>- Be a lowestLevelTask<br/>- Have a taskStartDate and taskFinishDate range which includes the given accountingDate |
+| glPostingProgramCode     | ErpProgramCode            |                |                 |               | GL Program used during subledger accounting jobs to post GL entries when costs are recorded against this task. |
+| glPostingPurposeCode     | ErpPurposeCode            |                |                 |               | GL Purpose  used during subledger accounting jobs to post GL entries when costs are recorded against this task. |
+| glPostingFundCode        | ErpFundCode               |                |                 |               | GL Fund used during subledger accounting jobs to post GL entries when costs are recorded against this task. |
+| glPostingActivityCode    | ErpActivityCode           |                |                 |               | GL Activity used during subledger accounting jobs to post GL entries when costs are recorded against this task. |
 
 * `eligibleForUse` : `Boolean!`
   * Returns whether this PpmTask is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmTask must:<br/>- Be chargeable<br/>- Be a lowestLevelTask<br/>- Have a taskStartDate and taskFinishDate range which includes the given accountingDate

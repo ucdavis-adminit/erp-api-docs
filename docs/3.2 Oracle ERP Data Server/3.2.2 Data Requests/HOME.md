@@ -222,25 +222,23 @@ type ValidationResponse {
   * Project allows detail posting
   * Activity allows detail posting
   * Project must not be a PPM Project
-    * Project must be a child of `GL0000000A`
+    * Project must be a child of `GLG000000A`
 * **Multi-Segment Checks**
   * That at least Entity, Fund, Financial Department, and Account have been provided.
   * If the given segment string already exists as an active record in the combination code table in Oracle.
     * (If a combination was previously marked as valid, the cross-validation rules are skipped in Oracle.)
 * **CVR Rule Checks (if requested)**
   * _Purpose is required for Expense Accounts (OPER_ACC_PURPOSE_1)_
-    * If the account descends from 50000B, then the purpose must be a non 00 value.
+    * If the account descends from 5XXXXX, then the purpose must be a non 00 value.
   * _Financial Aid Expenses must have Student Financial Aid purpose code 78 (OPER_ACC_PURPOSE_4)_
     * If the account descends from 51000A, then the purpose code must be 78.
-  * _Purpose code 78 (Student Financial Aid) must only be used with Financial Aid Expenses (OPER_ACC_PURPOSE_5)_
-    * If the purpose code is 78, then the account must descend from 51000A.
   * _Auxiliary Funds should only be used for Auxiliary Enterprise (76) purposes (OPER_FUND_PURPOSE)_
     * If the fund is a descendent of 1100C, then purpose code must be 76.
   * _Purpose code 76 (Auxiliary Enterprises) must only be used with Financial Auxilary Funds (OPER_PURPOSE_FUND)_
     * If the purpose code is 76, then the fund must descend from 1100C.
   * _Funds held for others (Account 22700D) should only be used with Agency Fund (Fund 5000C) (AGENCY_FUND_ACCT)_
     * If the account descends from 22700D, then the fund must descend from 5000C.
-  * _Sub-contract services (53300B) should only be used on Grant and Contract Funds (2000B)_
+  * _Sub-contract services (53300B) should only be used on Grant and Contract Funds (2000B) (SCS_ACCT_FUND)_
     * If the account is a descendent of 53300B, then the fund must be descended from 2000B.
 * **Additional Checks**
   * _Net Position Accounts are not allowed_
@@ -248,6 +246,14 @@ type ValidationResponse {
   * _Purchases to be capitalized must be recorded on a Capital Project._
     * If the account is a descendent of `52500B`, fail validation.
 
+<!-- To Add after SIT1
+DEPREXP_ACC_PURPOSE1	Only depreciation expense accounts 54000A can use purpose code 65 	Only accounts 54000A can use purpose code 65
+-->
+
+<!-- The below were removed prior to SIT1 / DEV4 Reload in June 2022
+  * _Purpose code 78 (Student Financial Aid) must only be used with Financial Aid Expenses (OPER_ACC_PURPOSE_5)_
+    * If the purpose code is 78, then the account must descend from 51000A.
+-->
 
 
 #### Implementation Notes

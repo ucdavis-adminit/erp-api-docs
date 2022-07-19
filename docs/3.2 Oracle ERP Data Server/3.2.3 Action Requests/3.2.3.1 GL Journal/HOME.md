@@ -287,7 +287,7 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
     * Value must be enabled and the accounting date between the start and end date in the relevant support table for the segment.
     * If the program, project, or activity fields have an invalid value, replace with all zeroes.
     * If the purpose has an invalid value, and is not required per the CVR rules below, replace with zeroes.
-    * The project in `glSegments` must be a GL-only project.  It must have `GL0000000A` as a parent.  (Use direct parent for now, there is no plan to make the hierarchy multi-level.)
+    * The project in `glSegments` must be a GL-only project.  It must have `GLG000000A` as the level 1 parent.
     * Segment must not be a summary value.
   * Verify Accounting Period if given.  It must exist and be open.  Assign current accounting period if missing.  Fail if an invalid period was given.
   * Verify that any field which has a valid list of values contains a valid value.
@@ -295,7 +295,7 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
     * Calculation must be made after the generation of PPM offset GL entries.
   * **Boundary API Additional Restrictions**
     * _Net Position Accounts are not allowed_
-      * If the account descends from 30000X, fail validation.
+      * If the account descends from `3XXXXX`, fail validation.
     * _PPM Offset Account is not allowed_
       * If the account == `TBD`, fail validation.
     * _Purchases to be capitalized must be recorded in PPM._
@@ -306,11 +306,9 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
     * Must be open for detail posting, and not a summary combination code.
   * **CVR Matching Rules (message then technical rule)**
     * _Purpose is required for Expense Accounts (OPER_ACC_PURPOSE_1)_
-      * If the account descends from 50000X, then the purpose must be a non 00 value.
+      * If the account descends from 5XXXXX, then the purpose must be a non 00 value.
     * _Financial Aid Expenses must have Student Financial Aid purpose code 78 (OPER_ACC_PURPOSE_4)_
       * If the account descends from 51000A, then the purpose code must be 78.
-    * _Purpose code 78 (Student Financial Aid) must only be used with Financial Aid Expenses (OPER_ACC_PURPOSE_5)_
-      * If the purpose code is 78, then the account must descend from 51000A.
     * _Auxiliary Funds should only be used for Auxiliary Enterprise (76) purposes (OPER_FUND_PURPOSE)_
       * If the fund is a descendent of 1100C, then purpose code must be 76.
     * _Purpose code 76 (Auxiliary Enterprises) must only be used with Financial Auxilary Funds (OPER_PURPOSE_FUND)_
@@ -319,14 +317,21 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
       * If the account descends from 22700D, then the fund must descend from 5000C.
     * _Sub-contract services (53300B) should only be used on Grant and Contract Funds (2000B) (SCS_ACCT_FUND)_
       * If the account is a descendent of 53300B, then the fund must be descended from 2000B.
-    * _Purpose Code 65 may only be used when recording depreciation. (DEPREXP_ACC_PURPOSE1,DEPREXP_PURPOSE_ACC1)_
+    * _Purpose Code 65 may only be used when recording depreciation. (DEPREXP_ACC_PURPOSE1)_
       * If the purpose code is 65, then the account must descend from 54000A.
-      * If the account is a descendent of 54000A then the purpose code must be 65.
-    * _Patient Account, Payor Settlment, and UCDH Prepaid Expense Accounts are reserved for UCDH Transactions. (OPER_ENTITY_ACC)_
+    * _Patient Account, Payor Settlment, Payor Payables, and Medical Salary Accounts are reserved for UCDH Transactions. (OPER_ENTITY_ACC)_
       * If the account descends from one of 12500C, 12600C, or 14001E, then the Entity code must descend from 132B.
+
+<!-- Items removed before SIT1
+
+    * _Purpose code 78 (Student Financial Aid) must only be used with Financial Aid Expenses (OPER_ACC_PURPOSE_5)_
+      * If the purpose code is 78, then the account must descend from 51000A.
     * _The teaching hospital purpose code may only be used with UCDH Entities._
       * If the Purpose code is 42, then the entity must descend from 132B.
       * If the entity descends from 132B, then the purpose code must be 42 or 00.
+    * If the account is a descendent of 54000A then the purpose code must be 65.
+
+--->
 
 * **PPM Costs**
 

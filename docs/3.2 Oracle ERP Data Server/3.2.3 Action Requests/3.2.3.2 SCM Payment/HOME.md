@@ -144,7 +144,7 @@ This request allows the submitting boundary application to create payment reques
     * values in each each line's segments.
     * If the program, project, or activity fields have an invalid value, replace with all zeroes.
     * If the purpose has an invalid value, and is not required per the CVR rules below, replace with zeroes.
-    * The project in `glSegments` must be a GL-only project.  It must have `GL0000000A` as a parent.  (Use direct parent for now, there is no plan to make the hierarchy multi-level.)
+    * The project in `glSegments` must be a GL-only project.  It must have `GLG000000A` as a parent.  (Use direct parent for now, there is no plan to make the hierarchy multi-level.)
     * Segment must not be a summary value and must allow detail posting. **(TODO)**
   * Verify Accounting Period if given.  It must exist and be open.  Assign current accounting period if missing.  Fail if an invalid period was given.
   * Verify that any field which has a valid list of values contains a valid value.
