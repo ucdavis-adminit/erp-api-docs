@@ -5,26 +5,26 @@
 
 #### Common Operations
 
-* [Common Types](3.2.3%20Action%20Requests/1_CommonTypes.md)
+* [Common Types](#/3%20Component%20GraphQL%20Servers/3.2%20Oracle%20ERP%20Data%20Server/3.2.3%20Action%20Requests/HOME?id=common-action-request-data-types ':ignore')
   * Input and output types common across ERP Action Requests.
-* [Common Operations](3.2.3%20Action%20Requests/2_CommonOperations.md)
+* Common Operations (**FUTURE**)
   * Action Request-related operations not specific to a particular type.
 
 #### General Ledger
 
-* [`GlJournal`](3.2.3%20Action%20Requests/GlJournal-1-summary.md) (**IN PROGRESS**)
+* [`GlJournal`](#/3%20Component%20GraphQL%20Servers/3.2%20Oracle%20ERP%20Data%20Server/3.2.3%20Action%20Requests/3.2.3.1%20GL%20Journal/HOME ':ignore')
   * Combined GL/PPM Journal import
 
 #### Supply Chain Management / PTP
 
-* [`ScmRequisition`](3.2.3%20Action%20Requests/ScmRequisition-1-summary.md) (**IN PROGRESS**)
+* [`ScmRequisition`](#/3%20Component%20GraphQL%20Servers/3.2%20Oracle%20ERP%20Data%20Server/3.2.3%20Action%20Requests/3.2.3.3%20SCM%20Requisition/HOME ':ignore') (**IN PROGRESS**)
   * Creation of new purchasing requisitions
-* [`ScmInvoicePayment`](3.2.3%20Action%20Requests/ScmInvoicePayment-1-summary.md) (**IN PROGRESS**)
+* [`ScmInvoicePayment`](#/3%20Component%20GraphQL%20Servers/3.2%20Oracle%20ERP%20Data%20Server/3.2.3%20Action%20Requests/3.2.3.2%20SCM%20Payment/HOME ':ignore')
   * Creation of PO Invoice and Non PO Payment Requests
 
 #### Accounts Receivable
 
-* [`ArInvoice`](3.2.3%20Action%20Requests/ArInvoice-1-summary.md) (**IN PROGRESS**)
+* [`ArInvoice`](#/3%20Component%20GraphQL%20Servers/3.2%20Oracle%20ERP%20Data%20Server/3.2.3%20Action%20Requests/3.2.3.4%20AR%20Invoice/HOME ':ignore')
   * AR Invoices
 
 

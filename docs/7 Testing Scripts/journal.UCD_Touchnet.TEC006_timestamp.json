@@ -1,0 +1,41 @@
+{
+  "header": {
+    "boundaryApplicationName": "GoAnywhere",
+    "consumerId": "UCD Touchnet",
+    "consumerReferenceId": "SIT1_TEC_006",
+    "consumerTrackingId": "REPLACEME_WITH_UUID",
+    "consumerNotes": ""
+  },
+  "payload": {
+    "journalSourceName": "UCD Touchnet",
+    "journalCategoryName": "UCD Recharge",
+    "journalName": "SIT1 TEC-006 SFTP Submitted Journal",
+    "journalReference": "SIT1_TEC_006",
+    "accountingDate": "2022-07-31",
+    "accountingPeriodName": "Jul-22",
+    "journalLines": [
+      {
+        "glSegments": {
+          "entity": "3110",
+          "fund": "13U00",
+          "department": "9304510",
+          "purpose": "68",
+          "account": "536400"
+        },
+        "debitAmount": 100.00,
+        "externalSystemIdentifier": "ITEMX"
+      },
+      {
+        "glSegments": {
+          "entity": "3110",
+          "fund": "13U00",
+          "department": "9300531",
+          "purpose": "68",
+          "account": "770000"
+        },
+        "creditAmount": 100.00,
+        "externalSystemIdentifier": "CREDIT"
+      }
+    ]
+  }
+}

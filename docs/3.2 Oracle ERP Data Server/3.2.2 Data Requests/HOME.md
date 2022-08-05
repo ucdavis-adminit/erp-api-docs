@@ -297,7 +297,6 @@ _Data pulled from these services should be manually reviewed_, as it will be bas
 |                | `chart`      | `KfsChartCode!`            |       |
 |                | `account`    | `KfsAccountNumber!`        |       |
 |                | `subAccount` | `KfsSubAccountNumber!`     |       |
-|                | `kfsProject` | `KfsProjectCode!`          |       |
 | **Returns**    |              |                            |       |
 |                |              | `KfsConvertAccountOutput!` |       |
 
@@ -315,8 +314,6 @@ type KfsConvertAccountOutput {
   account:        KfsAccountNumber!
   "The sub account number used when mapping.  Will be undefined if no mapping using the sub account was found."
   subAccount:     KfsSubAccountNumber
-  "The KFS project code used when mapping.  Will be undefined if no mapping using the project code was found."
-  kfsProject:     KfsProjectCode
 
   "The type of cost center this maps to in Oracle.  Determines which of glSegments and ppmSegments are populated."
   costCenterType: ErpCostCenterType
