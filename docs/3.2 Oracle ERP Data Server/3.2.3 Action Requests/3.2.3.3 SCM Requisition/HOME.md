@@ -60,7 +60,7 @@ This request allows the submitting boundary application to create purchase requi
   * scm_supplier_site table
 * Validate unitOfMeasureCode: this will probably be enum?  `ErpUnitOfMeasure`
 * Validate deliverToTypeCode - probably just enum. What should be in it?
-* Validate deliveryToLocationCode: ? Against `ErpLocation` table assuming that all uc locations are loaded there as well?
+* Validate deliveryToLocationCode: ? Against `ErpInstitutionLocation` table assuming that all uc locations are loaded there as well?
 * Validate glSegment
 * Validate glSegment String
 * Validate ppmSegment:

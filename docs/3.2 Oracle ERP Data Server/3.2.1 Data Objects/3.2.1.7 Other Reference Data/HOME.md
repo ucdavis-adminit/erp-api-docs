@@ -43,9 +43,48 @@ Contains information about the ERP API server's version.
 
 
 <!--BREAK-->
+### Data Object: ErpInstitutionLocation
+
+
+
+#### Access Controls
+
+* Required Role: ``
+
+#### Data Source
+
+* Local Table/View: `undefined`
+
+##### Properties
+
+| Property Name | Data Type               | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------- | ----------------------- | :------------: | :-------------: | ------------- | ----- |
+| locationId    | Long!                   |                |                 |               | Value that uniquely identifies the supplier site. |
+| addressLine1  | ScmAddressLine          |                |                 |               | Address Line 1 |
+| addressLine2  | ScmAddressLine          |                |                 |               | Address Line 2 |
+| addressLine3  | ScmAddressLine          |                |                 |               | Address Line 3 |
+| addressLine4  | ScmAddressLine          |                |                 |               | Address Line 4 |
+| city          | CityName                |                |                 |               | City of the supplier address |
+| postalCode    | ErpPostalCode           |                |                 |               | Postal code of the supplier address |
+| countryName   | NonEmptyTrimmedString80 |                |                 |               | Country of the supplier address |
+| countryCode   | ErpCountryCode          |                |                 |               | Abbreviation that identifies the country where the supplier address is located |
+| county        | NonEmptyTrimmedString60 |                |                 |               | County of the supplier address |
+| state         | NonEmptyTrimmedString60 |                |                 |               | State of the supplier address |
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
 ### Data Object: ErpLocation
 
-
+Locations referenced by Supplier and AR Customer Sites
 
 #### Access Controls
 
@@ -63,21 +102,24 @@ Contains information about the ERP API server's version.
 
 ##### Properties
 
-| Property Name          | Data Type               | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| ---------------------- | ----------------------- | :------------: | :-------------: | ------------- | ----- |
-| locationId             | Long                    |                |                 |               | Value that uniquely identifies the supplier site. |
-| addressLine1           | ScmAddressLine          |                |                 |               | Address Line 1 |
-| addressLine2           | ScmAddressLine          |                |                 |               | Address Line 2 |
-| addressLine3           | ScmAddressLine          |                |                 |               | Address Line 3 |
-| addressLine4           | ScmAddressLine          |                |                 |               | Address Line 4 |
-| addressPurposeOrdering | Boolean                 |                |                 |               | If true, then you can use the supplier address for ordering. If false, then you cannot use this address. The default value is false. |
-| addressPurposeRemitTo  | Boolean                 |                |                 |               | If true, then you can use the supplier address to send payment |
-| city                   | CityName                |                |                 |               | City of the supplier address |
-| postalCode             | ErpPostalCode           |                |                 |               | Postal code of the supplier address |
-| countryName            | NonEmptyTrimmedString80 |                |                 |               | Country of the supplier address |
-| countryCode            | ErpCountryCode          |                |                 |               | Abbreviation that identifies the country where the supplier address is located |
-| county                 | NonEmptyTrimmedString60 |                |                 |               | County of the supplier address |
-| state                  | NonEmptyTrimmedString60 |                |                 |               | State of the supplier address |
+| Property Name      | Data Type               | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------ | ----------------------- | :------------: | :-------------: | ------------- | ----- |
+| locationId         | Long!                   |                |                 |               | Value that uniquely identifies the supplier site. |
+| addressLine1       | ScmAddressLine          |                |                 |               | Address Line 1 |
+| addressLine2       | ScmAddressLine          |                |                 |               | Address Line 2 |
+| addressLine3       | ScmAddressLine          |                |                 |               | Address Line 3 |
+| addressLine4       | ScmAddressLine          |                |                 |               | Address Line 4 |
+| city               | CityName                |                |                 |               | City of the supplier address |
+| postalCode         | ErpPostalCode           |                |                 |               | Postal code of the supplier address |
+| countryName        | NonEmptyTrimmedString80 |                |                 |               | Country of the supplier address |
+| countryCode        | ErpCountryCode          |                |                 |               | Abbreviation that identifies the country where the supplier address is located |
+| county             | NonEmptyTrimmedString60 |                |                 |               | County of the supplier address |
+| state              | NonEmptyTrimmedString60 |                |                 |               | State of the supplier address |
+| statusCode         | String!                 |                |                 |               |  |
+| startDate          | LocalDate               |                |                 |               | The date from when the value is available for use. |
+| endDate            | LocalDate               |                |                 |               | The date till which the value is available for use. |
+| lastUpdateDateTime | DateTime!               |                |                 |               | Timestamp this record was last updated in the financial system. |
+| lastUpdateUserId   | ErpUserId               |                |                 |               | User ID of the person who last updated this record. |
 
 ##### Linked Data Objects
 

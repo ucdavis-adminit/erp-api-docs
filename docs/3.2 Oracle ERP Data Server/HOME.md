@@ -220,7 +220,7 @@ Below are some examples of responses from the API.  Successful response data is 
 #### Common Reference Data
 
 * [`ErpCountry`](3.2.1%20Data%20Objects/ErpCountry.md) (**TODO**)
-* [`ErpLocation`](3.2.1%20Data%20Objects/ErpLocation.md) (**TBD**)
+* [`ErpInstitutionLocation`](3.2.1%20Data%20Objects/ErpInstitutionLocation.md) (**TBD**)
 * [`ErpPerson`](3.2.1%20Data%20Objects/ErpPerson.md) (**TBD**)
 * [`ErpUnitOfMeasure`](3.2.1%20Data%20Objects/ErpUnitOfMeasure.md) (**TODO**)
   * Might need per-module types (e.g., AR and SCM might have different lists.)

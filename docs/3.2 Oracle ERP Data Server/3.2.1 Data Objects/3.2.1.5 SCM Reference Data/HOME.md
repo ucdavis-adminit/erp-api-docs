@@ -173,21 +173,20 @@ Supplier in Oracle replaces Vendor in KFS.
 
 ##### Properties
 
-| Property Name            | Data Type                | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| ------------------------ | ------------------------ | :------------: | :-------------: | ------------- | ----- |
-| supplierId               | Long                     |                |        Y        |               | Value that uniquely identifies the supplier. |
-| supplierNumber           | Long                     |                |        Y        |               |  |
-| partyId                  | Long                     |                |                 |               |  |
-| name                     | NonEmptyTrimmedString360 |                |        Y        |               | Supplier: Name of the supplier. |
-| aliasName                | NonEmptyTrimmedString360 |                |                 |               | Alias: Alternate internal name for the organization. |
-| alternateName            | NonEmptyTrimmedString360 |                |                 |               | Alternate Name: Alternate name of the supplier. |
-| businessRelationshipCode | NonEmptyTrimmedString30  |                |                 |               | Business Relationship: Business relationship between the enterprise and the supplier. |
-| supplierType             | NonEmptyTrimmedString80  |                |                 |               | Supplier Type: Type of supplier. |
-| startDateActive          | Date                     |                |                 |               | The date from when the value is available for use. |
-| endDateActive            | Date                     |                |                 |               | The date till which the value is available for use. |
-| lastUpdateDateTime       | DateTime!                |                |                 |               | Timestamp this record was last updated in the financial system. |
-| lastUpdateUserId         | ErpUserId                |                |                 |               | User ID of the person who last updated this record. |
-| sites                    | [ScmSupplierSite!]       |                |                 |               | Sites: The Supplier Sites resource manages supplier sites. |
+| Property Name            | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| supplierId               | Long!                     |                |        Y        |               | Value that uniquely identifies the supplier internally to Oracle. |
+| supplierNumber           | Long!                     |                |        Y        |               | Unique ID for the supplier used to reference it within the UI and in interfaces.  This largely corresponds to the Vendor ID in KFS. |
+| name                     | NonEmptyTrimmedString360! |                |        Y        |               | Supplier: Name of the supplier. |
+| aliasName                | NonEmptyTrimmedString360  |                |        Y        |               | Alias: Alternate internal name for used for the supplier. |
+| alternateName            | NonEmptyTrimmedString360  |                |        Y        |               | Alternate Name: Alternate name of the supplier. |
+| businessRelationshipCode | NonEmptyTrimmedString30   |                |                 |               | Business Relationship: Business relationship between the enterprise and the supplier. |
+| supplierType             | NonEmptyTrimmedString80   |                |                 |               | Supplier Type: Type of supplier. |
+| startDateActive          | Date                      |                |                 |               | The date from when the value is available for use. |
+| endDateActive            | Date                      |                |                 |               | The date till which the value is available for use. |
+| lastUpdateDateTime       | DateTime!                 |                |        Y        |               | Timestamp this record was last updated in the financial system. |
+| lastUpdateUserId         | ErpUserId                 |                |                 |               | User ID of the person who last updated this record. |
+| sites                    | [ScmSupplierSite!]!       |                |                 |               | Supplier business locations referenced when making orders or payments to the supplier. |
 
 ##### Linked Data Objects
 
@@ -230,7 +229,7 @@ Supplier in Oracle replaces Vendor in KFS.
 <!--BREAK-->
 ### Data Object: ScmSupplierSite
 
-
+Supplier Site represents a business location referenced when making orders or payments to the supplier.
 
 #### Access Controls
 
@@ -248,15 +247,17 @@ Supplier in Oracle replaces Vendor in KFS.
 
 ##### Properties
 
-| Property Name    | Data Type               | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| ---------------- | ----------------------- | :------------: | :-------------: | ------------- | ----- |
-| supplierSiteId   | Long                    |                |                 |               | Value that uniquely identifies the supplier site. |
-| supplierSiteCode | NonEmptyTrimmedString15 |                |                 |               |  |
-| supplierId       | Long                    |                |                 |               |  |
-| locationId       | Long                    |                |                 |               |  |
-| location         | ErpLocation             |                |                 |               |  |
+| Property Name    | Data Type                | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ---------------- | ------------------------ | :------------: | :-------------: | ------------- | ----- |
+| supplierSiteId   | Long!                    |                |                 |               | Value that uniquely identifies the supplier site internally within Oracle. |
+| supplierSiteCode | NonEmptyTrimmedString15! |                |                 |               | Code used to identify the site on the UI and in interfaces. |
+| locationId       | Long                     |                |                 |               | Internal location code containing address information. |
+| location         | ErpLocation              |                |                 |               | Physical address of the site. |
 
 * `location` : `ErpLocation`
+  * Physical address of the site.
+  * Description of `ErpLocation`:
+    * Locations referenced by Supplier and AR Customer Sites
 
 ##### Linked Data Objects
 
