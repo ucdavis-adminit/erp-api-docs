@@ -22,29 +22,48 @@ At present, only the action request type below will be configured for file-uploa
 
 After onboarding your boundary system and obtaining authorization to utilize the SFTP file uploads, you will be provided credentials by the GoAnywhere system administrators.  It utilizes a standard SFTP connection on port 2222.  (This should be the same as any existing file uploads for KFS.)
 
-#### File Naming and Location Conventions
+#### File Naming Convention
 
 Files must be named with a convention that indicates the data type, source and time of the file.  This will prevent any collision between files or duplicate import of any data.  The file name will be used as a unique identifier of that file.  A file with the exact same name will not be processed, even if the contents are different.
 
 The source name is the assigned journal source from Oracle with any spaces changed to underscores.  Each boundary system will be assigned one as they are onboarded into Oracle.
 
-The naming pattern is:
+The file naming pattern is:
 
 `<data type>.<Source Name>.<timestamp>.json`
 
-| Data Type                              | Prefix        | Sample Name                                       |
-| -------------------------------------- | ------------- | ------------------------------------------------- |
-| Journal                                | `journal`     | `journal.UCD_Boundary_System.20220701110325.json` |
-| (not supported) Invoice Payment        | `invoice`     | `invoice.UCD_Concur.20220701110325.json`          |
-| Payment Request                        | `payment`     | `payment.UCD_Banner.20220701110325.json`          |
-| (not supported) Receivables Invoice    | `receivable`  | `receivable.UCD_Stratocore.20220701110325.json`   |
-| (not supported) Purchasing Requisition | `requisition` | `requisition.UCD_CAES.20220701110325.json`        |
-| Award                                  | `award`       | `award.UCD_Cayuse.20220701110325.zip`             |
-| US Bank Credit Card Expenses           | `usbank`      | `usbank.UCD_USBank.20220701110325.dat`            |
-| Payment Plus Expenses                  | `paymentplus` | `paymentplus.UCD_Payment_Plus.20220701110325.dat` |
-| Concur SAE                             | `sae`         | `sae.UCD_Concur.20220701110325.dat`               |
-| UCPath I-303                           | `i303`        | `i303.UCD_UCPath.20220701110325.dat`              |
-| AggieShip FBAP                         | `fbap`        | `fbap.UCD_Aggieship.20220701110325.dat`           |
+| Data Type                    | Prefix        | File Submission Supported | Sample Name                                       |
+| ---------------------------- | ------------- | :-----------------------: | ------------------------------------------------- |
+| Journal                      | `journal`     |            Yes            | `journal.UCD_Boundary_System.20220701110325.json` |
+| Invoice Payment              | `invoice`     |            No             | `invoice.UCD_Concur.20220701110325.json`          |
+| Payment Request              | `payment`     |          Pending          | `payment.UCD_Banner.20220701110325.json`          |
+| Receivables Invoice          | `receivable`  |            No             | `receivable.UCD_Stratocore.20220701110325.json`   |
+| Purchasing Requisition       | `requisition` |            No             | `requisition.UCD_CAES.20220701110325.json`        |
+| Award                        | `award`       |          Pending          | `award.UCD_Cayuse.20220701110325.zip`             |
+| US Bank Credit Card Expenses | `usbank`      |          Pending          | `usbank.UCD_USBank.20220701110325.dat`            |
+| Payment Plus Expenses        | `paymentplus` |          Pending          | `paymentplus.UCD_Payment_Plus.20220701110325.dat` |
+| Concur SAE                   | `sae`         |          Pending          | `sae.UCD_Concur.20220701110325.dat`               |
+| UCPath I-303                 | `i303`        |          Pending          | `i303.UCD_UCPath.20220701110325.dat`              |
+| AggieShip FBAP               | `fbap`        |          Pending          | `fbap.UCD_Aggieship.20220701110325.dat`           |
+
+#### S3 File Location Conventions
+
+Files transferred to S3 will be stored with file names that imply a directory structure that reflects the direction of the data transfer, the environment which the file should be integrated with, the format of the data in the file, and the pipeline which should process the file.
+
+This path is used to submit the file to the appropriate integration pipeline intake topic.
+
+##### Examples
+
+* JSON journal file which should be processed into the TEST environment:
+  * `in/test/json/glJournalRequest/journal.UCD_Boundary_System.20220701110325.json`
+  * Destination pipeline: `in.test.sftp.json.glJournalRequest`
+* Banner payment file:
+  * `in/test/csv/apPaymentRequest/payment.UCD_Banner.20220701110325.dat`
+  * Destination pipeline: `in.test.sftp.csv.apPaymentRequest`
+* AggieShip FBAP file:
+  * `in/test/xml/aggieshipFbap/fbap.UCD_Aggieship.20220701110325.dat`
+  * Destination pipeline: `in.test.sftp.xml.aggieshipFbap`
+
 
 #### File Format
 

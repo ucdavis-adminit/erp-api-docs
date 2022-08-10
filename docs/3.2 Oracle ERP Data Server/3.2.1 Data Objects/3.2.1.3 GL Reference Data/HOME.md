@@ -378,39 +378,3 @@ Represents the types of transactions that are part of this journal.  For boundar
 
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
-
-
-<!--BREAK-->
-### Data Object: GlSegmentNames
-
-
-
-#### Access Controls
-
-* Required Role: ``
-
-#### Data Source
-
-* Local Table/View: `undefined`
-
-##### Properties
-
-| Property Name  | Data Type | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| -------------- | --------- | :------------: | :-------------: | ------------- | ----- |
-| entityName     | String    |                |                 |               |  |
-| fundName       | String    |                |                 |               |  |
-| departmentName | String    |                |                 |               |  |
-| accountName    | String    |                |                 |               |  |
-| purposeName    | String    |                |                 |               |  |
-| projectName    | String    |                |                 |               |  |
-| programName    | String    |                |                 |               |  |
-| activityName   | String    |                |                 |               |  |
-
-##### Linked Data Objects
-
-(None)
-
-#### Query Operations
-
-[^1]: Searchable attributes are available as part of the general search filter input.
-[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
