@@ -291,6 +291,7 @@ This request allows the submitting boundary application to create payment reques
 | glSegmentString         | String                                  | Delimited complete GL segment string.                                            |
 | ppmSegments             | [`PpmSegmentInput`](./1_CommonTypes.md) | PPM POET segment values                                                          |
 
+<!--
 ##### `ScmPaymentStatusOutput`
 
 > Response provided when the consumer submits a request.
@@ -301,6 +302,7 @@ This request allows the submitting boundary application to create payment reques
 |                       |                                              | **ScmPayment-Specific Properties**                                                                        |
 | paymentProcessRequest | String                                       | The name of payment batch or quick payment identifier.  Only populated once the payment has been created. |
 |                       |                                              |                                                                                                           |
+-->
 
 
 
