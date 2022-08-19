@@ -16,14 +16,16 @@
   --heading-h1-border-style: solid;
   --heading-h1-border-width: 0 0 4px 0;
 
+  --heading-h2-padding: 0 0 0 0;
   --heading-h2-border-style: solid;
-  --heading-h2-border-width: 2px 0 2px 0;
+  --heading-h2-border-color: var(--ucd-blue-70);
+  --heading-h2-border-width: 4px 0 4px 0;
 
   --heading-h3-border-style: solid;
   --heading-h3-border-width: 2px 0 2px 0;
 
   --heading-h1-font-size: var(--font-size-xxl);
-  --heading-h2-font-size: var(--font-size-xl);
+  --heading-h2-font-size: var(--font-size-xxl);
   --heading-h3-font-size: var(--font-size-xl);
   --heading-h4-font-size: var(--font-size-l);
   --heading-h5-font-size: var(--font-size-m);
@@ -64,7 +66,7 @@
 }
 
 /* Right TOC Sidebar */
-.page_toc div[class^="lv"] a {
+.page_toc div[class^="lv"] a span {
   color: var(--ucd-blue-100);
   text-decoration: none;
   font-weight: inherit;
@@ -80,13 +82,26 @@
   font-size: 1.2em;
 }
 
-.page_toc div.lv3 {
+.page_toc div.lv1 {
+  display: none;
+}
+
+.page_toc div.lv2 a span {
+  font-size: var(--font-size-m);
+  font-weight: bold;
+}
+
+.page_toc div.lv2 {
+  border-bottom: var(--ucd-blue-100) solid 1px;
+}
+
+.page_toc div.lv3 a span {
   font-size: var(--font-size-s);
   font-weight: bold;
 }
 
-.page_toc div.lv4 {
-  font-size: var(--font-size-xs);
+.page_toc div.lv4 a span {
+  font-size: var(--font-size-s);
 }
 
 /* Code highlighting */
