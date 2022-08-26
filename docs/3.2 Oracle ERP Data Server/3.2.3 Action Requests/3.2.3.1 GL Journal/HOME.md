@@ -1,11 +1,6 @@
 # 3.2.3.1 GL Journal
 
-<!--BREAK-->
-### Action Request: `GlJournal`
-
-#### Overview
-
-<!-- Start copy to GraphQL API Docs -->
+### Overview
 
 The journal voucher is the primary interface for loading transactions into Oracle from boundary systems.  It is used regardless of whether the expenses are costs which can be applied to the general ledger or must be expensed to the PPM sub-ledger.  The data model in the request allows for all fields which might be needed for GL or PPM transactions to be provided.  However, it is up to the caller to know and fill out the fields properly.  Where possible, the API will reject invalid data prior to it being sent to Oracle.
 
@@ -15,11 +10,11 @@ The correct values to use for chartstring segments is out of scope for this docu
 
 Please see below in this document for examples of payloads into this API.
 
-#### Access Controls
+### Access Controls
 
 * Required Role: `erp:writer-journal`
 
-#### Supporting Operations
+### Supporting Operations
 
 Other operations which should be used to pre-validate chartstring segments are below.  Please see <https://financeandbusiness.ucdavis.edu/aggie-enterprise/chart-of-accounts/redesign> for information about each of these segments.
 
@@ -37,7 +32,7 @@ For validating combinations, the following two operations are provided, differin
 * [`glValidateChartSegments`]({{Queries.glValidateChartSegments}})
 * [`glValidateChartstring`]({{Queries.glValidateChartstring}})
 
-#### Managed Project Cost Entries (PPM/POET)
+### Managed Project Cost Entries (PPM/POET)
 
 In addition to the standard GL-type of transaction which aligns with the KFS general ledger, Oracle Financials also utilizes a sub-ledger for tracking costs against managed projects.  This loosely matches contracts and grants (award-based) accounts from KFS, but PPM (Project and Portfolio Management) encompasses more than that.
 
@@ -64,17 +59,17 @@ As with the GL segments, the API provides the operations below for lookups and v
 * [`ppmOrganization`]({{Queries.ppmOrganization}})
 * [`ppmSegmentsValidate`]({{Queries.ppmSegmentsValidate}})
 
-#### Volume of Data
+### Volume of Data
 
 Unlike the use of the KFS ledger, the Oracle Financials general ledger will be a thin ledger.  This means that the level of detail that is allowed to be loaded into the ledger will be limited to summary level information.  It is required that you summarize data down as much as possible to the chartstring segments while being able to retain a link to the source of the transactions.  (E.g., an order number, batch number, or a transaction date)  Submitting lines for each source line item in an external billing system will not be allowed.  Failure to summarize data to an acceptable level will result in loss of API or journal upload access.
 
-#### Journal Balancing
+### Journal Balancing
 
 As with the KFS ledger, journal payloads must balance.  (debit = credits)  Each API payload is a single journal (document number in KFS).
 
 While lines with `glSegments` and `ppmSegments` are posted to different ledgers, we can balance across them when creating journals.  Offset entries are required by Oracle to keep the GL in balance until sub-ledger accounting processes execute.  These will be created by the integration framework for you and applied to a central clearing location outside of your department's cost center.
 
-#### Basic Use
+### Basic Use
 
 1. Call the operation (`glJournalRequest`) providing a data payload with the proper structure.  (See [`GlJournalRequestInput`]({{Types.GlJournalRequestInput}}))
 2. GraphQL Server will validate content format and reject if invalid.
@@ -86,9 +81,9 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
 
 <!-- End copy to GraphQL API Docs -->
 
-#### Operations
+### Operations
 
-##### `glJournalRequest`
+#### `glJournalRequest`
 
 > Submits a journal voucher data object for validation and submission to the Oracle ERP system.  Returns a handle with the results of the request submission.  This handle contains the operation to submit back to this server to get the results.
 
@@ -97,7 +92,7 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
 * **Returns**
   * `GlJournalRequestStatusOutput!`
 
-##### `glJournalRequestStatus`
+#### `glJournalRequestStatus`
 
 > Retrieves a GlJournal by the unique request ID assigned by the API upon submission of the request.
 
@@ -106,7 +101,7 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
 * **Returns**
   * `GlJournalRequestStatusOutput`
 
-##### `glJournalRequestStatusByConsumerTracking`
+#### `glJournalRequestStatusByConsumerTracking`
 
 > Retrieves a GlJournal by the unique tracking ID provided by the consumer during submission of the request.
 
@@ -115,7 +110,7 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
 * **Returns**
   * `GlJournalRequestStatusOutput`
 
-##### `glJournalRequestStatusByConsumerReference`
+#### `glJournalRequestStatusByConsumerReference`
 
 > Retrieves a list of GlJournals by the reference ID provided by the consumer during submission of the request.
 
@@ -124,7 +119,7 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
 * **Returns**
   * `[GlJournalRequestStatusOutput!]!`
 
-#### Related Lookup Objects
+### Related Lookup Objects
 
 > These are the data types which will be needed to support this API as they provide valid values for fields either provided by the consumer or for internal validations.
 
@@ -138,11 +133,7 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
   * [`ErpProject`](../3.2.1%20Data%20Objects/ErpProject.md)
   * [`ErpPurpose`](../3.2.1%20Data%20Objects/ErpPurpose.md)
 * **Journal Entry Support**
-  * [`GlAccountAlias`](../3.2.1%20Data%20Objects/GlAccountAlias.md)
-  * [`GlAccountingCombination`](../3.2.1%20Data%20Objects/GlAccountingCombination.md)
   * [`GlAccountingPeriod`](../3.2.1%20Data%20Objects/GlAccountingPeriod.md)
-  * [`GlJournalCategory`](../3.2.1%20Data%20Objects/GlJournalCategory.md)
-  * [`GlJournalSource`](../3.2.1%20Data%20Objects/GlJournalSource.md)
 * **PPM Costing**
   * [`PpmProject`](../3.2.1%20Data%20Objects/PpmProject.md)
   * [`PpmTask`](../3.2.1%20Data%20Objects/PpmTask.md)
@@ -150,9 +141,13 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
   * [`PpmOrganization`](../3.2.1%20Data%20Objects/PpmOrganization.md)
   * [`PpmFundingSource`](../3.2.1%20Data%20Objects/PpmFundingSource.md)
   * [`PpmAward`](../3.2.1%20Data%20Objects/PpmAward.md)
-* **PPM Costs Support**
-  * [`PpmDocumentEntry`](../3.2.1%20Data%20Objects/PpmDocumentEntry.md)
 
+  <!-- * [`GlAccountAlias`](../3.2.1%20Data%20Objects/GlAccountAlias.md) -->
+  <!-- * [`GlAccountingCombination`](../3.2.1%20Data%20Objects/GlAccountingCombination.md) -->
+  <!-- * [`GlJournalCategory`](../3.2.1%20Data%20Objects/GlJournalCategory.md) -->
+  <!-- * [`GlJournalSource`](../3.2.1%20Data%20Objects/GlJournalSource.md) -->
+<!-- * **PPM Costs Support** -->
+  <!-- * [`PpmDocumentEntry`](../3.2.1%20Data%20Objects/PpmDocumentEntry.md) -->
   <!-- * [`PpmDocument`](../3.2.1%20Data%20Objects/PpmDocument.md) -->
   <!-- * [`PpmExpenseCategory`](../3.2.1%20Data%20Objects/PpmExpenseCategory.md) -->
   <!-- * [`PpmProjectStatus`](../3.2.1%20Data%20Objects/PpmProjectStatus.md) -->
@@ -160,7 +155,7 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
   <!-- * [`PpmTransactionSource`](../3.2.1%20Data%20Objects/PpmTransactionSource.md) -->
 
 
-#### Request Objects
+## Request Object Data Types
 
 > Objects passed when making calls to the operations above.
 
@@ -179,17 +174,17 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
     * [`GlSegmentInput`](./1_CommonTypes.md)
     * [`PpmSegmentInput`](./1_CommonTypes.md)
 
-#### Response Objects
+### Response Objects
 
 * `GlJournalRequestStatusOutput`
   * Child Request Objects:
     * [`ActionRequestStatus`](./1_CommonTypes.md)
 
-#### Object Properties
+### Object Properties
 
 > Note: Object properties are for general documentation only.  The definitive data model is defined by the SDL retrieved from the graphql servers.
 
-##### `GlJournalInput`
+#### `GlJournalInput`
 
 | Property Name        | GraphQL Type             | Notes                               |
 | -------------------- | ------------------------ | ----------------------------------- |
@@ -204,18 +199,7 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
 |                      |                          | **Journal Lines**                   |
 | journalLines         | `[GlJournalLineInput!]!` |                                     |
 
-<!-- | glSegmentDefaults    | [`GlSegmentInput`](./1_CommonTypes.md)  |                                     | -->
-<!-- | ppmSegmentDefaults   | [`PpmSegmentInput`](./1_CommonTypes.md) |                                     | -->
-<!-- | TBD                  |                                         | (Other Journal-level Reference fields defined by functional team.) | -->
-<!-- | summarizeEntries     | Boolean                               |                                                                    |
-| postErrorsToSuspense | Boolean                               |                                                                    | -->
-<!-- | balanceType          | NonEmptyTrimmedString15               |                                                                    | -->
-<!--
-| externalReference    | String!                     | The reference information for the journal entered by the user.                           |
-| encumbranceType      | String                      | Type of encumbrance for records with an encumbrance balance type.                         |
-| referenceDate        | String!                     |                                                                                          | -->
-
-##### `GlJournalLineInput`
+#### `GlJournalLineInput`
 
 > Represents a single journal line or PPM Cost.  Every line must have a set of GL _or_ POET segments and a credit or debit amount.  All other fields are optional.
 
@@ -234,25 +218,22 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
 | externalSystemReference  | GlReferenceField25                      | This 25-character field is intended to aid in additional linking of boundary systems transactions, as needed, to Oracle Cloud summarized journal entries for the purposes of reconciliation.                                |
 | ppmComment               | GlDescriptionField40                    | Expenditure comment for PPM transactions.  Will be ignored for GL transactions.                                                                                                                                             |
 
-##### `GlJournalRequestStatusOutput`
+#### `GlJournalRequestStatusOutput`
 
 > Output type for GLJournal requests and follow-up status updates.
 >
 > Contains the overall request status.  After a successful creation of the journal, will also contain the Oracle Financials assigned journal ID.
 
 
-| Property Name     | Type                                         | Notes                                                                                                                                                            |
-| ----------------- | -------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| requestStatus     | [`ActionRequestStatus`](./1_CommonTypes.md)! | General action request status and tracking information.                                                                                                          |
-| validationResults | [`ValidationResponse`](./1_CommonTypes.md)   | Errors found when validatating the payload data.  These must be corrected before the request will be accepted.                                                   |
-|                   |                                              | **GlJournal-Specific Properties**                                                                                                                                |
-| glJournalId       | Long                                         | ERP-assigned journal ID for transactions posted to the GL.  Only populated on subsequent status requests if the journal was successfully processed.              |
-| ppmBatchName      | NonEmptyTrimmedString100                     | Integration-assigned batch name for costs posted to the PPM sub-ledger.  Only populated on subsequent status requests if the journal was successfully processed. |
+| Property Name     | Type                                         | Notes                                                                                                          |
+| ----------------- | -------------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| requestStatus     | [`ActionRequestStatus`](./1_CommonTypes.md)! | General action request status and tracking information.                                                        |
+| validationResults | [`ValidationResponse`](./1_CommonTypes.md)   | Errors found when validatating the payload data.  These must be corrected before the request will be accepted. |
 
 
-#### GLJournal API Validations
+## GLJournal API Validations
 
-##### Per GraphQL Data Model and Type Resolvers
+### Per GraphQL Data Model and Type Resolvers
 
 > These validations will be enforced by the GraphQL parser and data type definitions.
 
@@ -263,7 +244,7 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
 * Verify maximum lengths on fields.  (Delegate using custom data types if possible.)
   * (e.g., `TrimmedNonEmptyString240`)
 
-##### Request Header Checks
+### Request Header Checks
 
 * Validate Journal Source
   * Verify Source is allowed for API consumer. (TBD - We will want to link the API Consumer authentication identifier to the journal sources.)
@@ -272,7 +253,7 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
   * Verify Category is allowed for API consumer. (Each API Consumer may have a limited set of journal categories they are allowed to use.)
 * Confirm if `consumerTrackingId` previously used and reject if found in the action request table.
 
-##### Data Validation
+### Data Validation
 
 * **Overall**
 
@@ -600,12 +581,12 @@ ORDER BY entity, purpose
       * The accounting date must be between the `fundingSourceFromDate` and `fundingSourceToDate` of the funding source.
 
 
-#### Example `glJournalRequest` Requests
+## Example `glJournalRequest` Requests
 
 > Below are samples of the data object to be passed into the `glJournalRequest` mutation.
 > Ignore the specific values.  No real attempt has been made to determine the actual values expected by Oracle.
 
-##### GL Recharges
+### GL Recharges
 
 > Normal recharge using individual GL Segment fields.
 
@@ -653,13 +634,7 @@ ORDER BY entity, purpose
 }
 ```
 
-##### Use of Aliases
-
-> NOTE: Aliases are centrally managed within Oracle and not available to all campus boundary systems.
-
-**TODO**
-
-##### Use of Segment Strings
+### Use of Segment Strings
 
 ```jsonc
 {
@@ -694,11 +669,7 @@ ORDER BY entity, purpose
 }
 ```
 
-##### PPM Expenses
-
-**TODO**
-
-##### GL and PPM Expenses
+### GL and PPM Expenses
 
 ```jsonc
 {
@@ -759,7 +730,7 @@ ORDER BY entity, purpose
 }
 ```
 
-#### Example `glJournalRequest` Response
+### Example `glJournalRequest` Response
 
 > Initial response after submitting request.  Oracle-provided data in the response will not be populated.
 
@@ -784,7 +755,7 @@ ORDER BY entity, purpose
 }
 ```
 
-#### Example Raw JSON Payloads
+### Example Raw JSON Payloads
 
 If you don't have a GraphQL client, you can still post to the APIs by wrapping the above request objects in the GraphQL payload wrapper.  An example is below.  The payload goes in the `variables.data` object.  The `operationName` is as shown below and the `query` can be copied.  A sample result when that is used as the query is shown below.
 
@@ -836,7 +807,7 @@ If you don't have a GraphQL client, you can still post to the APIs by wrapping t
 }
 ```
 
-##### Sample Response for the Above
+#### Sample Response for the Above
 
 Responses are structured like the following.  Successful response data is wrapped by a `data.glJournalRequest` property.  If there are any errors, they are reported in a top-level `errors` property looking like the 2nd response below.
 
@@ -872,7 +843,7 @@ Responses are structured like the following.  Successful response data is wrappe
 ```
 
 
-#### Data Object to Oracle Mapping
+## Data Object to Oracle Mapping
 
 > Base Object:                        `GlJournalRequestInput`
 > `payload`:                          `GlJournalInput`
@@ -880,7 +851,7 @@ Responses are structured like the following.  Successful response data is wrappe
 > `payload.journalLines.glSegments`:  `GlSegmentInput`
 > `payload.journalLines.ppmSegments`: `PpmSegmentInput`
 
-##### For GL Entry Segment Lines
+### For GL Entry Segment Lines
 
 | GraphQL Property                              | Req? | Oracle FBDI Destination                      | GL_INTERFACE Column   |
 | --------------------------------------------- | ---- | -------------------------------------------- | --------------------- |
@@ -918,7 +889,7 @@ Responses are structured like the following.  Successful response data is wrappe
 | payload.journalLines.externalSystemReference  |      | ATTRIBUTE2 Value for Journal Entry Line DFF  | ATTRIBUTE2 (25)       |
 | Constant: **TBD**                             |      | REFERENCE10 (Journal Entry Line Description) | REFERENCE10 (240)     |
 
-###### Property Lookup Validations
+### Property Lookup Validations
 
 | GraphQL Property                           | Local Data Object      | Local Data Object Property |
 | ------------------------------------------ | ---------------------- | -------------------------- |
@@ -934,7 +905,7 @@ Responses are structured like the following.  Successful response data is wrappe
 | payload.journalLines.glSegments.project    | ErpProject             | code                       |
 | payload.journalLines.glSegments.activity   | ErpActivity            | code                       |
 
-##### For PPM Costing Segment Lines
+### For PPM Costing Segment Lines
 
 > where limits noted, values should be trimmed to the given length
 
@@ -980,7 +951,7 @@ Responses are structured like the following.  Successful response data is wrappe
   * `LineNumber` is the number of the line within the source request `journalLines` array.
   * `${payload.journalSource}-${header.consumerTrackingId}-${LineNumber}-${payload.journalLines.externalSystemIdentifier}-${payload.journalLines.externalSystemReference}`
 
-##### Property Lookup Validations
+### Property Lookup Validations
 
 | GraphQL Property                                 | Local Data Object          | Local Data Object Property |
 | ------------------------------------------------ | -------------------------- | -------------------------- |
@@ -993,7 +964,7 @@ Responses are structured like the following.  Successful response data is wrappe
 | payload.journalLines.ppmSegments.fundingSource   | PpmFundingSource           | fundSourceNumber           |
 
 
-#### Testing Scenarios
+## Testing Scenarios
 
 > To Be Expanded: dump format at present
 
