@@ -647,9 +647,9 @@ ORDER BY entity, purpose
         },
         "creditAmount": 100.00,
         "externalSystemIdentifier": "ITEMX"
-      },
+      }
     ]
-  },
+  }
 }
 ```
 
@@ -688,9 +688,9 @@ ORDER BY entity, purpose
         "glSegmentString": "1311-99100-1203456-770000-00-000-0000000000-000000-0000-000000-000000",
         "creditAmount": 100.00,
         "externalSystemIdentifier": "ITEMX"
-      },
+      }
     ]
-  },
+  }
 }
 ```
 
@@ -780,8 +780,7 @@ ORDER BY entity, purpose
     "errorMessages": [],
     "statusRequestPayload": "{ \\"query\\": \\"query { glJournalRequestStatus(requestId:\\\\\\"BA77D46E-C610-406E-B426-38939E432968\\\\\\") { glJournalId requestStatus { requestId consumerId requestTime } }\\"}",
     "actionRequestPayload": "" // too large - would be entire request input
-  },
-  "glJournalId": null,
+  }
 }
 ```
 

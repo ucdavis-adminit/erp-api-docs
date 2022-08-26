@@ -43,9 +43,9 @@
       {
         "ppmSegments": {
           "project": "GP12345678",
-          "task": "Task 1",
+          "task": "TASK01",
           "organization": "9300479",
-          "expenditureType": "Lab Equipment"
+          "expenditureType": "390000"
         },
         "debitAmount": 500.00,
         "externalSystemIdentifier": "ITEMY",
