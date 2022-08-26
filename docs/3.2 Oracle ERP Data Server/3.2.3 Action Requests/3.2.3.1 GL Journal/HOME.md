@@ -222,7 +222,7 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
 
 > Output type for GLJournal requests and follow-up status updates.
 >
-> Contains the overall request status.  After a successful creation of the journal, will also contain the Oracle Financials assigned journal ID.
+> Contains the overall request status.
 
 
 | Property Name     | Type                                         | Notes                                                                                                          |
@@ -241,16 +241,15 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
 * Required fields (enforced by GraphQL data model)
 * Ensure required fields are non-blank. (enforced by GraphQL data model)
 * Ensure fields are formatted properly (enforced by GraphQL data model - and custom code if needed)
-* Verify maximum lengths on fields.  (Delegate using custom data types if possible.)
+* Verify maximum lengths on fields.  (Enforced using custom data types where possible.)
   * (e.g., `TrimmedNonEmptyString240`)
 
 ### Request Header Checks
 
 * Validate Journal Source
-  * Verify Source is allowed for API consumer. (TBD - We will want to link the API Consumer authentication identifier to the journal sources.)
+  * Verify Source is allowed for API consumer.
 * Validate Journal Category
-  * Verify Category is valid for API use. (TBD - only a small set of journal categories will be able to be used via integrations)
-  * Verify Category is allowed for API consumer. (Each API Consumer may have a limited set of journal categories they are allowed to use.)
+  * Verify Category is `UCD Recharge`
 * Confirm if `consumerTrackingId` previously used and reject if found in the action request table.
 
 ### Data Validation
@@ -258,7 +257,7 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
 * **Overall**
 
   * Verify that a non-zero number of journal lines have been provided.
-  * Verify number of lines `<=` 1000 (Preliminary number - should be a constant we can adjust easily via config options)
+  * Verify number of lines `<=` 10000 (Preliminary number - may be adjusted based on performance testing.)
   * Verify no line was given both GL and POET segments.
   * Verify that any field provided by the consumer that has a valid list of values in Oracle contains a valid and active value.
 
@@ -283,7 +282,7 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
       * If the account is a descendent of `52500B`, fail validation.
   * **Validate via Combination Code** **(TODO)**
     * Check if the combination of the 11 GL segments is a known, valid combination.
-    * Using the GlAccountingCombination, check if the combination is valid is known and is active and valid for the given accounting date.  If so, CVR rules do not need to be run.  Oracle will allow any valid combination even if does not match the current CVR rules.  There is no validation failure for this rule.  This is only to short-circuit the CVR rules.
+    * Using the GlAccountingCombination, check if the combination is valid is known and is active and valid for the given accounting date.  If so, CVR rules do not need to be run.  Oracle will allow any valid combination even if does not match the _current_ CVR rules.  There is no validation failure for this rule.  This is only to short-circuit the CVR rules.
     * Must be open for detail posting, and not a summary combination code.
   * **CVR Matching Rules (message then technical rule)**
     * _Purpose is required for Expense Accounts (OPER_ACC_PURPOSE_1)_
@@ -600,8 +599,8 @@ ORDER BY entity, purpose
     "boundaryApplicationName": "My Boundary App" // name of the source boundary application
   },
   "payload": {
-    "journalSourceName": "BOUNDARY_APP_1", // Assigned journal source ID from the Finance department
-    "journalCategoryName": "INTERCOMPANY_REVENUE", // Allowed journal category name for the types of expenses
+    "journalSourceName": "UCD Your Journal Source", // Assigned journal source ID from the Finance department
+    "journalCategoryName": "UCD Recharge", // Allowed journal category name for the types of expenses
     "journalName": "MySystem Recharges for July 2023",
     "journalReference":  "ORDER_12345",
     "accountingDate": "2023-07-31",
@@ -610,9 +609,9 @@ ORDER BY entity, purpose
     "journalLines": [
       {
         "glSegments": {
-          "entity": "1311",
-          "fund": "99100",
-          "department": "9300051",
+          "entity": "3110",
+          "fund": "13U00",
+          "department": "9300531",
           "purpose": "68",
           "account": "390000"
         },
@@ -621,8 +620,8 @@ ORDER BY entity, purpose
       },
       {
         "glSegments": {
-          "entity": "1311",
-          "fund": "99100",
+          "entity": "3110",
+          "fund": "13U00",
           "department": "1203456",
           "account": "000060"
         },
@@ -646,8 +645,8 @@ ORDER BY entity, purpose
     "boundaryApplicationName": "My Boundary App" // name of the source boundary application
   },
   "payload": {
-    "journalSourceName": "BOUNDARY_APP_1", // Assigned journal source ID from the Finance department
-    "journalCategoryName": "INTERCOMPANY_REVENUE", // Allowed journal category name for the types of expenses
+    "journalSourceName": "UCD Your Boundary App", // Assigned journal source ID from the Finance department
+    "journalCategoryName": "UCD Recharge", // Allowed journal category name for the types of expenses
     "journalName": "MySystem Recharges for July 2023",
     "journalReference":  "ORDER_12345",
     "accountingDate": "2023-07-31",
@@ -655,12 +654,12 @@ ORDER BY entity, purpose
     // Array of accounting lines to post
     "journalLines": [
       {
-        "glSegmentString": "1311-99100-9300051-390000-68-000-0000000000-000000-0000-000000-000000",
+        "glSegmentString": "3110-13U00-9300531-390000-68-000-0000000000-000000-0000-000000-000000",
         "debitAmount": 100.00,
         "externalSystemIdentifier": "ITEMX"
       },
       {
-        "glSegmentString": "1311-99100-1203456-770000-00-000-0000000000-000000-0000-000000-000000",
+        "glSegmentString": "3110-13U00-1203456-770000-00-000-0000000000-000000-0000-000000-000000",
         "creditAmount": 100.00,
         "externalSystemIdentifier": "ITEMX"
       }
@@ -682,8 +681,8 @@ ORDER BY entity, purpose
     "boundaryApplicationName": "My Boundary App" // name of the source boundary application
   },
   "payload": {
-    "journalSourceName": "BOUNDARY_APP_1", // Assigned journal source ID from the Finance department
-    "journalCategoryName": "INTERCOMPANY_REVENUE", // Allowed journal category name for the types of expenses
+    "journalSourceName": "UCD Your Boundary App", // Assigned journal source ID from the Finance department
+    "journalCategoryName": "UCD Recharge", // Allowed journal category name for the types of expenses
     "journalName": "MySystem Recharges for July 2023",
     "journalReference":  "ORDER_12345",
     "accountingDate": "2023-07-31",
@@ -692,22 +691,22 @@ ORDER BY entity, purpose
     "journalLines": [
       // recharge to department
       {
-        "glSegmentString": "1311-99100-9300479-390000-68-000-0000000000-000000-0000-000000-000000",
+        "glSegmentString": "3110-13U00-9300479-390000-68-000-0000000000-000000-0000-000000-000000",
         "debitAmount": 100.00,
         "externalSystemIdentifier": "ITEMX"
       },
       // income to provider
       {
-        "glSegmentString": "1311-99100-9300051-770000-00-000-0000000000-000000-0000-000000-000000",
+        "glSegmentString": "3110-13U00-9300531-770000-00-000-0000000000-000000-0000-000000-000000",
         "creditAmount": 100.00,
         "externalSystemIdentifier": "ITEMX"
       },
       // income to provider for PPM expense
       {
         "glSegments": {
-          "entity": "1311",
-          "fund": "99100",
-          "department": "9300051",
+          "entity": "3110",
+          "fund": "13U00",
+          "department": "9300531",
           "account": "770000"
         },
         "creditAmount": 500.00,
@@ -771,8 +770,8 @@ If you don't have a GraphQL client, you can still post to the APIs by wrapping t
                 "consumerTrackingId": "CONSUMER_ORDER_NBR"
             },
             "payload": {
-                "journalSourceName": "A_BOUNDARY_SYSTEM",
-                "journalCategoryName": "Recharge",
+                "journalSourceName": "UCD Your Boundary App",
+                "journalCategoryName": "UCD Recharge",
                 "journalDescription": "Journal Description For Oracle",
                 "journalName": "Journal Name For Oracle",
                 "journalReference": "JournalReference",
@@ -780,7 +779,7 @@ If you don't have a GraphQL client, you can still post to the APIs by wrapping t
                 "journalLines": [
                     {
                         "glSegments": {
-                            "entity": "1311",
+                            "entity": "3110",
                             "fund": "12345",
                             "department": "1234567",
                             "purpose": "68",
@@ -791,7 +790,7 @@ If you don't have a GraphQL client, you can still post to the APIs by wrapping t
                     },
                     {
                         "glSegments": {
-                            "entity": "1311",
+                            "entity": "3110",
                             "fund": "12345",
                             "department": "1234567",
                             "account": "200001"
@@ -909,32 +908,32 @@ Responses are structured like the following.  Successful response data is wrappe
 
 > where limits noted, values should be trimmed to the given length
 
-| GraphQL Property                                 | Req? | Oracle FBDI Destination                     | GL_INTERFACE Column                         |
-| ------------------------------------------------ | ---- | ------------------------------------------- | ------------------------------------------- |
-| Constant: `MISCELLANEOUS`                        |      | Transaction Type                            | TRANSACTION_TYPE                            |
-| Constant: `UCD Business Unit`                    |      | Business Unit Name                          | BUSINESS_UNIT                               |
-| Constant: `UCD Miscellaneous Costs`              |      | Third-Party Application Transaction Source  | USER_TRANSACTION_SOURCE                     |
-| Constant: `Unaccounted External Transactions`    |      | Document Name                               | DOCUMENT_NAME                               |
-| payload.journalSource                            |      | Document Entry                              | DOC_ENTRY_NAME                              |
-| _Calculated: see below_                          | Yes  | Expenditure Batch                           | BATCH_NAME (200)                            |
-| _Calculated: see below_                          | Yes  | Batch Description                           | BATCH_DESCRIPTION (250)                     |
-| payload.accountingDate                           |      | Expenditure Item Date                       | EXPENDITURE_ITEM_DATE                       |
-| payload.journalLines.ppmSegments.project         |      | Project Number                              | PROJECT_NUMBER (10)                         |
-| payload.journalLines.ppmSegments.task            |      | Task Number                                 | TASK_NUMBER (100)                           |
-| payload.journalLines.ppmSegments.expenditureType |      | Expenditure Type                            | EXPENDITURE_TYPE (240)                      |
-| payload.journalLines.ppmSegments.organization    |      | Expenditure Organization                    | ORGANIZATION_NAME (240)                     |
-| payload.journalLines.ppmSegments.award           |      | Contract Name / Contract Number             | CONTRACT_NAME / CONTRACT_NUMBER             |
-| payload.journalLines.ppmSegments.fundingSource   |      | Funding Source Name / Funding Source Number | FUNDING_SOURCE_NAME / FUNDING_SOURCE_NUMBER |
-| Constant: `1.00`                                 |      | Quantity                                    | QUANTITY                                    |
-| Constant: `EA`                                   |      | Unit of Measure Code                        | UNIT_OF_MEASURE_NAME                        |
-| payload.journalLines.ppmComment                  | Yes  | Expenditure Item Comment                    | EXPENDITURE_COMMENT (240)                   |
-| _Calculated: see below_                          | Yes  | Original Transaction Reference              | ORIG_TRANSACTION_REFERENCE (120)            |
-| Constant: `USD`                                  |      | Transaction Currency Code                   | DENOM_CURRENCY_CODE                         |
-| payload.journalLines.debitAmount                 | ***  | Raw Cost in Transaction Currency            | DENOM_RAW_COST                              |
-| payload.journalLines.creditAmount                | ***  | Raw Cost in Transaction Currency            | DENOM_RAW_COST                              |
-| (empty)                                          |      | Billable                                    | BILLABLE_FLAG                               |
-| (empty)                                          |      | Capitalizable                               | CAPITALIZABLE_FLAG                          |
-| Constant: `PJC_All`                              |      | Context Category                            | CONTEXT_CATEGORY                            |
+| GraphQL Property                                        | Req? | Oracle FBDI Destination                    | GL_INTERFACE Column              |
+| ------------------------------------------------------- | ---- | ------------------------------------------ | -------------------------------- |
+| Constant: `MISCELLANEOUS`                               |      | Transaction Type                           | TRANSACTION_TYPE                 |
+| Constant: `UCD Business Unit`                           |      | Business Unit Name                         | BUSINESS_UNIT                    |
+| Constant: `UCD Miscellaneous Costs`                     |      | Third-Party Application Transaction Source | USER_TRANSACTION_SOURCE          |
+| Constant: `Unaccounted External Transactions`           |      | Document Name                              | DOCUMENT_NAME                    |
+| payload.journalSource                                   |      | Document Entry                             | DOC_ENTRY_NAME                   |
+| _Calculated: see below_                                 | Yes  | Expenditure Batch                          | BATCH_NAME (200)                 |
+| _Calculated: see below_                                 | Yes  | Batch Description                          | BATCH_DESCRIPTION (250)          |
+| payload.accountingDate                                  |      | Expenditure Item Date                      | EXPENDITURE_ITEM_DATE            |
+| payload.journalLines.ppmSegments.project                |      | Project Number                             | PROJECT_NUMBER (10)              |
+| payload.journalLines.ppmSegments.task                   |      | Task Number                                | TASK_NUMBER (100)                |
+| payload.journalLines.ppmSegments.expenditureType (name) |      | Expenditure Type                           | EXPENDITURE_TYPE (240)           |
+| payload.journalLines.ppmSegments.organization (name)    |      | Expenditure Organization                   | ORGANIZATION_NAME (240)          |
+| payload.journalLines.ppmSegments.award                  |      | Contract Number                            | CONTRACT_NUMBER                  |
+| payload.journalLines.ppmSegments.fundingSource          |      | Funding Source Number                      | FUNDING_SOURCE_NUMBER            |
+| Constant: `1.00`                                        |      | Quantity                                   | QUANTITY                         |
+| Constant: `EA`                                          |      | Unit of Measure Code                       | UNIT_OF_MEASURE_NAME             |
+| payload.journalLines.ppmComment                         | Yes  | Expenditure Item Comment                   | EXPENDITURE_COMMENT (240)        |
+| _Calculated: see below_                                 | Yes  | Original Transaction Reference             | ORIG_TRANSACTION_REFERENCE (120) |
+| Constant: `USD`                                         |      | Transaction Currency Code                  | DENOM_CURRENCY_CODE              |
+| payload.journalLines.debitAmount                        | ***  | Raw Cost in Transaction Currency           | DENOM_RAW_COST                   |
+| payload.journalLines.creditAmount                       | ***  | Raw Cost in Transaction Currency           | DENOM_RAW_COST                   |
+| (empty)                                                 |      | Billable                                   | BILLABLE_FLAG                    |
+| (empty)                                                 |      | Capitalizable                              | CAPITALIZABLE_FLAG               |
+| Constant: `PJC_All`                                     |      | Context Category                           | CONTEXT_CATEGORY                 |
 
 * **Destination: Expenditure Batch (batch name)**
   * We want to ensure each batch is unique for tracking purposes.
@@ -955,9 +954,8 @@ Responses are structured like the following.  Successful response data is wrappe
 
 | GraphQL Property                                 | Local Data Object          | Local Data Object Property |
 | ------------------------------------------------ | -------------------------- | -------------------------- |
-| payload.journalSource                            | PpmDocumentEntry           | name                       |
 | payload.journalLines.ppmSegments.project         | PpmProject                 | projectNumber              |
-| payload.journalLines.ppmSegments.task            | PpmTask                    | name                       |
+| payload.journalLines.ppmSegments.task            | PpmTask                    | taskNumber                 |
 | payload.journalLines.ppmSegments.expenditureType | PpmExpenditureType         | name                       |
 | payload.journalLines.ppmSegments.organization    | PpmExpenditureOrganization | name                       |
 | payload.journalLines.ppmSegments.award           | PpmAward                   | awardNumber                |

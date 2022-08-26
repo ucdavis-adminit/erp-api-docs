@@ -8,8 +8,8 @@
     "boundaryApplicationName": "My Boundary App" // name of the source boundary application
   },
   "payload": {
-    "journalSourceName": "BOUNDARY_APP_1", // Assigned journal source ID from the Finance department
-    "journalCategoryName": "INTERCOMPANY_REVENUE", // Allowed journal category name for the types of expenses
+    "journalSourceName": "UCD Your Boundary App", // Assigned journal source ID from the Finance department
+    "journalCategoryName": "UCD Recharge", // Allowed journal category name for the types of expenses
     "journalName": "MySystem Recharges for July 2023",
     "journalReference": "ORDER_12345",
     "accountingDate": "2023-07-31",
@@ -18,13 +18,13 @@
     "journalLines": [
       // recharge to department
       {
-        "glSegmentString": "1311-99100-9300479-390000-68-000-0000000000-000000-0000-000000-000000",
+        "glSegmentString": "1311-13U00-9300479-390000-68-000-0000000000-000000-0000-000000-000000",
         "debitAmount": 100.00,
         "externalSystemIdentifier": "ITEMX"
       },
       // income to provider
       {
-        "glSegmentString": "1311-99100-9300051-770000-68-000-0000000000-000000-0000-000000-000000",
+        "glSegmentString": "1311-13U00-9300531-770000-68-000-0000000000-000000-0000-000000-000000",
         "creditAmount": 100.00,
         "externalSystemIdentifier": "ITEMX"
       },
@@ -32,8 +32,8 @@
       {
         "glSegments": {
           "entity": "1311",
-          "fund": "99100",
-          "department": "9300051",
+          "fund": "13U00",
+          "department": "9300531",
           "account": "770000"
         },
         "creditAmount": 500.00,

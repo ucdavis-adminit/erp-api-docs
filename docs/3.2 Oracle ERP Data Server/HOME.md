@@ -47,13 +47,13 @@ The GraphQL specification for each operation defines the structure of the data w
       "header": {
         "boundaryApplicationName": "TESTING_APP",
         "consumerId": "CONSUMER_ID",
-        "consumerReferenceId": "A_UNIQUE_ID",
-        "consumerTrackingId": "CONSUMER_ORDER_NBR"
+        "consumerReferenceId": "CONSUMER_ORDER_NBR",
+        "consumerTrackingId": "A_UNIQUE_ID"
       },
       // the operation-specific payload for the operation
       "payload": {
-        "journalSourceName": "A_BOUNDARY_SYSTEM",
-        "journalCategoryName": "Recharge",
+        "journalSourceName": "UCD Your Boundary App",
+        "journalCategoryName": "UCD Recharge",
         "journalDescription": "Journal Description For Oracle",
         "journalName": "Journal Name For Oracle",
         "journalReference": "JournalReference",

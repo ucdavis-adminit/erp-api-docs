@@ -86,28 +86,28 @@ It is recommended that you utilize the API documentation and API server playgrou
             "boundaryApplicationName": "My Boundary App"
           },
           "payload": {
-            "journalSourceName": "BOUNDARY_APP_1",
-            "journalCategoryName": "INTERCOMPANY_REVENUE",
+            "journalSourceName": "UCD Your Boundary App",
+            "journalCategoryName": "UCD Recharge",
             "journalName": "MySystem Recharges for July 2023",
             "journalReference": "ORDER_12345",
             "accountingDate": "2023-07-31",
             "accountingPeriodName": "Jul-23",
             "journalLines": [
               {
-                "glSegmentString": "1311-99100-9300479-390000-68-000-0000000000-000000-0000-000000-000000",
+                "glSegmentString": "1311-13U00-9300479-390000-68-000-0000000000-000000-0000-000000-000000",
                 "debitAmount": 100.00,
                 "externalSystemIdentifier": "ITEMX"
               },
               {
-                "glSegmentString": "1311-99100-9300051-770000-68-000-0000000000-000000-0000-000000-000000",
+                "glSegmentString": "1311-13U00-9300531-770000-68-000-0000000000-000000-0000-000000-000000",
                 "creditAmount": 100.00,
                 "externalSystemIdentifier": "ITEMX"
               },
               {
                 "glSegments": {
                   "entity": "1311",
-                  "fund": "99100",
-                  "department": "9300051",
+                  "fund": "13U00",
+                  "department": "9300531",
                   "account": "770000"
                 },
                 "creditAmount": 500.00,
@@ -146,28 +146,28 @@ Then the contents of the file would be:
     "boundaryApplicationName": "My Boundary App"
   },
   "payload": {
-    "journalSourceName": "BOUNDARY_APP_1",
-    "journalCategoryName": "INTERCOMPANY_REVENUE",
+    "journalSourceName": "UCD Your Boundary App",
+    "journalCategoryName": "UCD Recharge",
     "journalName": "MySystem Recharges for July 2023",
     "journalReference": "ORDER_12345",
     "accountingDate": "2023-07-31",
     "accountingPeriodName": "Jul-23",
     "journalLines": [
       {
-        "glSegmentString": "1311-99100-9300479-390000-68-000-0000000000-000000-0000-000000-000000",
+        "glSegmentString": "1311-13U00-9300479-390000-68-000-0000000000-000000-0000-000000-000000",
         "debitAmount": 100.00,
         "externalSystemIdentifier": "ITEMX"
       },
       {
-        "glSegmentString": "1311-99100-9300051-770000-68-000-0000000000-000000-0000-000000-000000",
+        "glSegmentString": "1311-13U00-9300531-770000-68-000-0000000000-000000-0000-000000-000000",
         "creditAmount": 100.00,
         "externalSystemIdentifier": "ITEMX"
       },
       {
         "glSegments": {
           "entity": "1311",
-          "fund": "99100",
-          "department": "9300051",
+          "fund": "13U00",
+          "department": "9300531",
           "account": "770000"
         },
         "creditAmount": 500.00,
