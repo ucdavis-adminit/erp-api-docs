@@ -84,15 +84,6 @@ The Award Number identifies the number assigned to an award containing funding a
 * **Returns**
   * `[PpmAward!]!`
 
-##### `ppmAwardByProjectId`
-
-> Gets PpmAwards by project.  Returns empty  if not found
-
-* **Parameters**
-  * `projectId : String!`
-* **Returns**
-  * `[PpmAward!]!`
-
 ##### `ppmAwardByNumber`
 
 > Gets undefineds by number.  Returns empty if not found
@@ -354,75 +345,6 @@ The Funding Source identifies the name of the sponsor for the external funding s
 
 
 <!--BREAK-->
-### Data Object: PpmKeywords
-
-Cayuse support - non-segment data objects needed for submission of project and grant data
-Needed for to manage keywords for lookup table
-
-#### Access Controls
-
-* Required Role: `erp:reader-refdata`
-
-#### Data Source
-
-* Local Table/View: `PPM_KEYWORDS`
-* Data Origin:
-  * System: Oracle BICC
-  * Extract Objects:
-    * View Object: FscmTopModelAM.GmsSetupAM.KeywordViewPVO
-  * Underlying Database Objects:
-    * GMS_KEYWORDS_VL
-
-##### Properties
-
-| Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| id                 | Long!                     |                |                 |               | ID: The unique identifier of the keyword. |
-| name               | NonEmptyTrimmedString150! |                |        Y        |               | Keyword Name: The name of the keyword. |
-| description        | NonEmptyTrimmedString240  |                |        Y        |               | Keyword Description: The description for the Keyword. |
-| lastUpdateDateTime | DateTime!                 |                |        Y        |               | The date when the keyword was last updated. |
-| lastUpdatedBy      | ErpUserId                 |                |                 |               | The user that last updated the keyword. |
-
-##### Linked Data Objects
-
-(None)
-
-#### Query Operations
-
-##### `ppmKeywords`
-
-> Get a single PpmKeywords by id.  Returns undefined if does not exist
-
-* **Parameters**
-  * `id : String!`
-* **Returns**
-  * `PpmKeywords`
-
-##### `ppmKeywordsByName`
-
-> Gets PpmKeywordss by exact name.  Returns empty list if none are found
-
-* **Parameters**
-  * `name : String!`
-* **Returns**
-  * `[PpmKeywords!]!`
-
-##### `ppmKeywordsSearch`
-
-> Search for PpmKeywords objects by multiple properties.
-> See
-> See the PpmKeywordsFilterInput type for options.
-
-* **Parameters**
-  * `filter : PpmKeywordsFilterInput!`
-* **Returns**
-  * `PpmKeywordsSearchResults!`
-
-[^1]: Searchable attributes are available as part of the general search filter input.
-[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
-
-
-<!--BREAK-->
 ### Data Object: PpmOrganization
 
 The Expenditure Organization identifies the organization that is incurring the expense and revenue. This may NOT be the same as the organization that owns the project.
@@ -444,28 +366,26 @@ The Expenditure Organization identifies the organization that is incurring the e
 
 * Local Table/View: `PPM_ORGANIZATION`
 * Data Origin:
-  * System: Oracle BICC
+  * System: Oracle BIPublisher
   * Extract Objects:
-    * View Object:  FscmTopModelAM.OrganizationAM.ProjectExpenditureOrganizationPVO
+    * /Custom/Interfaces/Data Extracts/PPMExpenseOrganization.xdo
   * Underlying Database Objects:
-    * HR_ORG_UNIT_CLASSIFICATIONS_F
-    * HR_ORGANIZATION_UNITS_F_TL
+    * PJF_ORGANIZATIONS_EXPEND_V
 
 ##### Properties
 
 | Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
 | ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| id                 | Long!                     |       Y        |        Y        |               | Organization ID: Unique identifier of the Organization.  Internal to Oracle. |
+| code               | String!                   |                |        Y        |               | Organization Code: The code of the Organization. |
 | name               | NonEmptyTrimmedString100! |                |        Y        |               | Organization Name: Name of the Organization |
-| code               | String!                   |                |                 |               | Organization Code: The code of the Organization. |
 | effectiveStartDate | LocalDate!                |                |                 |               | Effective Start Date: Start date of Organization |
 | effectiveEndDate   | LocalDate                 |                |                 |               | Effective End Date: End date of Organization |
-| lastUpdateDateTime | DateTime!                 |                |        Y        |               | The date when the organization was last updated. |
-| lastUpdatedBy      | ErpUserId                 |                |                 |               | The user that last updated the organization. |
-| eligibleForUse     | Boolean!                  |                |                 |               | Returns whether this PpmOrganization is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmOrganization must:<br/>- Have a effectiveStartDate and effectiveEndDate range which includes the given accountingDate |
+| enabled            | Boolean!                  |                |        Y        |               | Whether the expense organization allows costing transactions against it. |
+| id                 | Long!                     |       Y        |                 |               | Organization ID: Unique identifier of the Organization.  Internal to Oracle. |
+| eligibleForUse     | Boolean!                  |                |                 |               | Returns whether this PpmOrganization is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmOrganization must:<br/>- Have a effectiveStartDate and effectiveEndDate range which includes the given accountingDate<br/>- Be enabled |
 
 * `eligibleForUse` : `Boolean!`
-  * Returns whether this PpmOrganization is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmOrganization must:<br/>- Have a effectiveStartDate and effectiveEndDate range which includes the given accountingDate
+  * Returns whether this PpmOrganization is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmOrganization must:<br/>- Have a effectiveStartDate and effectiveEndDate range which includes the given accountingDate<br/>- Be enabled
   * Arguments:
     * `accountingDate` : `LocalDate`
 
@@ -477,24 +397,6 @@ The Expenditure Organization identifies the organization that is incurring the e
 
 ##### `ppmOrganization`
 
-> Get a single PpmOrganization by id.  Returns undefined if does not exist
-
-* **Parameters**
-  * `id : String!`
-* **Returns**
-  * `PpmOrganization`
-
-##### `ppmOrganizationByName`
-
-> Gets PpmOrganizations by exact name.  Returns empty list if none are found
-
-* **Parameters**
-  * `name : String!`
-* **Returns**
-  * `PpmOrganization`
-
-##### `ppmOrganizationByCode`
-
 > Get a single PpmOrganization by code.  Returns undefined if does not exist
 
 * **Parameters**
@@ -502,15 +404,12 @@ The Expenditure Organization identifies the organization that is incurring the e
 * **Returns**
   * `PpmOrganization`
 
-##### `ppmOrganizationByDepartment`
+##### `ppmOrganizationByName`
 
-> Gets PpmOrganizations by the associated GL Financial Department.  Returns undefined if none is found.
-> 
-> PPM Expense Organization names will be the GL Financial Department number plus a description.  This full string must be used in file-based feeds.
-> This method will allow you to obtain the exact string (in the name property) that needs to be included.
+> Gets PpmOrganizations by exact name.  Returns undefined if does not exist
 
 * **Parameters**
-  * `department : ErpDepartmentCode!`
+  * `name : String!`
 * **Returns**
   * `PpmOrganization`
 
@@ -754,33 +653,6 @@ The Task identifies the activities used to further breakdown a PPM project. Ever
   * `id : String!`
 * **Returns**
   * `PpmTask`
-
-##### `ppmTaskByNumber`
-
-> Get a single PpmTask by number.  Returns undefined if does not exist
-
-* **Parameters**
-  * `taskNumber : String!`
-* **Returns**
-  * `PpmTask`
-
-##### `ppmTaskByName`
-
-> Gets PpmTasks by exact name.  Returns empty list if none are found
-
-* **Parameters**
-  * `name : NonEmptyTrimmedString240!`
-* **Returns**
-  * `[PpmTask!]!`
-
-##### `ppmTaskByProjectId`
-
-> Gets PpmTasks by project.  Returns empty list if none are found
-
-* **Parameters**
-  * `projectId : String!`
-* **Returns**
-  * `[PpmTask!]!`
 
 ##### `ppmTaskByProjectNumber`
 

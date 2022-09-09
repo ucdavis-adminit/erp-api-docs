@@ -427,7 +427,6 @@ Due to significant variations in departments' financial structure in KFS, it is 
 | hierarchyDepth     | Int                        |                |        Y        |               | Level below the top for a ErpFinancialDepartment that is part of a reporting hierarchy. |
 | hierarchyLevel     | String                     |                |        Y        |               | Reporting Level designation based on the hierarchy depth. |
 | departmentType     | ErpDepartmentTypeCode      |                |                 |               | Reporting Level designation based on the hierarchy depth. |
-| fiscalOfficerName  | NonEmptyTrimmedString240   |                |        Y        |               | Fiscal Officer: Display Name of the assigned fiscal officer for expenses charged to this department. |
 | eligibleForUse     | Boolean!                   |                |                 |               | Returns whether this ErpFinancialDepartment is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the ErpFinancialDepartment must:<br/>- Be enabled<br/>- Not be summaryOnly<br/>- Have a startDate and endDate range which includes the given accountingDate |
 
 * `parent` : `ErpFinancialDepartment`
@@ -979,11 +978,20 @@ The Purpose segment most closely aligns with the HEFC (Higher Ed. Function Code)
 
 #### Access Controls
 
-* Required Role: ``
+* Required Role: `erp:reader-refdata`
 
 #### Data Source
 
-* Local Table/View: `undefined`
+* Local Table/View: `ERP_UNIT_OF_MEASURE` (view)
+  * Support Tables:
+    * `ERP_UNIT_OF_MEASURE_TL`
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+    * View: FscmTopModelAM.InvUomPublicViewAM.InvUomPVO
+  * Underlying Database Objects:
+    * INV_UNITS_OF_MEASURE_B
+    * INV_UNITS_OF_MEASURE_TL
 
 ##### Properties
 

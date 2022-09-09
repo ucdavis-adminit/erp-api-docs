@@ -138,69 +138,6 @@ PpmDocumentEntry is used to store the document entries.
 
 
 <!--BREAK-->
-### Data Object: PpmKeywords
-
-Cayuse support - non-segment data objects needed for submission of project and grant data
-Needed for to manage keywords for lookup table
-
-#### Access Controls
-
-* Required Role: ``
-
-#### Data Source
-
-* Local Table/View: `undefined`
-
-##### Properties
-
-| Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| id                 | Long!                     |                |                 |               | ID: The unique identifier of the keyword. |
-| name               | NonEmptyTrimmedString150! |                |        Y        |               | Keyword Name: The name of the keyword. |
-| description        | NonEmptyTrimmedString240  |                |        Y        |               | Keyword Description: The description for the Keyword. |
-| lastUpdateDateTime | DateTime!                 |                |        Y        |               | The date when the keyword was last updated. |
-| lastUpdatedBy      | ErpUserId                 |                |                 |               | The user that last updated the keyword. |
-
-##### Linked Data Objects
-
-(None)
-
-#### Query Operations
-
-##### `ppmKeywords`
-
-> Get a single PpmKeywords by id.  Returns undefined if does not exist
-
-* **Parameters**
-  * `id : String!`
-* **Returns**
-  * `PpmKeywords`
-
-##### `ppmKeywordsByName`
-
-> Gets PpmKeywordss by exact name.  Returns empty list if none are found
-
-* **Parameters**
-  * `name : String!`
-* **Returns**
-  * `[PpmKeywords!]!`
-
-##### `ppmKeywordsSearch`
-
-> Search for PpmKeywords objects by multiple properties.
-> See
-> See the PpmKeywordsFilterInput type for options.
-
-* **Parameters**
-  * `filter : PpmKeywordsFilterInput!`
-* **Returns**
-  * `PpmKeywordsSearchResults!`
-
-[^1]: Searchable attributes are available as part of the general search filter input.
-[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
-
-
-<!--BREAK-->
 ### Data Object: PpmTerms
 
 Cayuse support - non-segment data objects needed for submission of project and grant data

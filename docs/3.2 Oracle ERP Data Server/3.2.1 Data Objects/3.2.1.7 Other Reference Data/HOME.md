@@ -49,11 +49,19 @@ Contains information about the ERP API server's version.
 
 #### Access Controls
 
-* Required Role: ``
+* Required Role: `erp:reader-refdata`
 
 #### Data Source
 
-* Local Table/View: `undefined`
+* Local Table/View: `ERP_INSTITUTION_LOCATION`
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+    * FscmTopModelAM.LocationAM.LocationRefPVO
+  * Underlying Database Objects:
+    * PER_ADDRESSES_F
+    * PER_LOCATION_DETAILS_F_VL
+    * PER_LOCATIONS
 
 ##### Properties
 
@@ -96,7 +104,7 @@ Locations referenced by Supplier and AR Customer Sites
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
-    * FscmTopModelAM.LocationAM.LocationRefPVO
+    * CrmAnalyticsAM.CrmExtractAM.HzBiccExtractAM.LocationExtractPVO
   * Underlying Database Objects:
     * HZ_LOCATIONS
 

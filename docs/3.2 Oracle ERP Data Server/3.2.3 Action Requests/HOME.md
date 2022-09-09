@@ -78,6 +78,24 @@
 | award           | PpmAwardNumber          |       |
 | fundingSource   | PpmFundingSourceNumber  |       |
 
+##### `GlideInput`
+
+| Property Name     | Type                    | Notes           |
+| ----------------- | ----------------------- | --------------- |
+| lineDescription   | String                  |  100 Characters |
+| journalLineNumber | Float                   |                 |
+| transactionDate   | Date                    |                 |
+| udfNumeric1       | Float                   |                 |
+| udfNumeric2       | Float                   |                 |
+| udfNumeric3       | Float                   |                 |
+| udfDate1          | Date                    |                 |
+| udfDate1          | Date                    |                 |
+| udfString1        | String                  | 50 Characters   |
+| udfString2        | String                  | 50 Characters   |
+| udfString3        | String                  | 50 Characters   |
+| udfString4        | String                  | 50 Characters   |
+| udfString5        | String                  | 50 Characters   |
+
 #### Output Types
 
 ##### `XxxxxxxxRequestStatusOutput`
