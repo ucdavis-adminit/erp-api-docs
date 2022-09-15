@@ -7,14 +7,17 @@
 
 This request allows the submitting boundary application to create a receivables invoice in the Oracle Financials system.  It accepts the provided data for a single invoice and runs validation prior to storing it for processing by the integration platform.
 
-Some key AR values will need to be known ahead of time, but will be provided to you:
+Some key AR values will need to be known ahead of time, but will be provided to you or available from the API:
 
+* `consumerId`: API consumer ID, provided to you
+* `boundaryApplicationName`: Name of your boundary application, provided to you
 * `batchSourceName`: Name of your boundary application, provided to you
 * `transactionTypeName`: TransactionType, provided to you
 * `customerAccountNumber`: Unique customer number from the ERP system, provided to you, or searchable via API
 * `customerSiteNumber`: Unique customer site/location number from the ERP system, provided to you, or searchable via API
+* `memoLineName`: MemoLineName provided to you controls the accounting generated for your invoice
+* `paymentTerm`: Name of the paymentTerms for your invoice, provided to you
 * `lines.unitOfMeasureCode`: Unit of Measure codes can be searched via API
-* `lines.glSegments`: Accounting segments indicating where the received funds will be deposited, provided to you, and can be searched via the API
 
 #### Access Controls
 
@@ -50,23 +53,8 @@ Some key AR values will need to be known ahead of time, but will be provided to 
   * `customerOrderedQuantity`
   * `unitSellingPrice`
   * `unitStandardPrice`
-  * `distributions`
-    * `distributionAccountClass`
-    * `amount`
-    * `percent`
-    * `glSegmentString`
-    * `glSegments`
-      * `entity`
-      * `fund`
-      * `department`
-      * `erpAccount`
-      * `account`
-      * `purpose`
-      * `project`
-      * `program`
-      * `activity`
-
-Either the `glSegmentString` or the `glSegments` section should be completed, not both.
+  * `memoLineName`
+  * `paymentTerm`
 
 #### Basic Use
 
@@ -88,7 +76,7 @@ Either the `glSegmentString` or the `glSegments` section should be completed, no
   * `ArInvoiceRequestStatusOutput!`
 
 
-#### API Validations (TO COMPLETE)
+#### API Validations
 
 ##### Per GraphQL Data Model and Type Resolvers
 
@@ -125,20 +113,11 @@ Either the `glSegmentString` or the `glSegments` section should be completed, no
   * Check that there is not a previously submitted pending or successful request with the same transaction number for the API consumer.
   * Verify transaction date within last month?
   * Verify accounting date belongs to an open AR Accounting Period.  (AR_PERIODS - though - there is no status on this table.  May need to join in to the GL period if the name matches)
+  * Memo Line Name
+  * Payment Term
 * **Verify Lines**
   * Verify items with lookup tables
-    * Memo Line Name
     * Unit of Measure Code (if provided)
-* **Verify Distributions**
-  * Verify items with lookup tables
-    * Standard chartstring validation
-  * Apply any additional business rules to the chartstring values
-  * Verify that exactly one of amount or percent is populated
-  * TODO: do we need both REC and REV on every line?
-    * REC entries are at the header level - and may only have a single entry with a 100% and no amount
-  * Check that all distributions for a given line and account class have all amount or all percent values.
-  * NEEDED?: Confirm that percent distributions for a given line and account class add up to 100.
-  * NEEDED?: Confirm that amount distributions for a given line and account class add up to the line amount.
 
 
 

@@ -354,17 +354,18 @@ When the line type is LINE, the value for this column should be REV, UNBILL, UNE
 
 ##### `ErpCoaHierarchyLevel`
 
-Hierarchy Level Codes used in the financial chartstring structures.
+Hierarchy Level Codes used in the financial chartstring structures.  Their meaning within each segment type is determined by chart of accounts design team.
 
 | Enum Value | Description |
 | ---------- | ----------- |
-| `A`        | Second Level, often defined by UCOP for segments with many values. |
-| `B`        | Third Level, campus-specific, but may be UCOP defined. |
-| `C`        | Fourth Level: Usually campus-defined values here and below. |
-| `D`        | Fifth Level |
-| `E`        | Sixth Level |
-| `F`        | Seventh Level |
-| `X`        | Top Level, Defined by UCOP |
+| `A`        | Top Level, often defined by UCOP for segments with many values. |
+| `B`        | Second Level, campus-specific, but may be UCOP defined. |
+| `C`        | Third Level: Usually campus-defined values here and below. |
+| `D`        | Fourth Level |
+| `E`        | Fifth Level |
+| `F`        | Sixth Level |
+| `G`        | Seventh Level |
+| `X`        | Top Level, Defined by UCOP, Only used by Account and Project. |
 
 ##### `ErpCostCenterType`
 

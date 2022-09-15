@@ -621,13 +621,13 @@ The Task identifies the activities used to further breakdown a PPM project. Ever
 | billable                 | Boolean!                  |                |        Y        |               | Billable: Indicates that transactions charged to that task can be billed to customers. |
 | chargeable               | Boolean!                  |                |        Y        |               | Chargeable: Indicates that something is eligible to be charged to a task. |
 | taskLevel                | NonNegativeInt!           |                |                 |               | Task Level: Indicates level of the task in the WBS. |
-| executionDisplaySequence | NonNegativeInt!           |                |                 |               | Display Sequence: The order in which the task is displayed in the project. |
-| lowestLevelTask          | Boolean!                  |                |        Y        |               | Lowest Level Task: Indicates the task is at the lowest level. |
+| executionDisplaySequence | NonNegativeInt            |                |                 |               | Display Sequence: The order in which the task is displayed in the project. |
+| lowestLevelTask          | Boolean                   |                |                 |               | Lowest Level Task: Indicates the task is at the lowest level. |
 | parentTaskId             | Long                      |                |                 |               | Parent Task ID: Identifier of the parent task of the task. |
 | topTaskId                | Long                      |                |                 |               | Top Task ID: Identifier of the top task to which the task rolls up. If the task is a top task, the identifier of the top task is same as the identifier of the task. |
 | lastUpdateDateTime       | DateTime!                 |                |        Y        |               | The date when the task was last updated. |
 | lastUpdatedBy            | ErpUserId                 |                |                 |               | The user that last updated the task. |
-| projectId                | Long                      |                |                 |               | The project that the task is linked to |
+| projectId                | Long!                     |                |        Y        |               | The project that the task is linked to |
 | eligibleForUse           | Boolean!                  |                |                 |               | Returns whether this PpmTask is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmTask must:<br/>- Be chargeable<br/>- Be a lowestLevelTask<br/>- Have a taskStartDate and taskFinishDate range which includes the given accountingDate |
 | glPostingProgramCode     | ErpProgramCode            |                |                 |               | GL Program used during subledger accounting jobs to post GL entries when costs are recorded against this task. |
 | glPostingPurposeCode     | ErpPurposeCode            |                |                 |               | GL Purpose  used during subledger accounting jobs to post GL entries when costs are recorded against this task. |
