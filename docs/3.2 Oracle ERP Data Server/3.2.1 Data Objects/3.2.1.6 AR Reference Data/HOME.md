@@ -42,7 +42,7 @@ Represents an accounting period in the GL module of Oracle Financials.  Used for
 | quarterStartDate      | LocalDate!               |                |                 |               |  |
 | quarterNumber         | PositiveInt!             |                |                 |               |  |
 | effectivePeriodNumber | PositiveInt!             |                |                 |               |  |
-| lastUpdateDate        | Timestamp!               |                |        Y        |               |  |
+| lastUpdateDateTime    | DateTime!                |                |        Y        |               |  |
 | lastUpdateUserId      | ErpUserId                |                |                 |               |  |
 
 ##### Linked Data Objects
@@ -156,12 +156,12 @@ This is due to the potentially sensitive nature of this information.
 
 ##### Properties
 
-| Property Name  | Data Type                | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| -------------- | ------------------------ | :------------: | :-------------: | ------------- | ----- |
-| accountNumber  | NonEmptyTrimmedString50  |                |        Y        |               | Value that uniquely identifies the CustomerAccount by number |
-| accountName    | NonEmptyTrimmedString100 |                |        Y        |               | Value that uniquely identifies the CustomerAccount by name |
-| status         | NonEmptyTrimmedString10  |                |                 |               | Status Code of the Customer Account |
-| lastUpdateDate | Timestamp                |                |                 |               | Date/Time last updated |
+| Property Name      | Data Type                | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------ | ------------------------ | :------------: | :-------------: | ------------- | ----- |
+| accountNumber      | NonEmptyTrimmedString50  |                |        Y        |               | Value that uniquely identifies the CustomerAccount by number |
+| accountName        | NonEmptyTrimmedString100 |                |        Y        |               | Value that uniquely identifies the CustomerAccount by name |
+| status             | NonEmptyTrimmedString10  |                |                 |               | Status Code of the Customer Account |
+| lastUpdateDateTime | DateTime                 |                |                 |               | Date/Time last updated |
 
 ##### Linked Data Objects
 
@@ -330,14 +330,14 @@ Invoice status information used to check remaining balances.
 
 ##### Properties
 
-| Property Name  | Data Type               | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| -------------- | ----------------------- | :------------: | :-------------: | ------------- | ----- |
-| id             | NonEmptyTrimmedString20 |                |        Y        |               | Value that uniquely identifies the MemoLine by ID |
-| name           | NonEmptyTrimmedString50 |                |        Y        |               | Value that uniquely identifies the MemoLine by name |
-| description    | NonEmptyTrimmedString80 |                |                 |               | Longer description |
-| type           | NonEmptyTrimmedString10 |                |                 |               | Type of the MemoLine |
-| creationDate   | DateTime                |                |                 |               | Date the MemoLine was created |
-| lastUpdateDate | DateTime                |                |                 |               | Date/Time last updated |
+| Property Name      | Data Type               | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------ | ----------------------- | :------------: | :-------------: | ------------- | ----- |
+| id                 | NonEmptyTrimmedString20 |                |        Y        |               | Value that uniquely identifies the MemoLine by ID |
+| name               | NonEmptyTrimmedString50 |                |        Y        |               | Value that uniquely identifies the MemoLine by name |
+| description        | NonEmptyTrimmedString80 |                |                 |               | Longer description |
+| type               | NonEmptyTrimmedString10 |                |                 |               | Type of the MemoLine |
+| creationDate       | DateTime                |                |                 |               | Date the MemoLine was created |
+| lastUpdateDateTime | DateTime                |                |                 |               | Date/Time last updated |
 
 ##### Linked Data Objects
 
@@ -400,7 +400,7 @@ TODO
 | startDate          | LocalDate                 |                |                 |               | The date from when the value is available for use. |
 | endDate            | LocalDate                 |                |                 |               | The date till which the value is available for use. |
 | inUse              | Boolean!                  |                |        Y        |               | Indicates that the AR Payment Term is in active use. |
-| lastUpdateDateTime | Timestamp                 |                |        Y        |               | Timestamp this record was last updated in the financial system. |
+| lastUpdateDateTime | DateTime                  |                |        Y        |               | Timestamp this record was last updated in the financial system. |
 | lastUpdateUserId   | ErpUserId                 |                |                 |               | User ID of the person who last updated this record. |
 
 ##### Linked Data Objects

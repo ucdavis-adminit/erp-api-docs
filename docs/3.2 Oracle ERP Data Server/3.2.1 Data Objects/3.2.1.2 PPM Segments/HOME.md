@@ -49,7 +49,7 @@ The Award Number identifies the number assigned to an award containing funding a
 | awardPurpose                | NonEmptyTrimmedString80  |                |                 |               | Purpose: Name of the award purpose. |
 | awardType                   | NonEmptyTrimmedString30  |                |        Y        |               | Type: Classification of an award, for example, Federal grants or Private grants. |
 | businessUnitName            | NonEmptyTrimmedString100 |                |                 |               | Business Unit: Unit of an enterprise that performs one or many business functions that can be rolled up in a management hierarchy. An award business unit is one within which the award is created. |
-| lastUpdateDate              | DateTime!                |                |                 |               | The date when the award was last updated. |
+| lastUpdateDateTime          | DateTime!                |                |        Y        |               | The date when the award was last updated. |
 | lastUpdatedBy               | ErpUserId                |                |                 |               | The user that last updated the award. |
 | awardFundingSource          | [PpmFundingSource!]      |                |                 |               | Award Funding Sources: The Award Funding Sources resource is used to view the attributes used to create or update a funding source for the award. |
 | defaultFundingSourceNumber  | PpmFundingSourceNumber   |                |                 |               |  |
@@ -86,7 +86,7 @@ The Award Number identifies the number assigned to an award containing funding a
 
 ##### `ppmAwardByNumber`
 
-> Gets undefineds by number.  Returns empty if not found
+> Gets PpmAwards by number.  Returns empty if not found
 
 * **Parameters**
   * `number : String!`
@@ -95,7 +95,7 @@ The Award Number identifies the number assigned to an award containing funding a
 
 ##### `ppmAwardByProjectAndAwardNumber`
 
-> Gets undefineds by projectNumber and awardNumber.  Returns null if not found
+> Gets PpmAwards by projectNumber and awardNumber.  Returns null if not found
 
 * **Parameters**
   * `projectNumber : String!`
@@ -493,6 +493,7 @@ The Project identifies the planned work or activity to be completed over a perio
 | projectOrganizationName    | NonEmptyTrimmedString240  |                |                 |               | Organization: An organizing unit in the internal or external structure of the enterprise. Organization structures provide the framework for performing legal reporting, financial control, and management reporting for the project. |
 | businessUnitName           | NonEmptyTrimmedString240  |                |                 |               | Name of the component of the system that this project belongs to.  There is a separation between sponsored projects managed by CGA, and other managed projects.  The value in this field should align with the sponsoredProject flag. |
 | legalEntityName            | NonEmptyTrimmedString240  |                |                 |               | Legal Entity: Name of the legal entity associated with the project. A legal entity is a recognized party with given rights and responsibilities by legislation. Legal entities generally have the right to own property, the right to trade, the responsibility to repay debt, and the responsibility to account for themselves to company regulators, taxation authorities, and owners according to rules specified in the relevant legislation. |
+| projectTypeName            | String                    |                |                 |               | Project Type Name: String # Max Length: 2000 |
 | primaryProjectManagerEmail | NonEmptyTrimmedString240  |                |        Y        |               | Project Manager Email: Email of the person who leads the project team and who has the authority and responsibility for meeting the project objectives. |
 | primaryProjectManagerName  | NonEmptyTrimmedString240  |                |                 |               | Project Manager: Name of the person who leads the project team and who has the authority and responsibility for meeting project objectives. |
 | sourceApplicationCode      | NonEmptyTrimmedString30   |                |                 |               | Source Application: The third-party application from which the project originates. |

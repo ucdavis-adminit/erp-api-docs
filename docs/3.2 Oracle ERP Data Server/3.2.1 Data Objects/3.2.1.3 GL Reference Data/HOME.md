@@ -25,18 +25,18 @@ The Alias will be interpreted by the API server and applied to the action reques
 
 ##### Properties
 
-| Property Name     | Data Type  | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| ----------------- | ---------- | :------------: | :-------------: | ------------- | ----- |
-| aliasCode         | String!    |                |        Y        |               | The unique code assigned to the contained set of glSegments. |
-| name              | String!    |                |        Y        |               |  |
-| description       | String!    |                |        Y        |               |  |
-| combinationCodeId | Long!      |                |        Y        |               | Internal numeric identifier of the combination of GL Segment values. |
-| enabled           | Boolean!   |                |        Y        |               |  |
-| startDate         | Date       |                |                 |               |  |
-| endDate           | Date       |                |                 |               |  |
-| lastUpdateDate    | DateTime!  |                |        Y        |               |  |
-| lastUpdateUser    | String     |                |                 |               |  |
-| glSegments        | GlSegments |                |                 |               |  |
+| Property Name      | Data Type  | Key Field [^2] | Searchable [^1] | Required Role | Notes                                                                |
+| ------------------ | ---------- | :------------: | :-------------: | ------------- | -------------------------------------------------------------------- |
+| aliasCode          | String!    |                |        Y        |               | The unique code assigned to the contained set of glSegments.         |
+| name               | String!    |                |        Y        |               |                                                                      |
+| description        | String!    |                |        Y        |               |                                                                      |
+| combinationCodeId  | Long!      |                |        Y        |               | Internal numeric identifier of the combination of GL Segment values. |
+| enabled            | Boolean!   |                |        Y        |               |                                                                      |
+| startDate          | Date       |                |                 |               |                                                                      |
+| endDate            | Date       |                |                 |               |                                                                      |
+| lastUpdateDateTime | DateTime!  |                |        Y        |               |                                                                      |
+| lastUpdateUser     | String     |                |                 |               |                                                                      |
+| glSegments         | GlSegments |                |                 |               |                                                                      |
 
 * `glSegments` : `GlSegments`
   * Description of `GlSegments`:
@@ -200,7 +200,7 @@ Represents an accounting period in the GL module of Oracle Financials.  Used for
 | quarterStartDate      | Date!                    |                |                 |               |  |
 | quarterNumber         | PositiveInt!             |                |                 |               |  |
 | effectivePeriodNumber | PositiveInt!             |                |                 |               |  |
-| lastUpdateDate        | Timestamp!               |                |        Y        |               |  |
+| lastUpdateDateTime    | DateTime!                |                |        Y        |               |  |
 | lastUpdateUserId      | ErpUserId                |                |                 |               |  |
 
 ##### Linked Data Objects

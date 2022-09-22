@@ -101,13 +101,15 @@ The Oracle Purchasing category is the conceptual replacement for the KFS Commodi
 
 | Property Name       | Data Type | Key Field [^2] | Searchable [^1] | Required Role | Notes |
 | ------------------- | --------- | :------------: | :-------------: | ------------- | ----- |
-| categoryId          | Long!     |       Y        |        Y        |               | Unique identifier of the Category Code |
-| categoryCode        | String!   |                |        Y        |               | A category is used to manage the catalog hierarchy. Items are assigned to categories in the catalog. |
+| id                  | Long!     |       Y        |                 |               | Unique identifier of the Category Code |
+| code                | String!   |                |        Y        |               | A category is used to manage the catalog hierarchy. Items are assigned to categories in the catalog. |
+| name                | String!   |                |        Y        |               | Name of the purchasing category.  This is used on the SCM Requisition interface. |
+| description         | String    |                |        Y        |               | Description of the purchasing category. |
 | categoryContentCode | String    |                |                 |               | Category Content Code. |
 | startDateActive     | Date      |                |                 |               | The date from when the value is available for use. |
 | endDateActive       | Date      |                |                 |               | The date till which the value is available for use. |
-| enabled             | Boolean!  |                |                 |               | Indicates that the Category is enabled. |
-| lastUpdateDateTime  | DateTime! |                |                 |               | Timestamp this record was last updated in the financial system. |
+| enabled             | Boolean!  |                |        Y        |               | Indicates that the Category is enabled. |
+| lastUpdateDateTime  | DateTime! |                |        Y        |               | Timestamp this record was last updated in the financial system. |
 | lastUpdateUserId    | ErpUserId |                |                 |               | User ID of the person who last updated this record. |
 
 ##### Linked Data Objects
@@ -121,16 +123,25 @@ The Oracle Purchasing category is the conceptual replacement for the KFS Commodi
 > Get a single ScmPurchasingCategory by unitOfMeasureId.  Returns undefined if does not exist
 
 * **Parameters**
-  * `categoryId : String!`
+  * `id : String!`
 * **Returns**
   * `ScmPurchasingCategory`
 
-##### `scmPurchasingCategoryByPurchasingCategoryCode`
+##### `scmPurchasingCategoryByCode`
 
 > Get a single ScmPurchasingCategory by category code.  Returns undefined if does not exist
 
 * **Parameters**
-  * `categoryCode : String!`
+  * `code : String!`
+* **Returns**
+  * `ScmPurchasingCategory`
+
+##### `scmPurchasingCategoryByName`
+
+> Get a single ScmPurchasingCategory by name.  Returns undefined if does not exist
+
+* **Parameters**
+  * `name : String!`
 * **Returns**
   * `ScmPurchasingCategory`
 

@@ -45,7 +45,7 @@ Contains information about the ERP API server's version.
 <!--BREAK-->
 ### Data Object: ErpInstitutionLocation
 
-
+UC Davis locations that can be used for delivery or receiving locations.
 
 #### Access Controls
 
@@ -67,23 +67,53 @@ Contains information about the ERP API server's version.
 
 | Property Name | Data Type               | Key Field [^2] | Searchable [^1] | Required Role | Notes |
 | ------------- | ----------------------- | :------------: | :-------------: | ------------- | ----- |
-| locationId    | Long!                   |                |                 |               | Value that uniquely identifies the supplier site. |
-| addressLine1  | ScmAddressLine          |                |                 |               | Address Line 1 |
+| locationId    | Long!                   |                |                 |               | Value that uniquely identifies the supplier site internally to Oracle. |
+| locationCode  | String!                 |                |        Y        |               | Value that uniquely identifies the supplier site for use on interfaces and in the Oracle UI. |
+| addressLine1  | ScmAddressLine!         |                |        Y        |               | Address Line 1 |
 | addressLine2  | ScmAddressLine          |                |                 |               | Address Line 2 |
 | addressLine3  | ScmAddressLine          |                |                 |               | Address Line 3 |
 | addressLine4  | ScmAddressLine          |                |                 |               | Address Line 4 |
-| city          | CityName                |                |                 |               | City of the supplier address |
-| postalCode    | ErpPostalCode           |                |                 |               | Postal code of the supplier address |
-| countryName   | NonEmptyTrimmedString80 |                |                 |               | Country of the supplier address |
-| countryCode   | ErpCountryCode          |                |                 |               | Abbreviation that identifies the country where the supplier address is located |
-| county        | NonEmptyTrimmedString60 |                |                 |               | County of the supplier address |
-| state         | NonEmptyTrimmedString60 |                |                 |               | State of the supplier address |
+| city          | CityName!               |                |        Y        |               | City Name |
+| state         | NonEmptyTrimmedString60 |                |        Y        |               | State Code |
+| postalCode    | ErpPostalCode           |                |        Y        |               | Postal code |
+| countryCode   | ErpCountryCode!         |                |        Y        |               | Country Code |
+| receivingSite | Boolean!                |                |        Y        |               | Whether the location can be used as the receiving address for a purchase order. |
+| deliverySite  | Boolean!                |                |        Y        |               | Whether the location can be used as the delivery address for a requisition. |
+| enabled       | Boolean!                |                |        Y        |               | Whether this address is enabled for current use. |
 
 ##### Linked Data Objects
 
 (None)
 
 #### Query Operations
+
+##### `erpInstitutionLocation`
+
+> Get a single ErpInstitutionLocation by internal ID.  Returns undefined if does not exist
+
+* **Parameters**
+  * `id : String!`
+* **Returns**
+  * `ErpInstitutionLocation`
+
+##### `erpInstitutionLocationByCode`
+
+> Get a single ErpInstitutionLocation by code.  Returns undefined if does not exist
+
+* **Parameters**
+  * `locationCode : String!`
+* **Returns**
+  * `ErpInstitutionLocation`
+
+##### `erpInstitutionLocationSearch`
+
+> Search for ErpInstitutionLocation objects by multiple properties.
+> See the ErpInstitutionLocationFilterInput type for options.
+
+* **Parameters**
+  * `filter : ErpInstitutionLocationFilterInput!`
+* **Returns**
+  * `ErpInstitutionLocationSearchResults!`
 
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
@@ -250,7 +280,7 @@ Represents one record per fusion system user
 | active             | Boolean                   |                |                 |               | Flag to mark when a user record that has been deleted in LDAP. |
 | startDate          | Date                      |                |                 |               | The date that the user is active from. |
 | endDate            | Date                      |                |                 |               | The date that the user ceases to be active in fusion. |
-| lastUpdateDateTime | Timestamp!                |                |        Y        |               |  |
+| lastUpdateDateTime | DateTime!                 |                |        Y        |               |  |
 | lastUpdateUserId   | ErpUserId                 |                |                 |               |  |
 
 ##### Linked Data Objects
