@@ -612,7 +612,7 @@ ORDER BY entity, purpose
         "glSegments": {
           "entity": "3110",
           "fund": "13U00",
-          "department": "9300531",
+          "department": "BTTT000",
           "purpose": "68",
           "account": "390000"
         },
@@ -707,7 +707,7 @@ ORDER BY entity, purpose
         "glSegments": {
           "entity": "3110",
           "fund": "13U00",
-          "department": "9300531",
+          "department": "BTTT000",
           "account": "770000"
         },
         "creditAmount": 500.00,

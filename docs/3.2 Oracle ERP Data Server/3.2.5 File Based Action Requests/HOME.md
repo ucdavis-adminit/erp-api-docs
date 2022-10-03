@@ -12,7 +12,7 @@ In either case, files are processed as soon as possible after receipt, subject o
 
 #### APIs Supporting SFTP Uploads
 
-At present, only the action request type below will be configured for file-upload access.
+At present, only the API action request type below will be configured for file-upload access.
 
 * `glJournalVoucher`
 
@@ -116,7 +116,7 @@ It is recommended that you utilize the API documentation and API server playgrou
                 "glSegments": {
                   "entity": "1311",
                   "fund": "13U00",
-                  "department": "9300531",
+                  "department": "BTTT000",
                   "account": "770000"
                 },
                 "creditAmount": 500.00,
@@ -176,7 +176,7 @@ Then the contents of the file would be:
         "glSegments": {
           "entity": "1311",
           "fund": "13U00",
-          "department": "9300531",
+          "department": "BTTT000",
           "account": "770000"
         },
         "creditAmount": 500.00,
