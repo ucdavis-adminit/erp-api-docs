@@ -296,6 +296,7 @@ Below are some examples of responses from the API.  Successful response data is 
 | `ScmName`                    | Oracle SCM Name |
 | `String`                     | The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text. |
 | `TimeZone`                   | A field whose value exists in the standard IANA Time Zone Database: https://www.iana.org/time-zones |
+| `UcEmployeeId`               | UC Employee ID.  May be either 8 or 9 digits. |
 | `URL`                        | A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt. |
 | `UUID`                       | A field whose value is a generic Universally Unique Identifier: https://en.wikipedia.org/wiki/Universally_unique_identifier. |
 
@@ -453,6 +454,16 @@ Nature of the payment for this one.  In general, all lines should be ITEM.
 | `FREIGHT`       |  |
 | `ITEM`          |  |
 | `MISCELLANEOUS` |  |
+
+##### `ScmPurchaseRequisitionLineType`
+
+Used on SCM Requisitions to distinguish between Quantity based line and Fixed Price lines
+
+| Enum Value | Description |
+| ---------- | ----------- |
+| `Fixed`    | Fixed Price |
+| `Price`    |  |
+| `Quantity` | Quantity |
 
 
 ![diagram](action-request-flow-summary.svg)

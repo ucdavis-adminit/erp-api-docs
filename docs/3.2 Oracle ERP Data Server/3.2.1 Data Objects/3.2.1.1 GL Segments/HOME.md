@@ -249,6 +249,56 @@ Due to significant variations in how departments track activities in KFS, it is 
 
 
 <!--BREAK-->
+### Data Object: ErpDepartmentalApprover
+
+Represents an approver from the Oracle Role-Based Security module.  Values here have been extracted
+from advanced security table and formatted for API use.
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `ERP_FIN_DEPT_APPROVER` (view)
+  * Support Tables:
+    * `ERP_DEPT_APPROVER_SETUP`
+    * `ERP_FIN_DEPT`
+    * `ASE_USER_ROLE_MEMBER`
+    * `PER_USER`
+    * `PER_ALL_PEOPLE_F`
+* Data Origin:
+  * System: Oracle BIPublisher
+  * Extract Objects:
+    * /Custom/Interfaces/Data Extracts/OracleRoles.xdo
+  * Underlying Database Objects:
+    * ASE_USER_ROLE_MBR
+    * ASE_USER_VL
+    * ASE_ROLE_VL
+
+##### Properties
+
+| Property Name | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| approverType  | NonEmptyTrimmedString50!  |                |                 |               | Type of the approver as defined by the functional users.  This name defines its usage in Oracle. |
+| userId        | ErpUserId!                |                |                 |               | Oracle User ID of the person.  This should be the same as the UCD Computing account ID for campus employees. |
+| name          | NonEmptyTrimmedString360! |                |                 |               |  |
+| firstName     | NonEmptyTrimmedString150  |                |                 |               |  |
+| lastName      | NonEmptyTrimmedString150  |                |                 |               |  |
+| employeeId    | UcEmployeeId              |                |                 |               |  |
+| emailAddress  | NonEmptyTrimmedString240  |                |                 |               |  |
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
 ### Data Object: ErpEntity
 
 The Entity segment identifies the major UC system organizational units. These units generally require their own complete, separately audited financial statements to comply with external, regulatory reporting requirements (e.g., external audits, tax reporting), which cannot achieve compliance by using the audited financial statements issued by the Office of the President. Entity, however, will also provide high level management and operational reports.
@@ -408,27 +458,34 @@ Due to significant variations in departments' financial structure in KFS, it is 
 
 ##### Properties
 
-| Property Name      | Data Type                  | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| ------------------ | -------------------------- | :------------: | :-------------: | ------------- | ----- |
-| code               | ErpDepartmentCode!         |       Y        |        Y        |               | Unique identifier of an ErpFinancialDepartment |
-| id                 | Long!                      |                |                 |               | Internal numeric identifier of an ErpFinancialDepartment |
-| name               | NonEmptyTrimmedString240!  |                |        Y        |               | Descriptive name of an ErpFinancialDepartment |
-| enabled            | Boolean!                   |                |        Y        |               | Whether this ErpFinancialDepartment is presently enabled for use. |
-| startDate          | LocalDate                  |                |                 |               | The date from when the value is available for use. |
-| endDate            | LocalDate                  |                |                 |               | The date till which the value is available for use. |
-| summaryOnly        | Boolean!                   |                |        Y        |               | Indicates that the ErpFinancialDepartment is only used for summarization and may not be used on GL Entries |
-| securityEnabled    | Boolean!                   |                |                 |               | Indicates that data linked to this ErpFinancialDepartment is protected by row-level security. |
-| sortOrder          | PositiveInt                |                |                 |               | The number that indicates the order in which the values appear in the list of values. |
-| lastUpdateDateTime | DateTime!                  |                |        Y        |               | Timestamp this record was last updated in the financial system. |
-| lastUpdateUserId   | ErpUserId                  |                |                 |               | User ID of the person who last updated this record. |
-| parentCode         | ErpDepartmentCode          |                |                 |               | Code of the ErpFinancialDepartment which is the immediate parent of this one.<br/>Will be undefined if the ErpFinancialDepartment has no parent. |
-| parent             | ErpFinancialDepartment     |                |                 |               | The ErpFinancialDepartment which is the immediate parent of this one.<br/>Will be undefined if the ErpFinancialDepartment has no parent. |
-| children           | [ErpFinancialDepartment!]! |                |                 |               | The ErpFinancialDepartments which are the immediate children of this one.<br/>Will be an empty list if the ErpFinancialDepartment has no children. |
-| hierarchyDepth     | Int                        |                |        Y        |               | Level below the top for a ErpFinancialDepartment that is part of a reporting hierarchy. |
-| hierarchyLevel     | String                     |                |        Y        |               | Reporting Level designation based on the hierarchy depth. |
-| departmentType     | ErpDepartmentTypeCode      |                |                 |               | Reporting Level designation based on the hierarchy depth. |
-| eligibleForUse     | Boolean!                   |                |                 |               | Returns whether this ErpFinancialDepartment is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the ErpFinancialDepartment must:<br/>- Be enabled<br/>- Not be summaryOnly<br/>- Have a startDate and endDate range which includes the given accountingDate |
+| Property Name      | Data Type                   | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------ | --------------------------- | :------------: | :-------------: | ------------- | ----- |
+| code               | ErpDepartmentCode!          |       Y        |        Y        |               | Unique identifier of an ErpFinancialDepartment |
+| id                 | Long!                       |                |                 |               | Internal numeric identifier of an ErpFinancialDepartment |
+| name               | NonEmptyTrimmedString240!   |                |        Y        |               | Descriptive name of an ErpFinancialDepartment |
+| enabled            | Boolean!                    |                |        Y        |               | Whether this ErpFinancialDepartment is presently enabled for use. |
+| startDate          | LocalDate                   |                |                 |               | The date from when the value is available for use. |
+| endDate            | LocalDate                   |                |                 |               | The date till which the value is available for use. |
+| summaryOnly        | Boolean!                    |                |        Y        |               | Indicates that the ErpFinancialDepartment is only used for summarization and may not be used on GL Entries |
+| securityEnabled    | Boolean!                    |                |                 |               | Indicates that data linked to this ErpFinancialDepartment is protected by row-level security. |
+| sortOrder          | PositiveInt                 |                |                 |               | The number that indicates the order in which the values appear in the list of values. |
+| lastUpdateDateTime | DateTime!                   |                |        Y        |               | Timestamp this record was last updated in the financial system. |
+| lastUpdateUserId   | ErpUserId                   |                |                 |               | User ID of the person who last updated this record. |
+| approvers          | [ErpDepartmentalApprover!]! |                |                 |               | List of all approvers linked to this department.  To return only a specific approver type, use the approverTypeName argument for this field. |
+| parentCode         | ErpDepartmentCode           |                |                 |               | Code of the ErpFinancialDepartment which is the immediate parent of this one.<br/>Will be undefined if the ErpFinancialDepartment has no parent. |
+| parent             | ErpFinancialDepartment      |                |                 |               | The ErpFinancialDepartment which is the immediate parent of this one.<br/>Will be undefined if the ErpFinancialDepartment has no parent. |
+| children           | [ErpFinancialDepartment!]!  |                |                 |               | The ErpFinancialDepartments which are the immediate children of this one.<br/>Will be an empty list if the ErpFinancialDepartment has no children. |
+| hierarchyDepth     | Int                         |                |        Y        |               | Level below the top for a ErpFinancialDepartment that is part of a reporting hierarchy. |
+| hierarchyLevel     | String                      |                |        Y        |               | Reporting Level designation based on the hierarchy depth. |
+| departmentType     | ErpDepartmentTypeCode       |                |                 |               | Reporting Level designation based on the hierarchy depth. |
+| eligibleForUse     | Boolean!                    |                |                 |               | Returns whether this ErpFinancialDepartment is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the ErpFinancialDepartment must:<br/>- Be enabled<br/>- Not be summaryOnly<br/>- Have a startDate and endDate range which includes the given accountingDate |
 
+* `approvers` : `[ErpDepartmentalApprover!]!`
+  * List of all approvers linked to this department.  To return only a specific approver type, use the approverTypeName argument for this field.
+  * Arguments:
+    * `approverTypeName` : `NonEmptyTrimmedString50`
+  * Description of `ErpDepartmentalApprover`:
+    * Represents an approver from the Oracle Role-Based Security module.  Values here have been extracted<br/>from advanced security table and formatted for API use.
 * `parent` : `ErpFinancialDepartment`
   * The ErpFinancialDepartment which is the immediate parent of this one.<br/>Will be undefined if the ErpFinancialDepartment has no parent.
 * `eligibleForUse` : `Boolean!`

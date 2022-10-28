@@ -7,7 +7,7 @@ Represents an accounting period in the GL module of Oracle Financials.  Used for
 
 #### Access Controls
 
-* Required Role: `erp:reader-refdata`
+* Required Role: `erp:writer-receivable`
 
 #### Data Source
 
@@ -142,7 +142,7 @@ This is due to the potentially sensitive nature of this information.
 
 #### Access Controls
 
-* Required Role: `erp:reader-refdata`
+* Required Role: `erp:reader-customer`
 
 #### Data Source
 
@@ -316,7 +316,7 @@ Invoice status information used to check remaining balances.
 
 #### Access Controls
 
-* Required Role: `erp:reader-refdata`
+* Required Role: `erp:writer-receivable`
 
 #### Data Source
 
@@ -384,7 +384,7 @@ TODO
 
 #### Access Controls
 
-* Required Role: `erp:reader-refdata`
+* Required Role: `erp:writer-receivable`
 
 #### Data Source
 
