@@ -648,6 +648,26 @@ The Fund segment most closely aligns with the fund attribute of the KFS Account.
 * **Returns**
   * `ErpFundSearchResults!`
 
+##### `erpFundSource`
+
+> Get a single ErpFundSource by id.  Returns undefined if does not exist
+
+* **Parameters**
+  * `code : String!`
+* **Returns**
+  * `ErpFundSource`
+
+##### `erpFundSourceSearch`
+
+> Search for ErpFundSource objects by multiple properties.
+> 
+> See the ErpFundSourceFilterInput type for options.
+
+* **Parameters**
+  * `filter : ErpFundSourceFilterInput!`
+* **Returns**
+  * `ErpFundSourceSearchResults!`
+
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
 

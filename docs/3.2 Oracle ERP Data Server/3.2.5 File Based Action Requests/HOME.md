@@ -46,7 +46,7 @@ The file naming pattern is:
 | Concur SAE                   | `sae`         |           Only            |                              | `sae.UCD_Concur.20220701110325.dat`               |
 | UCPath I-303                 | `i303`        |           Only            |                              | `i303.UCD_UCPath.20220701110325.dat`              |
 | AggieShip FBAP               | `fbap`        |           Only            |                              | `fbap.UCD_Aggieship.20220701110325.dat`           |
-
+| AR Lockbox                   | N/A           |           Only            |                              | (unknown)                                         |
 #### S3 File Location Conventions
 
 Files transferred to S3 will be stored with file names that imply a directory structure that reflects the direction of the data transfer, the environment which the file should be integrated with, the format of the data in the file, and the pipeline which should process the file.

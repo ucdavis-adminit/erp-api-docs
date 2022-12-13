@@ -1,4 +1,4 @@
-# 3.2.1.7 Other Reference Data
+# 3.2.1.8 Other Reference Data
 
 <!--BREAK-->
 ### Data Object: ErpApiInfo
@@ -37,6 +37,270 @@ Contains information about the ERP API server's version.
 * **Parameters**
 * **Returns**
   * `ErpApiInfo!`
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
+### Data Object: ErpBuilding
+
+
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `ERP_BUILDING` (view)
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+  * Underlying Database Objects:
+    * 
+
+##### Properties
+
+| Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| code               | NonEmptyTrimmedString150! |                |        Y        |               |  |
+| id                 | Long!                     |                |                 |               |  |
+| name               | NonEmptyTrimmedString240! |                |                 |               |  |
+| enabled            | Boolean!                  |                |        Y        |               |  |
+| startDate          | LocalDate                 |                |                 |               |  |
+| endDate            | LocalDate                 |                |                 |               |  |
+| lastUpdateUserId   | ErpUserId                 |                |                 |               |  |
+| lastUpdateDateTime | DateTime!                 |                |        Y        |               |  |
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+##### `erpBuilding`
+
+> Get a single ErpBuilding by id.  Returns undefined if does not exist
+
+* **Parameters**
+  * `code : String!`
+* **Returns**
+  * `ErpBuilding`
+
+##### `erpBuildingSearch`
+
+> Search for ErpBuilding objects by multiple properties.
+> 
+> See the ErpBuildingFilterInput type for options.
+
+* **Parameters**
+  * `filter : ErpBuildingFilterInput!`
+* **Returns**
+  * `ErpBuildingSearchResults!`
+
+##### `erpBuildingRoom`
+
+> Get a single ErpBuildingRoom by id.  Returns undefined if does not exist
+
+* **Parameters**
+  * `code : String!`
+* **Returns**
+  * `ErpBuildingRoom`
+
+##### `erpBuildingRoomSearch`
+
+> Search for ErpBuildingRoom objects by multiple properties.
+> 
+> See the ErpBuildingRoomFilterInput type for options.
+
+* **Parameters**
+  * `filter : ErpBuildingRoomFilterInput!`
+* **Returns**
+  * `ErpBuildingRoomSearchResults!`
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
+### Data Object: ErpBuildingRoom
+
+
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `ERP_BUILDING_ROOM` (view)
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+  * Underlying Database Objects:
+    * 
+
+##### Properties
+
+| Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| code               | NonEmptyTrimmedString150! |                |        Y        |               |  |
+| id                 | Long!                     |                |                 |               |  |
+| name               | NonEmptyTrimmedString240  |                |        Y        |               |  |
+| enabled            | Boolean!                  |                |        Y        |               |  |
+| startDate          | LocalDate                 |                |                 |               |  |
+| endDate            | LocalDate                 |                |                 |               |  |
+| lastUpdateUserId   | ErpUserId                 |                |                 |               |  |
+| lastUpdateDateTime | DateTime!                 |                |        Y        |               |  |
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+##### `erpBuildingRoom`
+
+> Get a single ErpBuildingRoom by id.  Returns undefined if does not exist
+
+* **Parameters**
+  * `code : String!`
+* **Returns**
+  * `ErpBuildingRoom`
+
+##### `erpBuildingRoomSearch`
+
+> Search for ErpBuildingRoom objects by multiple properties.
+> 
+> See the ErpBuildingRoomFilterInput type for options.
+
+* **Parameters**
+  * `filter : ErpBuildingRoomFilterInput!`
+* **Returns**
+  * `ErpBuildingRoomSearchResults!`
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
+### Data Object: ErpCampus
+
+
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `ERP_CAMPUS` (view)
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+  * Underlying Database Objects:
+    * 
+
+##### Properties
+
+| Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| code               | NonEmptyTrimmedString150! |                |        Y        |               |  |
+| id                 | Long!                     |                |                 |               |  |
+| name               | NonEmptyTrimmedString240! |                |                 |               |  |
+| enabled            | Boolean!                  |                |        Y        |               |  |
+| startDate          | LocalDate                 |                |                 |               |  |
+| endDate            | LocalDate                 |                |                 |               |  |
+| lastUpdateUserId   | ErpUserId                 |                |                 |               |  |
+| lastUpdateDateTime | DateTime!                 |                |        Y        |               |  |
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+##### `erpCampus`
+
+> Get a single ErpCampus by id.  Returns undefined if does not exist
+
+* **Parameters**
+  * `code : String!`
+* **Returns**
+  * `ErpCampus`
+
+##### `erpCampusSearch`
+
+> Search for ErpCampus objects by multiple properties.
+> 
+> See the ErpCampusFilterInput type for options.
+
+* **Parameters**
+  * `filter : ErpCampusFilterInput!`
+* **Returns**
+  * `ErpCampusSearchResults!`
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
+### Data Object: ErpFundSource
+
+
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `ERP_FUND_SOURCE` (view)
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+  * Underlying Database Objects:
+    * 
+
+##### Properties
+
+| Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| code               | NonEmptyTrimmedString150! |                |        Y        |               |  |
+| id                 | Long!                     |                |                 |               |  |
+| name               | NonEmptyTrimmedString240! |                |                 |               |  |
+| enabled            | Boolean!                  |                |        Y        |               |  |
+| startDate          | LocalDate                 |                |                 |               |  |
+| endDate            | LocalDate                 |                |                 |               |  |
+| lastUpdateUserId   | ErpUserId                 |                |                 |               |  |
+| lastUpdateDateTime | DateTime!                 |                |        Y        |               |  |
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+##### `erpFundSource`
+
+> Get a single ErpFundSource by id.  Returns undefined if does not exist
+
+* **Parameters**
+  * `code : String!`
+* **Returns**
+  * `ErpFundSource`
+
+##### `erpFundSourceSearch`
+
+> Search for ErpFundSource objects by multiple properties.
+> 
+> See the ErpFundSourceFilterInput type for options.
+
+* **Parameters**
+  * `filter : ErpFundSourceFilterInput!`
+* **Returns**
+  * `ErpFundSourceSearchResults!`
 
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
@@ -294,7 +558,7 @@ Represents one record per fusion system user
 > Get a single ErpUser by id.  Returns undefined if does not exist
 
 * **Parameters**
-  * `id : String!`
+  * `code : String!`
 * **Returns**
   * `ErpUser`
 

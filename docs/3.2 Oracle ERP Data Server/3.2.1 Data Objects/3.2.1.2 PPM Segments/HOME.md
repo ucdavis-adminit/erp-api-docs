@@ -35,25 +35,25 @@ The Award Number identifies the number assigned to an award containing funding a
 
 ##### Properties
 
-| Property Name               | Data Type                | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| --------------------------- | ------------------------ | :------------: | :-------------: | ------------- | ----- |
-| id                          | Long!                    |       Y        |        Y        |               | Award ID: Unique identifier of the award. |
-| name                        | NonEmptyTrimmedString240 |                |        Y        |               | Award Name: Name of the award. |
-| awardNumber                 | NonEmptyTrimmedString30  |                |        Y        |               |  Award Number: Award number tracked by the sponsor. |
-| awardTypeName               | String                   |                |                 |               | The award type name associated with the award |
-| description                 | NonEmptyTrimmedString240 |                |                 |               | Description: Brief description of the award. |
-| startDate                   | LocalDate                |                |                 |               | Start Date: Start date of the award. |
-| endDate                     | LocalDate                |                |                 |               | End Date: End date of the award. |
-| closeDate                   | LocalDate                |                |                 |               | Close Date: Date past the end date of the award. Transactions for the award can be entered up to this date. |
-| awardOwningOrganizationName | String                   |                |                 |               | Award Owning Organization: An organization that owns awards within an enterprise. An organizing unit in the internal or external structure of your enterprise. Organization structures provide the framework for performing legal reporting, financial control, and management reporting for the award. |
-| awardPurpose                | NonEmptyTrimmedString80  |                |                 |               | Purpose: Name of the award purpose. |
-| awardType                   | NonEmptyTrimmedString30  |                |        Y        |               | Type: Classification of an award, for example, Federal grants or Private grants. |
-| businessUnitName            | NonEmptyTrimmedString100 |                |                 |               | Business Unit: Unit of an enterprise that performs one or many business functions that can be rolled up in a management hierarchy. An award business unit is one within which the award is created. |
-| lastUpdateDateTime          | DateTime!                |                |        Y        |               | The date when the award was last updated. |
-| lastUpdatedBy               | ErpUserId                |                |                 |               | The user that last updated the award. |
-| awardFundingSource          | [PpmFundingSource!]      |                |                 |               | Award Funding Sources: The Award Funding Sources resource is used to view the attributes used to create or update a funding source for the award. |
-| defaultFundingSourceNumber  | PpmFundingSourceNumber   |                |                 |               |  |
-| eligibleForUse              | Boolean!                 |                |                 |               | Returns whether this PpmAward is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmAward must:<br/>- Have closeDate after the given accountingDate |
+| Property Name               | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| --------------------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| id                          | Long!                     |       Y        |        Y        |               | Award ID: Unique identifier of the award. |
+| name                        | NonEmptyTrimmedString240! |                |        Y        |               | Award Name: Name of the award. |
+| awardNumber                 | NonEmptyTrimmedString30!  |                |        Y        |               |  Award Number: Award number tracked by the sponsor. |
+| awardTypeName               | NonEmptyTrimmedString30!  |                |                 |               | The award type name associated with the award |
+| description                 | NonEmptyTrimmedString240  |                |                 |               | Description: Brief description of the award. |
+| startDate                   | LocalDate                 |                |                 |               | Start Date: Start date of the award. |
+| endDate                     | LocalDate                 |                |                 |               | End Date: End date of the award. |
+| closeDate                   | LocalDate                 |                |                 |               | Close Date: Date past the end date of the award. Transactions for the award can be entered up to this date. |
+| awardOwningOrganizationName | NonEmptyTrimmedString240! |                |                 |               | Award Owning Organization: An organization that owns awards within an enterprise. An organizing unit in the internal or external structure of your enterprise. Organization structures provide the framework for performing legal reporting, financial control, and management reporting for the award. |
+| awardPurpose                | NonEmptyTrimmedString80   |                |                 |               | Purpose: Name of the award purpose. |
+| awardType                   | NonEmptyTrimmedString30   |                |        Y        |               | Type: Classification of an award, for example, Federal grants or Private grants. |
+| businessUnitName            | NonEmptyTrimmedString100! |                |                 |               | Business Unit: Unit of an enterprise that performs one or many business functions that can be rolled up in a management hierarchy. An award business unit is one within which the award is created. |
+| lastUpdateDateTime          | DateTime!                 |                |        Y        |               | The date when the award was last updated. |
+| lastUpdatedBy               | ErpUserId                 |                |                 |               | The user that last updated the award. |
+| awardFundingSource          | [PpmFundingSource!]       |                |                 |               | Award Funding Sources: The Award Funding Sources resource is used to view the attributes used to create or update a funding source for the award. |
+| defaultFundingSourceNumber  | PpmFundingSourceNumber    |                |                 |               |  |
+| eligibleForUse              | Boolean!                  |                |                 |               | Returns whether this PpmAward is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmAward must:<br/>- Have closeDate after the given accountingDate |
 
 * `eligibleForUse` : `Boolean!`
   * Returns whether this PpmAward is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmAward must:<br/>- Have closeDate after the given accountingDate
@@ -269,16 +269,16 @@ The Funding Source identifies the name of the sponsor for the external funding s
 
 | Property Name         | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
 | --------------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| id                    | Long!                     |                |        Y        |               | Funding Source ID: The unique identifier of the funding source. |
+| id                    | Long!                     |                |                 |               | Funding Source ID: The unique identifier of the funding source. |
 | name                  | NonEmptyTrimmedString360! |                |        Y        |               | Funding Source Name: The source name of the funding source. |
 | fundingSourceNumber   | NonEmptyTrimmedString50!  |                |        Y        |               | Funding Source Number: The number of the funding source. |
 | description           | NonEmptyTrimmedString240  |                |                 |               | Funding Source Description: The description of the funding source. |
-| fundingSourceFromDate | LocalDate!                |                |                 |               | Funding Source From Date: The date from which the funding source is active. |
-| fundingSourceToDate   | LocalDate                 |                |                 |               | Funding Source To Date: The date till which the funding source is active. |
-| fundingSourceTypeCode | String                    |                |                 |               | The code of the funding source type. |
+| fundingSourceFromDate | LocalDate                 |                |        Y        |               | Funding Source From Date: The date from which the funding source is active. |
+| fundingSourceToDate   | LocalDate                 |                |        Y        |               | Funding Source To Date: The date till which the funding source is active. |
+| fundingSourceType     | NonEmptyTrimmedString50   |                |                 |               | The funding source type name. |
 | lastUpdateDateTime    | DateTime!                 |                |        Y        |               | The date when the funding source was last updated. |
 | lastUpdatedBy         | ErpUserId                 |                |                 |               | The user that last updated the funding source. |
-| awardId               | Long                      |                |                 |               | The award id linked to the funding Source |
+| awardId               | Long!                     |                |        Y        |               | The award id linked to the funding Source |
 | eligibleForUse        | Boolean!                  |                |                 |               | Returns whether this PpmFundingSource is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmFundingSource must:<br/>- Have a fundingSourceFromDate and fundingSourceToDate range which includes the given accountingDate |
 
 * `eligibleForUse` : `Boolean!`

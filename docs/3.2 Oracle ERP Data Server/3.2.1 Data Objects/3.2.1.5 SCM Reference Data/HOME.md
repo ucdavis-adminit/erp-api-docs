@@ -1,6 +1,90 @@
 # 3.2.1.5 SCM Reference Data
 
 <!--BREAK-->
+### Data Object: ApAccountingPeriod
+
+Represents an accounting period in the GL module of Oracle Financials.  Used for validation of submitted journal entry data.
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `AP_PERIOD` (view)
+  * Support Tables:
+    * `ERP_PERIOD`
+* Data Origin:
+  * System: Oracle BIPublisher
+  * Extract Objects:
+    * Report: GL Period Export
+  * Underlying Database Objects:
+    * GL_LEDGERS_ALL_V (VIEW)
+    * FND_APPLICATION (VIEW)
+    * GL_PERIOD_STATUSES
+    * FND_APPL_TAXONOMY
+    * GL_LEDGERS
+    * FND_LOOKUP_VALUES_B
+    * FND_LOOKUP_VALUES_TL
+
+##### Properties
+
+| Property Name         | Data Type                | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| --------------------- | ------------------------ | :------------: | :-------------: | ------------- | ----- |
+| periodName            | ErpAccountingPeriodName! |                |        Y        |               | The unique name of a GL Accounting Period |
+| periodYear            | PositiveInt!             |                |        Y        |               |  |
+| periodNumber          | PositiveInt!             |                |        Y        |               |  |
+| periodStatus          | ErpPeriodStatus!         |                |        Y        |               |  |
+| adjustmentPeriod      | Boolean!                 |                |        Y        |               |  |
+| startDate             | Date!                    |                |        Y        |               |  |
+| endDate               | Date!                    |                |        Y        |               |  |
+| yearStartDate         | Date!                    |                |                 |               |  |
+| quarterStartDate      | Date!                    |                |                 |               |  |
+| quarterNumber         | PositiveInt!             |                |                 |               |  |
+| effectivePeriodNumber | PositiveInt!             |                |                 |               |  |
+| lastUpdateDateTime    | DateTime!                |                |        Y        |               |  |
+| lastUpdateUserId      | ErpUserId                |                |                 |               |  |
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+##### `apAccountingPeriod`
+
+> Get a single ApAccountingPeriod by its name.  Returns undefined if does not exist
+
+* **Parameters**
+  * `periodName : String!`
+* **Returns**
+  * `ApAccountingPeriod`
+
+##### `apAccountingPeriodByDate`
+
+> Get a single non-adjustment ApAccountingPeriod by the given date.  Returns undefined if no period is defined for the given date.
+
+* **Parameters**
+  * `accountingDate : Date!`
+* **Returns**
+  * `ApAccountingPeriod`
+
+##### `apAccountingPeriodSearch`
+
+> Search for ApAccountingPeriod objects by multiple properties.
+> See
+> See the ApAccountingPeriodFilterInput type for options.
+
+* **Parameters**
+  * `filter : ApAccountingPeriodFilterInput!`
+* **Returns**
+  * `ApAccountingPeriodSearchResults!`
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
 ### Data Object: ScmPaymentTerm
 
 

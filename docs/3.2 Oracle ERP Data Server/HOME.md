@@ -459,11 +459,10 @@ Nature of the payment for this one.  In general, all lines should be ITEM.
 
 Used on SCM Requisitions to distinguish between Quantity based line and Fixed Price lines
 
-| Enum Value | Description |
-| ---------- | ----------- |
-| `Fixed`    | Fixed Price |
-| `Price`    |  |
-| `Quantity` | Quantity |
+| Enum Value    | Description |
+| ------------- | ----------- |
+| `Fixed_Price` | Fixed Price |
+| `Quantity`    | Quantity |
 
 
 ![diagram](action-request-flow-summary.svg)
