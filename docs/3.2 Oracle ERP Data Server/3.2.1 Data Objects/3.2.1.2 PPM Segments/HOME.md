@@ -53,6 +53,13 @@ The Award Number identifies the number assigned to an award containing funding a
 | lastUpdatedBy               | ErpUserId                 |                |                 |               | The user that last updated the award. |
 | awardFundingSource          | [PpmFundingSource!]       |                |                 |               | Award Funding Sources: The Award Funding Sources resource is used to view the attributes used to create or update a funding source for the award. |
 | defaultFundingSourceNumber  | PpmFundingSourceNumber    |                |                 |               |  |
+| awardCfda                   | [PpmCfdaAward!]           |                |                 |               |  |
+| flowThruAmount              | NonNegativeFloat          |                |                 |               |  |
+| flowThruFromDate            | LocalDate                 |                |                 |               |  |
+| flowThruToDate              | LocalDate                 |                |                 |               |  |
+| flowThruPrimarySponsorId    | NonEmptyTrimmedString30   |                |                 |               |  |
+| flowThruRefAwardName        | NonEmptyTrimmedString100  |                |                 |               |  |
+| flowThruIsFederal           | Boolean                   |                |                 |               |  |
 | eligibleForUse              | Boolean!                  |                |                 |               | Returns whether this PpmAward is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmAward must:<br/>- Have closeDate after the given accountingDate |
 
 * `eligibleForUse` : `Boolean!`
@@ -113,6 +120,104 @@ The Award Number identifies the number assigned to an award containing funding a
   * `filter : PpmAwardFilterInput!`
 * **Returns**
   * `PpmAwardSearchResults!`
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
+### Data Object: PpmCfda
+
+CFDA
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `PPM_CFDA`
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+    * View Object: FscmTopModelAM.GmsSetupAM.CFDAViewPVO
+  * Underlying Database Objects:
+    * 
+
+##### Properties
+
+| Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| cfda               | NonEmptyTrimmedString30!  |                |        Y        |               |  |
+| assistanceType     | NonEmptyTrimmedString2000 |                |                 |               |  |
+| programTitle       | NonEmptyTrimmedString255  |                |        Y        |               |  |
+| creationDate       | DateTime                  |                |                 |               |  |
+| lastUpdateDateTime | DateTime                  |                |        Y        |               |  |
+| lastUpdateUserId   | ErpUserId                 |                |                 |               |  |
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+##### `ppmCfda`
+
+> undefined
+
+* **Parameters**
+  * `cfda : String!`
+* **Returns**
+  * `PpmCfda`
+
+##### `ppmCfdaSearch`
+
+> undefined
+
+* **Parameters**
+  * `filter : PpmCfdaFilterInput!`
+* **Returns**
+  * `PpmCfdaSearchResults!`
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
+### Data Object: PpmCfdaAward
+
+CFDAAward
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `PPM_AWARD_CFDA`
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+    * View Object: FscmTopModelAM.GmsAwardAM.AwardCFDAPVO
+  * Underlying Database Objects:
+    * 
+
+##### Properties
+
+| Property Name      | Data Type               | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------ | ----------------------- | :------------: | :-------------: | ------------- | ----- |
+| id                 | Long!                   |                |                 |               |  |
+| cfda               | NonEmptyTrimmedString30 |                |                 |               |  |
+| awardId            | Long                    |                |                 |               |  |
+| creationFate       | DateTime                |                |                 |               |  |
+| lastUpdateDateTime | DateTime                |                |                 |               |  |
+| lastUpdateUserId   | ErpUserId               |                |                 |               |  |
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
 
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
@@ -505,6 +610,7 @@ The Project identifies the planned work or activity to be completed over a perio
 | templateProject            | Boolean!                  |                |        Y        |               | Template Project Only Flag: If this project is a template for other projects.  Template projects may not have costs submitted against them. |
 | lastUpdateDateTime         | DateTime!                 |                |        Y        |               | Timestamp this record was last updated in the financial system. |
 | lastUpdateUserId           | ErpUserId                 |                |                 |               | User ID of the person who last updated this record. |
+| projectBudgeted            | Boolean!                  |                |                 |               | is project budgeted by joining to project to project budgeted status view in datasources |
 | tasks                      | [PpmTask!]                |                |                 |               | Tasks: The Task resource includes the attributes that are used to store values while creating or updating project tasks. Tasks are units of project work assigned or performed as part of the duties of a resource. Tasks can be a portion of project work to be performed within a defined period by a specific resource or multiple resources.<br/><br/>By default, this will only list tasks which are allowed to be assigned costs.  If you need to see all tasks, set the property argument to false. |
 | awards                     | [PpmAward!]               |                |                 |               |  |
 | defaultAwardNumber         | PpmAwardNumber            |                |                 |               | For sponsored projects, the default award number that will be expensed if left off of the journal line or distribution. |
@@ -574,6 +680,69 @@ The Project identifies the planned work or activity to be completed over a perio
   * `filter : PpmProjectFilterInput!`
 * **Returns**
   * `PpmProjectSearchResults!`
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
+### Data Object: PpmSponsor
+
+SPONSOR
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `PPM_SPONSOR`
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+    * View Object: FscmTopModelAM.GmsSetupAM.SponsorPVO
+  * Underlying Database Objects:
+    * 
+
+##### Properties
+
+| Property Name        | Data Type                | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| -------------------- | ------------------------ | :------------: | :-------------: | ------------- | ----- |
+| sponsorId            | Long!                    |                |        Y        |               |  |
+| partyId              | Long                     |                |        Y        |               |  |
+| burdenScheduleId     | Long                     |                |        Y        |               |  |
+| billToSponsorId      | Long                     |                |        Y        |               |  |
+| letterOfCreditNumber | NonEmptyTrimmedString240 |                |                 |               |  |
+| isLetterOfCredit     | Boolean                  |                |                 |               |  |
+| isFederal            | Boolean                  |                |        Y        |               |  |
+| statusCode           | NonEmptyTrimmedString30  |                |        Y        |               |  |
+| creationDate         | DateTime                 |                |                 |               |  |
+| lastUpdateDateTime   | DateTime                 |                |        Y        |               |  |
+| lastUpdateUserId     | ErpUserId                |                |                 |               |  |
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+##### `ppmSponsor`
+
+> undefined
+
+* **Parameters**
+  * `sponsorId : String!`
+* **Returns**
+  * `PpmSponsor`
+
+##### `ppmSponsorSearch`
+
+> undefined
+
+* **Parameters**
+  * `filter : PpmSponsorFilterInput!`
+* **Returns**
+  * `PpmSponsorSearchResults!`
 
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
