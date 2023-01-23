@@ -67,6 +67,104 @@ Needed for to manage grants and contracts for lookup table
 
 
 <!--BREAK-->
+### Data Object: PpmCfda
+
+CFDA
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `PPM_CFDA`
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+    * View Object: FscmTopModelAM.GmsSetupAM.CFDAViewPVO
+  * Underlying Database Objects:
+    * 
+
+##### Properties
+
+| Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| cfda               | NonEmptyTrimmedString30!  |                |        Y        |               |  |
+| assistanceType     | NonEmptyTrimmedString2000 |                |                 |               |  |
+| programTitle       | NonEmptyTrimmedString255  |                |        Y        |               |  |
+| creationDate       | DateTime                  |                |                 |               |  |
+| lastUpdateDateTime | DateTime                  |                |        Y        |               |  |
+| lastUpdateUserId   | ErpUserId                 |                |                 |               |  |
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+##### `ppmCfda`
+
+> undefined
+
+* **Parameters**
+  * `cfda : String!`
+* **Returns**
+  * `PpmCfda`
+
+##### `ppmCfdaSearch`
+
+> undefined
+
+* **Parameters**
+  * `filter : PpmCfdaFilterInput!`
+* **Returns**
+  * `PpmCfdaSearchResults!`
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
+### Data Object: PpmCfdaAward
+
+CFDAAward
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `PPM_AWARD_CFDA`
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+    * View Object: FscmTopModelAM.GmsAwardAM.AwardCFDAPVO
+  * Underlying Database Objects:
+    * 
+
+##### Properties
+
+| Property Name      | Data Type               | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------ | ----------------------- | :------------: | :-------------: | ------------- | ----- |
+| id                 | Long!                   |                |                 |               |  |
+| cfda               | NonEmptyTrimmedString30 |                |                 |               |  |
+| awardId            | Long                    |                |                 |               |  |
+| creationFate       | DateTime                |                |                 |               |  |
+| lastUpdateDateTime | DateTime                |                |                 |               |  |
+| lastUpdateUserId   | ErpUserId               |                |                 |               |  |
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
 ### Data Object: PpmDocumentEntry
 
 PpmDocumentEntry is used to store the document entries.
@@ -138,6 +236,69 @@ PpmDocumentEntry is used to store the document entries.
 
 
 <!--BREAK-->
+### Data Object: PpmSponsor
+
+SPONSOR
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `PPM_SPONSOR`
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+    * View Object: FscmTopModelAM.GmsSetupAM.SponsorPVO
+  * Underlying Database Objects:
+    * 
+
+##### Properties
+
+| Property Name        | Data Type                | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| -------------------- | ------------------------ | :------------: | :-------------: | ------------- | ----- |
+| sponsorId            | Long!                    |                |        Y        |               |  |
+| partyId              | Long                     |                |        Y        |               |  |
+| burdenScheduleId     | Long                     |                |        Y        |               |  |
+| billToSponsorId      | Long                     |                |        Y        |               |  |
+| letterOfCreditNumber | NonEmptyTrimmedString240 |                |                 |               |  |
+| isLetterOfCredit     | Boolean                  |                |                 |               |  |
+| isFederal            | Boolean                  |                |        Y        |               |  |
+| statusCode           | NonEmptyTrimmedString30  |                |        Y        |               |  |
+| creationDate         | DateTime                 |                |                 |               |  |
+| lastUpdateDateTime   | DateTime                 |                |        Y        |               |  |
+| lastUpdateUserId     | ErpUserId                |                |                 |               |  |
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+##### `ppmSponsor`
+
+> undefined
+
+* **Parameters**
+  * `sponsorId : String!`
+* **Returns**
+  * `PpmSponsor`
+
+##### `ppmSponsorSearch`
+
+> undefined
+
+* **Parameters**
+  * `filter : PpmSponsorFilterInput!`
+* **Returns**
+  * `PpmSponsorSearchResults!`
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
 ### Data Object: PpmTerms
 
 Cayuse support - non-segment data objects needed for submission of project and grant data
@@ -145,11 +306,17 @@ Needed for to manage Terms and Conditions for lookup table
 
 #### Access Controls
 
-* Required Role: ``
+* Required Role: `erp:reader-refdata`
 
 #### Data Source
 
-* Local Table/View: `undefined`
+* Local Table/View: `PPM_TERMS`
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+    * View Object: FscmTopModelAM.GmsSetupAM.TermsViewPVO
+  * Underlying Database Objects:
+    * GMS_TERMS_TL
 
 ##### Properties
 

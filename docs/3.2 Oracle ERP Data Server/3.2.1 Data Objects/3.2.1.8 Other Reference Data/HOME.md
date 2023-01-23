@@ -246,6 +246,56 @@ Contains information about the ERP API server's version.
 
 
 <!--BREAK-->
+### Data Object: ErpDepartmentalApprover
+
+Represents an approver from the Oracle Role-Based Security module.  Values here have been extracted
+from advanced security table and formatted for API use.
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `ERP_FIN_DEPT_APPROVER` (view)
+  * Support Tables:
+    * `ERP_DEPT_APPROVER_SETUP`
+    * `ERP_FIN_DEPT`
+    * `ASE_USER_ROLE_MEMBER`
+    * `PER_USER`
+    * `PER_ALL_PEOPLE_F`
+* Data Origin:
+  * System: Oracle BIPublisher
+  * Extract Objects:
+    * /Custom/Interfaces/Data Extracts/OracleRoles.xdo
+  * Underlying Database Objects:
+    * ASE_USER_ROLE_MBR
+    * ASE_USER_VL
+    * ASE_ROLE_VL
+
+##### Properties
+
+| Property Name | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| approverType  | NonEmptyTrimmedString50!  |                |                 |               | Type of the approver as defined by the functional users.  This name defines its usage in Oracle. |
+| userId        | ErpUserId!                |                |                 |               | Oracle User ID of the person.  This should be the same as the UCD Computing account ID for campus employees. |
+| name          | NonEmptyTrimmedString360! |                |                 |               |  |
+| firstName     | NonEmptyTrimmedString150  |                |                 |               |  |
+| lastName      | NonEmptyTrimmedString150  |                |                 |               |  |
+| employeeId    | UcEmployeeId              |                |                 |               |  |
+| emailAddress  | NonEmptyTrimmedString240  |                |                 |               |  |
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
 ### Data Object: ErpFundSource
 
 
@@ -440,7 +490,7 @@ Locations referenced by Supplier and AR Customer Sites
 
 #### Access Controls
 
-* Required Role: `erp:reader-supplier`
+* Required Role: `erp:reader-refdata`
 
 #### Data Source
 
@@ -486,6 +536,15 @@ Locations referenced by Supplier and AR Customer Sites
 
 * **Parameters**
   * `uomCode : String!`
+* **Returns**
+  * `ErpUnitOfMeasure`
+
+##### `erpUnitOfMeasureByName`
+
+> Get a single ErpUnitOfMeasure by unit of measure.  Returns undefined if does not exist
+
+* **Parameters**
+  * `name : String!`
 * **Returns**
   * `ErpUnitOfMeasure`
 

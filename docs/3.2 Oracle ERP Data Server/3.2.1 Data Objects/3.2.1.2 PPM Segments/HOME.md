@@ -1,539 +1,6 @@
 # 3.2.1.2 PPM Segments
 
 <!--BREAK-->
-### Data Object: PpmAward
-
-The Award Number identifies the number assigned to an award containing funding activities.
-
-**Roll-up relationship to the new Chart of Accounts in the General Ledger:**
-
-* The Award Number value will NOT roll up to the Chart of Accounts. Award Number values will only be maintained in the PPM module.
-
-**Examples:**
-
-* Award Number values will be Oracle-generated
-
-#### Access Controls
-
-* Required Role: `erp:reader-refdata`
-
-#### Data Source
-
-* Local Table/View: `PPM_AWARD_V` (view)
-  * Support Tables:
-    * `PPM_AWARD`
-    * `ERP_CONTRACT`
-    * `PPM_PROJECT_AWARD`
-* Data Origin:
-  * System: Oracle BICC
-  * Extract Objects:
-    * View Object: FscmTopModelAM.GmsAwardAM.AwardHeaderViewPVO
-  * Underlying Database Objects:
-    * GMS_AWARD_HEADERS_B
-    * GMS_AWARD_HEADERS_TL
-    * GMS_AWARD_HEADERS_VL
-
-##### Properties
-
-| Property Name               | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| --------------------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| id                          | Long!                     |       Y        |        Y        |               | Award ID: Unique identifier of the award. |
-| name                        | NonEmptyTrimmedString240! |                |        Y        |               | Award Name: Name of the award. |
-| awardNumber                 | NonEmptyTrimmedString30!  |                |        Y        |               |  Award Number: Award number tracked by the sponsor. |
-| awardTypeName               | NonEmptyTrimmedString30!  |                |                 |               | The award type name associated with the award |
-| description                 | NonEmptyTrimmedString240  |                |                 |               | Description: Brief description of the award. |
-| startDate                   | LocalDate                 |                |                 |               | Start Date: Start date of the award. |
-| endDate                     | LocalDate                 |                |                 |               | End Date: End date of the award. |
-| closeDate                   | LocalDate                 |                |                 |               | Close Date: Date past the end date of the award. Transactions for the award can be entered up to this date. |
-| awardOwningOrganizationName | NonEmptyTrimmedString240! |                |                 |               | Award Owning Organization: An organization that owns awards within an enterprise. An organizing unit in the internal or external structure of your enterprise. Organization structures provide the framework for performing legal reporting, financial control, and management reporting for the award. |
-| awardPurpose                | NonEmptyTrimmedString80   |                |                 |               | Purpose: Name of the award purpose. |
-| awardType                   | NonEmptyTrimmedString30   |                |        Y        |               | Type: Classification of an award, for example, Federal grants or Private grants. |
-| businessUnitName            | NonEmptyTrimmedString100! |                |                 |               | Business Unit: Unit of an enterprise that performs one or many business functions that can be rolled up in a management hierarchy. An award business unit is one within which the award is created. |
-| lastUpdateDateTime          | DateTime!                 |                |        Y        |               | The date when the award was last updated. |
-| lastUpdatedBy               | ErpUserId                 |                |                 |               | The user that last updated the award. |
-| awardFundingSource          | [PpmFundingSource!]       |                |                 |               | Award Funding Sources: The Award Funding Sources resource is used to view the attributes used to create or update a funding source for the award. |
-| defaultFundingSourceNumber  | PpmFundingSourceNumber    |                |                 |               |  |
-| awardCfda                   | [PpmCfdaAward!]           |                |                 |               |  |
-| flowThruAmount              | NonNegativeFloat          |                |                 |               |  |
-| flowThruFromDate            | LocalDate                 |                |                 |               |  |
-| flowThruToDate              | LocalDate                 |                |                 |               |  |
-| flowThruPrimarySponsorId    | NonEmptyTrimmedString30   |                |                 |               |  |
-| flowThruRefAwardName        | NonEmptyTrimmedString100  |                |                 |               |  |
-| flowThruIsFederal           | Boolean                   |                |                 |               |  |
-| eligibleForUse              | Boolean!                  |                |                 |               | Returns whether this PpmAward is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmAward must:<br/>- Have closeDate after the given accountingDate |
-
-* `eligibleForUse` : `Boolean!`
-  * Returns whether this PpmAward is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmAward must:<br/>- Have closeDate after the given accountingDate
-  * Arguments:
-    * `accountingDate` : `LocalDate`
-
-##### Linked Data Objects
-
-(None)
-
-#### Query Operations
-
-##### `ppmAward`
-
-> Get a single PpmAward by id.  Returns undefined if does not exist
-
-* **Parameters**
-  * `id : String!`
-* **Returns**
-  * `PpmAward`
-
-##### `ppmAwardByName`
-
-> Gets PpmAwards by exact name.  Returns empty list if none are found
-
-* **Parameters**
-  * `name : String!`
-* **Returns**
-  * `[PpmAward!]!`
-
-##### `ppmAwardByNumber`
-
-> Gets PpmAwards by number.  Returns empty if not found
-
-* **Parameters**
-  * `number : String!`
-* **Returns**
-  * `PpmAward`
-
-##### `ppmAwardByProjectAndAwardNumber`
-
-> Gets PpmAwards by projectNumber and awardNumber.  Returns null if not found
-
-* **Parameters**
-  * `projectNumber : String!`
-  * `awardNumber : String!`
-* **Returns**
-  * `PpmAward`
-
-##### `ppmAwardSearch`
-
-> Search for PpmAward objects by multiple properties.
-> See
-> See the PpmAwardFilterInput type for options.
-
-* **Parameters**
-  * `filter : PpmAwardFilterInput!`
-* **Returns**
-  * `PpmAwardSearchResults!`
-
-[^1]: Searchable attributes are available as part of the general search filter input.
-[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
-
-
-<!--BREAK-->
-### Data Object: PpmCfda
-
-CFDA
-
-#### Access Controls
-
-* Required Role: `erp:reader-refdata`
-
-#### Data Source
-
-* Local Table/View: `PPM_CFDA`
-* Data Origin:
-  * System: Oracle BICC
-  * Extract Objects:
-    * View Object: FscmTopModelAM.GmsSetupAM.CFDAViewPVO
-  * Underlying Database Objects:
-    * 
-
-##### Properties
-
-| Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| cfda               | NonEmptyTrimmedString30!  |                |        Y        |               |  |
-| assistanceType     | NonEmptyTrimmedString2000 |                |                 |               |  |
-| programTitle       | NonEmptyTrimmedString255  |                |        Y        |               |  |
-| creationDate       | DateTime                  |                |                 |               |  |
-| lastUpdateDateTime | DateTime                  |                |        Y        |               |  |
-| lastUpdateUserId   | ErpUserId                 |                |                 |               |  |
-
-##### Linked Data Objects
-
-(None)
-
-#### Query Operations
-
-##### `ppmCfda`
-
-> undefined
-
-* **Parameters**
-  * `cfda : String!`
-* **Returns**
-  * `PpmCfda`
-
-##### `ppmCfdaSearch`
-
-> undefined
-
-* **Parameters**
-  * `filter : PpmCfdaFilterInput!`
-* **Returns**
-  * `PpmCfdaSearchResults!`
-
-[^1]: Searchable attributes are available as part of the general search filter input.
-[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
-
-
-<!--BREAK-->
-### Data Object: PpmCfdaAward
-
-CFDAAward
-
-#### Access Controls
-
-* Required Role: `erp:reader-refdata`
-
-#### Data Source
-
-* Local Table/View: `PPM_AWARD_CFDA`
-* Data Origin:
-  * System: Oracle BICC
-  * Extract Objects:
-    * View Object: FscmTopModelAM.GmsAwardAM.AwardCFDAPVO
-  * Underlying Database Objects:
-    * 
-
-##### Properties
-
-| Property Name      | Data Type               | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| ------------------ | ----------------------- | :------------: | :-------------: | ------------- | ----- |
-| id                 | Long!                   |                |                 |               |  |
-| cfda               | NonEmptyTrimmedString30 |                |                 |               |  |
-| awardId            | Long                    |                |                 |               |  |
-| creationFate       | DateTime                |                |                 |               |  |
-| lastUpdateDateTime | DateTime                |                |                 |               |  |
-| lastUpdateUserId   | ErpUserId               |                |                 |               |  |
-
-##### Linked Data Objects
-
-(None)
-
-#### Query Operations
-
-[^1]: Searchable attributes are available as part of the general search filter input.
-[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
-
-
-<!--BREAK-->
-### Data Object: PpmExpenditureType
-
-The Expenditure Type identifies the natural classification of the expense transaction being recorded.
-
-**Roll-up relationship to the Chart of Accounts in the General Ledger:**
-
-* The Expenditure Type value will roll up to the (Natural) Account segment in the Chart of Accounts.
-* The first 6 characters of the Expenditure Type value will correspond with the (Natural) Account value it rolls up to.
-
-**Examples:**
-
-* Salary
-* Fringe Benefits
-* Consulting Services
-* Travel
-
-#### Access Controls
-
-* Required Role: `erp:reader-refdata`
-
-#### Data Source
-
-* Local Table/View: `PPM_EXPENDITURE_TYPE`
-* Data Origin:
-  * System: Oracle BICC
-  * Extract Objects:
-    * View Object: FscmTopModelAM.PjfSetupTransactionsAM.ExpenditureTypeView
-  * Underlying Database Objects:
-    * PJF_EXP_TYPES_B
-    * PJF_EXP_TYPES_TL
-
-##### Properties
-
-| Property Name       | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| ------------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| id                  | Long!                     |       Y        |        Y        |               | Expenditure Type ID: Unique identifier of the expenditure type. |
-| name                | NonEmptyTrimmedString240! |                |        Y        |               | Expenditure Type: Name of the expenditure type. |
-| code                | String!                   |                |                 |               | Expenditure Type Code: The code of the Expenditure Type. |
-| description         | String                    |                |                 |               | Expenditure Type Description: Description of the expenditure type. |
-| startDate           | LocalDate                 |                |                 |               | Expenditure Type Start Date: Start date of an expenditure type. |
-| endDate             | LocalDate                 |                |                 |               | Expenditure Type End Date: End date of an expenditure type. |
-| expenditureCategory | NonEmptyTrimmedString240  |                |                 |               | Expenditure Category: Name of the expenditure category. |
-| revenueCategoryCode | NonEmptyTrimmedString30   |                |                 |               | Revenue Category Code: Code of a category grouping of expenditure types by type of revenue. |
-| lastUpdateDateTime  | DateTime!                 |                |        Y        |               | The date when the expenditure type was last updated. |
-| lastUpdatedBy       | ErpUserId                 |                |                 |               | The user that last updated the expenditure type. |
-| eligibleForUse      | Boolean!                  |                |                 |               | Returns whether this PpmExpenditureType is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmExpenditureType must:<br/>- Have a startDate and endDate range which includes the given accoutingDate |
-
-* `eligibleForUse` : `Boolean!`
-  * Returns whether this PpmExpenditureType is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmExpenditureType must:<br/>- Have a startDate and endDate range which includes the given accoutingDate
-  * Arguments:
-    * `accountingDate` : `LocalDate`
-
-##### Linked Data Objects
-
-(None)
-
-#### Query Operations
-
-##### `ppmExpenditureType`
-
-> Get a single PpmExpenditureType by id.  Returns undefined if does not exist.
-> 
-> This ID is an internal tracking number used by the financial system.  It is only used to link between objects internally.
-> Use the ppmExpenditureTypeByName or ppmExpenditureTypeByAccount operations to pull by a unique identifier.
-
-* **Parameters**
-  * `id : String!`
-* **Returns**
-  * `PpmExpenditureType`
-
-##### `ppmExpenditureTypeByName`
-
-> Gets PpmExpenditureTypes by exact name.  Returns empty list if none are found
-
-* **Parameters**
-  * `name : NonEmptyTrimmedString100!`
-* **Returns**
-  * `PpmExpenditureType!`
-
-##### `ppmExpenditureTypeByCode`
-
-> Get a single PpmExpenditureType by code.  Returns undefined if does not exist
-
-* **Parameters**
-  * `code : String!`
-* **Returns**
-  * `PpmExpenditureType`
-
-##### `ppmExpenditureTypeByAccount`
-
-> Gets PpmExpenditureTypes by the associated GL Account.  Returns undefined if none is found.
-> 
-> PPM Expense Type names will be the GL Account number plus a description.  This full string must be used in file-based feeds.
-> This method will allow you to obtain the exact string (in the name property) that needs to be included.
-
-* **Parameters**
-  * `account : ErpAccountCode!`
-* **Returns**
-  * `PpmExpenditureType`
-
-##### `ppmExpenditureTypeSearch`
-
-> Search for PpmExpenditureType objects by multiple properties.
-> See
-> See the PpmExpenditureTypeFilterInput type for options.
-
-* **Parameters**
-  * `filter : PpmExpenditureTypeFilterInput!`
-* **Returns**
-  * `PpmExpenditureTypeSearchResults!`
-
-[^1]: Searchable attributes are available as part of the general search filter input.
-[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
-
-
-<!--BREAK-->
-### Data Object: PpmFundingSource
-
-The Funding Source identifies the name of the sponsor for the external funding source.
-
-**Roll-up relationship to the new Chart of Accounts in the General Ledger:**
-
-* Funding Source values will only be used in the PPM module.
-* The Funding Source will map to the correct value for the Fund segment in the CoA
-  * (i.e In the examples below, NIH and USAID would map to the Federal Fund value in the Chart of Accounts)
-
-**Examples:**
-
-* National Institute of Health (NIH)
-* U.S. Agency for International Development (USAID)
-
-#### Access Controls
-
-* Required Role: `erp:reader-refdata`
-
-#### Data Source
-
-* Local Table/View: `PPM_FUNDING_SOURCE`
-* Data Origin:
-  * System: Oracle BICC
-  * Extract Objects:
-    * View Object:FscmTopModelAM.GmsAwardAM.AwardFundingSourcePVO
-  * Underlying Database Objects:
-    * GMS_FUNDING_SOURCES_B
-    * GMS_FUNDING_SOURCES_TL
-
-##### Properties
-
-| Property Name         | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| --------------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| id                    | Long!                     |                |                 |               | Funding Source ID: The unique identifier of the funding source. |
-| name                  | NonEmptyTrimmedString360! |                |        Y        |               | Funding Source Name: The source name of the funding source. |
-| fundingSourceNumber   | NonEmptyTrimmedString50!  |                |        Y        |               | Funding Source Number: The number of the funding source. |
-| description           | NonEmptyTrimmedString240  |                |                 |               | Funding Source Description: The description of the funding source. |
-| fundingSourceFromDate | LocalDate                 |                |        Y        |               | Funding Source From Date: The date from which the funding source is active. |
-| fundingSourceToDate   | LocalDate                 |                |        Y        |               | Funding Source To Date: The date till which the funding source is active. |
-| fundingSourceType     | NonEmptyTrimmedString50   |                |                 |               | The funding source type name. |
-| lastUpdateDateTime    | DateTime!                 |                |        Y        |               | The date when the funding source was last updated. |
-| lastUpdatedBy         | ErpUserId                 |                |                 |               | The user that last updated the funding source. |
-| awardId               | Long!                     |                |        Y        |               | The award id linked to the funding Source |
-| eligibleForUse        | Boolean!                  |                |                 |               | Returns whether this PpmFundingSource is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmFundingSource must:<br/>- Have a fundingSourceFromDate and fundingSourceToDate range which includes the given accountingDate |
-
-* `eligibleForUse` : `Boolean!`
-  * Returns whether this PpmFundingSource is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmFundingSource must:<br/>- Have a fundingSourceFromDate and fundingSourceToDate range which includes the given accountingDate
-  * Arguments:
-    * `accountingDate` : `LocalDate`
-
-##### Linked Data Objects
-
-(None)
-
-#### Query Operations
-
-##### `ppmFundingSource`
-
-> Get a single PpmFundingSource by id.  Returns undefined if does not exist
-
-* **Parameters**
-  * `id : String!`
-* **Returns**
-  * `PpmFundingSource`
-
-##### `ppmFundingSourceByNumber`
-
-> Get a single PpmFundingSource by number.  Returns undefined if does not exist
-
-* **Parameters**
-  * `fundingSourceNumber : String!`
-* **Returns**
-  * `PpmFundingSource`
-
-##### `ppmFundingSourceByProjectAndFundingSourceNumber`
-
-> Get a single PpmFundingSource by project number and funding source number.  Returns null if does not exist
-
-* **Parameters**
-  * `projectNumber : String!`
-  * `fundingSourceNumber : String!`
-* **Returns**
-  * `PpmFundingSource`
-
-##### `ppmFundingSourceByName`
-
-> Gets PpmFundingSources by exact name.  Returns empty list if none are found
-
-* **Parameters**
-  * `name : String!`
-* **Returns**
-  * `[PpmFundingSource!]!`
-
-##### `ppmFundingSourceSearch`
-
-> Search for PpmFundingSource objects by multiple properties.
-> See
-> See the PpmFundingSourceFilterInput type for options.
-
-* **Parameters**
-  * `filter : PpmFundingSourceFilterInput!`
-* **Returns**
-  * `PpmFundingSourceSearchResults!`
-
-[^1]: Searchable attributes are available as part of the general search filter input.
-[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
-
-
-<!--BREAK-->
-### Data Object: PpmOrganization
-
-The Expenditure Organization identifies the organization that is incurring the expense and revenue. This may NOT be the same as the organization that owns the project.
-
-**Roll-up relationship to the new Chart of Accounts in the General Ledger:**
-
-* The Expenditure Organization value will roll up to the Financial Department segment of the Chart of Accounts.
-
-**Examples:**
-
-* Computer Science
-* Plant Sciences
-
-#### Access Controls
-
-* Required Role: `erp:reader-refdata`
-
-#### Data Source
-
-* Local Table/View: `PPM_ORGANIZATION`
-* Data Origin:
-  * System: Oracle BIPublisher
-  * Extract Objects:
-    * /Custom/Interfaces/Data Extracts/PPMExpenseOrganization.xdo
-  * Underlying Database Objects:
-    * PJF_ORGANIZATIONS_EXPEND_V
-
-##### Properties
-
-| Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| code               | String!                   |                |        Y        |               | Organization Code: The code of the Organization. |
-| name               | NonEmptyTrimmedString100! |                |        Y        |               | Organization Name: Name of the Organization |
-| effectiveStartDate | LocalDate!                |                |                 |               | Effective Start Date: Start date of Organization |
-| effectiveEndDate   | LocalDate                 |                |                 |               | Effective End Date: End date of Organization |
-| enabled            | Boolean!                  |                |        Y        |               | Whether the expense organization allows costing transactions against it. |
-| id                 | Long!                     |       Y        |                 |               | Organization ID: Unique identifier of the Organization.  Internal to Oracle. |
-| eligibleForUse     | Boolean!                  |                |                 |               | Returns whether this PpmOrganization is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmOrganization must:<br/>- Have a effectiveStartDate and effectiveEndDate range which includes the given accountingDate<br/>- Be enabled |
-
-* `eligibleForUse` : `Boolean!`
-  * Returns whether this PpmOrganization is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmOrganization must:<br/>- Have a effectiveStartDate and effectiveEndDate range which includes the given accountingDate<br/>- Be enabled
-  * Arguments:
-    * `accountingDate` : `LocalDate`
-
-##### Linked Data Objects
-
-(None)
-
-#### Query Operations
-
-##### `ppmOrganization`
-
-> Get a single PpmOrganization by code.  Returns undefined if does not exist
-
-* **Parameters**
-  * `code : String!`
-* **Returns**
-  * `PpmOrganization`
-
-##### `ppmOrganizationByName`
-
-> Gets PpmOrganizations by exact name.  Returns undefined if does not exist
-
-* **Parameters**
-  * `name : String!`
-* **Returns**
-  * `PpmOrganization`
-
-##### `ppmOrganizationSearch`
-
-> Search for PpmOrganization objects by multiple properties.
-> See
-> See the PpmOrganizationFilterInput type for options.
-
-* **Parameters**
-  * `filter : PpmOrganizationFilterInput!`
-* **Returns**
-  * `PpmOrganizationSearchResults!`
-
-[^1]: Searchable attributes are available as part of the general search filter input.
-[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
-
-
-<!--BREAK-->
 ### Data Object: PpmProject
 
 The Project identifies the planned work or activity to be completed over a period of time and intended to achieve a particular goal.
@@ -686,69 +153,6 @@ The Project identifies the planned work or activity to be completed over a perio
 
 
 <!--BREAK-->
-### Data Object: PpmSponsor
-
-SPONSOR
-
-#### Access Controls
-
-* Required Role: `erp:reader-refdata`
-
-#### Data Source
-
-* Local Table/View: `PPM_SPONSOR`
-* Data Origin:
-  * System: Oracle BICC
-  * Extract Objects:
-    * View Object: FscmTopModelAM.GmsSetupAM.SponsorPVO
-  * Underlying Database Objects:
-    * 
-
-##### Properties
-
-| Property Name        | Data Type                | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| -------------------- | ------------------------ | :------------: | :-------------: | ------------- | ----- |
-| sponsorId            | Long!                    |                |        Y        |               |  |
-| partyId              | Long                     |                |        Y        |               |  |
-| burdenScheduleId     | Long                     |                |        Y        |               |  |
-| billToSponsorId      | Long                     |                |        Y        |               |  |
-| letterOfCreditNumber | NonEmptyTrimmedString240 |                |                 |               |  |
-| isLetterOfCredit     | Boolean                  |                |                 |               |  |
-| isFederal            | Boolean                  |                |        Y        |               |  |
-| statusCode           | NonEmptyTrimmedString30  |                |        Y        |               |  |
-| creationDate         | DateTime                 |                |                 |               |  |
-| lastUpdateDateTime   | DateTime                 |                |        Y        |               |  |
-| lastUpdateUserId     | ErpUserId                |                |                 |               |  |
-
-##### Linked Data Objects
-
-(None)
-
-#### Query Operations
-
-##### `ppmSponsor`
-
-> undefined
-
-* **Parameters**
-  * `sponsorId : String!`
-* **Returns**
-  * `PpmSponsor`
-
-##### `ppmSponsorSearch`
-
-> undefined
-
-* **Parameters**
-  * `filter : PpmSponsorFilterInput!`
-* **Returns**
-  * `PpmSponsorSearchResults!`
-
-[^1]: Searchable attributes are available as part of the general search filter input.
-[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
-
-
-<!--BREAK-->
 ### Data Object: PpmTask
 
 The Task identifies the activities used to further breakdown a PPM project. Every project MUST have at least one Task.  The number of tasks will vary by type of project.
@@ -859,10 +263,18 @@ The Task identifies the activities used to further breakdown a PPM project. Ever
 
 
 <!--BREAK-->
-### Data Object: PpmTerms
+### Data Object: PpmOrganization
 
-Cayuse support - non-segment data objects needed for submission of project and grant data
-Needed for to manage Terms and Conditions for lookup table
+The Expenditure Organization identifies the organization that is incurring the expense and revenue. This may NOT be the same as the organization that owns the project.
+
+**Roll-up relationship to the new Chart of Accounts in the General Ledger:**
+
+* The Expenditure Organization value will roll up to the Financial Department segment of the Chart of Accounts.
+
+**Examples:**
+
+* Computer Science
+* Plant Sciences
 
 #### Access Controls
 
@@ -870,27 +282,30 @@ Needed for to manage Terms and Conditions for lookup table
 
 #### Data Source
 
-* Local Table/View: `PPM_TERMS`
+* Local Table/View: `PPM_ORGANIZATION`
 * Data Origin:
-  * System: Oracle BICC
+  * System: Oracle BIPublisher
   * Extract Objects:
-    * View Object: FscmTopModelAM.GmsSetupAM.TermsViewPVO
+    * /Custom/Interfaces/Data Extracts/PPMExpenseOrganization.xdo
   * Underlying Database Objects:
-    * GMS_TERMS_TL
+    * PJF_ORGANIZATIONS_EXPEND_V
 
 ##### Properties
 
-| Property Name       | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| ------------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| id                  | Long!                     |                |                 |               | ID: The unique identifier of the term. |
-| name                | NonEmptyTrimmedString150! |                |        Y        |               | Term Name: The name of the Term. |
-| description         | NonEmptyTrimmedString240  |                |        Y        |               | Term Description: The description for the Term. |
-| startDate           | LocalDate!                |                |                 |               | Term start date: Start Date of the term |
-| endDate             | LocalDate                 |                |                 |               | Term end date: End Date of the term |
-| categoryName        | NonEmptyTrimmedString150! |                |        Y        |               | Category Name: The category name of the Term |
-| categoryDescription | NonEmptyTrimmedString240  |                |                 |               | Category Description: The category description of the Term |
-| lastUpdateDateTime  | DateTime                  |                |        Y        |               | The date when the keyword was last updated. |
-| lastUpdatedBy       | ErpUserId                 |                |                 |               | The user that last updated the term. |
+| Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| code               | String!                   |                |        Y        |               | Organization Code: The code of the Organization. |
+| name               | NonEmptyTrimmedString100! |                |        Y        |               | Organization Name: Name of the Organization |
+| effectiveStartDate | LocalDate!                |                |                 |               | Effective Start Date: Start date of Organization |
+| effectiveEndDate   | LocalDate                 |                |                 |               | Effective End Date: End date of Organization |
+| enabled            | Boolean!                  |                |        Y        |               | Whether the expense organization allows costing transactions against it. |
+| id                 | Long!                     |       Y        |                 |               | Organization ID: Unique identifier of the Organization.  Internal to Oracle. |
+| eligibleForUse     | Boolean!                  |                |                 |               | Returns whether this PpmOrganization is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmOrganization must:<br/>- Have a effectiveStartDate and effectiveEndDate range which includes the given accountingDate<br/>- Be enabled |
+
+* `eligibleForUse` : `Boolean!`
+  * Returns whether this PpmOrganization is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmOrganization must:<br/>- Have a effectiveStartDate and effectiveEndDate range which includes the given accountingDate<br/>- Be enabled
+  * Arguments:
+    * `accountingDate` : `LocalDate`
 
 ##### Linked Data Objects
 
@@ -898,43 +313,385 @@ Needed for to manage Terms and Conditions for lookup table
 
 #### Query Operations
 
-##### `ppmTerms`
+##### `ppmOrganization`
 
-> Get a single PpmTerms by id.  Returns undefined if does not exist
+> Get a single PpmOrganization by code.  Returns undefined if does not exist
+
+* **Parameters**
+  * `code : String!`
+* **Returns**
+  * `PpmOrganization`
+
+##### `ppmOrganizationByName`
+
+> Gets PpmOrganizations by exact name.  Returns undefined if does not exist
+
+* **Parameters**
+  * `name : String!`
+* **Returns**
+  * `PpmOrganization`
+
+##### `ppmOrganizationSearch`
+
+> Search for PpmOrganization objects by multiple properties.
+> See
+> See the PpmOrganizationFilterInput type for options.
+
+* **Parameters**
+  * `filter : PpmOrganizationFilterInput!`
+* **Returns**
+  * `PpmOrganizationSearchResults!`
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
+### Data Object: PpmExpenditureType
+
+The Expenditure Type identifies the natural classification of the expense transaction being recorded.
+
+**Roll-up relationship to the Chart of Accounts in the General Ledger:**
+
+* The Expenditure Type value will roll up to the (Natural) Account segment in the Chart of Accounts.
+* The first 6 characters of the Expenditure Type value will correspond with the (Natural) Account value it rolls up to.
+
+**Examples:**
+
+* Salary
+* Fringe Benefits
+* Consulting Services
+* Travel
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `PPM_EXPENDITURE_TYPE`
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+    * View Object: FscmTopModelAM.PjfSetupTransactionsAM.ExpenditureTypeView
+  * Underlying Database Objects:
+    * PJF_EXP_TYPES_B
+    * PJF_EXP_TYPES_TL
+
+##### Properties
+
+| Property Name       | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| id                  | Long!                     |       Y        |        Y        |               | Expenditure Type ID: Unique identifier of the expenditure type. |
+| name                | NonEmptyTrimmedString240! |                |        Y        |               | Expenditure Type: Name of the expenditure type. |
+| code                | String!                   |                |                 |               | Expenditure Type Code: The code of the Expenditure Type. |
+| description         | String                    |                |                 |               | Expenditure Type Description: Description of the expenditure type. |
+| startDate           | LocalDate                 |                |                 |               | Expenditure Type Start Date: Start date of an expenditure type. |
+| endDate             | LocalDate                 |                |                 |               | Expenditure Type End Date: End date of an expenditure type. |
+| expenditureCategory | NonEmptyTrimmedString240  |                |                 |               | Expenditure Category: Name of the expenditure category. |
+| revenueCategoryCode | NonEmptyTrimmedString30   |                |                 |               | Revenue Category Code: Code of a category grouping of expenditure types by type of revenue. |
+| lastUpdateDateTime  | DateTime!                 |                |        Y        |               | The date when the expenditure type was last updated. |
+| lastUpdatedBy       | ErpUserId                 |                |                 |               | The user that last updated the expenditure type. |
+| eligibleForUse      | Boolean!                  |                |                 |               | Returns whether this PpmExpenditureType is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmExpenditureType must:<br/>- Have a startDate and endDate range which includes the given accoutingDate |
+
+* `eligibleForUse` : `Boolean!`
+  * Returns whether this PpmExpenditureType is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmExpenditureType must:<br/>- Have a startDate and endDate range which includes the given accoutingDate
+  * Arguments:
+    * `accountingDate` : `LocalDate`
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+##### `ppmExpenditureType`
+
+> Get a single PpmExpenditureType by id.  Returns undefined if does not exist.
+> 
+> This ID is an internal tracking number used by the financial system.  It is only used to link between objects internally.
+> Use the ppmExpenditureTypeByName or ppmExpenditureTypeByAccount operations to pull by a unique identifier.
 
 * **Parameters**
   * `id : String!`
 * **Returns**
-  * `PpmTerms`
+  * `PpmExpenditureType`
 
-##### `ppmTermsByName`
+##### `ppmExpenditureTypeByName`
 
-> Gets PpmTermss by category name and name.  Returns undefined if none are found
+> Gets PpmExpenditureTypes by exact name.  Returns empty list if none are found
 
 * **Parameters**
-  * `categoryName : String!`
+  * `name : NonEmptyTrimmedString100!`
+* **Returns**
+  * `PpmExpenditureType!`
+
+##### `ppmExpenditureTypeByCode`
+
+> Get a single PpmExpenditureType by code.  Returns undefined if does not exist
+
+* **Parameters**
+  * `code : String!`
+* **Returns**
+  * `PpmExpenditureType`
+
+##### `ppmExpenditureTypeByAccount`
+
+> Gets PpmExpenditureTypes by the associated GL Account.  Returns undefined if none is found.
+> 
+> PPM Expense Type names will be the GL Account number plus a description.  This full string must be used in file-based feeds.
+> This method will allow you to obtain the exact string (in the name property) that needs to be included.
+
+* **Parameters**
+  * `account : ErpAccountCode!`
+* **Returns**
+  * `PpmExpenditureType`
+
+##### `ppmExpenditureTypeSearch`
+
+> Search for PpmExpenditureType objects by multiple properties.
+> See
+> See the PpmExpenditureTypeFilterInput type for options.
+
+* **Parameters**
+  * `filter : PpmExpenditureTypeFilterInput!`
+* **Returns**
+  * `PpmExpenditureTypeSearchResults!`
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
+### Data Object: PpmAward
+
+The Award Number identifies the number assigned to an award containing funding activities.
+
+**Roll-up relationship to the new Chart of Accounts in the General Ledger:**
+
+* The Award Number value will NOT roll up to the Chart of Accounts. Award Number values will only be maintained in the PPM module.
+
+**Examples:**
+
+* Award Number values will be Oracle-generated
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `PPM_AWARD_V` (view)
+  * Support Tables:
+    * `PPM_AWARD`
+    * `ERP_CONTRACT`
+    * `PPM_PROJECT_AWARD`
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+    * View Object: FscmTopModelAM.GmsAwardAM.AwardHeaderViewPVO
+  * Underlying Database Objects:
+    * GMS_AWARD_HEADERS_B
+    * GMS_AWARD_HEADERS_TL
+    * GMS_AWARD_HEADERS_VL
+
+##### Properties
+
+| Property Name               | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| --------------------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| id                          | Long!                     |       Y        |        Y        |               | Award ID: Unique identifier of the award. |
+| name                        | NonEmptyTrimmedString240! |                |        Y        |               | Award Name: Name of the award. |
+| awardNumber                 | NonEmptyTrimmedString30!  |                |        Y        |               |  Award Number: Award number tracked by the sponsor. |
+| awardTypeName               | NonEmptyTrimmedString30!  |                |                 |               | The award type name associated with the award |
+| description                 | NonEmptyTrimmedString240  |                |                 |               | Description: Brief description of the award. |
+| startDate                   | LocalDate                 |                |                 |               | Start Date: Start date of the award. |
+| endDate                     | LocalDate                 |                |                 |               | End Date: End date of the award. |
+| closeDate                   | LocalDate                 |                |                 |               | Close Date: Date past the end date of the award. Transactions for the award can be entered up to this date. |
+| awardOwningOrganizationName | NonEmptyTrimmedString240! |                |                 |               | Award Owning Organization: An organization that owns awards within an enterprise. An organizing unit in the internal or external structure of your enterprise. Organization structures provide the framework for performing legal reporting, financial control, and management reporting for the award. |
+| awardPurpose                | NonEmptyTrimmedString80   |                |                 |               | Purpose: Name of the award purpose. |
+| awardType                   | NonEmptyTrimmedString30   |                |        Y        |               | Type: Classification of an award, for example, Federal grants or Private grants. |
+| businessUnitName            | NonEmptyTrimmedString100! |                |                 |               | Business Unit: Unit of an enterprise that performs one or many business functions that can be rolled up in a management hierarchy. An award business unit is one within which the award is created. |
+| lastUpdateDateTime          | DateTime!                 |                |        Y        |               | The date when the award was last updated. |
+| lastUpdatedBy               | ErpUserId                 |                |                 |               | The user that last updated the award. |
+| awardFundingSource          | [PpmFundingSource!]       |                |                 |               | Award Funding Sources: The Award Funding Sources resource is used to view the attributes used to create or update a funding source for the award. |
+| defaultFundingSourceNumber  | PpmFundingSourceNumber    |                |                 |               |  |
+| awardCfda                   | [PpmCfdaAward!]           |                |                 |               |  |
+| flowThruAmount              | NonNegativeFloat          |                |                 |               |  |
+| flowThruFromDate            | LocalDate                 |                |                 |               |  |
+| flowThruToDate              | LocalDate                 |                |                 |               |  |
+| flowThruPrimarySponsorId    | NonEmptyTrimmedString30   |                |                 |               |  |
+| flowThruRefAwardName        | NonEmptyTrimmedString100  |                |                 |               |  |
+| flowThruIsFederal           | Boolean                   |                |                 |               |  |
+| eligibleForUse              | Boolean!                  |                |                 |               | Returns whether this PpmAward is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmAward must:<br/>- Have closeDate after the given accountingDate |
+
+* `eligibleForUse` : `Boolean!`
+  * Returns whether this PpmAward is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmAward must:<br/>- Have closeDate after the given accountingDate
+  * Arguments:
+    * `accountingDate` : `LocalDate`
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+##### `ppmAward`
+
+> Get a single PpmAward by id.  Returns undefined if does not exist
+
+* **Parameters**
+  * `id : String!`
+* **Returns**
+  * `PpmAward`
+
+##### `ppmAwardByName`
+
+> Gets PpmAwards by exact name.  Returns empty list if none are found
+
+* **Parameters**
   * `name : String!`
 * **Returns**
-  * `PpmTerms`
+  * `[PpmAward!]!`
 
-##### `ppmTermsCategories`
+##### `ppmAwardByNumber`
 
-> Gets PpmTermss by distinct category code.  Returns empty list if none are found
+> Gets PpmAwards by number.  Returns empty if not found
 
 * **Parameters**
+  * `number : String!`
 * **Returns**
-  * `[PpmTerms!]!`
+  * `PpmAward`
 
-##### `ppmTermsSearch`
+##### `ppmAwardByProjectAndAwardNumber`
 
-> Search for PpmTerms objects by multiple properties.
+> Gets PpmAwards by projectNumber and awardNumber.  Returns null if not found
+
+* **Parameters**
+  * `projectNumber : String!`
+  * `awardNumber : String!`
+* **Returns**
+  * `PpmAward`
+
+##### `ppmAwardSearch`
+
+> Search for PpmAward objects by multiple properties.
 > See
-> See the PpmTermsFilterInput type for options.
+> See the PpmAwardFilterInput type for options.
 
 * **Parameters**
-  * `filter : PpmTermsFilterInput!`
+  * `filter : PpmAwardFilterInput!`
 * **Returns**
-  * `PpmTermsSearchResults!`
+  * `PpmAwardSearchResults!`
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
+### Data Object: PpmFundingSource
+
+The Funding Source identifies the name of the sponsor for the external funding source.
+
+**Roll-up relationship to the new Chart of Accounts in the General Ledger:**
+
+* Funding Source values will only be used in the PPM module.
+* The Funding Source will map to the correct value for the Fund segment in the CoA
+  * (i.e In the examples below, NIH and USAID would map to the Federal Fund value in the Chart of Accounts)
+
+**Examples:**
+
+* National Institute of Health (NIH)
+* U.S. Agency for International Development (USAID)
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `PPM_FUNDING_SOURCE`
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+    * View Object:FscmTopModelAM.GmsAwardAM.AwardFundingSourcePVO
+  * Underlying Database Objects:
+    * GMS_FUNDING_SOURCES_B
+    * GMS_FUNDING_SOURCES_TL
+
+##### Properties
+
+| Property Name         | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| --------------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| id                    | Long!                     |                |                 |               | Funding Source ID: The unique identifier of the funding source. |
+| name                  | NonEmptyTrimmedString360! |                |        Y        |               | Funding Source Name: The source name of the funding source. |
+| fundingSourceNumber   | NonEmptyTrimmedString50!  |                |        Y        |               | Funding Source Number: The number of the funding source. |
+| description           | NonEmptyTrimmedString240  |                |                 |               | Funding Source Description: The description of the funding source. |
+| fundingSourceFromDate | LocalDate                 |                |        Y        |               | Funding Source From Date: The date from which the funding source is active. |
+| fundingSourceToDate   | LocalDate                 |                |        Y        |               | Funding Source To Date: The date till which the funding source is active. |
+| fundingSourceType     | NonEmptyTrimmedString50   |                |                 |               | The funding source type name. |
+| lastUpdateDateTime    | DateTime!                 |                |        Y        |               | The date when the funding source was last updated. |
+| lastUpdatedBy         | ErpUserId                 |                |                 |               | The user that last updated the funding source. |
+| awardId               | Long!                     |                |        Y        |               | The award id linked to the funding Source |
+| eligibleForUse        | Boolean!                  |                |                 |               | Returns whether this PpmFundingSource is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmFundingSource must:<br/>- Have a fundingSourceFromDate and fundingSourceToDate range which includes the given accountingDate |
+
+* `eligibleForUse` : `Boolean!`
+  * Returns whether this PpmFundingSource is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmFundingSource must:<br/>- Have a fundingSourceFromDate and fundingSourceToDate range which includes the given accountingDate
+  * Arguments:
+    * `accountingDate` : `LocalDate`
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+##### `ppmFundingSource`
+
+> Get a single PpmFundingSource by id.  Returns undefined if does not exist
+
+* **Parameters**
+  * `id : String!`
+* **Returns**
+  * `PpmFundingSource`
+
+##### `ppmFundingSourceByNumber`
+
+> Get a single PpmFundingSource by number.  Returns undefined if does not exist
+
+* **Parameters**
+  * `fundingSourceNumber : String!`
+* **Returns**
+  * `PpmFundingSource`
+
+##### `ppmFundingSourceByProjectAndFundingSourceNumber`
+
+> Get a single PpmFundingSource by project number and funding source number.  Returns null if does not exist
+
+* **Parameters**
+  * `projectNumber : String!`
+  * `fundingSourceNumber : String!`
+* **Returns**
+  * `PpmFundingSource`
+
+##### `ppmFundingSourceByName`
+
+> Gets PpmFundingSources by exact name.  Returns empty list if none are found
+
+* **Parameters**
+  * `name : String!`
+* **Returns**
+  * `[PpmFundingSource!]!`
+
+##### `ppmFundingSourceSearch`
+
+> Search for PpmFundingSource objects by multiple properties.
+> See
+> See the PpmFundingSourceFilterInput type for options.
+
+* **Parameters**
+  * `filter : PpmFundingSourceFilterInput!`
+* **Returns**
+  * `PpmFundingSourceSearchResults!`
 
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.

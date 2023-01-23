@@ -1,304 +1,6 @@
 # 3.2.1.1 GL Segments
 
 <!--BREAK-->
-### Data Object: ErpAccount
-
-For clarity between the CoA Account segment and the current KFS Account, we will refer to the CoA segment as "Natural Account", a commonly used accounting term.
-
-The (Natural) Account segment categorizes the nature of the transaction being recorded. The transaction is either revenue-producing, an expenditure, an asset that is owned, or a liability that is owed. Additionally, Account maintains Net Position for Entities and Funds.
-
-(Natural) Account values will generally be shared across Financial Departments to provide consistency in operational and management reporting for UC Davis.
-
-**FAU Value Comparison:**
-
-The (Natural) Account segment most closely aligns with the KFS Object Code.
-
-#### Access Controls
-
-* Required Role: `erp:reader-refdata`
-
-#### Data Source
-
-* Local Table/View: `ERP_ACCOUNT` (view)
-  * Support Tables:
-    * `VALUE_SET_TYPED_VALUES_PVO`
-    * `VALUE_SET_TYPED_VALUES_TL_PVO`
-    * `VALUE_SET_VALUES_PVO`
-* Data Origin:
-  * System: Oracle BICC
-  * Extract Objects:
-    * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetTypedValuesPVO
-    * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetTypedValuesTLPVO
-    * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetValuesPVO
-    * View Object: FscmTopModelAM.FinExtractAM.GlBiccExtractAM.SegmentValueHierarchyExtractPVO
-    * View Object: FscmTopModelAM.AnalyticsServiceAM.FndTreeAndVersionVO
-  * Underlying Database Objects:
-    * FND_VS_VALUES_B
-    * GL_SEG_VAL_HIER_CF
-    * FND_VS_VALUE_SETS
-    * FND_VS_VALUES_TL
-    * FND_TREE_AND_VERSION_VO
-
-##### Properties
-
-| Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| code               | ErpAccountCode!           |       Y        |        Y        |               | Unique identifier of an ErpAccount |
-| id                 | Long!                     |                |                 |               | Internal numeric identifier of an ErpAccount |
-| name               | NonEmptyTrimmedString240! |                |        Y        |               | Descriptive name of an ErpAccount |
-| enabled            | Boolean!                  |                |        Y        |               | Whether this ErpAccount is presently enabled for use. |
-| startDate          | LocalDate                 |                |                 |               | The date from when the value is available for use. |
-| endDate            | LocalDate                 |                |                 |               | The date till which the value is available for use. |
-| summaryOnly        | Boolean!                  |                |        Y        |               | Indicates that the ErpAccount is only used for summarization and may not be used on GL Entries |
-| securityEnabled    | Boolean!                  |                |                 |               | Indicates that data linked to this ErpAccount is protected by row-level security. |
-| sortOrder          | PositiveInt               |                |                 |               | The number that indicates the order in which the values appear in the list of values. |
-| lastUpdateDateTime | DateTime!                 |                |        Y        |               | Timestamp this record was last updated in the financial system. |
-| lastUpdateUserId   | ErpUserId                 |                |                 |               | User ID of the person who last updated this record. |
-| parentCode         | ErpAccountCode            |                |                 |               | Code of the ErpAccount which is the immediate parent of this one.<br/>Will be undefined if the ErpAccount has no parent. |
-| parent             | ErpAccount                |                |                 |               | The ErpAccount which is the immediate parent of this one.<br/>Will be undefined if the ErpAccount has no parent. |
-| children           | [ErpAccount!]             |                |                 |               | The ErpAccounts which are the immediate children of this one.<br/>Will be an empty list if the ErpAccount has no children. |
-| hierarchyDepth     | Int                       |                |        Y        |               | Level below the top for a ErpAccount that is part of a reporting hierarchy. |
-| hierarchyLevel     | String                    |                |        Y        |               | Reporting Level designation based on the hierarchy depth. |
-| eligibleForUse     | Boolean!                  |                |                 |               | Returns whether this ErpAccount is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the ErpAccount must:<br/>- Be enabled<br/>- Not be summaryOnly<br/>- Have a startDate and endDate range which includes the given accountingDate |
-| purposeRequired    | Boolean!                  |                |                 |               | Whether GL segment strings using this account code require a purpose code.  All expenses require an assigned purpose code.  Purpose is optional on other types of transactions.<br/><br/>Expense accounts are defined as those which descend from account 50000B. |
-
-* `parent` : `ErpAccount`
-  * The ErpAccount which is the immediate parent of this one.<br/>Will be undefined if the ErpAccount has no parent.
-* `eligibleForUse` : `Boolean!`
-  * Returns whether this ErpAccount is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the ErpAccount must:<br/>- Be enabled<br/>- Not be summaryOnly<br/>- Have a startDate and endDate range which includes the given accountingDate
-  * Arguments:
-    * `accountingDate` : `LocalDate`
-
-##### Linked Data Objects
-
-(None)
-
-#### Query Operations
-
-##### `erpAccount`
-
-> Get a single ErpAccount by code.  Returns undefined if does not exist
-
-* **Parameters**
-  * `code : String!`
-* **Returns**
-  * `ErpAccount`
-
-##### `erpAccountAll`
-
-> Get all currently valid ErpAccount objects.
-
-* **Parameters**
-  * `sort : [String!]`
-* **Returns**
-  * `[ErpAccount!]!`
-
-##### `erpAccountChildren`
-
-> Get items under the given ErpAccount in the hierarchy.
-> Returns undefined if the parent does not exist.
-> Returns an empty list if the given record has no children.
-
-* **Parameters**
-  * `code : String!`
-* **Returns**
-  * `[ErpAccount!]`
-
-##### `erpAccountSearch`
-
-> Search for ErpAccount objects by multiple properties.
-> See the ErpAccountFilterInput type for options.
-
-* **Parameters**
-  * `filter : ErpAccountFilterInput!`
-* **Returns**
-  * `ErpAccountSearchResults!`
-
-[^1]: Searchable attributes are available as part of the general search filter input.
-[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
-
-
-<!--BREAK-->
-### Data Object: ErpActivity
-
-The Activity segment will track significant transactions which are recurring and take place at a point in time.
-
-**Expanded Definition and Criteria:**
-
-The Activity segment will track activities or events which support:
-
-- Financial Departments
-- and/or Programs
-- and/or GL-Only Projects.
-
-Activities need to be tracked and reported on because of their financial significance.
-Activity values will generally be shared across Financial Departments to provide consistency in operational and management reporting for UC Davis.
-Activity values are assigned by UC Davis.
-
-**Examples:**
-
-- Commencement
-- Student Orientation & Welcome Events
-- Fund Raising Campaigns
-- Symposiums/ Colloquiums
-- Student Advising
-- Professional Development/Awards
-- Student Competitions
-- Marketing & Media Campaigns
-- Recruitment & Relocation
-- Student Organizations & Sports Clubs
-- Campus-wide Activities (e.g. Picnic Day)
-
-**FAU Value Comparison:**
-
-Due to significant variations in how departments track activities in KFS, it is not possible to align the Activity segment with a KFS value.
-
-#### Access Controls
-
-* Required Role: `erp:reader-refdata`
-
-#### Data Source
-
-* Local Table/View: `ERP_ACTIVITY` (view)
-  * Support Tables:
-    * `VALUE_SET_TYPED_VALUES_PVO`
-    * `VALUE_SET_TYPED_VALUES_TL_PVO`
-    * `VALUE_SET_VALUES_PVO`
-* Data Origin:
-  * System: Oracle BICC
-  * Extract Objects:
-    * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetTypedValuesPVO
-    * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetTypedValuesTLPVO
-    * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetValuesPVO
-    * View Object: FscmTopModelAM.FinExtractAM.GlBiccExtractAM.SegmentValueHierarchyExtractPVO
-    * View Object: FscmTopModelAM.AnalyticsServiceAM.FndTreeAndVersionVO
-  * Underlying Database Objects:
-    * FND_VS_VALUES_B
-    * GL_SEG_VAL_HIER_CF
-    * FND_VS_VALUE_SETS
-    * FND_VS_VALUES_TL
-    * FND_TREE_AND_VERSION_VO
-
-##### Properties
-
-| Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| code               | ErpActivityCode!          |       Y        |        Y        |               | Unique identifier of an ErpActivity |
-| id                 | Long!                     |                |                 |               | Internal numeric identifier of an ErpActivity |
-| name               | NonEmptyTrimmedString240! |                |        Y        |               | Descriptive name of an ErpActivity |
-| enabled            | Boolean!                  |                |        Y        |               | Whether this ErpActivity is presently enabled for use. |
-| startDate          | LocalDate                 |                |                 |               | The date from when the value is available for use. |
-| endDate            | LocalDate                 |                |                 |               | The date till which the value is available for use. |
-| summaryOnly        | Boolean!                  |                |        Y        |               | Indicates that the ErpActivity is only used for summarization and may not be used on GL Entries |
-| securityEnabled    | Boolean!                  |                |                 |               | Indicates that data linked to this ErpActivity is protected by row-level security. |
-| sortOrder          | PositiveInt               |                |                 |               | The number that indicates the order in which the values appear in the list of values. |
-| lastUpdateDateTime | DateTime!                 |                |        Y        |               | Timestamp this record was last updated in the financial system. |
-| lastUpdateUserId   | ErpUserId                 |                |                 |               | User ID of the person who last updated this record. |
-| parentCode         | ErpActivityCode           |                |                 |               | Code of the ErpActivity which is the immediate parent of this one.<br/>Will be undefined if the ErpActivity has no parent. |
-| parent             | ErpActivity               |                |                 |               | The ErpActivity which is the immediate parent of this one.<br/>Will be undefined if the ErpActivity has no parent. |
-| children           | [ErpActivity!]            |                |                 |               | The ErpActivitys which are the immediate children of this one.<br/>Will be an empty list if the ErpActivity has no children. |
-| hierarchyDepth     | Int                       |                |        Y        |               | Level below the top for a ErpActivity that is part of a reporting hierarchy. |
-| hierarchyLevel     | String                    |                |        Y        |               | Reporting Level designation based on the hierarchy depth. |
-| eligibleForUse     | Boolean!                  |                |                 |               | Returns whether this ErpActivity is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the ErpActivity must:<br/>- Be enabled<br/>- Not be summaryOnly<br/>- Have a startDate and endDate range which includes the given accountingDate |
-
-* `parent` : `ErpActivity`
-  * The ErpActivity which is the immediate parent of this one.<br/>Will be undefined if the ErpActivity has no parent.
-* `eligibleForUse` : `Boolean!`
-  * Returns whether this ErpActivity is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the ErpActivity must:<br/>- Be enabled<br/>- Not be summaryOnly<br/>- Have a startDate and endDate range which includes the given accountingDate
-  * Arguments:
-    * `accountingDate` : `LocalDate`
-
-##### Linked Data Objects
-
-(None)
-
-#### Query Operations
-
-##### `erpActivity`
-
-> Get a single ErpActivity by code.  Returns undefined if does not exist
-
-* **Parameters**
-  * `code : String!`
-* **Returns**
-  * `ErpActivity`
-
-##### `erpActivityChildren`
-
-> Get items under the given ErpActivity in the hierarchy.
-> Returns undefined if the parent does not exist.
-> Returns an empty list if the given record has no children.
-
-* **Parameters**
-  * `code : String!`
-* **Returns**
-  * `[ErpActivity!]`
-
-##### `erpActivitySearch`
-
-> Search for ErpActivity objects by multiple properties.
-> See the ErpActivityFilterInput type for options.
-
-* **Parameters**
-  * `filter : ErpActivityFilterInput!`
-* **Returns**
-  * `ErpActivitySearchResults!`
-
-[^1]: Searchable attributes are available as part of the general search filter input.
-[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
-
-
-<!--BREAK-->
-### Data Object: ErpDepartmentalApprover
-
-Represents an approver from the Oracle Role-Based Security module.  Values here have been extracted
-from advanced security table and formatted for API use.
-
-#### Access Controls
-
-* Required Role: `erp:reader-refdata`
-
-#### Data Source
-
-* Local Table/View: `ERP_FIN_DEPT_APPROVER` (view)
-  * Support Tables:
-    * `ERP_DEPT_APPROVER_SETUP`
-    * `ERP_FIN_DEPT`
-    * `ASE_USER_ROLE_MEMBER`
-    * `PER_USER`
-    * `PER_ALL_PEOPLE_F`
-* Data Origin:
-  * System: Oracle BIPublisher
-  * Extract Objects:
-    * /Custom/Interfaces/Data Extracts/OracleRoles.xdo
-  * Underlying Database Objects:
-    * ASE_USER_ROLE_MBR
-    * ASE_USER_VL
-    * ASE_ROLE_VL
-
-##### Properties
-
-| Property Name | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| ------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| approverType  | NonEmptyTrimmedString50!  |                |                 |               | Type of the approver as defined by the functional users.  This name defines its usage in Oracle. |
-| userId        | ErpUserId!                |                |                 |               | Oracle User ID of the person.  This should be the same as the UCD Computing account ID for campus employees. |
-| name          | NonEmptyTrimmedString360! |                |                 |               |  |
-| firstName     | NonEmptyTrimmedString150  |                |                 |               |  |
-| lastName      | NonEmptyTrimmedString150  |                |                 |               |  |
-| employeeId    | UcEmployeeId              |                |                 |               |  |
-| emailAddress  | NonEmptyTrimmedString240  |                |                 |               |  |
-
-##### Linked Data Objects
-
-(None)
-
-#### Query Operations
-
-[^1]: Searchable attributes are available as part of the general search filter input.
-[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
-
-
-<!--BREAK-->
 ### Data Object: ErpEntity
 
 The Entity segment identifies the major UC system organizational units. These units generally require their own complete, separately audited financial statements to comply with external, regulatory reporting requirements (e.g., external audits, tax reporting), which cannot achieve compliance by using the audited financial statements issued by the Office of the President. Entity, however, will also provide high level management and operational reports.
@@ -410,6 +112,135 @@ The Entity segment most closely aligns with the KFS Chart (e.g. 3, H, L, P).
   * `filter : ErpEntityFilterInput!`
 * **Returns**
   * `ErpEntitySearchResults!`
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
+### Data Object: ErpFund
+
+Funds provide a method of tracking funding resources whose use is limited by donors, granting agencies, regulations and other external individuals or entities, or by governing boards. A Fund is maintained for each specific funding type (e.g., Unrestricted, Restricted-Expendable, Capital) which supports the compilation of GASB audited financial statements.
+
+The balancing segment designation in Oracle Financials Cloud allows for net position (e.g., fund balance) to be calculated at the Fund level.
+
+In most cases, Fund activity will be presented in the general ledger in summary and the Fund values will be shared amongst Financial Departments. For example, all Financial Departments will share one Restricted Expendable Federal Contracts fund. The detailed transactional information related to each federally sponsored project within this fund will be tracked using the PPM module.
+
+**FAU Value Comparison:**
+The Fund segment most closely aligns with the fund attribute of the KFS Account.
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `ERP_FUND` (view)
+  * Support Tables:
+    * `VALUE_SET_TYPED_VALUES_PVO`
+    * `VALUE_SET_TYPED_VALUES_TL_PVO`
+    * `VALUE_SET_VALUES_PVO`
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+    * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetTypedValuesPVO
+    * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetTypedValuesTLPVO
+    * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetValuesPVO
+    * View Object: FscmTopModelAM.FinExtractAM.GlBiccExtractAM.SegmentValueHierarchyExtractPVO
+    * View Object: FscmTopModelAM.AnalyticsServiceAM.FndTreeAndVersionVO
+  * Underlying Database Objects:
+    * FND_VS_VALUES_B
+    * GL_SEG_VAL_HIER_CF
+    * FND_VS_VALUE_SETS
+    * FND_VS_VALUES_TL
+    * FND_TREE_AND_VERSION_VO
+
+##### Properties
+
+| Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| code               | ErpFundCode!              |       Y        |        Y        |               | Unique identifier of an ErpFund |
+| id                 | Long!                     |                |                 |               | Internal numeric identifier of an ErpFund |
+| name               | NonEmptyTrimmedString240! |                |        Y        |               | Descriptive name of an ErpFund |
+| enabled            | Boolean!                  |                |        Y        |               | Whether this ErpFund is presently enabled for use. |
+| startDate          | LocalDate                 |                |                 |               | The date from when the value is available for use. |
+| endDate            | LocalDate                 |                |                 |               | The date till which the value is available for use. |
+| summaryOnly        | Boolean!                  |                |        Y        |               | Indicates that the ErpFund is only used for summarization and may not be used on GL Entries |
+| securityEnabled    | Boolean!                  |                |                 |               | Indicates that data linked to this ErpFund is protected by row-level security. |
+| sortOrder          | PositiveInt               |                |                 |               | The number that indicates the order in which the values appear in the list of values. |
+| lastUpdateDateTime | DateTime!                 |                |        Y        |               | Timestamp this record was last updated in the financial system. |
+| lastUpdateUserId   | ErpUserId                 |                |                 |               | User ID of the person who last updated this record. |
+| parentCode         | ErpFundCode               |                |                 |               | Code of the ErpFund which is the immediate parent of this one.<br/>Will be undefined if the ErpFund has no parent. |
+| parent             | ErpFund                   |                |                 |               | The ErpFund which is the immediate parent of this one.<br/>Will be undefined if the ErpFund has no parent. |
+| children           | [ErpFund!]!               |                |                 |               | The ErpFunds which are the immediate children of this one.<br/>Will be an empty list if the ErpFund has no children. |
+| hierarchyDepth     | Int                       |                |        Y        |               | Level below the top for a ErpFund that is part of a reporting hierarchy. |
+| hierarchyLevel     | String                    |                |        Y        |               | Reporting Level designation based on the hierachy depth. |
+| budgeted           | Boolean                   |                |        Y        |               | Whether this fund is used for budgeting purposes. |
+| eligibleForUse     | Boolean!                  |                |                 |               | Returns whether this ErpFund is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the ErpFund must:<br/>- Be enabled<br/>- Not be summaryOnly<br/>- Have a startDate and endDate range which includes the given accountingDate |
+
+* `parent` : `ErpFund`
+  * The ErpFund which is the immediate parent of this one.<br/>Will be undefined if the ErpFund has no parent.
+* `eligibleForUse` : `Boolean!`
+  * Returns whether this ErpFund is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the ErpFund must:<br/>- Be enabled<br/>- Not be summaryOnly<br/>- Have a startDate and endDate range which includes the given accountingDate
+  * Arguments:
+    * `accountingDate` : `LocalDate`
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+##### `erpFund`
+
+> Get a single ErpFund by code.  Returns undefined if does not exist
+
+* **Parameters**
+  * `code : String!`
+* **Returns**
+  * `ErpFund`
+
+##### `erpFundChildren`
+
+> Get items under the given ErpFund in the hierarchy.
+> Returns undefined if the parent does not exist.
+> Returns an empty list if the given record has no children.
+
+* **Parameters**
+  * `code : String!`
+* **Returns**
+  * `[ErpFund!]`
+
+##### `erpFundSearch`
+
+> Search for ErpFund objects by multiple properties.
+> See
+> See the ErpFundFilterInput type for options.
+
+* **Parameters**
+  * `filter : ErpFundFilterInput!`
+* **Returns**
+  * `ErpFundSearchResults!`
+
+##### `erpFundSource`
+
+> Get a single ErpFundSource by id.  Returns undefined if does not exist
+
+* **Parameters**
+  * `code : String!`
+* **Returns**
+  * `ErpFundSource`
+
+##### `erpFundSourceSearch`
+
+> Search for ErpFundSource objects by multiple properties.
+> 
+> See the ErpFundSourceFilterInput type for options.
+
+* **Parameters**
+  * `filter : ErpFundSourceFilterInput!`
+* **Returns**
+  * `ErpFundSourceSearchResults!`
 
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
@@ -544,16 +375,17 @@ Due to significant variations in departments' financial structure in KFS, it is 
 
 
 <!--BREAK-->
-### Data Object: ErpFund
+### Data Object: ErpAccount
 
-Funds provide a method of tracking funding resources whose use is limited by donors, granting agencies, regulations and other external individuals or entities, or by governing boards. A Fund is maintained for each specific funding type (e.g., Unrestricted, Restricted-Expendable, Capital) which supports the compilation of GASB audited financial statements.
+For clarity between the CoA Account segment and the current KFS Account, we will refer to the CoA segment as "Natural Account", a commonly used accounting term.
 
-The balancing segment designation in Oracle Financials Cloud allows for net position (e.g., fund balance) to be calculated at the Fund level.
+The (Natural) Account segment categorizes the nature of the transaction being recorded. The transaction is either revenue-producing, an expenditure, an asset that is owned, or a liability that is owed. Additionally, Account maintains Net Position for Entities and Funds.
 
-In most cases, Fund activity will be presented in the general ledger in summary and the Fund values will be shared amongst Financial Departments. For example, all Financial Departments will share one Restricted Expendable Federal Contracts fund. The detailed transactional information related to each federally sponsored project within this fund will be tracked using the PPM module.
+(Natural) Account values will generally be shared across Financial Departments to provide consistency in operational and management reporting for UC Davis.
 
 **FAU Value Comparison:**
-The Fund segment most closely aligns with the fund attribute of the KFS Account.
+
+The (Natural) Account segment most closely aligns with the KFS Object Code.
 
 #### Access Controls
 
@@ -561,7 +393,7 @@ The Fund segment most closely aligns with the fund attribute of the KFS Account.
 
 #### Data Source
 
-* Local Table/View: `ERP_FUND` (view)
+* Local Table/View: `ERP_ACCOUNT` (view)
   * Support Tables:
     * `VALUE_SET_TYPED_VALUES_PVO`
     * `VALUE_SET_TYPED_VALUES_TL_PVO`
@@ -585,29 +417,29 @@ The Fund segment most closely aligns with the fund attribute of the KFS Account.
 
 | Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
 | ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| code               | ErpFundCode!              |       Y        |        Y        |               | Unique identifier of an ErpFund |
-| id                 | Long!                     |                |                 |               | Internal numeric identifier of an ErpFund |
-| name               | NonEmptyTrimmedString240! |                |        Y        |               | Descriptive name of an ErpFund |
-| enabled            | Boolean!                  |                |        Y        |               | Whether this ErpFund is presently enabled for use. |
+| code               | ErpAccountCode!           |       Y        |        Y        |               | Unique identifier of an ErpAccount |
+| id                 | Long!                     |                |                 |               | Internal numeric identifier of an ErpAccount |
+| name               | NonEmptyTrimmedString240! |                |        Y        |               | Descriptive name of an ErpAccount |
+| enabled            | Boolean!                  |                |        Y        |               | Whether this ErpAccount is presently enabled for use. |
 | startDate          | LocalDate                 |                |                 |               | The date from when the value is available for use. |
 | endDate            | LocalDate                 |                |                 |               | The date till which the value is available for use. |
-| summaryOnly        | Boolean!                  |                |        Y        |               | Indicates that the ErpFund is only used for summarization and may not be used on GL Entries |
-| securityEnabled    | Boolean!                  |                |                 |               | Indicates that data linked to this ErpFund is protected by row-level security. |
+| summaryOnly        | Boolean!                  |                |        Y        |               | Indicates that the ErpAccount is only used for summarization and may not be used on GL Entries |
+| securityEnabled    | Boolean!                  |                |                 |               | Indicates that data linked to this ErpAccount is protected by row-level security. |
 | sortOrder          | PositiveInt               |                |                 |               | The number that indicates the order in which the values appear in the list of values. |
 | lastUpdateDateTime | DateTime!                 |                |        Y        |               | Timestamp this record was last updated in the financial system. |
 | lastUpdateUserId   | ErpUserId                 |                |                 |               | User ID of the person who last updated this record. |
-| parentCode         | ErpFundCode               |                |                 |               | Code of the ErpFund which is the immediate parent of this one.<br/>Will be undefined if the ErpFund has no parent. |
-| parent             | ErpFund                   |                |                 |               | The ErpFund which is the immediate parent of this one.<br/>Will be undefined if the ErpFund has no parent. |
-| children           | [ErpFund!]!               |                |                 |               | The ErpFunds which are the immediate children of this one.<br/>Will be an empty list if the ErpFund has no children. |
-| hierarchyDepth     | Int                       |                |        Y        |               | Level below the top for a ErpFund that is part of a reporting hierarchy. |
-| hierarchyLevel     | String                    |                |        Y        |               | Reporting Level designation based on the hierachy depth. |
-| budgeted           | Boolean                   |                |        Y        |               | Whether this fund is used for budgeting purposes. |
-| eligibleForUse     | Boolean!                  |                |                 |               | Returns whether this ErpFund is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the ErpFund must:<br/>- Be enabled<br/>- Not be summaryOnly<br/>- Have a startDate and endDate range which includes the given accountingDate |
+| parentCode         | ErpAccountCode            |                |                 |               | Code of the ErpAccount which is the immediate parent of this one.<br/>Will be undefined if the ErpAccount has no parent. |
+| parent             | ErpAccount                |                |                 |               | The ErpAccount which is the immediate parent of this one.<br/>Will be undefined if the ErpAccount has no parent. |
+| children           | [ErpAccount!]             |                |                 |               | The ErpAccounts which are the immediate children of this one.<br/>Will be an empty list if the ErpAccount has no children. |
+| hierarchyDepth     | Int                       |                |        Y        |               | Level below the top for a ErpAccount that is part of a reporting hierarchy. |
+| hierarchyLevel     | String                    |                |        Y        |               | Reporting Level designation based on the hierarchy depth. |
+| eligibleForUse     | Boolean!                  |                |                 |               | Returns whether this ErpAccount is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the ErpAccount must:<br/>- Be enabled<br/>- Not be summaryOnly<br/>- Have a startDate and endDate range which includes the given accountingDate |
+| purposeRequired    | Boolean!                  |                |                 |               | Whether GL segment strings using this account code require a purpose code.  All expenses require an assigned purpose code.  Purpose is optional on other types of transactions.<br/><br/>Expense accounts are defined as those which descend from account 50000B. |
 
-* `parent` : `ErpFund`
-  * The ErpFund which is the immediate parent of this one.<br/>Will be undefined if the ErpFund has no parent.
+* `parent` : `ErpAccount`
+  * The ErpAccount which is the immediate parent of this one.<br/>Will be undefined if the ErpAccount has no parent.
 * `eligibleForUse` : `Boolean!`
-  * Returns whether this ErpFund is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the ErpFund must:<br/>- Be enabled<br/>- Not be summaryOnly<br/>- Have a startDate and endDate range which includes the given accountingDate
+  * Returns whether this ErpAccount is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the ErpAccount must:<br/>- Be enabled<br/>- Not be summaryOnly<br/>- Have a startDate and endDate range which includes the given accountingDate
   * Arguments:
     * `accountingDate` : `LocalDate`
 
@@ -617,56 +449,160 @@ The Fund segment most closely aligns with the fund attribute of the KFS Account.
 
 #### Query Operations
 
-##### `erpFund`
+##### `erpAccount`
 
-> Get a single ErpFund by code.  Returns undefined if does not exist
+> Get a single ErpAccount by code.  Returns undefined if does not exist
 
 * **Parameters**
   * `code : String!`
 * **Returns**
-  * `ErpFund`
+  * `ErpAccount`
 
-##### `erpFundChildren`
+##### `erpAccountAll`
 
-> Get items under the given ErpFund in the hierarchy.
+> Get all currently valid ErpAccount objects.
+
+* **Parameters**
+  * `sort : [String!]`
+* **Returns**
+  * `[ErpAccount!]!`
+
+##### `erpAccountChildren`
+
+> Get items under the given ErpAccount in the hierarchy.
 > Returns undefined if the parent does not exist.
 > Returns an empty list if the given record has no children.
 
 * **Parameters**
   * `code : String!`
 * **Returns**
-  * `[ErpFund!]`
+  * `[ErpAccount!]`
 
-##### `erpFundSearch`
+##### `erpAccountSearch`
 
-> Search for ErpFund objects by multiple properties.
-> See
-> See the ErpFundFilterInput type for options.
+> Search for ErpAccount objects by multiple properties.
+> See the ErpAccountFilterInput type for options.
 
 * **Parameters**
-  * `filter : ErpFundFilterInput!`
+  * `filter : ErpAccountFilterInput!`
 * **Returns**
-  * `ErpFundSearchResults!`
+  * `ErpAccountSearchResults!`
 
-##### `erpFundSource`
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
 
-> Get a single ErpFundSource by id.  Returns undefined if does not exist
+
+<!--BREAK-->
+### Data Object: ErpPurpose
+
+The Purpose segment tracks the purpose of the transaction, such as NACUBO-defined functional expense classification and mission.
+
+NACUBO classification data is utilized for far-reaching external reporting (e.g., institution ranking). This field is also essential for compliance with federal cost principles and financial statement reporting requiring expenditures be displayed by functional class.
+
+**FAU Value Comparison:**
+
+The Purpose segment most closely aligns with the HEFC (Higher Ed. Function Code) attribute of the KFS Account.
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `ERP_PURPOSE` (view)
+  * Support Tables:
+    * `VALUE_SET_TYPED_VALUES_PVO`
+    * `VALUE_SET_TYPED_VALUES_TL_PVO`
+    * `VALUE_SET_VALUES_PVO`
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+    * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetTypedValuesPVO
+    * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetTypedValuesTLPVO
+    * View Object: FscmTopModelAM.AnalyticsServiceAM.ValueSetValuesPVO
+    * View Object: FscmTopModelAM.FinExtractAM.GlBiccExtractAM.SegmentValueHierarchyExtractPVO
+    * View Object: FscmTopModelAM.AnalyticsServiceAM.FndTreeAndVersionVO
+  * Underlying Database Objects:
+    * FND_VS_VALUES_B
+    * GL_SEG_VAL_HIER_CF
+    * FND_VS_VALUE_SETS
+    * FND_VS_VALUES_TL
+    * FND_TREE_AND_VERSION_VO
+
+##### Properties
+
+| Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| code               | ErpPurposeCode!           |       Y        |        Y        |               | Unique identifier of an ErpPurpose |
+| id                 | Long!                     |                |                 |               | Internal numeric identifier of an ErpPurpose |
+| name               | NonEmptyTrimmedString240! |                |        Y        |               | Descriptive name of an ErpPurpose |
+| enabled            | Boolean!                  |                |        Y        |               | Whether this ErpPurpose is presently enabled for use. |
+| startDate          | LocalDate                 |                |                 |               | The date from when the value is available for use. |
+| endDate            | LocalDate                 |                |                 |               | The date till which the value is available for use. |
+| summaryOnly        | Boolean!                  |                |        Y        |               | Indicates that the ErpPurpose is only used for summarization and may not be used on GL Entries |
+| securityEnabled    | Boolean!                  |                |                 |               | Indicates that data linked to this ErpPurpose is protected by row-level security. |
+| sortOrder          | PositiveInt               |                |                 |               | The number that indicates the order in which the values appear in the list of values. |
+| lastUpdateDateTime | DateTime!                 |                |        Y        |               | Timestamp this record was last updated in the financial system. |
+| lastUpdateUserId   | ErpUserId                 |                |                 |               | User ID of the person who last updated this record. |
+| parentCode         | ErpPurposeCode            |                |                 |               | Code of the ErpPurpose which is the immediate parent of this one.<br/>Will be undefined if the ErpPurpose has no parent. |
+| parent             | ErpPurpose                |                |                 |               | The ErpPurpose which is the immediate parent of this one.<br/>Will be undefined if the ErpPurpose has no parent. |
+| children           | [ErpPurpose!]             |                |                 |               | The ErpPurposes which are the immediate children of this one.<br/>Will be an empty list if the ErpPurpose has no children. |
+| hierarchyDepth     | Int                       |                |        Y        |               | Level below the top for a ErpPurpose that is part of a reporting hierarchy. |
+| hierarchyLevel     | String                    |                |        Y        |               | Reporting Level designation based on the hierachy depth. |
+| eligibleForUse     | Boolean!                  |                |                 |               | Returns whether this ErpPurpose is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the ErpPurpose must:<br/>- Be enabled<br/>- Not be summaryOnly<br/>- Have a startDate and endDate range which includes the given accountingDate |
+
+* `parent` : `ErpPurpose`
+  * The ErpPurpose which is the immediate parent of this one.<br/>Will be undefined if the ErpPurpose has no parent.
+* `eligibleForUse` : `Boolean!`
+  * Returns whether this ErpPurpose is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the ErpPurpose must:<br/>- Be enabled<br/>- Not be summaryOnly<br/>- Have a startDate and endDate range which includes the given accountingDate
+  * Arguments:
+    * `accountingDate` : `LocalDate`
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+##### `erpPurpose`
+
+> Get a single ErpPurpose by code.  Returns undefined if does not exist
 
 * **Parameters**
   * `code : String!`
 * **Returns**
-  * `ErpFundSource`
+  * `ErpPurpose`
 
-##### `erpFundSourceSearch`
+##### `erpPurposeAll`
 
-> Search for ErpFundSource objects by multiple properties.
-> 
-> See the ErpFundSourceFilterInput type for options.
+> Get all currently valid ErpPurpose objects.
 
 * **Parameters**
-  * `filter : ErpFundSourceFilterInput!`
+  * `sort : [String!]`
 * **Returns**
-  * `ErpFundSourceSearchResults!`
+  * `[ErpPurpose!]!`
+
+##### `erpPurposeChildren`
+
+> Get items under the given ErpPurpose in the hierarchy.
+> Returns undefined if the parent does not exist.
+> Returns an empty list if the given record has no children.
+
+* **Parameters**
+  * `code : String!`
+* **Returns**
+  * `[ErpPurpose!]`
+
+##### `erpPurposeSearch`
+
+> Search for ErpPurpose objects by multiple properties.
+> See
+> See the ErpPurposeFilterInput type for options.
+
+* **Parameters**
+  * `filter : ErpPurposeFilterInput!`
+* **Returns**
+  * `ErpPurposeSearchResults!`
 
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
@@ -933,15 +869,39 @@ Due to significant variations in how departments track projects in KFS, it is no
 
 
 <!--BREAK-->
-### Data Object: ErpPurpose
+### Data Object: ErpActivity
 
-The Purpose segment tracks the purpose of the transaction, such as NACUBO-defined functional expense classification and mission.
+The Activity segment will track significant transactions which are recurring and take place at a point in time.
 
-NACUBO classification data is utilized for far-reaching external reporting (e.g., institution ranking). This field is also essential for compliance with federal cost principles and financial statement reporting requiring expenditures be displayed by functional class.
+**Expanded Definition and Criteria:**
+
+The Activity segment will track activities or events which support:
+
+- Financial Departments
+- and/or Programs
+- and/or GL-Only Projects.
+
+Activities need to be tracked and reported on because of their financial significance.
+Activity values will generally be shared across Financial Departments to provide consistency in operational and management reporting for UC Davis.
+Activity values are assigned by UC Davis.
+
+**Examples:**
+
+- Commencement
+- Student Orientation & Welcome Events
+- Fund Raising Campaigns
+- Symposiums/ Colloquiums
+- Student Advising
+- Professional Development/Awards
+- Student Competitions
+- Marketing & Media Campaigns
+- Recruitment & Relocation
+- Student Organizations & Sports Clubs
+- Campus-wide Activities (e.g. Picnic Day)
 
 **FAU Value Comparison:**
 
-The Purpose segment most closely aligns with the HEFC (Higher Ed. Function Code) attribute of the KFS Account.
+Due to significant variations in how departments track activities in KFS, it is not possible to align the Activity segment with a KFS value.
 
 #### Access Controls
 
@@ -949,7 +909,7 @@ The Purpose segment most closely aligns with the HEFC (Higher Ed. Function Code)
 
 #### Data Source
 
-* Local Table/View: `ERP_PURPOSE` (view)
+* Local Table/View: `ERP_ACTIVITY` (view)
   * Support Tables:
     * `VALUE_SET_TYPED_VALUES_PVO`
     * `VALUE_SET_TYPED_VALUES_TL_PVO`
@@ -973,28 +933,28 @@ The Purpose segment most closely aligns with the HEFC (Higher Ed. Function Code)
 
 | Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
 | ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| code               | ErpPurposeCode!           |       Y        |        Y        |               | Unique identifier of an ErpPurpose |
-| id                 | Long!                     |                |                 |               | Internal numeric identifier of an ErpPurpose |
-| name               | NonEmptyTrimmedString240! |                |        Y        |               | Descriptive name of an ErpPurpose |
-| enabled            | Boolean!                  |                |        Y        |               | Whether this ErpPurpose is presently enabled for use. |
+| code               | ErpActivityCode!          |       Y        |        Y        |               | Unique identifier of an ErpActivity |
+| id                 | Long!                     |                |                 |               | Internal numeric identifier of an ErpActivity |
+| name               | NonEmptyTrimmedString240! |                |        Y        |               | Descriptive name of an ErpActivity |
+| enabled            | Boolean!                  |                |        Y        |               | Whether this ErpActivity is presently enabled for use. |
 | startDate          | LocalDate                 |                |                 |               | The date from when the value is available for use. |
 | endDate            | LocalDate                 |                |                 |               | The date till which the value is available for use. |
-| summaryOnly        | Boolean!                  |                |        Y        |               | Indicates that the ErpPurpose is only used for summarization and may not be used on GL Entries |
-| securityEnabled    | Boolean!                  |                |                 |               | Indicates that data linked to this ErpPurpose is protected by row-level security. |
+| summaryOnly        | Boolean!                  |                |        Y        |               | Indicates that the ErpActivity is only used for summarization and may not be used on GL Entries |
+| securityEnabled    | Boolean!                  |                |                 |               | Indicates that data linked to this ErpActivity is protected by row-level security. |
 | sortOrder          | PositiveInt               |                |                 |               | The number that indicates the order in which the values appear in the list of values. |
 | lastUpdateDateTime | DateTime!                 |                |        Y        |               | Timestamp this record was last updated in the financial system. |
 | lastUpdateUserId   | ErpUserId                 |                |                 |               | User ID of the person who last updated this record. |
-| parentCode         | ErpPurposeCode            |                |                 |               | Code of the ErpPurpose which is the immediate parent of this one.<br/>Will be undefined if the ErpPurpose has no parent. |
-| parent             | ErpPurpose                |                |                 |               | The ErpPurpose which is the immediate parent of this one.<br/>Will be undefined if the ErpPurpose has no parent. |
-| children           | [ErpPurpose!]             |                |                 |               | The ErpPurposes which are the immediate children of this one.<br/>Will be an empty list if the ErpPurpose has no children. |
-| hierarchyDepth     | Int                       |                |        Y        |               | Level below the top for a ErpPurpose that is part of a reporting hierarchy. |
-| hierarchyLevel     | String                    |                |        Y        |               | Reporting Level designation based on the hierachy depth. |
-| eligibleForUse     | Boolean!                  |                |                 |               | Returns whether this ErpPurpose is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the ErpPurpose must:<br/>- Be enabled<br/>- Not be summaryOnly<br/>- Have a startDate and endDate range which includes the given accountingDate |
+| parentCode         | ErpActivityCode           |                |                 |               | Code of the ErpActivity which is the immediate parent of this one.<br/>Will be undefined if the ErpActivity has no parent. |
+| parent             | ErpActivity               |                |                 |               | The ErpActivity which is the immediate parent of this one.<br/>Will be undefined if the ErpActivity has no parent. |
+| children           | [ErpActivity!]            |                |                 |               | The ErpActivitys which are the immediate children of this one.<br/>Will be an empty list if the ErpActivity has no children. |
+| hierarchyDepth     | Int                       |                |        Y        |               | Level below the top for a ErpActivity that is part of a reporting hierarchy. |
+| hierarchyLevel     | String                    |                |        Y        |               | Reporting Level designation based on the hierarchy depth. |
+| eligibleForUse     | Boolean!                  |                |                 |               | Returns whether this ErpActivity is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the ErpActivity must:<br/>- Be enabled<br/>- Not be summaryOnly<br/>- Have a startDate and endDate range which includes the given accountingDate |
 
-* `parent` : `ErpPurpose`
-  * The ErpPurpose which is the immediate parent of this one.<br/>Will be undefined if the ErpPurpose has no parent.
+* `parent` : `ErpActivity`
+  * The ErpActivity which is the immediate parent of this one.<br/>Will be undefined if the ErpActivity has no parent.
 * `eligibleForUse` : `Boolean!`
-  * Returns whether this ErpPurpose is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the ErpPurpose must:<br/>- Be enabled<br/>- Not be summaryOnly<br/>- Have a startDate and endDate range which includes the given accountingDate
+  * Returns whether this ErpActivity is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the ErpActivity must:<br/>- Be enabled<br/>- Not be summaryOnly<br/>- Have a startDate and endDate range which includes the given accountingDate
   * Arguments:
     * `accountingDate` : `LocalDate`
 
@@ -1004,124 +964,35 @@ The Purpose segment most closely aligns with the HEFC (Higher Ed. Function Code)
 
 #### Query Operations
 
-##### `erpPurpose`
+##### `erpActivity`
 
-> Get a single ErpPurpose by code.  Returns undefined if does not exist
+> Get a single ErpActivity by code.  Returns undefined if does not exist
 
 * **Parameters**
   * `code : String!`
 * **Returns**
-  * `ErpPurpose`
+  * `ErpActivity`
 
-##### `erpPurposeAll`
+##### `erpActivityChildren`
 
-> Get all currently valid ErpPurpose objects.
-
-* **Parameters**
-  * `sort : [String!]`
-* **Returns**
-  * `[ErpPurpose!]!`
-
-##### `erpPurposeChildren`
-
-> Get items under the given ErpPurpose in the hierarchy.
+> Get items under the given ErpActivity in the hierarchy.
 > Returns undefined if the parent does not exist.
 > Returns an empty list if the given record has no children.
 
 * **Parameters**
   * `code : String!`
 * **Returns**
-  * `[ErpPurpose!]`
+  * `[ErpActivity!]`
 
-##### `erpPurposeSearch`
+##### `erpActivitySearch`
 
-> Search for ErpPurpose objects by multiple properties.
-> See
-> See the ErpPurposeFilterInput type for options.
-
-* **Parameters**
-  * `filter : ErpPurposeFilterInput!`
-* **Returns**
-  * `ErpPurposeSearchResults!`
-
-[^1]: Searchable attributes are available as part of the general search filter input.
-[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
-
-
-<!--BREAK-->
-### Data Object: ErpUnitOfMeasure
-
-
-
-#### Access Controls
-
-* Required Role: `erp:reader-refdata`
-
-#### Data Source
-
-* Local Table/View: `ERP_UNIT_OF_MEASURE` (view)
-  * Support Tables:
-    * `ERP_UNIT_OF_MEASURE_TL`
-* Data Origin:
-  * System: Oracle BICC
-  * Extract Objects:
-    * View: FscmTopModelAM.InvUomPublicViewAM.InvUomPVO
-  * Underlying Database Objects:
-    * INV_UNITS_OF_MEASURE_B
-    * INV_UNITS_OF_MEASURE_TL
-
-##### Properties
-
-| Property Name   | Data Type               | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| --------------- | ----------------------- | :------------: | :-------------: | ------------- | ----- |
-| unitOfMeasureId | Long                    |       Y        |        Y        |               | Unique identifier of the Unit of Measure (UOM) |
-| uomCode         | ErpUnitOfMeasureCode    |                |        Y        |               | Unique short code assigned to a Unit of Measure (UOM) |
-| name            | NonEmptyTrimmedString25 |                |        Y        |               | Translatable Unit of Measure (UOM) name |
-| description     | NonEmptyTrimmedString50 |                |                 |               | Translatable Unit of Measure (UOM) description. |
-| baseUOM         | Boolean!                |                |                 |               | Base Unit of Measure (UOM) flag. |
-
-##### Linked Data Objects
-
-(None)
-
-#### Query Operations
-
-##### `erpUnitOfMeasure`
-
-> Get a single ErpUnitOfMeasure by unitOfMeasureId.  Returns undefined if does not exist
+> Search for ErpActivity objects by multiple properties.
+> See the ErpActivityFilterInput type for options.
 
 * **Parameters**
-  * `unitOfMeasureId : String!`
+  * `filter : ErpActivityFilterInput!`
 * **Returns**
-  * `ErpUnitOfMeasure`
-
-##### `erpUnitOfMeasureByCode`
-
-> Get a single ErpUnitOfMeasure by uom code.  Returns undefined if does not exist
-
-* **Parameters**
-  * `uomCode : String!`
-* **Returns**
-  * `ErpUnitOfMeasure`
-
-##### `erpUnitOfMeasureByName`
-
-> Get a single ErpUnitOfMeasure by unit of measure.  Returns undefined if does not exist
-
-* **Parameters**
-  * `name : String!`
-* **Returns**
-  * `ErpUnitOfMeasure`
-
-##### `erpUnitOfMeasureSearch`
-
-> Search for ErpUnitOfMeasure objects by multiple properties.
-> See the ErpUnitOfMeasureFilterInput type for options.
-
-* **Parameters**
-  * `filter : ErpUnitOfMeasureFilterInput!`
-* **Returns**
-  * `ErpUnitOfMeasureSearchResults!`
+  * `ErpActivitySearchResults!`
 
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
