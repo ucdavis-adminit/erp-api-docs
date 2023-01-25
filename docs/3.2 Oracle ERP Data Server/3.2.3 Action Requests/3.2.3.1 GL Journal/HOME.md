@@ -236,285 +236,77 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
 
 ### Per GraphQL Data Model and Type Resolvers
 
-> These validations will be enforced by the GraphQL parser and data type definitions.
+> This set of validations will be enforced by the GraphQL parser and data type definitions.
 
-* Valid JSON data structure.
+* Valid JSON data structure
 * Required fields (enforced by GraphQL data model)
 * Ensure required fields are non-blank. (enforced by GraphQL data model)
-* Ensure fields are formatted properly (enforced by GraphQL data model - and custom code if needed)
-* Verify maximum lengths on fields.  (Enforced using custom data types where possible.)
+* Ensure fields are formatted properly (enforced by GraphQL data model)
+* Verify maximum lengths on fields.  (enforced by GraphQL data model)
   * (e.g., `TrimmedNonEmptyString240`)
 
 ### Request Header Checks
 
-* Validate Journal Source
-  * Verify Source is allowed for API consumer.
-* Validate Journal Category
-  * Verify Category is `UCD Recharge`
-* Confirm if `consumerTrackingId` previously used and reject if found in the action request table.
+* Validate API user's Consumer ID is valid and active.
+  * (The Consumer ID is extracted from API authentication.)
+* Validate supplied Journal Source Name exists and is active
+  * Verify Journal Source is allowed for the calling API consumer.
+* Validate Journal Category is `UCD Recharge`
+* Verify that the given `consumerTrackingId` has not been previously used on an accepted request.
 
 ### Data Validation
 
-* **Overall**
+#### Overall
 
-  * Verify that a non-zero number of journal lines have been provided.
-  * Verify number of lines `<=` 10000 (Preliminary number - may be adjusted based on performance testing.)
-  * Verify no line was given both GL and POET segments.
-  * Verify that any field provided by the consumer that has a valid list of values in Oracle contains a valid and active value.
+* If an accounting period was given, verify that it is open to accept transactions.
+* If no accounting period given, verify that the period associated with the accounting date is open to accept transactions.
+* Verify that the accounting date, if given, is not in the future.
+* Verify that a non-zero number of journal lines have been provided.
+* Verify number of lines `<=` 10000 (Preliminary number - may be adjusted based on performance testing.)
+* Verify no line was given both GL and PPM segments.
+* Verify that the total of debits and credits in the journal balance.
 
-* **GL Transactions**
+#### GL Transactions
 
-  * Verify values given in GL segments
-    * Value must be enabled and the accounting date between the start and end date in the relevant support table for the segment.
-    * If the program, project, or activity fields have an invalid value, replace with all zeroes.
-    * If the purpose has an invalid value, and is not required per the CVR rules below, replace with zeroes.
-    * The project in `glSegments` must be a GL-only project.  It must have `GLG000000A` as the level 1 parent.
-    * Segment must not be a summary value.
-  * Verify Accounting Period if given.  It must exist and be open.  Assign current accounting period if missing.  Fail if an invalid period was given.
-  * Verify that any field which has a valid list of values contains a valid value.
-  * Verify that the GL journal lines balance to zero.  (I.e., debits == credits)
-    * Calculation must be made after the generation of PPM offset GL entries.
-  * **Boundary API Additional Restrictions**
-    * _Net Position Accounts are not allowed_
-      * If the account descends from `3XXXXX`, fail validation.
-    * _PPM Offset Account is not allowed_
-      * If the account == `TBD`, fail validation.
-    * _Purchases to be capitalized must be recorded in PPM._
-      * If the account is a descendent of `52500B`, fail validation.
-  * **Validate via Combination Code** **(TODO)**
-    * Check if the combination of the 11 GL segments is a known, valid combination.
-    * Using the GlAccountingCombination, check if the combination is valid is known and is active and valid for the given accounting date.  If so, CVR rules do not need to be run.  Oracle will allow any valid combination even if does not match the _current_ CVR rules.  There is no validation failure for this rule.  This is only to short-circuit the CVR rules.
-    * Must be open for detail posting, and not a summary combination code.
-  * **CVR Matching Rules (message then technical rule)**
-    * _Purpose is required for Expense Accounts (OPER_ACC_PURPOSE_1)_
-      * If the account descends from 5XXXXX, then the purpose must be a non 00 value.
-    * _Financial Aid Expenses must have Student Financial Aid purpose code 78 (OPER_ACC_PURPOSE_4)_
-      * If the account descends from 51000A, then the purpose code must be 78.
-    * _Auxiliary Funds should only be used for Auxiliary Enterprise (76) purposes (OPER_FUND_PURPOSE)_
-      * If the fund is a descendent of 1100C, then purpose code must be 76.
-    * _Purpose code 76 (Auxiliary Enterprises) must only be used with Financial Auxilary Funds (OPER_PURPOSE_FUND)_
-      * If the purpose code is 76, then the fund must descend from 1100C.
-    * _Funds held for others (Account 22700D) should only be used with Agency Fund (Fund 5000C) (AGENCY_FUND_ACCT)_
-      * If the account descends from 22700D, then the fund must descend from 5000C.
-    * _Sub-contract services (53300B) should only be used on Grant and Contract Funds (2000B) (SCS_ACCT_FUND)_
-      * If the account is a descendent of 53300B, then the fund must be descended from 2000B.
-    * _Purpose Code 65 may only be used when recording depreciation. (DEPREXP_ACC_PURPOSE1)_
-      * If the purpose code is 65, then the account must descend from 54000A.
-    * _Patient Account, Payor Settlment, Payor Payables, and Medical Salary Accounts are reserved for UCDH Transactions. (OPER_ENTITY_ACC)_
-      * If the account descends from one of 12500C, 12600C, or 14001E, then the Entity code must descend from 132B.
-  * **Entity/Purpose Restrictions**
-    * Per the table below, purpose codes can only be used with the associated entity code.
+* The presence of `glSegments` will override `glSegmentString`.
+* If `glSegmentString` provided, it must parse properly, and contain all 11 segments in the correct order.
+* Verify that the 4 required segments have been provided and are not all zeros. (`entity`, `fund`, `department`, `account`)
+* If a non-blank and non-zeroes `project` has been provided, verify that the project is not a PPM Managed project.
+* Verify values given in each GL segment
+  * Value must be a valid value for the segment.
+  * Value must be active on the accounting date between the segment's start and end date.
+  * Segment must be a detail-level value.  (Segments are assigned a level in a hierarchy, only the lowest level values are valid for transactions.)
 
-| Entity | Name                                       | Purpose | Name                                         |
-| ------ | ------------------------------------------ | ------- | -------------------------------------------- |
-| 3110   | UC Davis Campus Excluding School of Health | 00      | Purpose Value Default                        |
-| 3110   | UC Davis Campus Excluding School of Health | 40      | Instruction                                  |
-| 3110   | UC Davis Campus Excluding School of Health | 41      | Summer Session                               |
-| 3110   | UC Davis Campus Excluding School of Health | 43      | Academic Support                             |
-| 3110   | UC Davis Campus Excluding School of Health | 44      | Research Non AES                             |
-| 3110   | UC Davis Campus Excluding School of Health | 45      | AES Research                                 |
-| 3110   | UC Davis Campus Excluding School of Health | 60      | Libraries                                    |
-| 3110   | UC Davis Campus Excluding School of Health | 61      | University Extension                         |
-| 3110   | UC Davis Campus Excluding School of Health | 62      | Public Service                               |
-| 3110   | UC Davis Campus Excluding School of Health | 64      | Operations Maintenance of Plant              |
-| 3110   | UC Davis Campus Excluding School of Health | 65      | Depreciation                                 |
-| 3110   | UC Davis Campus Excluding School of Health | 66      | Impairment                                   |
-| 3110   | UC Davis Campus Excluding School of Health | 68      | Student Services                             |
-| 3110   | UC Davis Campus Excluding School of Health | 72      | Institutional Support General Administration |
-| 3110   | UC Davis Campus Excluding School of Health | 76      | Auxiliary Enterprises                        |
-| 3110   | UC Davis Campus Excluding School of Health | 78      | Student Financial Aid                        |
-| 3110   | UC Davis Campus Excluding School of Health | 79      | Department of Energy Laboratories            |
-| 3110   | UC Davis Campus Excluding School of Health | 80      | Provisions for Allocations                   |
-| 3111   | UC Davis Schools of Health                 | 00      | Purpose Value Default                        |
-| 3111   | UC Davis Schools of Health                 | 40      | Instruction                                  |
-| 3111   | UC Davis Schools of Health                 | 41      | Summer Session                               |
-| 3111   | UC Davis Schools of Health                 | 43      | Academic Support                             |
-| 3111   | UC Davis Schools of Health                 | 44      | Research Non AES                             |
-| 3111   | UC Davis Schools of Health                 | 45      | AES Research                                 |
-| 3111   | UC Davis Schools of Health                 | 60      | Libraries                                    |
-| 3111   | UC Davis Schools of Health                 | 61      | University Extension                         |
-| 3111   | UC Davis Schools of Health                 | 62      | Public Service                               |
-| 3111   | UC Davis Schools of Health                 | 64      | Operations Maintenance of Plant              |
-| 3111   | UC Davis Schools of Health                 | 65      | Depreciation                                 |
-| 3111   | UC Davis Schools of Health                 | 66      | Impairment                                   |
-| 3111   | UC Davis Schools of Health                 | 68      | Student Services                             |
-| 3111   | UC Davis Schools of Health                 | 72      | Institutional Support General Administration |
-| 3111   | UC Davis Schools of Health                 | 76      | Auxiliary Enterprises                        |
-| 3111   | UC Davis Schools of Health                 | 78      | Student Financial Aid                        |
-| 3111   | UC Davis Schools of Health                 | 79      | Department of Energy Laboratories            |
-| 3111   | UC Davis Schools of Health                 | 80      | Provisions for Allocations                   |
-| 3112   | Schools of Health FOA                      | 00      | Purpose Value Default                        |
-| 3112   | Schools of Health FOA                      | 40      | Instruction                                  |
-| 3112   | Schools of Health FOA                      | 41      | Summer Session                               |
-| 3112   | Schools of Health FOA                      | 43      | Academic Support                             |
-| 3112   | Schools of Health FOA                      | 44      | Research Non AES                             |
-| 3112   | Schools of Health FOA                      | 45      | AES Research                                 |
-| 3112   | Schools of Health FOA                      | 60      | Libraries                                    |
-| 3112   | Schools of Health FOA                      | 61      | University Extension                         |
-| 3112   | Schools of Health FOA                      | 62      | Public Service                               |
-| 3112   | Schools of Health FOA                      | 64      | Operations Maintenance of Plant              |
-| 3112   | Schools of Health FOA                      | 65      | Depreciation                                 |
-| 3112   | Schools of Health FOA                      | 66      | Impairment                                   |
-| 3112   | Schools of Health FOA                      | 68      | Student Services                             |
-| 3112   | Schools of Health FOA                      | 72      | Institutional Support General Administration |
-| 3112   | Schools of Health FOA                      | 76      | Auxiliary Enterprises                        |
-| 3112   | Schools of Health FOA                      | 78      | Student Financial Aid                        |
-| 3112   | Schools of Health FOA                      | 79      | Department of Energy Laboratories            |
-| 3112   | Schools of Health FOA                      | 80      | Provisions for Allocations                   |
-| 3114   | SOH Faculty Practice Plan                  | 00      | Purpose Value Default                        |
-| 3114   | SOH Faculty Practice Plan                  | 40      | Instruction                                  |
-| 3114   | SOH Faculty Practice Plan                  | 41      | Summer Session                               |
-| 3114   | SOH Faculty Practice Plan                  | 43      | Academic Support                             |
-| 3114   | SOH Faculty Practice Plan                  | 44      | Research Non AES                             |
-| 3114   | SOH Faculty Practice Plan                  | 45      | AES Research                                 |
-| 3114   | SOH Faculty Practice Plan                  | 60      | Libraries                                    |
-| 3114   | SOH Faculty Practice Plan                  | 61      | University Extension                         |
-| 3114   | SOH Faculty Practice Plan                  | 62      | Public Service                               |
-| 3114   | SOH Faculty Practice Plan                  | 64      | Operations Maintenance of Plant              |
-| 3114   | SOH Faculty Practice Plan                  | 65      | Depreciation                                 |
-| 3114   | SOH Faculty Practice Plan                  | 66      | Impairment                                   |
-| 3114   | SOH Faculty Practice Plan                  | 68      | Student Services                             |
-| 3114   | SOH Faculty Practice Plan                  | 72      | Institutional Support General Administration |
-| 3114   | SOH Faculty Practice Plan                  | 76      | Auxiliary Enterprises                        |
-| 3114   | SOH Faculty Practice Plan                  | 78      | Student Financial Aid                        |
-| 3114   | SOH Faculty Practice Plan                  | 79      | Department of Energy Laboratories            |
-| 3114   | SOH Faculty Practice Plan                  | 80      | Provisions for Allocations                   |
-| 3116   | Aggie Square                               | 00      | Purpose Value Default                        |
-| 3116   | Aggie Square                               | 40      | Instruction                                  |
-| 3116   | Aggie Square                               | 41      | Summer Session                               |
-| 3116   | Aggie Square                               | 43      | Academic Support                             |
-| 3116   | Aggie Square                               | 44      | Research Non AES                             |
-| 3116   | Aggie Square                               | 45      | AES Research                                 |
-| 3116   | Aggie Square                               | 60      | Libraries                                    |
-| 3116   | Aggie Square                               | 61      | University Extension                         |
-| 3116   | Aggie Square                               | 62      | Public Service                               |
-| 3116   | Aggie Square                               | 64      | Operations Maintenance of Plant              |
-| 3116   | Aggie Square                               | 65      | Depreciation                                 |
-| 3116   | Aggie Square                               | 66      | Impairment                                   |
-| 3116   | Aggie Square                               | 68      | Student Services                             |
-| 3116   | Aggie Square                               | 72      | Institutional Support General Administration |
-| 3116   | Aggie Square                               | 76      | Auxiliary Enterprises                        |
-| 3116   | Aggie Square                               | 78      | Student Financial Aid                        |
-| 3116   | Aggie Square                               | 79      | Department of Energy Laboratories            |
-| 3116   | Aggie Square                               | 80      | Provisions for Allocations                   |
-| 3120   | CHF - West Village                         | 00      | Purpose Value Default                        |
-| 3120   | CHF - West Village                         | 40      | Instruction                                  |
-| 3120   | CHF - West Village                         | 41      | Summer Session                               |
-| 3120   | CHF - West Village                         | 43      | Academic Support                             |
-| 3120   | CHF - West Village                         | 44      | Research Non AES                             |
-| 3120   | CHF - West Village                         | 45      | AES Research                                 |
-| 3120   | CHF - West Village                         | 60      | Libraries                                    |
-| 3120   | CHF - West Village                         | 61      | University Extension                         |
-| 3120   | CHF - West Village                         | 62      | Public Service                               |
-| 3120   | CHF - West Village                         | 64      | Operations Maintenance of Plant              |
-| 3120   | CHF - West Village                         | 65      | Depreciation                                 |
-| 3120   | CHF - West Village                         | 66      | Impairment                                   |
-| 3120   | CHF - West Village                         | 68      | Student Services                             |
-| 3120   | CHF - West Village                         | 72      | Institutional Support General Administration |
-| 3120   | CHF - West Village                         | 76      | Auxiliary Enterprises                        |
-| 3120   | CHF - West Village                         | 78      | Student Financial Aid                        |
-| 3120   | CHF - West Village                         | 79      | Department of Energy Laboratories            |
-| 3120   | CHF - West Village                         | 80      | Provisions for Allocations                   |
-| 3121   | CHF - Orchard Park                         | 00      | Purpose Value Default                        |
-| 3121   | CHF - Orchard Park                         | 40      | Instruction                                  |
-| 3121   | CHF - Orchard Park                         | 41      | Summer Session                               |
-| 3121   | CHF - Orchard Park                         | 43      | Academic Support                             |
-| 3121   | CHF - Orchard Park                         | 44      | Research Non AES                             |
-| 3121   | CHF - Orchard Park                         | 45      | AES Research                                 |
-| 3121   | CHF - Orchard Park                         | 60      | Libraries                                    |
-| 3121   | CHF - Orchard Park                         | 61      | University Extension                         |
-| 3121   | CHF - Orchard Park                         | 62      | Public Service                               |
-| 3121   | CHF - Orchard Park                         | 64      | Operations Maintenance of Plant              |
-| 3121   | CHF - Orchard Park                         | 65      | Depreciation                                 |
-| 3121   | CHF - Orchard Park                         | 66      | Impairment                                   |
-| 3121   | CHF - Orchard Park                         | 68      | Student Services                             |
-| 3121   | CHF - Orchard Park                         | 72      | Institutional Support General Administration |
-| 3121   | CHF - Orchard Park                         | 76      | Auxiliary Enterprises                        |
-| 3121   | CHF - Orchard Park                         | 78      | Student Financial Aid                        |
-| 3121   | CHF - Orchard Park                         | 79      | Department of Energy Laboratories            |
-| 3121   | CHF - Orchard Park                         | 80      | Provisions for Allocations                   |
-| 3210   | UCD Medical Center                         | 00      | Purpose Value Default                        |
-| 3210   | UCD Medical Center                         | 42      | Teaching Hospitals                           |
-| 3210   | UCD Medical Center                         | 65      | Depreciation                                 |
-| 3210   | UCD Medical Center                         | 66      | Impairment                                   |
-| 3210   | UCD Medical Center                         | 72      | Institutional Support General Administration |
-| 3299   | UCD Medical Center - Elimination Entries   | 00      | Purpose Value Default                        |
-| 3299   | UCD Medical Center - Elimination Entries   | 42      | Teaching Hospitals                           |
-| 3299   | UCD Medical Center - Elimination Entries   | 65      | Depreciation                                 |
-| 3299   | UCD Medical Center - Elimination Entries   | 66      | Impairment                                   |
-| 3310   | UCD - ANR                                  | 00      | Purpose Value Default                        |
-| 3310   | UCD - ANR                                  | 40      | Instruction                                  |
-| 3310   | UCD - ANR                                  | 41      | Summer Session                               |
-| 3310   | UCD - ANR                                  | 43      | Academic Support                             |
-| 3310   | UCD - ANR                                  | 44      | Research Non AES                             |
-| 3310   | UCD - ANR                                  | 45      | AES Research                                 |
-| 3310   | UCD - ANR                                  | 60      | Libraries                                    |
-| 3310   | UCD - ANR                                  | 61      | University Extension                         |
-| 3310   | UCD - ANR                                  | 62      | Public Service                               |
-| 3310   | UCD - ANR                                  | 64      | Operations Maintenance of Plant              |
-| 3310   | UCD - ANR                                  | 65      | Depreciation                                 |
-| 3310   | UCD - ANR                                  | 66      | Impairment                                   |
-| 3310   | UCD - ANR                                  | 68      | Student Services                             |
-| 3310   | UCD - ANR                                  | 72      | Institutional Support General Administration |
-| 3310   | UCD - ANR                                  | 76      | Auxiliary Enterprises                        |
-| 3310   | UCD - ANR                                  | 78      | Student Financial Aid                        |
-| 3310   | UCD - ANR                                  | 79      | Department of Energy Laboratories            |
-| 3310   | UCD - ANR                                  | 80      | Provisions for Allocations                   |
-| 3410   | UCD - UCOP                                 | 00      | Purpose Value Default                        |
-| 3410   | UCD - UCOP                                 | 40      | Instruction                                  |
-| 3410   | UCD - UCOP                                 | 41      | Summer Session                               |
-| 3410   | UCD - UCOP                                 | 43      | Academic Support                             |
-| 3410   | UCD - UCOP                                 | 44      | Research Non AES                             |
-| 3410   | UCD - UCOP                                 | 45      | AES Research                                 |
-| 3410   | UCD - UCOP                                 | 60      | Libraries                                    |
-| 3410   | UCD - UCOP                                 | 61      | University Extension                         |
-| 3410   | UCD - UCOP                                 | 62      | Public Service                               |
-| 3410   | UCD - UCOP                                 | 64      | Operations Maintenance of Plant              |
-| 3410   | UCD - UCOP                                 | 65      | Depreciation                                 |
-| 3410   | UCD - UCOP                                 | 66      | Impairment                                   |
-| 3410   | UCD - UCOP                                 | 68      | Student Services                             |
-| 3410   | UCD - UCOP                                 | 72      | Institutional Support General Administration |
-| 3410   | UCD - UCOP                                 | 76      | Auxiliary Enterprises                        |
-| 3410   | UCD - UCOP                                 | 78      | Student Financial Aid                        |
-| 3410   | UCD - UCOP                                 | 79      | Department of Energy Laboratories            |
-| 3410   | UCD - UCOP                                 | 80      | Provisions for Allocations                   |
-| 3710   | UC Davis Foundation                        | 00      | Purpose Value Default                        |
-| 3710   | UC Davis Foundation                        | 40      | Instruction                                  |
-| 3710   | UC Davis Foundation                        | 41      | Summer Session                               |
-| 3710   | UC Davis Foundation                        | 43      | Academic Support                             |
-| 3710   | UC Davis Foundation                        | 44      | Research Non AES                             |
-| 3710   | UC Davis Foundation                        | 45      | AES Research                                 |
-| 3710   | UC Davis Foundation                        | 60      | Libraries                                    |
-| 3710   | UC Davis Foundation                        | 61      | University Extension                         |
-| 3710   | UC Davis Foundation                        | 62      | Public Service                               |
-| 3710   | UC Davis Foundation                        | 64      | Operations Maintenance of Plant              |
-| 3710   | UC Davis Foundation                        | 65      | Depreciation                                 |
-| 3710   | UC Davis Foundation                        | 66      | Impairment                                   |
-| 3710   | UC Davis Foundation                        | 68      | Student Services                             |
-| 3710   | UC Davis Foundation                        | 72      | Institutional Support General Administration |
-| 3710   | UC Davis Foundation                        | 76      | Auxiliary Enterprises                        |
-| 3710   | UC Davis Foundation                        | 78      | Student Financial Aid                        |
-| 3710   | UC Davis Foundation                        | 79      | Department of Energy Laboratories            |
-| 3710   | UC Davis Foundation                        | 80      | Provisions for Allocations                   |
-| 3810   | Cal Aggie Alumni Association               | 00      | Purpose Value Default                        |
-| 3810   | Cal Aggie Alumni Association               | 40      | Instruction                                  |
-| 3810   | Cal Aggie Alumni Association               | 41      | Summer Session                               |
-| 3810   | Cal Aggie Alumni Association               | 43      | Academic Support                             |
-| 3810   | Cal Aggie Alumni Association               | 44      | Research Non AES                             |
-| 3810   | Cal Aggie Alumni Association               | 45      | AES Research                                 |
-| 3810   | Cal Aggie Alumni Association               | 60      | Libraries                                    |
-| 3810   | Cal Aggie Alumni Association               | 61      | University Extension                         |
-| 3810   | Cal Aggie Alumni Association               | 62      | Public Service                               |
-| 3810   | Cal Aggie Alumni Association               | 64      | Operations Maintenance of Plant              |
-| 3810   | Cal Aggie Alumni Association               | 65      | Depreciation                                 |
-| 3810   | Cal Aggie Alumni Association               | 66      | Impairment                                   |
-| 3810   | Cal Aggie Alumni Association               | 68      | Student Services                             |
-| 3810   | Cal Aggie Alumni Association               | 72      | Institutional Support General Administration |
-| 3810   | Cal Aggie Alumni Association               | 76      | Auxiliary Enterprises                        |
-| 3810   | Cal Aggie Alumni Association               | 78      | Student Financial Aid                        |
-| 3810   | Cal Aggie Alumni Association               | 79      | Department of Energy Laboratories            |
-| 3810   | Cal Aggie Alumni Association               | 80      | Provisions for Allocations                   |
-| 9999   | Elimination                                | 00      | Purpose Value Default                        |
+#### CVR Rules (Compound Validation Rules)
+
+* Purpose is required for Expense Accounts (OPER_ACC_PURPOSE_1)
+  * If the account descends from 5XXXXX, then the purpose must be a non 00 value.
+* Auxiliary Funds should only be used for Auxiliary Enterprise (76) purposes (OPER_FUND_PURPOSE)
+  * If the fund is a descendent of 1100C, then purpose code must be 76.
+* Purpose Code 65 may only be used when recording depreciation. (DEPREXP_ACC_PURPOSE1)
+  * If the purpose code is 65, then the account must descend from 54000A.
+* Funds held for others (Account 22700D) should only be used with Agency Fund (Fund 5000C) (AGENCY_FUND_ACCT)
+  * If the account descends from 22700D, then the fund must descend from 5000C.
+* Sub-contract services (53300B) should only be used on Grant and Contract Funds (2000B) (SCS_ACCT_FUND)
+  * If the account is a descendent of 53300B, then the fund must be descended from 2000B.
+
+
+<!-- Items removed before SIT1
+
+    * _Purpose code 78 (Student Financial Aid) must only be used with Financial Aid Expenses (OPER_ACC_PURPOSE_5)_
+      * If the purpose code is 78, then the account must descend from 51000A.
+    * _The teaching hospital purpose code may only be used with UCDH Entities._
+      * If the Purpose code is 42, then the entity must descend from 132B.
+      * If the entity descends from 132B, then the purpose code must be 42 or 00.
+    * If the account is a descendent of 54000A then the purpose code must be 65.
+
+--->
+
+#### Entity/Purpose Restrictions
+
+Purpose code use is limited by entity.  Only combinations on the table below are allowed.
+
+[](./entity-purpose-restrictions.txt ':include :type=markdown')
 
 <!-- table above extracted 8/5/22 from TEST via
 
@@ -528,57 +320,105 @@ SELECT value_1 as entity, s1.name as entity_name, value_2 as purpose, s2.name as
 ORDER BY entity, purpose
 -->
 
-<!-- Items removed before SIT1
+#### Boundary Application Additional Rules
 
-    * _Purpose code 78 (Student Financial Aid) must only be used with Financial Aid Expenses (OPER_ACC_PURPOSE_5)_
-      * If the purpose code is 78, then the account must descend from 51000A.
-    * _The teaching hospital purpose code may only be used with UCDH Entities._
-      * If the Purpose code is 42, then the entity must descend from 132B.
-      * If the entity descends from 132B, then the purpose code must be 42 or 00.
-    * If the account is a descendent of 54000A then the purpose code must be 65.
+* _Net Position Accounts are not allowed_
+  * If the account descends from `3XXXXX`, fail validation.
+* _Salary and Benefit Accounts are not allowed_
+  * If the account descends from any of `50000A`, `50500A`, `50600A`, `50700A`, fail validation.
+* _Purchases to be capitalized must be recorded in PPM._
+  * If the account is a descendant of `52500B`, fail validation.
 
---->
+#### COFI Fund Restrictions
 
-* **PPM Costs**
+Common Operating Funds are distributed to by the budget office.  The funds below may not be used on transactions, but will be expensed to by the central office.  Instead of using one of these funds, boundary systems should use fund `99100` in place of any of the funds below.
 
-  * Verify values given in each PPM segment
-    * values in each each line's segments.
-  * Verify lines have complete PPM segments (project, task, organization, expenditure type)
-    * Verify Award and Funding Source populated and valid if the Project has a Sponsored Project type. (per `sponsoredProject` flag on the project type)
-      * This would be after derivation of the award and funding source from the project if not provided by the end user.
-  * **Validate Project**
-    * _Project is not Active_
-      * `projectStatus` = `ACTIVE`
-    * _Costs can not be assigned to template projects_
-      * `templateProject` = false
-    * _Given accounting date (yyyy-mm-dd) is not within the project start and completion dates._
-      * Check accounting date against the `projectStartDate` and `projectCompletionDate`s.
-  * **Validate Task**
-    * _Summary tasks may not record costs_
-      * is lowest level (`lowestLevelTask`)
-    * _Task does not accept costs_
-      * marked as `chargeable`
-    * _Given accounting date (yyyy-mm-dd) is not within the task start and completion dates._
-      * Check accounting date against the `taskStartDate` and `transactionCompletionDate`s.
-  * **Validate Expenditure Type**
-    * Attempt a full match of the given value against the expense type table.  If that fails, and the string is longer than 6 characters, attempt a lookup against the first 6 characters of the expense type.
-    * Populate the output with the full name of the expense type.  (This should be the GL account code plus its name.)
-    * _Expenditure Type is not active_
-      * is active
-      * is not outside of start and end dates (`expenditureTypeStartDate` - `expenditureTypeEndDate`)
-  * **Validate Expenditure Organization**
-    * Attempt a full match of the given value against the organization table.  If that fails, and the string is longer than 7 characters, attempt a lookup against the first 7 characters of the organization name.
-    * Accounting date falls within expense org dates (`effectiveStartDate` and `effectiveEndDate`)
-    * Populate the output with the full name of the organization.  (This should be the financial department code plus the name.)
-  * **Award and Funding Source**
-    * If `sponsoredProject` is false, then no award or funding source may be provided.  _Do not provide an award or funding source except on sponsored projects._
-    * Otherwise verify the values if present at that they are linked to the given project.
-    * **Validate Award**
-      * If provided, the award must be linked to the project.  If not, populate the output with the default award.
-      * The accounting date must be between the start date and `closeDate` of the award.
-    * **Validate Funding Source**
-      * If provided, the award must be linked to the project.  If not, populate the output with the default award.
-      * The accounting date must be between the `fundingSourceFromDate` and `fundingSourceToDate` of the funding source.
+See: <https://financeandbusiness.ucdavis.edu/aggie-enterprise/about/cofi/resources> for more information.
+
+| Fund Number | Name                                  |
+| ----------- | ------------------------------------- |
+| 07427       | UNIVERSITY OPPORTUNITY FUND           |
+| 10010       | ANNUAL GIVING PROGRAM ALLOCATIONS     |
+| 10500       | SUMMER SESSIONS INCOME                |
+| 13U51       | UCOP SYSTEMWIDE ASSESSMENT            |
+| 14000       | GRAD STUDIES TUITION INCOME           |
+| 14001       | UNIVERSITY TUITION INCOME             |
+| 19900       | GENERAL FUNDS                         |
+| 19903       | GEN FUND - UTILITIES                  |
+| 19904       | S/A UNDERGRADUATE TEACHING EXCELLENCE |
+| 19905       | S/A INSTRUCTIONAL EQUIP REPLACEMENT   |
+| 19933       | UC GENERAL FUND / FEDERAL OVERHEAD    |
+| 19941       | UC GENERAL FUND                       |
+| 19942       | NONRESIDENT TUITION                   |
+| 66110       | ENDOWMENT ADMIN COST RECOVERY FEE     |
+| 68800       | UNIVERSITY PATENT INCOME FUND         |
+| 69006       | SSDP ASSESSMENT                       |
+| 69240       | PRIVATE GIFT / GRANT STIP INCOME FUND |
+| 69250       | CUF SHORT TERM INVESTMENT POOL INC    |
+| 69763       | UC LAB FEE RESEARCH PROG / UCHRI      |
+| 69820       | INCENTIVE PAYMENTS AND VENDOR REBATES |
+| 69823       | CAMPUS COMMON GOODS ASSESSMENT        |
+| 69825       | CAMPUS OVERHEAD FUNDS                 |
+| 69826       | GEN & EMP PRAC LIAB RECHG             |
+| 69831       | ENDOWMENT INFRASTRUCTURE FEE          |
+| 69993       | CAMPUS ASSESSMENT FUND                |
+| 75079       | GIFT FEE                              |
+
+#### PPM Costs
+
+* The presence of `ppmSegments` will override `ppmSegmentString`.
+* If `ppmSegmentString` provided, it must parse properly, and contain either the first 4 or all 6 segments in the correct order.
+* Verify that the 4 required segments have been provided. (`project`, `task`, `organization`, `expenditureType`)
+* Verify values given in each PPM segment
+  * Value must be a valid value for the segment.
+  * Value must be active on the accounting date between the segment's start and end date.
+  * See below for details on the checks performed on each segment.
+
+
+##### Project Validations
+
+* Project must be `ACTIVE`
+* Project must not be a template project.
+* Project must have an established budget (of any amount.)
+* Accounting date must be within the project's start and completion dates.
+
+##### Task Validations
+
+* Task must be valid for the project.
+* Task must be marked as chargeable.
+* Accounting date must be within the task's start and finish dates.
+
+##### Organization Validations
+
+* Organization must be enabled.
+* Accounting date must be within the organization's effective start and end dates.
+
+##### Expenditure Type Validations
+
+* Expenditure type must be enabled.
+* Accounting date must be within the expenditure type's start and end dates.
+* **Special Case: Revenue Accounts**
+  * PPM Does not allow revenue on transactions.  Special handling has been added to the API to address this through the integration processes.  Specific GL Accounts are allowed to be used on PPM Transactions.  They are NOT set up as PPM Expenditure Types, but an exception is made to the validation rules to allow them to be passed through.
+  * Revenue accounts allowed descend from the parents below:
+    * `48000A`
+    * `41000A`
+    * `40090C`
+    * `40100C`
+    * `40200C`
+
+##### Award Validation
+
+* Awards should only be included on sponsored projects and are required on sponsored projects.
+* Award must be associated with the project.
+* If left blank on a sponsored project, a default will be provided.  If one can not be derived, then the transaction will fail validation with the missing award.  This is likely due to an incomplete project setup which must be corrected in Oracle before transactions can be submitted.
+* Accounting date must be within the award's start and close dates.
+
+##### Funding Source Validation
+
+* Funding sources should only be included on sponsored projects and are required on sponsored projects.
+* Funding source must be associated with the project and award.
+* If left blank on a sponsored project, a default will be provided.  If one can not be derived, then the transaction will fail validation with the missing funding source.  This is likely due to an incomplete project setup which must be corrected in Oracle before transactions can be submitted.
+* Accounting date must be within the funding source's from and to dates.
 
 
 ## Example `glJournalRequest` Requests
