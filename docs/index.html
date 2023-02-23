@@ -7,9 +7,12 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
     <meta name="viewport"
       content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <link rel="stylesheet" href="//unpkg.com/docsify-themeable/dist/css/theme-simple.css">
+
+    <link rel="stylesheet" href="//unpkg.com/docsify-themeable/dist/css/theme-simple.css" title="light">
+
     <link rel="stylesheet" href="//unpkg.com/docsify-sidebar-collapse/dist/sidebar.min.css">
-    <link rel="stylesheet" href="aggieenterprise.css">
+
+    <link rel="stylesheet" href="aggieenterprise.css" title="light">
   </head>
 
   <body>
@@ -44,7 +47,10 @@
     "depth": 6,
     "hideOtherSidebarContent": false
   },
-  "sidebarDisplayLevel": 1
+  "sidebarDisplayLevel": 1,
+  "darklightTheme": {
+    "defaultTheme": "light"
+  }
 };
     </script>
     <script src="//unpkg.com/docsify/lib/docsify.min.js"></script>
@@ -58,6 +64,7 @@
     <script src="//unpkg.com/prismjs/components/prism-twig.min.js"></script>
     <script src="//unpkg.com/prismjs/components/prism-groovy.min.js"></script>
     <script>
+      Prism.languages.mjs        = Prism.languages.javascript;
       Prism.languages.jsonc      = Prism.languages.json;
       Prism.languages.avsc       = Prism.languages.json;
       Prism.languages.sh         = Prism.languages.bash;

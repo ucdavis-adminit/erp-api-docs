@@ -4,21 +4,214 @@ This server is responsible for exposing data from a local copy of the Oracle ERP
 
 It will also provide operations for "Action Requests" for sending updates into Oracle.  Action Requests are asynchronous in that the request will not be sent to Oracle during the initial call.  The request will be recorded and queued for submission to the ERP system.  Each request will be assigned a unique identifier, and the caller given a location to call back to check on the status and obtain results of the call once it has completed.
 
-### Using the API (IN PROGRESS)
 
-The ERP data and operations are exposed to boundary systems via a GraphQL API.  GraphQL is a specification for executing queries and mutations in a standard manner.  The underlying technology is just JSON over HTTP.  GraphQL is a specification for the contents of the JSON messages.  GraphQL allows us to tightly define the data model and the allowed contents within fields of the data model.  As such it is (almost) impossible to send incorrectly formatted data to the API when using a GraphQL-aware tool.
+
+## Using the API
+
+Oracle Financials data and action requests are exposed to boundary systems via a GraphQL API.  GraphQL is a specification for executing queries and mutations in a standard manner.  The underlying technology is JSON over HTTP.  GraphQL is a specification for the contents of the JSON messages.  GraphQL allows us to tightly define the data model and the allowed contents within fields of the data model.  As such it is (almost) impossible to send incorrectly formatted data to the API when using a GraphQL-aware tool.
+
+GraphQL APIs receive all operations per a single endpoint as a POST operation to a single endpoint.  The payload structure is standardized and determines the processing performed by the server.
 
 See: <https://graphql.org/>
 
-This document will contain the system-specific payload specifications and examples of sending those payloads.  However, describing the full specification of GraphQL is out of scope for this document and you should refer to the above URL for more information.
+This contains the system-specific payload specifications and examples of sending those payloads.  However, describing the full specification of GraphQL syntax and payloads is out of scope for this document and you should refer to the above URL for more information.
 
-#### Connecting
+The API framework consists of four major components:
 
-For connecting to the API, you will be provided with an URL as the endpoint.  You use the same URL for all calls to the API.  GraphQL uses a single `https://<host name>/graphql` endpoint.  To that URL, you will sent HTTP post operations using the required JSON payload to execute the needed operation.  Authentication will be accepted in the form of a token in an HTTP header.  The nature of the token is still under development, but plan for it to be a JWT token, as that is the largest token option we are considering.
+* WSO2 API Manager
+* GraphQL Federation Server
+* GraphQL API Servers (one per data domain - e.g., ERP, UCPath, etc...)
+* Grouper
+
+This infrastructure provides for Authentication, Request Validation, Support for Cross-Domain data queries, and, of course, access to data and action requests.
+
+1. Each request starts by passing through the WSO2 server, which handles all authentication and preliminary validation of your GraphQL operations.
+2. The Federation server obtains access roles from Grouper, and then passes the request to the appropriate GraphQL API server.
+3. GraphQL API servers perform the requested operation and return the results back up the chain.
+
+### Onboarding
+
+Each Boundary System will be onboarded to access the API by being assigned a Consumer ID.  (WSO2)  This ID will be enabled for access to the two non-production environments, presently named:
+
+* `ait-test`
+* `ait-sit`
+
+As part of the onboarding, the Boundary System will be provided a Client ID and Client Secret for each of the sandbox environment and for production.  These may be used to generate the API tokens needed for running GraphQL operations.  The API token will be valid for a limited period of time, no more than 24 hours.  The token will need to be regenerated on a regular basis.
+
+### Authentication
+
+The API uses a leading practice from the OAuth specification.  The Authentication to the service will need to be performed on a regular basis to generate an API token used for making calls to the API for operations.  The generated token will only be usable for a limited period of time, no more than 24 hours.  Tokens must be regenerated once expired.  (They may be regenerated at any time, but will cease to function after 24 hours from time of creation.)
+
+The time of expiration will be encoded in the returned token.  The token is a JWT token and can be decoded to see the expiration time.  (See: <https://jwt.io/>)
+
+> It is expected of Boundary Systems to securely maintain the Client ID and Client Secret tokens.  It also will be necessary for Boundary Systems to handle the frequent expiration of their generated API tokens and regenerate them as needed.  See below in this document for more information on the regeneration process.
+
+#### API Token Generation
+
+In the non-production environments, the API token may be generated by connecting to the following URL:
+
+* `https://wso2am-ui-np.aws.ait.ucdavis.edu/oauth2/token`
+* Method: `POST`
+* Headers:
+  * Content-Type: `application/x-www-form-urlencoded`
+  * Authorization: `Basic Base64(client_id:client_secret)`
+* Body: `grant_type=client_credentials`
+
+#### Sample Token Generation
+
+The command below is a sample cURL command which includes the needed data and headers.  The client_id and client_secret are the values provided to the Boundary System during onboarding.
+
+```bash
+curl -X POST https://wso2am-ui-np.aws.ait.ucdavis.edu/oauth2/token -d "grant_type=client_credentials" -H"Authorization: Basic Base64(client_id:client_secret)"
+```
+
+The response will be a value like this:
+
+```json
+{
+  "access_token": "eyJ4NXQiOiJObVV3T0RZNE5HWmlOR0kzTURZM09EZzJZVEEyWlRCbVptUXlOamhtTXpJeVkySTFPVGczWVEiLCJraWQiOiJORGc0Wm1RNU1qRXpNMkV4WmpWbFlqTTVObUZqWm1FNVpqYzVPVFJtTkRFNFlUSmxNemN5Tm1FM01UazFOV1ptWWpjeVlUWTFNR0l3TlRWbE5tWXpNQV9SUzI1NiIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJhaXQtYWRtaW4iLCJhdXQiOiJBUFBMSUNBVElPTiIsImF1ZCI6InVoMVp4VUVaMzRFU3JxeDMxWlFiUGhqYXJ3TWEiLCJuYmYiOjE2NzYwNzE5NDEsImF6cCI6InVoMVp4VUVaMzRFU3JxeDMxWlFiUGhqYXJ3TWEiLCJzY29wZSI6ImRlZmF1bHQiLCJpc3MiOiJodHRwczpcL1wvd3NvMmFtLXVpLW5wLmF3cy5haXQudWNkYXZpcy5lZHVcL29hdXRoMlwvdG9rZW4iLCJleHAiOjE2NzYwNzU1NDEsImlhdCI6MTY3NjA3MTk0MSwianRpIjoiYTk3MmNjY2UtMGFmMi00ZGVlLWIyOGEtNzM0ZGUyN2M2ZWFmIn0.BGcF-1p_EQqRhPX63oZYkXtBx3cx2ti5cFbk5FAxdqlPD9FRDBSHCI3A5arEcenVnJdnN_zokerEO-Ri8yfoRm12jg1B5XRJWdq8K4aq3lmaTBFsffVKslFhWU5j5rUrFRd4U2ZRQtsrQY6YeIHBF-KwqaIqsA1imosw7dAgrSpjnbOJCdht0Bq6eF1U17Z8NYkOMD6nURgTXyRIYrodqGJHJ4v0M2fOuH6adIvMi6NJv7c_5jG6bxQC2u-TgvuzwHT6JLLiwhlWM9oPTSIg0vT_vi63NCM47fryTyUmQnM8jD-8WclTDzzItLVmdze5sxTh_o_gzZDfKWEcQxZtvg",
+  "scope": "default",
+  "token_type": "Bearer",
+  "expires_in": 3600
+}
+```
+
+The value of `access_token` is itself a JWT token.  This is the string you must pass as a Bearer token to all GraphQL API calls.  Decoding it will show the expiration time.  Decoding the JWT will reveal contents like the below.  Please refer to the JWT RFC for more information on the contents of the token.  However, the "sub" will be your consumer ID, and the "exp" will be the expiration time.
+
+```json
+{
+  "sub": "ait-admin",
+  "aut": "APPLICATION",
+  "aud": "uh1ZxUEZ34ESrqx31ZQbPhjarwMa",
+  "nbf": 1676071941,
+  "azp": "uh1ZxUEZ34ESrqx31ZQbPhjarwMa",
+  "scope": "default",
+  "iss": "https://wso2am-ui-np.aws.ait.ucdavis.edu/oauth2/token",
+  "exp": 1676075541,
+  "iat": 1676071941,
+  "jti": "a972ccce-0af2-4dee-b28a-734de27c6eaf"
+}
+```
+
+### Expiration and Renewal of Credentials
+
+If your credentials have expired or have been revoked, you will receive a 401 response from the API.  You will need to generate a new token and use that for future API calls.
+
+The response payload in this situation will look like the below:
+
+```json
+{
+  "code": "900901",
+  "message": "Invalid Credentials",
+  "description": "Invalid JWT token. Make sure you have provided the correct security credentials"
+}
+```
+
+> A common solution to this is to wrap calls to the API in a handler which checks the expiration time in the token, and regenerates if it has expired.  Another is to try the call, and if it fails, regenerate the token and try again.  If the former is used, it is recommended to actually check if the token is within 5 minutes of expiring, so as to limit failures due to clock skew.
+
+Renewing the credentials is the same as generating a new token.  The token will be valid for same amount of time as the original, and you can generate a new one at any time.
+
+!> **WARNING:** Generating a new token will invalidate any previous tokens you have generated.  If you have multiple applications using the API, you will need to update all of them with the new token.
+
+> There is a method by which you can maintain multiple named tokens, however, each named token generated in this way behaves the same as the above.  When that token is replaced, the previous token with the same name is invalidated.
+
+### Maintaining Multiple Tokens
+
+When generating tokens, the previously authorized token is invalidated and will fail if used to call the GraphQL API.  However, you can generate multiple tokens, and name them.  This allows you to maintain multiple tokens, and use them in different applications or on different servers in a cluster, eliminating the need to hold the tokens in a shared repository.
+
+To generate a named token, you pass the `scope` field in the payload when generating the token.  This will generate a token with the name you specify.  If you generate a token with the same name as an existing token, the existing token will be invalidated and replaced with the new token.
+
+#### Example cURL Call to Generate a Named Token
+
+This will generate a token named `SERVER_1` with the same credentials as the previous example.
+
+```bash
+curl -X POST https://wso2am-ui-np.aws.ait.ucdavis.edu/oauth2/token \
+  -d "grant_type=client_credentials&scope=SERVER_1" \
+  -H "Authorization: Basic Base64(client_id:client_secret)"
+```
+
+The scope used will be visible in the access token when decoded with JWT:
+
+```json
+{
+  "sub": "ait-admin",
+  "aut": "APPLICATION",
+  "aud": "uh1ZxUEZ34ESrqx31ZQbPhjarwMa",
+  "nbf": 1676073881,
+  "azp": "uh1ZxUEZ34ESrqx31ZQbPhjarwMa",
+  "scope": "SERVER_1",
+  "iss": "https://wso2am-ui-np.aws.ait.ucdavis.edu/oauth2/token",
+  "exp": 1676077481,
+  "iat": 1676073881,
+  "jti": "238e681e-6410-470f-be33-ff649ea6d71e"
+}
+```
+
+### Authorization
+
+!> TODO
+
+* roles and descriptions
+
+### Making API Calls
+
+API Calls are made by submitting GraphQL-structured JSON payloads to the API endpoint for the environment (ait-test/ait-sit) you want to use.  These URLs may change over time, but this will be communicated prior to any changes.
+
+* <https://wso2am-api-np.aws.ait.ucdavis.edu/ait-test/1>
+* <https://wso2am-api-np.aws.ait.ucdavis.edu/ait-sit/1>
+
+These endpoints are the only URL you would use for a given environment, to them, you POST JSON payloads with the GraphQL operations.
+
+#### Example cURL Call using the Token to Access the API
+
+```bash
+export API_TOKEN=eyJ4NXQiOiJObVV3T0RZNE5HWmlOR0kzTURZM09EZzJZVEEyWlRCbVptUXlOamhtTXpJeVkySTFPVGczWVEiLCJraWQiOiJORGc0Wm1RNU1qRXpNMkV4WmpWbFlqTTVObUZqWm1FNVpqYzVPVFJtTkRFNFlUSmxNemN5Tm1FM01UazFOV1ptWWpjeVlUWTFNR0l3TlRWbE5tWXpNQV9SUzI1NiIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJhaXQtYWRtaW4iLCJhdXQiOiJBUFBMSUNBVElPTiIsImF1ZCI6IlNTTllSMUZPTlVZRDVvZ0lQREgwYUJweFk3TWEiLCJuYmYiOjE2NzYwNzI1MjQsImF6cCI6IlNTTllSMUZPTlVZRDVvZ0lQREgwYUJweFk3TWEiLCJzY29wZSI6ImRlZmF1bHQiLCJpc3MiOiJodHRwczpcL1wvd3NvMmFtLXVpLW5wLmF3cy5haXQudWNkYXZpcy5lZHVcL29hdXRoMlwvdG9rZW4iLCJleHAiOjE2Nzg2NjQ1MjQsImlhdCI6MTY3NjA3MjUyNCwianRpIjoiNDY2ODNlZGEtNWVkZS00ZmQ1LTg3YjEtZDk2MWNjZmI5MzcwIn0.gJbRX18IyFwuMe54QVdVAnhPc5HM3HregXZ-oW5zvsPpmHJwzOwxtPdUz2H3Oq3e3hOqe56oZZeTJk00n2HW35r1Prig56FnIeqk6_6HmaPZUdm4h77N5fUQwFM93_Gsrk9-lkya5k4nEAn78NDF5k3GwV8dthzR-0WSvxXu-a6k7SbUYDxhnLfsVyxsc0C4ichNgMGStbNKTZLIwBPerwSmyMIIK1uMKk2YXa_XY4bJFMOJaTJPTxJh-WyageDlxTXckgivDyUk78XVFr-bs5VkiY9sDvkIUvuLypM5VVTtXVXDdx2jwOYMna08K4aESzcatGu0ELoMu5-oMxxGdQ
+
+curl 'https://wso2am-api-np.aws.ait.ucdavis.edu/ait-test/1' -X POST \
+  -H "authorization: Bearer $API_TOKEN" \
+  -H 'content-type: application/json' \
+  --data-raw '{"query":"{\n  erpApiInfo {\n    versionNumber\n    shortHash\n    branch\n    committedOn\n    erpSchema\n    apiSchema\n    \n  }\n}\n"}'
+```
+
+Response:
+
+```json
+{
+  "data": {
+    "erpApiInfo": {
+      "versionNumber": "0.2023.01.20",
+      "shortHash": "48cf3ad",
+      "branch": "master",
+      "committedOn": "2023-01-23",
+      "erpSchema": "test_erp",
+      "apiSchema": "test_api"
+    }
+  }
+}
+```
 
 Once connected, your access roles will be determined.  They will identify what operations you have permissions to execute and what data elements you are able to retrieve.
 
-#### Clients
+### Revocation of Tokens
+
+If you have a need to revoke a token before its expiration time, they can be revoked by calling the following endpoint:
+
+* `https://wso2am-ui-np.aws.ait.ucdavis.edu/oauth2/revoke`
+* Method: `POST`
+* Headers:
+  * Content-Type: `application/x-www-form-urlencoded`
+  * Authorization: `Basic Base64(client_id:client_secret)`
+* Body: `token=(JWT Token)`
+
+#### Sample Revocation Call
+
+```bash
+curl -X POST https://wso2am-ui-np.aws.ait.ucdavis.edu/oauth2/revoke -d "token=eyJ4NXQiOiJObVV3T0RZNE5HWmlOR0kzTURZM09EZzJZVEEyWlRCbVptUXlOamhtTXpJeVkySTFPVGczWVEiLCJraWQiOiJORGc0Wm1RNU1qRXpNMkV4WmpWbFlqTTVObUZqWm1FNVpqYzVPVFJtTkRFNFlUSmxNemN5Tm1FM01UazFOV1ptWWpjeVlUWTFNR0l3TlRWbE5tWXpNQV9SUzI1NiIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiJhaXQtYWRtaW4iLCJhdXQiOiJBUFBMSUNBVElPTiIsImF1ZCI6InVoMVp4VUVaMzRFU3JxeDMxWlFiUGhqYXJ3TWEiLCJuYmYiOjE2NzYwNzA0MDYsImF6cCI6InVoMVp4VUVaMzRFU3JxeDMxWlFiUGhqYXJ3TWEiLCJzY29wZSI6ImRlZmF1bHQiLCJpc3MiOiJodHRwczpcL1wvd3NvMmFtLXVpLW5wLmF3cy5haXQudWNkYXZpcy5lZHVcL29hdXRoMlwvdG9rZW4iLCJleHAiOjE2NzYwNzQwMDYsImlhdCI6MTY3NjA3MDQwNiwianRpIjoiMWM0NDg4ZGItYjc4OC00NjEwLWJjZjQtZWI2ZDAyODA3NTMxIn0.JDrFrwrwx38_wsQsT4wHuIOpP-N9GEqV71SJk_CSidrCtHDaXZ5YRHBnervz3WkKE0pS7xJilRM0ZJymJlOQHdERIrraQELYKYk_jk3N_XUTB1CtwZXznzYYk5UhWnDXzV_eadA06Qw1Qz7HEH8zBbuPfICFnJ_DyT9t_cESGmvtb9TwBqNsj_BAVGGa68ixiS-RMr6-NVl2zJzydlUV8CVmKu_15gtaSthdq9cSdOUQ9GrVHE8VpABG99dp8oHoy8YpJiCcAf1BKPB7UxBjCz_QfHUizAm73Kcy78Uh_bFwSmlOtkhv-X-6BsjH5Zysr4Z7TnNrBv8uXMzNStC5Tw" -H"Authorization: Basic Base64(client_id:client_secret)"
+```
+
+
+### Clients
 
 There are a number of clients for various languages available from package repositories.
 
@@ -87,13 +280,13 @@ The GraphQL specification for each operation defines the structure of the data w
 }
 ```
 
-#### Testing Operations
+### Testing Operations
 
 Because every GraphQL server publishes its operations and schema, it is simple to point a GraphQL-aware tool at the server and get a full description of the API as well as (usually) a dynamic editor which can validate your request and payload contents in real-time based on the schema definitions.  You can utilize tools like Postman, Insomnia, or GraphiQL.  We might also be able to provide a playground as part of our API Portal.  (time permitting)
 
 You will just need to provide your credentials in the HTTP header per the tool's configuration to be sent as part of the requests to allow for retrieval of the schema and submission of operations.
 
-#### Obtaining Action Request Results
+### Obtaining Action Request Results
 
 In order to provide an infrastructure with minimum downtime from the perspective of our boundary applications, API data submissions to Oracle are performed an an asynchronous manner.  The submission is validated and stored within the integration platform.  The API then immediately returns the necessary information to follow-up on the request in its response.  The caller is responsible for checking in on the success or failure of the request.  (If possible, we may also provide a service to post a status message back to a URL provided by the caller.)
 
@@ -157,8 +350,8 @@ Below are some examples of responses from the API.  Successful response data is 
   * The Project segment tracks financial activity for a "body of work" that often has a start and an end date that spans across fiscal years.
 * [`ErpActivity`](3.2.1%20Data%20Objects/ErpActivity.md)
   * Systemwide activity to which a transaction is assigned.
-* [`ErpFlex1`](3.2.1%20Data%20Objects/ErpFlex1.md) (**FUTURE**)
-* [`ErpFlex2`](3.2.1%20Data%20Objects/ErpFlex2.md) (**FUTURE**)
+<!-- * [`ErpFlex1`](3.2.1%20Data%20Objects/ErpFlex1.md) (**FUTURE**) -->
+<!-- * [`ErpFlex2`](3.2.1%20Data%20Objects/ErpFlex2.md) (**FUTURE**) -->
 
 <!-- * [`ErpInterEntity`](3.2.1%20Data%20Objects/ErpInterEntity.md) (**FUTURE**) -->
   <!-- * Internal accounting use only when transactions cross between entities, to represent the nature of the funds transfer. -->
@@ -171,8 +364,8 @@ Below are some examples of responses from the API.  Successful response data is 
   * Type of activity recorded on a journal.  Cooresponds to the KFS document type code.
 * [`GlAccountingPeriod`](3.2.1%20Data%20Objects/GlAccountingPeriod.md)
   * Accounting period to which a transaction is assigned.
-* [`GlChartstringAlias`](3.2.1%20Data%20Objects/GlChartstringAlias.md)
-  * Shortcut string for a full set of key accounting segments.  Usable on integration journals instead of specifying all chartfields.  Will be resolved by the integration layer.
+<!-- * [`GlChartstringAlias`](3.2.1%20Data%20Objects/GlChartstringAlias.md)
+  * Shortcut string for a full set of key accounting segments.  Usable on integration journals instead of specifying all chartfields.  Will be resolved by the integration layer. -->
 
 #### PPM Costing Segments
 
@@ -185,8 +378,8 @@ Below are some examples of responses from the API.  Successful response data is 
 
 #### PPM Reference Data
 
-* [`PpmDocumentEntry`](3.2.1%20Data%20Objects/PpmDocumentEntry.md) (**IN PROGRESS**)
-  * This will serve the function of the Journal Source in the GL module.
+* [`PpmDocumentEntry`](3.2.1%20Data%20Objects/PpmDocumentEntry.md)
+  * This will serve the function of the Journal Source in the PPM module.
 
 <!-- * [`PpmCostingType`](3.2.1%20Data%20Objects/PpmCostingType.md) (**TBD**) -->
 <!-- * [`PpmCustomer`](3.2.1%20Data%20Objects/PpmCustomer.md) (**TBD**) -->
