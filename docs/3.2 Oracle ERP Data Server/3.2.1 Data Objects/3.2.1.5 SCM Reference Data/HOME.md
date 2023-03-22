@@ -85,6 +85,64 @@ Represents an accounting period in the GL module of Oracle Financials.  Used for
 
 
 <!--BREAK-->
+### Data Object: ApInvoice
+
+
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `AP_INVOICE_V` (view)
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+    * 
+  * Underlying Database Objects:
+    * 
+    * 
+    * 
+
+##### Properties
+
+| Property Name         | Data Type                | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| --------------------- | ------------------------ | :------------: | :-------------: | ------------- | ----- |
+| invoiceId             | Long!                    |                |                 |               |  |
+| vendorId              | Long!                    |                |                 |               |  |
+| vendorSiteId          | Long!                    |                |                 |               |  |
+| orgId                 | Long!                    |                |                 |               |  |
+| poHeaderId            | Long                     |                |                 |               |  |
+| supplierNumber        | NonEmptyTrimmedString30  |                |                 |               |  |
+| supplierSiteCode      | NonEmptyTrimmedString15  |                |                 |               |  |
+| supplierName          | NonEmptyTrimmedString360 |                |                 |               |  |
+| supplierInvoiceNumber | NonEmptyTrimmedString25  |                |                 |               |  |
+| invoiceNumber         | NonEmptyTrimmedString50  |                |                 |               |  |
+| poNumber              | NonEmptyTrimmedString30  |                |                 |               |  |
+| checkNumber           | NonEmptyTrimmedString50  |                |                 |               |  |
+| paymentAmount         | Long                     |                |                 |               |  |
+| invoiceDate           | Date                     |                |                 |               |  |
+| paymentDate           | Date                     |                |                 |               |  |
+| paymentStatusCode     | NonEmptyTrimmedString1   |                |                 |               |  |
+| paymentSourceName     | NonEmptyTrimmedString25  |                |                 |               |  |
+| checkStatusCode       | NonEmptyTrimmedString50  |                |                 |               |  |
+| paymentMethodCode     | NonEmptyTrimmedString25  |                |                 |               |  |
+| batchName             | NonEmptyTrimmedString50  |                |                 |               |  |
+| lastUpdateDateTime    | DateTime                 |                |                 |               |  |
+| lastUpdateUserId      | ErpUserId                |                |                 |               |  |
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
 ### Data Object: ScmPaymentTerm
 
 

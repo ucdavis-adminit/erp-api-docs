@@ -156,12 +156,14 @@ This is due to the potentially sensitive nature of this information.
 
 ##### Properties
 
-| Property Name      | Data Type                | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| ------------------ | ------------------------ | :------------: | :-------------: | ------------- | ----- |
-| accountNumber      | NonEmptyTrimmedString50  |                |        Y        |               | Value that uniquely identifies the CustomerAccount by number |
-| accountName        | NonEmptyTrimmedString100 |                |        Y        |               | Value that uniquely identifies the CustomerAccount by name |
-| status             | NonEmptyTrimmedString10  |                |                 |               | Status Code of the Customer Account |
-| lastUpdateDateTime | DateTime                 |                |                 |               | Date/Time last updated |
+| Property Name        | Data Type                | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| -------------------- | ------------------------ | :------------: | :-------------: | ------------- | ----- |
+| custAccountId        | Long!                    |                |                 |               |  |
+| accountNumber        | NonEmptyTrimmedString50  |                |        Y        |               | Value that uniquely identifies the CustomerAccount by number |
+| accountName          | NonEmptyTrimmedString100 |                |        Y        |               | Value that uniquely identifies the CustomerAccount by name |
+| status               | NonEmptyTrimmedString10  |                |                 |               | Status Code of the Customer Account |
+| lastUpdateDateTime   | DateTime                 |                |                 |               | Date/Time last updated |
+| customerAccountSites | [ArCustomerAccountSite]  |                |                 |               | Customer Accounts have one to many Sites associated |
 
 ##### Linked Data Objects
 
@@ -197,46 +199,64 @@ This is due to the potentially sensitive nature of this information.
 * **Returns**
   * `ArCustomerAccountSearchResults!`
 
+##### `arCustomerAccountSite`
+
+> Get a single ArCustomerAccountSite by custAccountSiteId.  Returns undefined if does not exist
+
+* **Parameters**
+  * `custAccountSiteId : String!`
+* **Returns**
+  * `ArCustomerAccountSite`
+
+##### `arCustomerAccountSiteSearch`
+
+> Search for ArCustomerAccountSite objects by multiple properties.
+> See the ArCustomerAccountSiteFilterInput type for options.
+
+* **Parameters**
+  * `filter : ArCustomerAccountSiteFilterInput!`
+* **Returns**
+  * `ArCustomerAccountSiteSearchResults!`
+
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
 
 
 <!--BREAK-->
-### Data Object: ArCustomerAccount
+### Data Object: ArCustomerAccountSite
 
-Represents a Customer Account Site within the AR module of Oracle Financials.
 
-This is a sub-unit of a Customer Account, and for some customers, they may
-have different sites for ShipTo vs BillTo and other purposes.
-
-Each AR Invoice must be tied to a specific customer site by Customer Account Site Number, and this
-is validated against reference data.
 
 #### Access Controls
 
-* Required Role: `erp:reader-refdata`
+* Required Role: `erp:reader-customer`
 
 #### Data Source
 
 * Local Table/View: `AR_CUSTOMER_ACCOUNT_SITE`
-  * Support Tables:
-    * n/a
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
-    * View `CrmAnalyticsAM.CrmExtractAM.HzBiccExtractAM.CustomerAccountSiteExtractPVO`
+    * CrmAnalyticsAM.CrmExtractAM.HzBiccExtractAM.CustomerAccountSiteExtractPVO
   * Underlying Database Objects:
-    * `HZ_CUST_ACCT_SITES_ALL`
+    * HZ_CUST_ACCT_SITES_ALL
 
 ##### Properties
 
-| Property Name          | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| ---------------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| internalAccountSiteId  | NonEmptyTrimmedString50!  |       Y        |        Y        |               | Primary key of this object. |
-| shipToFlag             | NonEmptyTrimmedString1    |                |        Y        |               | Whether this is a ShipTo site. |
-| billToFlag             | NonEmptyTrimmedString1    |                |        Y        |               | Whether this is a BillTo site. |
-| status                 | NonEmptyTrimmedString1    |                |        Y        |               | Status code of this customer account. |
-| lastUpdateDateTime     | DateTime                  |                |        Y        |               | Timestamp this record was last updated in the financial system. |
+| Property Name      | Data Type              | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------ | ---------------------- | :------------: | :-------------: | ------------- | ----- |
+| custAccountSiteId  | Long!                  |                |        Y        |               |  |
+| custAccountId      | Long!                  |                |        Y        |               |  |
+| partySiteId        | Long!                  |                |        Y        |               |  |
+| startDate          | Date                   |                |        Y        |               |  |
+| endDate            | Date                   |                |        Y        |               |  |
+| shipToFlag         | NonEmptyTrimmedString1 |                |                 |               |  |
+| billToFlag         | NonEmptyTrimmedString1 |                |                 |               |  |
+| status             | NonEmptyTrimmedString1 |                |                 |               |  |
+| lastUpdateDateTime | DateTime               |                |        Y        |               |  |
+| partySite          | ArPartySite            |                |                 |               |  |
+
+* `partySite` : `ArPartySite`
 
 ##### Linked Data Objects
 
@@ -246,14 +266,14 @@ is validated against reference data.
 
 ##### `arCustomerAccountSite`
 
-> Get a single ArCustomerAccountSite by `internalAccountSiteId`.  Returns undefined if does not exist
+> Get a single ArCustomerAccountSite by custAccountSiteId.  Returns undefined if does not exist
 
 * **Parameters**
-  * `internalAccountSiteId : String!`
+  * `custAccountSiteId : String!`
 * **Returns**
   * `ArCustomerAccountSite`
 
-##### `ArCustomerAccountSiteSearch`
+##### `arCustomerAccountSiteSearch`
 
 > Search for ArCustomerAccountSite objects by multiple properties.
 > See the ArCustomerAccountSiteFilterInput type for options.
@@ -372,6 +392,84 @@ Invoice status information used to check remaining balances.
   * `filter : ArMemoLineFilterInput!`
 * **Returns**
   * `ArMemoLineSearchResults!`
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
+### Data Object: ArPartySite
+
+
+
+#### Access Controls
+
+* Required Role: `erp:reader-customer`
+
+#### Data Source
+
+* Local Table/View: `AR_PARTY_SITE`
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+    * CrmAnalyticsAM.CrmExtractAM.HzBiccExtractAM.PartySiteExtractPVO
+  * Underlying Database Objects:
+    * HZ_PARTY_SITES
+
+##### Properties
+
+| Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| partySiteNumber    | NonEmptyTrimmedString50!  |                |        Y        |               | Value that uniquely identifies the PartySite by number |
+| partySiteName      | NonEmptyTrimmedString100! |                |        Y        |               | Value that uniquely identifies the PartySite by name |
+| status             | NonEmptyTrimmedString10   |                |                 |               | Status Code of the PartySite |
+| partySiteId        | Long                      |                |                 |               |  |
+| partyId            | Long                      |                |                 |               |  |
+| locationId         | Long                      |                |                 |               |  |
+| lastUpdateDateTime | DateTime                  |                |                 |               |  |
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+##### `arPartySite`
+
+> Get a single ArPartySite by partySiteId.  Returns undefined if does not exist
+
+* **Parameters**
+  * `partySiteId : Long!`
+* **Returns**
+  * `ArPartySite`
+
+##### `arPartySiteByPartySiteNumber`
+
+> Get a single ArPartySite by partySiteNumber.  Returns undefined if does not exist
+
+* **Parameters**
+  * `partySiteNumber : String!`
+* **Returns**
+  * `ArPartySite`
+
+##### `arPartySiteByPartySiteName`
+
+> Get a single ArPartySite by partySiteName.  Returns undefined if does not exist
+
+* **Parameters**
+  * `partySiteName : String!`
+* **Returns**
+  * `ArPartySite`
+
+##### `arPartySiteSearch`
+
+> Search for ArPartySite objects by multiple properties.
+> See the ArPartySiteFilterInput type for options.
+
+* **Parameters**
+  * `filter : ArPartySiteFilterInput!`
+* **Returns**
+  * `ArPartySiteSearchResults!`
 
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.

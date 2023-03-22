@@ -14,7 +14,7 @@ In either case, files are processed as soon as possible after receipt, subject o
 
 At present, only the API action request type below will be configured for file-upload access.
 
-* `glJournalVoucher`
+* `glJournalRequest`
 
 <!-- * `scmInvoicePayment` -->
 
@@ -32,47 +32,9 @@ The file naming pattern is:
 
 `<data type>.<Source Name>.<timestamp>.json`
 
-| Data Type                    | Prefix        | File Submission Supported | Operation Name               | Sample Name                                       |
-| ---------------------------- | ------------- | :-----------------------: | ---------------------------- | ------------------------------------------------- |
-| Journal                      | `journal`     |            Yes            | glJournalRequest             | `journal.UCD_Boundary_System.20220701110325.json` |
-| Invoice Payment              | `invoice`     |            No             | scmInvoicePaymentCreate      | `invoice.UCD_Concur.20220701110325.json`          |
-| Payment Request              | `payment`     |           Only            | apPaymentRequest             | `payment.UCD_Banner.20220701110325.json`          |
-| Purchasing Requisition       | `requisition` |            No             | scmPurchaseRequisitionCreate | `requisition.UCD_CAES.20220701110325.json`        |
-| Receivables Invoice          | `receivable`  |            No             |                              | `receivable.UCD_Stratocore.20220701110325.json`   |
-| Award                        | `award`       |           Only            | ppmAwardCreate               | `award.UCD_Cayuse.20220701110325.zip`             |
-| Sponsored Project            | `project`     |           Only            | ppmProjectCreate             | `project.UCD_Cayuse.20220701110325.zip`           |
-| US Bank Credit Card Expenses | `usbank`      |           Only            |                              | `usbank.UCD_USBank.20220701110325.dat`            |
-| Payment Plus Expenses        | `paymentplus` |           Only            |                              | `paymentplus.UCD_Payment_Plus.20220701110325.dat` |
-| Concur SAE                   | `sae`         |           Only            |                              | `sae.UCD_Concur.20220701110325.dat`               |
-| UCPath I-303                 | `i303`        |           Only            |                              | `i303.UCD_UCPath.20220701110325.dat`              |
-| AggieShip FBAP               | `fbap`        |           Only            |                              | `fbap.UCD_Aggieship.20220701110325.dat`           |
-| AR Lockbox                   | N/A           |           Only            |                              | (unknown)                                         |
-#### S3 File Location Conventions
-
-Files transferred to S3 will be stored with file names that imply a directory structure that reflects the direction of the data transfer, the environment which the file should be integrated with, the format of the data in the file, and the pipeline which should process the file.
-
-This path is used to submit the file to the appropriate integration pipeline intake topic.
-
-1. Environment code (test/dev2/dev4/prod)
-2. Data Direction (in/out)
-3. Data Type (json/csv/xml/zip/dat/etc)
-4. Operation Name (glJournalCreate, ppmAwardCreate, etc)  This would be mapped from the file name prefix.
-5. File Name (including extension)
-
-##### Examples
-
-* JSON journal file which should be processed into the TEST environment:
-  * `test/in/json/glJournalRequest/journal.UCD_Boundary_System.20220701110325.json`
-  * Destination pipeline: `in.test.sftp.json.glJournalRequest`
-* Banner payment file:
-  * `test/in/csv/apPaymentRequest/payment.UCD_Banner.20220701110325.dat`
-  * Destination pipeline: `in.test.sftp.csv.apPaymentRequest`
-* AggieShip FBAP file:
-  * `test/in/xml/aggieshipFbap/fbap.UCD_Aggieship.20220701110325.dat`
-  * Destination pipeline: `in.test.sftp.xml.aggieshipFbap`
-* Cayuse Award File:
-  * `test/in/zip/ppmAwardCreate/award.UCD_Cayuse.20220701110325.zip`
-  * Destination pipeline: `in.test.sftp.zip.ppmAwardCreate`
+| Data Type | Prefix    | File Submission Supported | Operation Name   | Sample Name                                       |
+| --------- | --------- | :-----------------------: | ---------------- | ------------------------------------------------- |
+| Journal   | `journal` |            Yes            | glJournalRequest | `journal.UCD_Boundary_System.20220701110325.json` |
 
 #### File Format
 

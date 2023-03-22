@@ -590,17 +590,16 @@ Represents one record per fusion system user
 
 | Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
 | ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| id                 | Long!                     |                |        Y        |               | Mandatory Primary Key. |
+| id                 | Long!                     |                |                 |               | Mandatory Primary Key. |
 | userId             | NonEmptyTrimmedString100! |                |        Y        |               | The latest principal username of the user |
-| personId           | Long!                     |                |        Y        |               | The description of the journal category associated with the row. |
-| firstName          | NonEmptyTrimmedString150! |                |                 |               | Person's First name. |
+| personId           | Long!                     |                |                 |               |  |
+| firstName          | NonEmptyTrimmedString150! |                |        Y        |               | Person's First name. |
 | lastName           | NonEmptyTrimmedString150! |                |        Y        |               | Person's Last name. |
 | displayName        | NonEmptyTrimmedString360  |                |        Y        |               | Peron's Display name. |
-| fullName           | NonEmptyTrimmedString360  |                |                 |               | Person's Full name. |
-| email              | ErpEmailAddress           |                |                 |               | E-mail address. |
-| assignmentStatus   | NonEmptyTrimmedString30   |                |                 |               | Unique code representing the status. |
+| email              | ErpEmailAddress           |                |        Y        |               | E-mail address. |
+| assignmentStatus   | NonEmptyTrimmedString30   |                |                 |               |  |
 | assignmentType     | NonEmptyTrimmedString30   |                |                 |               | Identifies the type of record: employee, CWK, applicant or non-workers |
-| active             | Boolean                   |                |                 |               | Flag to mark when a user record that has been deleted in LDAP. |
+| active             | Boolean                   |                |                 |               |  |
 | startDate          | Date                      |                |                 |               | The date that the user is active from. |
 | endDate            | Date                      |                |                 |               | The date that the user ceases to be active in fusion. |
 | lastUpdateDateTime | DateTime!                 |                |        Y        |               |  |
@@ -617,7 +616,7 @@ Represents one record per fusion system user
 > Get a single ErpUser by id.  Returns undefined if does not exist
 
 * **Parameters**
-  * `code : String!`
+  * `id : String!`
 * **Returns**
   * `ErpUser`
 
@@ -629,15 +628,6 @@ Represents one record per fusion system user
   * `userId : String!`
 * **Returns**
   * `ErpUser`
-
-##### `erpUserAll`
-
-> Get all currently valid ErpUser objects.
-
-* **Parameters**
-  * `sort : [String!]`
-* **Returns**
-  * `[ErpUser!]!`
 
 ##### `erpUserSearch`
 

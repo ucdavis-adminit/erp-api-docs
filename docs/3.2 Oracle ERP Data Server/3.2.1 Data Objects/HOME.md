@@ -185,11 +185,11 @@ It is the responsibility of any backing datasource to be able to implement these
 
 At the time of writing, the common filter input data types were defined as:
 
-* `StringInputFilter`
-* `IntInputFilter`
-* `FloatInputFilter`
-* `BooleanInputFilter`
-* `DateInputFilter`
+* `StringFilterInput`
+* `IntFilterInput`
+* `FloatFilterInput`
+* `BooleanFilterInput`
+* `DateFilterInput`
 
 ```gql
 "String filter criteria object, only one of this object's properties should be set.  Except as noted in the properties below, all comparisons are case-sensitive."

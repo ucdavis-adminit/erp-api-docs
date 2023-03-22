@@ -77,7 +77,7 @@
   color: var(--ucd-blue-100);
   border-bottom: var(--ucd-blue-100) solid 2px;
   margin: revert;
-  padding-bottom: revert;
+  padding-bottom: 0px;
   font-weight: 600;
   font-size: 1.2em;
 }
@@ -89,10 +89,18 @@
 .page_toc div.lv2 a span {
   font-size: var(--font-size-m);
   font-weight: bold;
+  color: var(--ucd-accent-merlot);
 }
 
 .page_toc div.lv2 {
   border-bottom: var(--ucd-blue-100) solid 1px;
+  background-color: var(--ucd-gold-10);
+}
+
+.page_toc div.lv3:before {
+  content: "•";
+  position: relative;
+  left: -2px;
 }
 
 .page_toc div.lv3 a span {
