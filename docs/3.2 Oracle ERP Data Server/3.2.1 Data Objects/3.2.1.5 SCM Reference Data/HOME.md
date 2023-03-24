@@ -328,15 +328,17 @@ Supplier in Oracle replaces Vendor in KFS.
 
 | Property Name            | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
 | ------------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| supplierId               | Long!                     |                |        Y        |               | Value that uniquely identifies the supplier internally to Oracle. |
-| supplierNumber           | Long!                     |                |        Y        |               | Unique ID for the supplier used to reference it within the UI and in interfaces.  This largely corresponds to the Vendor ID in KFS. |
+| supplierId               | Long!                     |                |                 |               | Value that uniquely identifies the supplier internally to Oracle. |
+| supplierNumber           | NonEmptyTrimmedString30!  |                |        Y        |               | Unique ID for the supplier used to reference it within the UI and in interfaces.  This largely corresponds to the Vendor ID in KFS. |
 | name                     | NonEmptyTrimmedString360! |                |        Y        |               | Supplier: Name of the supplier. |
 | aliasName                | NonEmptyTrimmedString360  |                |        Y        |               | Alias: Alternate internal name for used for the supplier. |
 | alternateName            | NonEmptyTrimmedString360  |                |        Y        |               | Alternate Name: Alternate name of the supplier. |
 | businessRelationshipCode | NonEmptyTrimmedString30   |                |                 |               | Business Relationship: Business relationship between the enterprise and the supplier. |
-| supplierType             | NonEmptyTrimmedString80   |                |                 |               | Supplier Type: Type of supplier. |
-| startDateActive          | Date                      |                |                 |               | The date from when the value is available for use. |
-| endDateActive            | Date                      |                |                 |               | The date till which the value is available for use. |
+| supplierType             | NonEmptyTrimmedString30   |                |                 |               | DEPRECATED: Use organizationTypeCode instead. |
+| supplierTypeCode         | NonEmptyTrimmedString30   |                |                 |               | The general type of goods or services provided by this supplier. |
+| organizationTypeCode     | NonEmptyTrimmedString30   |                |        Y        |               | The nature of the supplier's business structure.  (Corporation, Partnership, etc...) |
+| startDateActive          | LocalDate                 |                |                 |               | The date from when the value is available for use. |
+| endDateActive            | LocalDate                 |                |                 |               | The date till which the value is available for use. |
 | lastUpdateDateTime       | DateTime!                 |                |        Y        |               | Timestamp this record was last updated in the financial system. |
 | lastUpdateUserId         | ErpUserId                 |                |                 |               | User ID of the person who last updated this record. |
 | sites                    | [ScmSupplierSite!]!       |                |                 |               | Supplier business locations referenced when making orders or payments to the supplier. |
@@ -352,7 +354,7 @@ Supplier in Oracle replaces Vendor in KFS.
 > Get a single ScmSupplier by supplierId.  Returns undefined if does not exist
 
 * **Parameters**
-  * `supplierId : String!`
+  * `supplierId : Long!`
 * **Returns**
   * `ScmSupplier`
 
