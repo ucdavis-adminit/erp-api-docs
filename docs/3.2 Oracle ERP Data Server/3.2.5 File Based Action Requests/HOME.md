@@ -30,9 +30,11 @@ The file naming pattern is:
 
 `<data type>.<Source Name>.<timestamp>.json`
 
-| Data Type | Prefix    | File Submission Supported | Operation Name   | Sample Name                                       |
-| --------- | --------- | :-----------------------: | ---------------- | ------------------------------------------------- |
-| Journal   | `journal` |            Yes            | glJournalRequest | `journal.UCD_Boundary_System.20220701110325.json` |
+| Data Type      | Prefix    | Operation Name   | Sample File Name                                  |
+| -------------- | --------- | ---------------- | ------------------------------------------------- |
+| GL/PPM Journal | `journal` | glJournalRequest | `journal.UCD_Boundary_System.20220701110325.json` |
+
+!> Filename Maximum Length: 80 characters including extension
 
 #### File Format
 
@@ -62,16 +64,6 @@ It is recommended that you utilize the API documentation and API server playgrou
             "accountingDate": "2023-07-31",
             "accountingPeriodName": "Jul-23",
             "journalLines": [
-              {
-                "glSegmentString": "1311-13U00-9300479-390000-68-000-0000000000-000000-0000-000000-000000",
-                "debitAmount": 100.00,
-                "externalSystemIdentifier": "ITEMX"
-              },
-              {
-                "glSegmentString": "1311-13U00-9300531-770000-68-000-0000000000-000000-0000-000000-000000",
-                "creditAmount": 100.00,
-                "externalSystemIdentifier": "ITEMX"
-              },
               {
                 "glSegments": {
                   "entity": "1311",
@@ -123,16 +115,6 @@ Then the contents of the file would be:
     "accountingPeriodName": "Jul-23",
     "journalLines": [
       {
-        "glSegmentString": "1311-13U00-9300479-390000-68-000-0000000000-000000-0000-000000-000000",
-        "debitAmount": 100.00,
-        "externalSystemIdentifier": "ITEMX"
-      },
-      {
-        "glSegmentString": "1311-13U00-9300531-770000-68-000-0000000000-000000-0000-000000-000000",
-        "creditAmount": 100.00,
-        "externalSystemIdentifier": "ITEMX"
-      },
-      {
         "glSegments": {
           "entity": "1311",
           "fund": "13U00",
@@ -180,7 +162,7 @@ If the file passes validation, it will be queued for formatting and transmission
 
 ##### 5. Data Submission
 
-Finally, the data gets submitted to Oracle.  This is a multi-stage process.  If there are failures related to the data (according to Oracle), those will be reported back to the configured email address.
+The data is submitted to Oracle.  This is a multi-stage process by Oracle.  If there are failures at this point (according to Oracle), they will be extracted from Oracle and reported back to the email address configured for the boundary system ID.
 
 
 ![diagram](file-upload-flow.svg)
