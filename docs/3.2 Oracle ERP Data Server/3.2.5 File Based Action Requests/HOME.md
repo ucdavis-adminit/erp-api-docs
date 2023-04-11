@@ -16,8 +16,6 @@ At present, only the API action request type below will be configured for file-u
 
 * `glJournalRequest`
 
-<!-- * `scmInvoicePayment` -->
-
 #### Obtaining Access
 
 After onboarding your boundary system and obtaining authorization to utilize the SFTP file uploads, you will be provided credentials by the GoAnywhere system administrators.  It utilizes a standard SFTP connection on port 2222.  (This should be the same as any existing file uploads for KFS.)
@@ -182,7 +180,7 @@ If the file passes validation, it will be queued for formatting and transmission
 
 ##### 5. Data Submission
 
-Finally, the data gets submitted to Oracle.  This is a multi-stage process.  If there are failures related to the data (according to Oracle), those will be reported back to the configured email address by Oracle.
+Finally, the data gets submitted to Oracle.  This is a multi-stage process.  If there are failures related to the data (according to Oracle), those will be reported back to the configured email address.
 
 
 ![diagram](file-upload-flow.svg)
