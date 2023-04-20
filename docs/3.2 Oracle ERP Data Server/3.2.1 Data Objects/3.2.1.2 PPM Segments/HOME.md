@@ -106,7 +106,7 @@ The Project identifies the planned work or activity to be completed over a perio
 > Get a single PpmProject by code.  Returns undefined if does not exist
 
 * **Parameters**
-  * `projectId : String!`
+  * `projectId : NumericString!`
 * **Returns**
   * `PpmProject`
 
@@ -122,15 +122,6 @@ The Project identifies the planned work or activity to be completed over a perio
 ##### `ppmProjectByName`
 
 > Gets a list of PpmProjects by exact name.  Returns empty list if none are found.  Project Name should be unique in oracle.
-
-* **Parameters**
-  * `projectName : String!`
-* **Returns**
-  * `[PpmProject!]!`
-
-##### `ppmProjectDefaultAwardFundingSource`
-
-> Gets default award and funding source for PpmProjects by exact name.   Project Name should be unique in oracle.
 
 * **Parameters**
   * `projectName : String!`
@@ -224,7 +215,7 @@ The Task identifies the activities used to further breakdown a PPM project. Ever
 > Get a single PpmTask by id.  Returns undefined if it does not exist
 
 * **Parameters**
-  * `id : String!`
+  * `id : NumericString!`
 * **Returns**
   * `PpmTask`
 
@@ -413,7 +404,7 @@ The Expenditure Type identifies the natural classification of the expense transa
 > Use the ppmExpenditureTypeByName or ppmExpenditureTypeByAccount operations to pull by a unique identifier.
 
 * **Parameters**
-  * `id : String!`
+  * `id : NumericString!`
 * **Returns**
   * `PpmExpenditureType`
 
@@ -519,7 +510,7 @@ The Award Number identifies the number assigned to an award containing funding a
 | flowThruAmount              | NonNegativeFloat          |                |                 |               |  |
 | flowThruFromDate            | LocalDate                 |                |                 |               |  |
 | flowThruToDate              | LocalDate                 |                |                 |               |  |
-| flowThruPrimarySponsorId    | NonEmptyTrimmedString30   |                |                 |               |  |
+| flowThruPrimarySponsorId    | Long                      |                |                 |               |  |
 | flowThruRefAwardName        | NonEmptyTrimmedString100  |                |                 |               |  |
 | flowThruIsFederal           | Boolean                   |                |                 |               |  |
 | eligibleForUse              | Boolean!                  |                |                 |               | Returns whether this PpmAward is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmAward must:<br/>- Have closeDate after the given accountingDate |
@@ -540,7 +531,7 @@ The Award Number identifies the number assigned to an award containing funding a
 > Get a single PpmAward by id.  Returns undefined if does not exist
 
 * **Parameters**
-  * `id : String!`
+  * `id : NumericString!`
 * **Returns**
   * `PpmAward`
 
@@ -650,7 +641,7 @@ The Funding Source identifies the name of the sponsor for the external funding s
 > Get a single PpmFundingSource by id.  Returns undefined if does not exist
 
 * **Parameters**
-  * `id : String!`
+  * `id : NumericString!`
 * **Returns**
   * `PpmFundingSource`
 

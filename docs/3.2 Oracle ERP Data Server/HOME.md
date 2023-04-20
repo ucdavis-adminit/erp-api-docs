@@ -435,7 +435,8 @@ Below are some examples of responses from the API.  Successful response data is 
 | `Currency`                   | A field whose value is a Currency: https://en.wikipedia.org/wiki/ISO_4217. |
 | `Date`                       | A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. |
 | `DateTime`                   | A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. |
-| `EmailAddress`               | A field whose value conforms to the standard internet email address format as specified in RFC822: https://www.w3.org/Protocols/rfc822/. |
+| `DeweyDecimal`               | A field whose value conforms to the standard DeweyDecimal format as specified by the OCLC https://www.oclc.org/content/dam/oclc/dewey/resources/summaries/deweysummaries.pdf |
+| `EmailAddress`               | A field whose value conforms to the standard internet email address format as specified in HTML Spec: https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address. |
 | `ErpAccountCode`             | Oracle GL Account Segment Code<br/><br/>- All values are exactly 6 characters matching the regex pattern: `[0-9A-Z]{6}`<br/>- Validated against the [`ErpAccount`]({{Types.ErpAccount}}) object. |
 | `ErpAccountingPeriodName`    | Oracle Accounting Period Name<br/><br/>- Validated against the `periodName` of the [`GlAccountingPeriod`]({{Types.GlAccountingPeriod}}).<br/>   |
 | `ErpActivityCode`            | Oracle GL Activity Segment Code<br/><br/>- All values are exactly 6 characters matching the regex pattern: `[0-9A-Z]{6}`<br/>- Validated against the [`ErpActivity`]({{Types.ErpActivity}}) object. |
@@ -464,12 +465,14 @@ Below are some examples of responses from the API.  Successful response data is 
 | `GlSegmentString`            | Oracle GL Combined Segments Chartstring<br/><br/>Must be fully populated with all 11 segments, even if unused.  Fill unused segments with zeroes.<br/><br/>- Format Pattern: `0000-00000-0000000-000000-00-000-0000000000-000000-0000-000000-000000`<br/>- Format Regex:   `^[0-9]{3}[0-9AB]-[0-9A-Z]{5}-[0-9A-Z]{7}-[0-9A-Z]{6}-[0-9][0-9A-Z]-[0-9A-Z]{3}-[0-9A-Z]{10}-[0-9A-Z]{6}-0000-000000-000000$`<br/> |
 | `Int`                        | The `Int` scalar type represents non-fractional signed whole numeric values. Int can represent values between -(2^31) and 2^31 - 1. |
 | `IP`                         | A field whose value is either an IPv4 or IPv6 address: https://en.wikipedia.org/wiki/IP_address. |
+| `IPCPatent`                  | A field whose value is an IPC Class Symbol within the International Patent Classification System: https://www.wipo.int/classifications/ipc/en/ |
 | `JWT`                        | A field whose value is a JSON Web Token (JWT): https://jwt.io/introduction. |
 | `KfsAccountNumber`           | 7-character KFS Account Number, upper-case letters and digits only |
 | `KfsChartCode`               | 1-character KFS Chart Code.  Must be one of 3, L, H, S, P, M, N |
 | `KfsOrgCode`                 | 4-character KFS Org Code, upper-case letters and digits only |
 | `KfsProjectCode`             | 10-character KFS Project Code, upper-case letters and digits only |
 | `KfsSubAccountNumber`        | 5-character KFS Sub Account Number, upper-case letters and digits only |
+| `LCCSubclass`                | A field whose value conforms to the Library of Congress Subclass Format ttps://www.loc.gov/catdir/cpso/lcco/ |
 | `LocalDate`                  | A local date string (i.e., with no associated timezone) in `YYYY-MM-DD` format, e.g. `2020-01-01`. |
 | `Long`                       | The `BigInt` scalar type represents non-fractional signed whole numeric values. |
 | `NonEmptyString`             | A string that cannot be passed as an empty value |
@@ -479,6 +482,7 @@ Below are some examples of responses from the API.  Successful response data is 
 | `NonEmptyTrimmedString40`    | String limited to 40 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonNegativeFloat`           | Floats that will have a value of 0 or more. |
 | `NonNegativeInt`             | Integers that will have a value of 0 or more. |
+| `NumericString`              | String consisting of only digits.  Used to represent numbers larger than other data types easily allow.  Max 40 digits. |
 | `PositiveFloat`              | Floats that will have a value greater than 0. |
 | `PositiveInt`                | Integers that will have a value greater than 0. |
 | `PpmAwardNumber`             | Oracle PPM Award Number<br/><br/>Only required for Sponsored Research projects (defined as a flag on the [PpmProject]({{Types.PpmProject}})), this identifies the award to which the expenses are applied.  This will be an system-generated 7-character string.  It is for project reporting only, and has no impact on the GL mappings.<br/><br/>Normally, you will not need to provide this, as most projects will have a single award and this will be derived by the API.  File-based submitters will need to look up the default project number from the PpmProject and supply it when the `sponsoredProject` property is true.<br/> |

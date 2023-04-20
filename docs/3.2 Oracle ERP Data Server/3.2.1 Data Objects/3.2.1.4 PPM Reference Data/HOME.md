@@ -343,7 +343,7 @@ Needed for to manage Terms and Conditions for lookup table
 > Get a single PpmTerms by id.  Returns undefined if does not exist
 
 * **Parameters**
-  * `id : String!`
+  * `id : NumericString!`
 * **Returns**
   * `PpmTerms`
 

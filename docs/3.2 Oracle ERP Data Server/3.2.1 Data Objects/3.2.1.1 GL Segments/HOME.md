@@ -222,26 +222,6 @@ The Fund segment most closely aligns with the fund attribute of the KFS Account.
 * **Returns**
   * `ErpFundSearchResults!`
 
-##### `erpFundSource`
-
-> Get a single ErpFundSource by id.  Returns undefined if does not exist
-
-* **Parameters**
-  * `code : String!`
-* **Returns**
-  * `ErpFundSource`
-
-##### `erpFundSourceSearch`
-
-> Search for ErpFundSource objects by multiple properties.
-> 
-> See the ErpFundSourceFilterInput type for options.
-
-* **Parameters**
-  * `filter : ErpFundSourceFilterInput!`
-* **Returns**
-  * `ErpFundSourceSearchResults!`
-
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
 
@@ -434,7 +414,7 @@ The (Natural) Account segment most closely aligns with the KFS Object Code.
 | hierarchyDepth     | Int                       |                |        Y        |               | Level below the top for a ErpAccount that is part of a reporting hierarchy. |
 | hierarchyLevel     | String                    |                |        Y        |               | Reporting Level designation based on the hierarchy depth. |
 | eligibleForUse     | Boolean!                  |                |                 |               | Returns whether this ErpAccount is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the ErpAccount must:<br/>- Be enabled<br/>- Not be summaryOnly<br/>- Have a startDate and endDate range which includes the given accountingDate |
-| purposeRequired    | Boolean!                  |                |                 |               | Whether GL segment strings using this account code require a purpose code.  All expenses require an assigned purpose code.  Purpose is optional on other types of transactions.<br/><br/>Expense accounts are defined as those which descend from account 50000B. |
+| purposeRequired    | Boolean!                  |                |                 |               | DEPRECATED - NOT IMPLEMENTED |
 
 * `parent` : `ErpAccount`
   * The ErpAccount which is the immediate parent of this one.<br/>Will be undefined if the ErpAccount has no parent.
@@ -842,17 +822,6 @@ Due to significant variations in how departments track projects in KFS, it is no
   * `code : String!`
 * **Returns**
   * `ErpProject`
-
-##### `erpProjectChildren`
-
-> Get items under the given ErpProject in the hierarchy.
-> Returns undefined if the parent does not exist.
-> Returns an empty list if the given record has no children.
-
-* **Parameters**
-  * `code : String!`
-* **Returns**
-  * `[ErpProject!]`
 
 ##### `erpProjectSearch`
 

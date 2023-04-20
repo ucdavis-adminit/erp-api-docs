@@ -66,7 +66,7 @@ Contains information about the ERP API server's version.
 | ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
 | code               | NonEmptyTrimmedString150! |                |        Y        |               |  |
 | id                 | Long!                     |                |                 |               |  |
-| name               | NonEmptyTrimmedString240! |                |                 |               |  |
+| name               | NonEmptyTrimmedString240! |                |        Y        |               |  |
 | enabled            | Boolean!                  |                |        Y        |               |  |
 | startDate          | LocalDate                 |                |                 |               |  |
 | endDate            | LocalDate                 |                |                 |               |  |
@@ -78,26 +78,6 @@ Contains information about the ERP API server's version.
 (None)
 
 #### Query Operations
-
-##### `erpBuilding`
-
-> Get a single ErpBuilding by id.  Returns undefined if does not exist
-
-* **Parameters**
-  * `code : String!`
-* **Returns**
-  * `ErpBuilding`
-
-##### `erpBuildingSearch`
-
-> Search for ErpBuilding objects by multiple properties.
-> 
-> See the ErpBuildingFilterInput type for options.
-
-* **Parameters**
-  * `filter : ErpBuildingFilterInput!`
-* **Returns**
-  * `ErpBuildingSearchResults!`
 
 ##### `erpBuildingRoom`
 
@@ -118,6 +98,26 @@ Contains information about the ERP API server's version.
   * `filter : ErpBuildingRoomFilterInput!`
 * **Returns**
   * `ErpBuildingRoomSearchResults!`
+
+##### `erpBuilding`
+
+> Get a single ErpBuilding by id.  Returns undefined if does not exist
+
+* **Parameters**
+  * `code : String!`
+* **Returns**
+  * `ErpBuilding`
+
+##### `erpBuildingSearch`
+
+> Search for ErpBuilding objects by multiple properties.
+> 
+> See the ErpBuildingFilterInput type for options.
+
+* **Parameters**
+  * `filter : ErpBuildingFilterInput!`
+* **Returns**
+  * `ErpBuildingSearchResults!`
 
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
@@ -147,7 +147,7 @@ Contains information about the ERP API server's version.
 | ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
 | code               | NonEmptyTrimmedString150! |                |        Y        |               |  |
 | id                 | Long!                     |                |                 |               |  |
-| name               | NonEmptyTrimmedString240  |                |        Y        |               |  |
+| name               | NonEmptyTrimmedString240! |                |        Y        |               |  |
 | enabled            | Boolean!                  |                |        Y        |               |  |
 | startDate          | LocalDate                 |                |                 |               |  |
 | endDate            | LocalDate                 |                |                 |               |  |
@@ -208,7 +208,7 @@ Contains information about the ERP API server's version.
 | ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
 | code               | NonEmptyTrimmedString150! |                |        Y        |               |  |
 | id                 | Long!                     |                |                 |               |  |
-| name               | NonEmptyTrimmedString240! |                |                 |               |  |
+| name               | NonEmptyTrimmedString240! |                |        Y        |               |  |
 | enabled            | Boolean!                  |                |        Y        |               |  |
 | startDate          | LocalDate                 |                |                 |               |  |
 | endDate            | LocalDate                 |                |                 |               |  |
@@ -319,7 +319,7 @@ from advanced security table and formatted for API use.
 | ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
 | code               | NonEmptyTrimmedString150! |                |        Y        |               |  |
 | id                 | Long!                     |                |                 |               |  |
-| name               | NonEmptyTrimmedString240! |                |                 |               |  |
+| name               | NonEmptyTrimmedString240! |                |        Y        |               |  |
 | enabled            | Boolean!                  |                |        Y        |               |  |
 | startDate          | LocalDate                 |                |                 |               |  |
 | endDate            | LocalDate                 |                |                 |               |  |

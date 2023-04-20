@@ -24,7 +24,7 @@
 | ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
 | code               | NonEmptyTrimmedString150! |                |        Y        |               |  |
 | id                 | Long!                     |                |                 |               |  |
-| name               | NonEmptyTrimmedString240! |                |                 |               |  |
+| name               | NonEmptyTrimmedString240! |                |        Y        |               |  |
 | enabled            | Boolean!                  |                |        Y        |               |  |
 | startDate          | LocalDate                 |                |                 |               |  |
 | endDate            | LocalDate                 |                |                 |               |  |
@@ -95,7 +95,7 @@
 | manufacturerName        | NonEmptyTrimmedString360  |                |                 |               |  |
 | serialNumber            | NonEmptyTrimmedString40   |                |                 |               |  |
 | modelNumber             | NonEmptyTrimmedString40   |                |                 |               |  |
-| minorCategory           | NonEmptyTrimmedString150! |                |                 |               |  |
+| minorCategoryCode       | NonEmptyTrimmedString150! |                |        Y        |               |  |
 | campusCode              | NonEmptyTrimmedString150! |                |                 |               |  |
 | buildingCode            | NonEmptyTrimmedString150! |                |        Y        |               |  |
 | roomCode                | NonEmptyTrimmedString150  |                |                 |               |  |
@@ -150,6 +150,26 @@
 
 #### Query Operations
 
+##### `faAssetCategory`
+
+> Get a single FaAssetCategory by id.  Returns undefined if does not exist
+
+* **Parameters**
+  * `id : String!`
+* **Returns**
+  * `FaAssetCategory`
+
+##### `faAssetCategorySearch`
+
+> Search for FaAssetCategory objects by multiple properties.
+> 
+> See the FaAssetCategoryFilterInput type for options.
+
+* **Parameters**
+  * `filter : FaAssetCategoryFilterInput!`
+* **Returns**
+  * `FaAssetCategorySearchResults!`
+
 ##### `faAsset`
 
 > Get a single FaAsset by id.  Returns undefined if does not exist
@@ -188,26 +208,6 @@
 * **Returns**
   * `FaAsset`
 
-##### `faAssetCategory`
-
-> Get a single FaAssetCategory by id.  Returns undefined if does not exist
-
-* **Parameters**
-  * `id : String!`
-* **Returns**
-  * `FaAssetCategory`
-
-##### `faAssetCategorySearch`
-
-> Search for FaAssetCategory objects by multiple properties.
-> 
-> See the FaAssetCategoryFilterInput type for options.
-
-* **Parameters**
-  * `filter : FaAssetCategoryFilterInput!`
-* **Returns**
-  * `FaAssetCategorySearchResults!`
-
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
 
@@ -219,7 +219,7 @@
 
 #### Access Controls
 
-* Required Role: ``
+* Required Role: `erp:reader-fixedasset`
 
 #### Data Source
 
@@ -234,15 +234,15 @@
 
 | Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
 | ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| assetCategoryId    | Long!                     |                |        Y        |               |  |
-| name               | NonEmptyTrimmedString240! |                |        Y        |               |  |
+| assetCategoryId    | Long!                     |                |                 |               |  |
+| name               | NonEmptyTrimmedString240  |                |        Y        |               |  |
 | enabled            | Boolean!                  |                |        Y        |               |  |
-| inventorialFlag    | Boolean!                  |                |                 |               |  |
-| capitalizeFlag     | Boolean!                  |                |                 |               |  |
+| inventorial        | Boolean!                  |                |        Y        |               |  |
+| capitalize         | Boolean!                  |                |                 |               |  |
 | propertyTypeCode   | NonEmptyTrimmedString150! |                |                 |               |  |
-| categoryType       | NonEmptyTrimmedString150! |                |                 |               |  |
-| majorCategoryCode  | NonEmptyTrimmedString150! |                |                 |               |  |
-| minorCategoryCode  | NonEmptyTrimmedString150! |                |                 |               |  |
+| categoryType       | NonEmptyTrimmedString150! |                |        Y        |               |  |
+| majorCategoryCode  | NonEmptyTrimmedString150! |                |        Y        |               |  |
+| minorCategoryCode  | NonEmptyTrimmedString150! |                |        Y        |               |  |
 | ownedOrLeasedCode  | NonEmptyTrimmedString150! |                |                 |               |  |
 | lastUpdateUserId   | ErpUserId                 |                |                 |               |  |
 | lastUpdateDateTime | DateTime!                 |                |        Y        |               |  |
@@ -298,18 +298,19 @@
 
 ##### Properties
 
-| Property Name      | Data Type               | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| ------------------ | ----------------------- | :------------: | :-------------: | ------------- | ----- |
-| assetId            | Long                    |                |                 |               |  |
-| typeCode           | NonEmptyTrimmedString30 |                |                 |               |  |
-| headerId           | Long                    |                |                 |               |  |
-| serviceDate        | LocalDate               |                |                 |               |  |
-| totalCost          | Float                   |                |                 |               |  |
-| effectiveDate      | LocalDate               |                |                 |               |  |
-| ineffectiveDate    | LocalDate               |                |                 |               |  |
-| creationDate       | DateTime                |                |                 |               |  |
-| lastUpdateUserId   | ErpUserId               |                |                 |               |  |
-| lastUpdateDateTime | DateTime                |                |                 |               |  |
+| Property Name      | Data Type                | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------ | ------------------------ | :------------: | :-------------: | ------------- | ----- |
+| headerId           | Long!                    |                |                 |               |  |
+| assetId            | Long!                    |                |                 |               |  |
+| typeCode           | NonEmptyTrimmedString30! |                |                 |               |  |
+| headerOutId        | Long                     |                |                 |               |  |
+| serviceDate        | LocalDate!               |                |                 |               |  |
+| totalCost          | Float!                   |                |                 |               |  |
+| effectiveDate      | LocalDate!               |                |                 |               |  |
+| ineffectiveDate    | LocalDate                |                |                 |               |  |
+| creationDate       | DateTime!                |                |                 |               |  |
+| lastUpdateUserId   | ErpUserId                |                |                 |               |  |
+| lastUpdateDateTime | DateTime!                |                |                 |               |  |
 
 ##### Linked Data Objects
 
@@ -387,7 +388,7 @@
 | ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
 | code               | NonEmptyTrimmedString150! |                |        Y        |               |  |
 | id                 | Long!                     |                |                 |               |  |
-| name               | NonEmptyTrimmedString240! |                |                 |               |  |
+| name               | NonEmptyTrimmedString240! |                |        Y        |               |  |
 | enabled            | Boolean!                  |                |        Y        |               |  |
 | startDate          | LocalDate                 |                |                 |               |  |
 | endDate            | LocalDate                 |                |                 |               |  |
@@ -448,7 +449,7 @@
 | ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
 | code               | NonEmptyTrimmedString150! |                |        Y        |               |  |
 | id                 | Long!                     |                |                 |               |  |
-| name               | NonEmptyTrimmedString240! |                |                 |               |  |
+| name               | NonEmptyTrimmedString240! |                |        Y        |               |  |
 | enabled            | Boolean!                  |                |        Y        |               |  |
 | startDate          | LocalDate                 |                |                 |               |  |
 | endDate            | LocalDate                 |                |                 |               |  |
@@ -509,7 +510,7 @@
 | ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
 | code               | NonEmptyTrimmedString150! |                |        Y        |               |  |
 | id                 | Long!                     |                |                 |               |  |
-| name               | NonEmptyTrimmedString240! |                |                 |               |  |
+| name               | NonEmptyTrimmedString240! |                |        Y        |               |  |
 | enabled            | Boolean!                  |                |        Y        |               |  |
 | startDate          | LocalDate                 |                |                 |               |  |
 | endDate            | LocalDate                 |                |                 |               |  |
@@ -570,7 +571,7 @@
 | ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
 | code               | NonEmptyTrimmedString150! |                |        Y        |               |  |
 | id                 | Long!                     |                |                 |               |  |
-| name               | NonEmptyTrimmedString240! |                |                 |               |  |
+| name               | NonEmptyTrimmedString240! |                |        Y        |               |  |
 | enabled            | Boolean!                  |                |        Y        |               |  |
 | startDate          | LocalDate                 |                |                 |               |  |
 | endDate            | LocalDate                 |                |                 |               |  |
@@ -631,7 +632,7 @@
 | ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
 | code               | NonEmptyTrimmedString150! |                |        Y        |               |  |
 | id                 | Long!                     |                |                 |               |  |
-| name               | NonEmptyTrimmedString240! |                |                 |               |  |
+| name               | NonEmptyTrimmedString240! |                |        Y        |               |  |
 | enabled            | Boolean!                  |                |        Y        |               |  |
 | startDate          | LocalDate                 |                |                 |               |  |
 | endDate            | LocalDate                 |                |                 |               |  |
@@ -733,7 +734,7 @@
 | ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
 | code               | NonEmptyTrimmedString150! |                |        Y        |               |  |
 | id                 | Long!                     |                |                 |               |  |
-| name               | NonEmptyTrimmedString240! |                |                 |               |  |
+| name               | NonEmptyTrimmedString240! |                |        Y        |               |  |
 | enabled            | Boolean!                  |                |        Y        |               |  |
 | startDate          | LocalDate                 |                |                 |               |  |
 | endDate            | LocalDate                 |                |                 |               |  |
@@ -794,7 +795,7 @@
 | ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
 | code               | NonEmptyTrimmedString150! |                |        Y        |               |  |
 | id                 | Long!                     |                |                 |               |  |
-| name               | NonEmptyTrimmedString240! |                |                 |               |  |
+| name               | NonEmptyTrimmedString240! |                |        Y        |               |  |
 | enabled            | Boolean!                  |                |        Y        |               |  |
 | startDate          | LocalDate                 |                |                 |               |  |
 | endDate            | LocalDate                 |                |                 |               |  |
@@ -855,7 +856,7 @@
 | ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
 | code               | NonEmptyTrimmedString150! |                |        Y        |               |  |
 | id                 | Long!                     |                |                 |               |  |
-| name               | NonEmptyTrimmedString240! |                |                 |               |  |
+| name               | NonEmptyTrimmedString240! |                |        Y        |               |  |
 | enabled            | Boolean!                  |                |        Y        |               |  |
 | startDate          | LocalDate                 |                |                 |               |  |
 | endDate            | LocalDate                 |                |                 |               |  |

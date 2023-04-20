@@ -96,14 +96,20 @@ Represents an accounting period in the GL module of Oracle Financials.  Used for
 #### Data Source
 
 * Local Table/View: `AP_INVOICE_V` (view)
+  * Support Tables:
+    * `AP_INVOICE`
+    * `SCM_SUPPLIER`
+    * `SCM_SUPPLIER_SITE`
+    * `PO_HEADER`
+    * `AP_CHECK_INVOICE`
+    * `AP_CHECK_NUMBER`
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
-    * 
+    * FscmTopModelAM.FinExtractAM.ApBiccExtractAM.InvoiceHeaderExtractPVO
   * Underlying Database Objects:
-    * 
-    * 
-    * 
+    * AP_INVOICES_ALL
+    * AP_PAYMENT_SCHEDULES_ALL
 
 ##### Properties
 
