@@ -476,10 +476,30 @@ Below are some examples of responses from the API.  Successful response data is 
 | `LocalDate`                  | A local date string (i.e., with no associated timezone) in `YYYY-MM-DD` format, e.g. `2020-01-01`. |
 | `Long`                       | The `BigInt` scalar type represents non-fractional signed whole numeric values. |
 | `NonEmptyString`             | A string that cannot be passed as an empty value |
+| `NonEmptyTrimmedString1`     | String limited to 1 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
+| `NonEmptyTrimmedString10`    | String limited to 10 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
+| `NonEmptyTrimmedString100`   | String limited to 100 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString1000`  | String limited to 1000 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
+| `NonEmptyTrimmedString15`    | String limited to 15 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
+| `NonEmptyTrimmedString150`   | String limited to 150 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
+| `NonEmptyTrimmedString2`     | String limited to 2 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
+| `NonEmptyTrimmedString20`    | Trimmed String limited to 20 characters. |
 | `NonEmptyTrimmedString2000`  | String limited to 2000 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
+| `NonEmptyTrimmedString225`   | String limited to 225 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString240`   | String limited to 240 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
+| `NonEmptyTrimmedString25`    | String limited to 25 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
+| `NonEmptyTrimmedString250`   | String limited to 250 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
+| `NonEmptyTrimmedString255`   | String limited to 255 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
+| `NonEmptyTrimmedString3`     | String limited to 3 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
+| `NonEmptyTrimmedString30`    | Trimmed String limited to 30 characters. |
+| `NonEmptyTrimmedString32`    | String limited to 32 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
+| `NonEmptyTrimmedString320`   | String limited to 320 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
+| `NonEmptyTrimmedString360`   | String limited to 360 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
+| `NonEmptyTrimmedString4`     | String limited to 4 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString40`    | String limited to 40 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
+| `NonEmptyTrimmedString50`    | String limited to 50 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
+| `NonEmptyTrimmedString60`    | String limited to 60 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
+| `NonEmptyTrimmedString80`    | String limited to 80 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonNegativeFloat`           | Floats that will have a value of 0 or more. |
 | `NonNegativeInt`             | Integers that will have a value of 0 or more. |
 | `NumericString`              | String consisting of only digits.  Used to represent numbers larger than other data types easily allow.  Max 40 digits. |
@@ -496,8 +516,13 @@ Below are some examples of responses from the API.  Successful response data is 
 | `ScmName`                    | Oracle SCM Name |
 | `SemVer`                     | A field whose value is a Semantic Version: https://semver.org |
 | `String`                     | The `String` scalar type represents textual data, represented as UTF-8 character sequences. The String type is most often used by GraphQL to represent free-form human-readable text. |
+| `Timestamp`                  | The javascript `Date` as integer. Type represents date and time as number of milliseconds from start of UNIX epoch. |
 | `TimeZone`                   | A field whose value exists in the standard IANA Time Zone Database: https://www.iana.org/time-zones |
+| `TrimmedString100`           | String limited to 100 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
+| `TrimmedString50`            | String limited to 50 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `UcEmployeeId`               | UC Employee ID.  May be either 8 or 9 digits. |
+| `UnsignedFloat`              | Floats that will have a value of 0 or more. |
+| `UnsignedInt`                | Integers that will have a value of 0 or more. |
 | `URL`                        | A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt. |
 | `UUID`                       | A field whose value is a generic Universally Unique Identifier: https://en.wikipedia.org/wiki/Universally_unique_identifier. |
 
@@ -637,13 +662,13 @@ Status options within the [ActionRequestStatus]({{Types.ActionRequestStatus}}) t
 
 | Enum Value  | Description |
 | ----------- | ----------- |
-| `COMPLETE`  | If Callback URL Provided: Request has been processed, and the callback was successfully contacted.  Or, request has been processed, and no callback URL was provided. |
-| `ERROR`     | There was an error processing the request after it was picked up. |
+| `COMPLETE`  | Request has been processed with no significant issues. |
+| `ERROR`     | There was an error processing the request.  Review the results to determine what corrective action may be required.  In the case that multiple jobs were required to process the request, some may have completed successfully while others may have failed. |
 | `INPROCESS` | Request has been picked up for processing. |
-| `PENDING`   | Request has been submitted to the server, but not validated or processed. |
-| `PROCESSED` | Request has been processed, but the callback has not been completed. |
+| `PENDING`   | Request has been submitted to the API, but picked up for processing. |
 | `REJECTED`  | There was a validation error in the request payload data. |
-| `STALE`     | If Callback URL Provided: Request has been processed, but repeated attempts to contact the callback have failed and no more will be tried. |
+| `STALE`     | Request never completed within the maximum allowed time. |
+| `WARNING`   | There were issues while processing the request.  Some of the submitted data may not be completely imported to the target system.  You should review any output to see if corrective action is required. |
 
 ##### `ScmInvoiceType`
 
@@ -665,6 +690,7 @@ Nature of the payment for this one.  In general, all lines should be ITEM.
 | `FREIGHT`       |  |
 | `ITEM`          |  |
 | `MISCELLANEOUS` |  |
+| `TAX`           |  |
 
 ##### `ScmPurchaseRequisitionLineType`
 
@@ -674,6 +700,19 @@ Used on SCM Requisitions to distinguish between Quantity based line and Fixed Pr
 | ------------- | ----------- |
 | `Fixed_Price` | Fixed Price |
 | `Quantity`    | Quantity |
+
+##### `ScmSupplierSiteType`
+
+Supplier Site types which can be used to filter sites for a specific purpose.
+
+| Enum Value   | Description |
+| ------------ | ----------- |
+| `PAY`        | May be used on invoices / payments. |
+| `PCARD`      | Used with purchasing card transactions. |
+| `PRIMARYPAY` | Indicates the primary/default site payments should be sent to for a given supplier. |
+| `PURCHASING` | May be used on requisitions. |
+| `RFQ`        | To be used during the RFQ process. |
+| `TAX`        | Used for tax reporting. |
 
 
 ![diagram](action-request-flow-summary.svg)

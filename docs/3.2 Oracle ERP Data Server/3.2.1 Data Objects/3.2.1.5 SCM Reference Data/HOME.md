@@ -343,11 +343,19 @@ Supplier in Oracle replaces Vendor in KFS.
 | supplierType             | NonEmptyTrimmedString30   |                |                 |               | DEPRECATED: Use organizationTypeCode instead. |
 | supplierTypeCode         | NonEmptyTrimmedString30   |                |                 |               | The general type of goods or services provided by this supplier. |
 | organizationTypeCode     | NonEmptyTrimmedString30   |                |        Y        |               | The nature of the supplier's business structure.  (Corporation, Partnership, etc...) |
-| startDateActive          | LocalDate                 |                |                 |               | The date from when the value is available for use. |
-| endDateActive            | LocalDate                 |                |                 |               | The date till which the value is available for use. |
+| startDate                | LocalDate                 |                |                 |               | The date from when the value is available for use. |
+| endDate                  | LocalDate                 |                |                 |               | The date till which the value is available for use. |
 | lastUpdateDateTime       | DateTime!                 |                |        Y        |               | Timestamp this record was last updated in the financial system. |
 | lastUpdateUserId         | ErpUserId                 |                |                 |               | User ID of the person who last updated this record. |
-| sites                    | [ScmSupplierSite!]!       |                |                 |               | Supplier business locations referenced when making orders or payments to the supplier. |
+| sites                    | [ScmSupplierSite!]!       |                |                 |               | Supplier business locations referenced when making orders or payments to the supplier.<br/><br/>You can optionally specify a type of site to filter the results.  See enum ScmSupplierSiteType for the list of valid values. |
+| eligibleForUse           | Boolean!                  |                |                 |               | Whether this supplier is able to be used for the current accounting date. |
+
+* `sites` : `[ScmSupplierSite!]!`
+  * Supplier business locations referenced when making orders or payments to the supplier.<br/><br/>You can optionally specify a type of site to filter the results.  See enum ScmSupplierSiteType for the list of valid values.
+  * Arguments:
+    * `siteType` : `ScmSupplierSiteType`
+  * Description of `ScmSupplierSite`:
+    * Supplier Site represents a business location referenced when making orders or payments to the supplier.
 
 ##### Linked Data Objects
 
@@ -408,12 +416,21 @@ Supplier Site represents a business location referenced when making orders or pa
 
 ##### Properties
 
-| Property Name    | Data Type                | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| ---------------- | ------------------------ | :------------: | :-------------: | ------------- | ----- |
-| supplierSiteId   | Long!                    |                |                 |               | Value that uniquely identifies the supplier site internally within Oracle. |
-| supplierSiteCode | NonEmptyTrimmedString15! |                |                 |               | Code used to identify the site on the UI and in interfaces. |
-| locationId       | Long                     |                |                 |               | Internal location code containing address information. |
-| location         | ErpLocation              |                |                 |               | Physical address of the site. |
+| Property Name      | Data Type                | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------ | ------------------------ | :------------: | :-------------: | ------------- | ----- |
+| supplierSiteId     | Long!                    |                |                 |               | Value that uniquely identifies the supplier site internally within Oracle. |
+| supplierSiteCode   | NonEmptyTrimmedString15! |                |                 |               | Code used to identify the site on the UI and in interfaces. |
+| locationId         | Long                     |                |                 |               | Internal location code containing address information. |
+| location           | ErpLocation              |                |                 |               | Physical address of the site. |
+| effectiveEndDate   | LocalDate                |                |                 |               |  |
+| effectiveStartDate | LocalDate                |                |                 |               |  |
+| eligibleForUse     | Boolean!                 |                |                 |               | Whether the site is eligible for use on the current accounting date. |
+| taxSite            | Boolean!                 |                |                 |               | Whether the site is used for tax reporting. |
+| pcardSite          | Boolean!                 |                |                 |               | Whether this site is used when making purchasing card transactions. |
+| paySite            | Boolean!                 |                |                 |               | Whether this site may be for outbound payments. |
+| primarypaySite     | Boolean!                 |                |                 |               | Whether this site is the primary/default site for payments to this supplier. |
+| purchasingSite     | Boolean!                 |                |                 |               | Whether this site may be used on requisitions. |
+| rfqSite            | Boolean!                 |                |                 |               | Whether this site is used during the RFQ process. |
 
 * `location` : `ErpLocation`
   * Physical address of the site.

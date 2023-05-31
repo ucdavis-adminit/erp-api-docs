@@ -259,9 +259,9 @@ SPONSOR
 | Property Name        | Data Type                | Key Field [^2] | Searchable [^1] | Required Role | Notes |
 | -------------------- | ------------------------ | :------------: | :-------------: | ------------- | ----- |
 | sponsorId            | Long!                    |                |        Y        |               |  |
-| partyId              | Long                     |                |        Y        |               |  |
-| burdenScheduleId     | Long                     |                |        Y        |               |  |
-| billToSponsorId      | Long                     |                |        Y        |               |  |
+| partyId              | Long                     |                |                 |               |  |
+| burdenScheduleId     | Long                     |                |                 |               |  |
+| billToSponsorId      | Long                     |                |                 |               |  |
 | letterOfCreditNumber | NonEmptyTrimmedString240 |                |                 |               |  |
 | isLetterOfCredit     | Boolean                  |                |                 |               |  |
 | isFederal            | Boolean                  |                |        Y        |               |  |
@@ -269,6 +269,7 @@ SPONSOR
 | creationDate         | DateTime                 |                |                 |               |  |
 | lastUpdateDateTime   | DateTime                 |                |        Y        |               |  |
 | lastUpdateUserId     | ErpUserId                |                |                 |               |  |
+| references           | [PpmSponsorReference!]!  |                |                 |               |  |
 
 ##### Linked Data Objects
 
@@ -293,6 +294,52 @@ SPONSOR
   * `filter : PpmSponsorFilterInput!`
 * **Returns**
   * `PpmSponsorSearchResults!`
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
+### Data Object: PpmSponsorReference
+
+SPONSOR REFERENCE
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `PPM_SPONSOR_REFERENCE`
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+    * View Object:FscmTopModelAM.GmsSetupAM.SponsorReferencePVO
+  * Underlying Database Objects:
+    * GMS_SPONSORS_REFERENCES_B
+    * GMS_SPONSORS_REFERENCES_TL
+    * GMS_REFERENCES_B
+    * GMS_REFERENCES_TL
+    * GMS_SPONSORS_REFERENCES_VL
+    * GMS_REFERENCES_VL
+
+##### Properties
+
+| Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| id                 | Long!                     |                |                 |               |  |
+| sponsorId          | Long!                     |                |                 |               |  |
+| referenceTypeName  | NonEmptyTrimmedString80!  |                |                 |               |  |
+| referenceValue     | NonEmptyTrimmedString80   |                |                 |               |  |
+| comments           | NonEmptyTrimmedString2000 |                |                 |               |  |
+| lastUpdateDateTime | DateTime!                 |                |                 |               |  |
+| lastUpdateUserId   | ErpUserId                 |                |                 |               |  |
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
 
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.

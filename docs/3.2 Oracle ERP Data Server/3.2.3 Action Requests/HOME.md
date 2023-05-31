@@ -82,14 +82,14 @@
 
 | Property Name     | Type                    | Notes           |
 | ----------------- | ----------------------- | --------------- |
-| lineDescription   | String                  |  100 Characters |
+| lineDescription   | String                  | 100 Characters  |
 | journalLineNumber | Float                   |                 |
-| transactionDate   | Date                    |                 |
+| transactionDate   | Date                    | yyyy-mm-dd      |
 | udfNumeric1       | Float                   |                 |
 | udfNumeric2       | Float                   |                 |
 | udfNumeric3       | Float                   |                 |
-| udfDate1          | Date                    |                 |
-| udfDate1          | Date                    |                 |
+| udfDate1          | Date                    | yyyy-mm-dd      |
+| udfDate1          | Date                    | yyyy-mm-dd      |
 | udfString1        | String                  | 50 Characters   |
 | udfString2        | String                  | 50 Characters   |
 | udfString3        | String                  | 50 Characters   |
