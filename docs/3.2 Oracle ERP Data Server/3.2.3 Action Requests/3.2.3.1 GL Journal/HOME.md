@@ -258,11 +258,12 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
 
 #### Overall
 
-* If an accounting period was given, verify that it is open to accept transactions.
+* If an accounting period was given, verify that it is open to accept transactions and is not an adjustment period.  (I.e., period 13)
 * If no accounting period given, verify that the period associated with the accounting date is open to accept transactions.
 * Verify that the accounting date, if given, is not in the future.
 * Verify that a non-zero number of journal lines have been provided.
 * Verify number of lines `<=` 10000 (Preliminary number - may be adjusted based on performance testing.)
+* Verify that all lines have GL or PPM segment values.
 * Verify no line was given both GL and PPM segments.
 * Verify that the total of debits and credits in the journal balance.
 
@@ -272,43 +273,45 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
 * If `glSegmentString` provided, it must parse properly, and contain all 11 segments in the correct order.
 * Verify that the 4 required segments have been provided and are not all zeros. (`entity`, `fund`, `department`, `account`)
 * If a non-blank and non-zeroes `project` has been provided, verify that the project is not a PPM Managed project.
+  * (Managed projects must be submitted on lines using the `ppmSegments` or `ppmSegmentString` properties.)
 * Verify values given in each GL segment
   * Value must be a valid value for the segment.
   * Value must be active on the accounting date between the segment's start and end date.
   * Segment must be a detail-level value.  (Segments are assigned a level in a hierarchy, only the lowest level values are valid for transactions.)
 
-#### CVR Rules (Compound Validation Rules)
+#### CVRs (Cross-Validation Rules)
 
-* Purpose is required for Expense Accounts (OPER_ACC_PURPOSE_1)
+* Expense transactions must have a purpose (OPER_ACC_PURPOSE_1)
   * If the account descends from 5XXXXX, then the purpose must be a non 00 value.
 * Auxiliary Funds should only be used for Auxiliary Enterprise (76) purposes (OPER_FUND_PURPOSE)
-  * If the fund is a descendent of 1100C, then purpose code must be 76.
-* Purpose Code 65 may only be used when recording depreciation. (DEPREXP_ACC_PURPOSE1)
-  * If the purpose code is 65, then the account must descend from 54000A.
+  * If the fund is a descendant of 1100C, then purpose code must be 76.
+* Depreciation expenses must use purpose code 65 (DEPREXP_ACC_PURPOSE1)
+  * If the account is a descendant of 54000A, then the purpose code must be 65.
 * Funds held for others (Account 22700D) should only be used with Agency Fund (Fund 5000C) (AGENCY_FUND_ACCT)
   * If the account descends from 22700D, then the fund must descend from 5000C.
 * Sub-contract services (53300B) should only be used on Grant and Contract Funds (2000B) (SCS_ACCT_FUND)
   * If the account is a descendent of 53300B, then the fund must be descended from 2000B.
-
-
-<!-- Items removed before SIT1
-
-    * _Purpose code 78 (Student Financial Aid) must only be used with Financial Aid Expenses (OPER_ACC_PURPOSE_5)_
-      * If the purpose code is 78, then the account must descend from 51000A.
-    * _The teaching hospital purpose code may only be used with UCDH Entities._
-      * If the Purpose code is 42, then the entity must descend from 132B.
-      * If the entity descends from 132B, then the purpose code must be 42 or 00.
-    * If the account is a descendent of 54000A then the purpose code must be 65.
-
---->
+* Sub-contract services (53300B and below) may only be recorded on Contracts and Grants funds (2000B and below) (PDST_ACCT_FUND)
+* Capital Accounts under parents 16000B and 16500B can only be used with NICA funds under parent 4000A (OPER_FUND_ACC)
+* Long-Term Debt Interest expenses (58020D and below) must be recorded in an approriate Debt Service Fund (1410C and below) (INTEXP_ACCT_FUND)
+* Taxable Interest Expenses for Capital Financing (58000D and below) must be recorded in fund 24401 (INTEXP_ACCT_FUND2)
+* Non-Taxable Interest Expenses for Capital Financing (58010D and below) must be recorded in fund 24400 (INTEXP_ACCT_FUND3)
+* Balance sheet transactions in UCDH Entity 3210 may only be recorded in department 9500000 (UCDH_BS_DEPT)
+* UCD Operating Funds (12000) may only be used within the UCDH Entity 3210 (UCDH_FUND)
+* School of Health and School of Nursing departments (430000C and 440000C and below) may only be used with the School of Health entity code (SOH_DEPT)
+* ANR (Entity 3310) Smith Lever Federal Appropriations (2090C and below) must only be used for Public Service purposes (62) (ANR_DEPT_PURPOSE)
+* ANR (Antity 3310) Smith Lever Federal Appropriations (2090C and below) must only be used for ANR Local Programs (91B and below) (ANR_SMLVR_PROGRAM)
+* UC ANR Departments (991000B and below) may only be used with ANR Entity Code 3310 (ANR_DEPT_ENTITY)
+* Revenue accounts may not be used with Common University Fund 13U00 (COFI_NO_REVENUE)
+* Purchases to be Capitalized (52500B and below) may not be recorded on a Sales and Services fund (1210D and below) (CAP_EXP_SALES_FUND)
 
 #### Entity/Purpose Restrictions
 
-Purpose code use is limited by entity.  Only combinations on the table below are allowed.
+Purpose code use is limited by entity.  Only combinations on the table below are allowed.   (Extracted from DEV2 / SUAT 6/15/23)
 
 [](./entity-purpose-restrictions.txt ':include :type=markdown')
 
-<!-- table above extracted 8/5/22 from TEST via
+<!-- table above extracted via Query Below:
 
 SELECT value_1 as entity, s1.name as entity_name, value_2 as purpose, s2.name as purpose_name
     FROM test_erp.value_set_related_values
@@ -320,16 +323,20 @@ SELECT value_1 as entity, s1.name as entity_name, value_2 as purpose, s2.name as
 ORDER BY entity, purpose
 -->
 
+#### Entity/Department Restrictions
+
+**TODO: Combinations of Entity and Department Codes may be getting added to Oracle rules.  The mappings _may_ be included, however, the size of the mappings may be too large to actually include in the documentation.**
+
 #### Boundary Application Additional Rules
 
 * _Net Position Accounts are not allowed_
-  * If the account descends from `3XXXXX`, fail validation.
+  * Disallow all transactions if the account is a child of `3XXXXX`
 * _Salary and Benefit Accounts are not allowed_
-  * If the account descends from any of `50000A`, `50500A`, `50600A`, `50700A`, fail validation.
+  * Disallow transactions where the account is a child of one of `50000A`, `50500A`, `50600A`, or `50700A`
 * _Purchases to be capitalized must be recorded in PPM._
-  * If the account is a descendant of `52500B`, fail validation.
+  * Disallow accounts which are children of `52500B`
 
-#### COFI Fund Restrictions
+##### COFI Fund Restrictions
 
 Common Operating Funds are distributed to by the budget office.  The funds below may not be used on transactions, but will be expensed to by the central office.  Instead of using one of these funds, boundary systems should use fund `99100` in place of any of the funds below.
 
@@ -377,9 +384,10 @@ See: <https://financeandbusiness.ucdavis.edu/aggie-enterprise/about/cofi/resourc
 
 ##### Project Validations
 
-* Project must be `ACTIVE`
-* Project must not be a template project.
-* Project must have an established budget (of any amount.)
+* Project must be `ACTIVE` or `PENDING_CLOSE`
+* Project must not be a departmental-default project (starting with `DKO`)
+* Project must not be a template project
+* Project must have an established budget (of any amount)
 * Accounting date must be within the project's start and completion dates.
 
 ##### Task Validations
@@ -399,25 +407,25 @@ See: <https://financeandbusiness.ucdavis.edu/aggie-enterprise/about/cofi/resourc
 * Accounting date must be within the expenditure type's start and end dates.
 * **Special Case: Revenue Accounts**
   * PPM Does not allow revenue on transactions.  Special handling has been added to the API to address this through the integration processes.  Specific GL Accounts are allowed to be used on PPM Transactions.  They are NOT set up as PPM Expenditure Types, but an exception is made to the validation rules to allow them to be passed through.
-  * Revenue accounts allowed descend from the parents below:
-    * `48000A`
-    * `41000A`
-    * `40090C`
-    * `40100C`
-    * `40200C`
+  * Revenue accounts allowed are children of the parents below:
+    * `40090C` - Self Supporting Degree Fees
+    * `40100C` - Professional Degree Supplemental Tuitions
+    * `40200C` - University Extension Program Fees
+    * `41000A` - Sales and Services of Educational Activities
+    * `48000A` - Non-Capital Private Gifts
 
 ##### Award Validation
 
-* Awards should only be included on sponsored projects and are required on sponsored projects.
+* Award should only be included on sponsored projects and is **required** on sponsored projects.
 * Award must be associated with the project.
-* If left blank on a sponsored project, a default will be provided.  If one can not be derived, then the transaction will fail validation with the missing award.  This is likely due to an incomplete project setup which must be corrected in Oracle before transactions can be submitted.
+* If left blank on a sponsored project, the operation will attempt to find a default.  If one can not be found, then the transaction will fail validation.  This will likely be due to an incomplete project setup which must be corrected in Oracle before transactions against that project may be submitted.
 * Accounting date must be within the award's start and close dates.
 
 ##### Funding Source Validation
 
-* Funding sources should only be included on sponsored projects and are required on sponsored projects.
-* Funding source must be associated with the project and award.
-* If left blank on a sponsored project, a default will be provided.  If one can not be derived, then the transaction will fail validation with the missing funding source.  This is likely due to an incomplete project setup which must be corrected in Oracle before transactions can be submitted.
+* Funding source should only be included on sponsored projects and is required on sponsored projects.
+* Funding source must be associated with the project / award combination.
+* If left blank on a sponsored project, the operation will attempt to find a default.  If one can not be found, then the transaction will fail validation.  This will likely be due to an incomplete project setup which must be corrected in Oracle before transactions against that project may be submitted.
 * Accounting date must be within the funding source's from and to dates.
 
 
