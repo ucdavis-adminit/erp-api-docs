@@ -281,29 +281,25 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
 
 #### CVRs (Cross-Validation Rules)
 
-* Expense transactions must have a purpose (OPER_ACC_PURPOSE_1)
-  * If the account descends from 5XXXXX, then the purpose must be a non 00 value.
-* Auxiliary Funds should only be used for Auxiliary Enterprise (76) purposes (OPER_FUND_PURPOSE)
-  * If the fund is a descendant of 1100C, then purpose code must be 76.
-* Depreciation expenses must use purpose code 65 (DEPREXP_ACC_PURPOSE1)
-  * If the account is a descendant of 54000A, then the purpose code must be 65.
-* Funds held for others (Account 22700D) should only be used with Agency Fund (Fund 5000C) (AGENCY_FUND_ACCT)
-  * If the account descends from 22700D, then the fund must descend from 5000C.
-* Sub-contract services (53300B) should only be used on Grant and Contract Funds (2000B) (SCS_ACCT_FUND)
-  * If the account is a descendent of 53300B, then the fund must be descended from 2000B.
-* Sub-contract services (53300B and below) may only be recorded on Contracts and Grants funds (2000B and below) (PDST_ACCT_FUND)
-* Capital Accounts under parents 16000B and 16500B can only be used with NICA funds under parent 4000A (OPER_FUND_ACC)
-* Long-Term Debt Interest expenses (58020D and below) must be recorded in an approriate Debt Service Fund (1410C and below) (INTEXP_ACCT_FUND)
-* Taxable Interest Expenses for Capital Financing (58000D and below) must be recorded in fund 24401 (INTEXP_ACCT_FUND2)
-* Non-Taxable Interest Expenses for Capital Financing (58010D and below) must be recorded in fund 24400 (INTEXP_ACCT_FUND3)
-* Balance sheet transactions in UCDH Entity 3210 may only be recorded in department 9500000 (UCDH_BS_DEPT)
-* UCD Operating Funds (12000) may only be used within the UCDH Entity 3210 (UCDH_FUND)
-* School of Health and School of Nursing departments (430000C and 440000C and below) may only be used with the School of Health entity code (SOH_DEPT)
-* ANR (Entity 3310) Smith Lever Federal Appropriations (2090C and below) must only be used for Public Service purposes (62) (ANR_DEPT_PURPOSE)
-* ANR (Antity 3310) Smith Lever Federal Appropriations (2090C and below) must only be used for ANR Local Programs (91B and below) (ANR_SMLVR_PROGRAM)
-* UC ANR Departments (991000B and below) may only be used with ANR Entity Code 3310 (ANR_DEPT_ENTITY)
-* Revenue accounts may not be used with Common University Fund 13U00 (COFI_NO_REVENUE)
-* Purchases to be Capitalized (52500B and below) may not be recorded on a Sales and Services fund (1210D and below) (CAP_EXP_SALES_FUND)
+| Rule ID              | Description                                                                                                                                                |
+| -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `EXP_PURPOSE_REQ`    | Expense transactions must have a purpose                                                                                                                   |
+| `AUX_FUND_PURPOSE`   | Auxiliary Funds (1100C and below) should only be used for Auxiliary Enterprise (76) purposes                                                               |
+| `CAPITAL_ACCT_FUND`  | Ensure Capital Asset (16000B and below) and Accumulated Depreciation (16500B and below) Accounts are only used with NICA Funds (4000A and below)           |
+| `DEPR_ACCT_PURPOSE`  | Depreciation expenses (54000A and below) must use purpose code 65                                                                                          |
+| `AGENCY_FUND_ACCT`   | Funds held for others (Account 22700B and below) should only be used with Agency Funds (5000A and below)                                                   |
+| `INTEREST_FUND_ACCT` | Accounts under parent 23500C, 29500C should only be used with Split Interest Fund under parent 2210B                                                       |
+| `SUBCONT_ACCT_FUND`  | Sub-contract services (53300B and below) should only be used with Federal Funds (2000B, 2085B and below)                                                   |
+| `PDST_ACCT_FUND`     | Professional Degree Supplemental Tuition Revenue (40100C and below) may only be used with PDST Funds (1410C and below)                                     |
+| `INTEXP_ACCT_FUND`   | Commercial Paper and Long-Term Debt Interest expenses (58000C and 58020C and below) must be recorded in an appropriate Debt Service Fund (2400B and below) |
+| `UCDH_BS_DEPT`       | Balance sheet transactions in UCDH Entity 3210 may only be recorded in department 9500000                                                                  |
+| `UCDH_FUND_ENTITY`   | UCD Operating Funds (12000) may only be used within the UCDH Entity 3210                                                                                   |
+| `SOH_DEPT_ENTITY`    | School of Health and School of Nursing departments (430000C and 440000C and below) may only be used with the School of Health entity code                  |
+| `CAP_EXP_SALES_FUND` | Purchases to be Capitalized (52500B and below) may not be recorded on a Sales and Services fund (1210D and below)                                          |
+| `COFI_NO_EXTREVENUE` | Revenue accounts may not be used with Common University Fund 13U00                                                                                         |
+| `ANR_DEPT_PURPOSE`   | ANR (Entity 3310) Smith Lever Federal Appropriations (2090C and below) must only be used for Public Service purposes (62)                                  |
+| `ANR_SMLVR_PROGRAM`  | ANR (Entity 3310) Smith Lever Federal Appropriations (2090C and below) must only be used for ANR Local Programs (91B and below)                            |
+| `ANR_DEPT_ENTITY`    | UC ANR Departments (991000B and below) may only be used with ANR Entity Code 3310                                                                          |
 
 #### Entity/Purpose Restrictions
 
