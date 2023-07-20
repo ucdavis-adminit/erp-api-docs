@@ -296,10 +296,12 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
 | `UCDH_FUND_ENTITY`   | UCD Operating Funds (12000) may only be used within the UCDH Entity 3210                                                                                   |
 | `SOH_DEPT_ENTITY`    | School of Health and School of Nursing departments (430000C and 440000C and below) may only be used with the School of Health entity code                  |
 | `CAP_EXP_SALES_FUND` | Purchases to be Capitalized (52500B and below) may not be recorded on a Sales and Services fund (1210D and below)                                          |
-| `COFI_NO_EXTREVENUE` | Revenue accounts may not be used with Common University Fund 13U00                                                                                         |
-| `ANR_DEPT_PURPOSE`   | ANR (Entity 3310) Smith Lever Federal Appropriations (2090C and below) must only be used for Public Service purposes (62)                                  |
-| `ANR_SMLVR_PROGRAM`  | ANR (Entity 3310) Smith Lever Federal Appropriations (2090C and below) must only be used for ANR Local Programs (91B and below)                            |
-| `ANR_DEPT_ENTITY`    | UC ANR Departments (991000B and below) may only be used with ANR Entity Code 3310                                                                          |
+| `COFI_NO_EXTREVENUE` | External Revenue accounts may not be used with Common University Funds (13U0D and below)                                                                   |
+| `HATCHFUND_PURPOSE`  | ANR Expenses with Hatch Funds (2085C, 2086C, 2087C, 2088C and below) must use Organized Research purpose codes.                                            |
+| `SMITHFUND_PURPOSE`  | ANR (Entity 3310) Smith Lever Federal Appropriations (2090C and below) must only be used for Public Service purposes (62)                                  |
+| `SMITHFUND_PROGRAM`  | ANR (Entity 3310) Smith Lever Federal Appropriations (2090C and below) must only be used for ANR Local Programs (91B and below)                            |
+
+<!-- | `ANRDEPT_ENTITY`     | UC ANR Departments (991000B and below) may only be used with ANR Entity Code 3310                                                                          | -->
 
 #### Entity/Purpose Restrictions
 
@@ -328,13 +330,17 @@ ORDER BY entity, purpose
 * _Net Position Accounts are not allowed_
   * Disallow all transactions if the account is a child of `3XXXXX`
 * _Salary and Benefit Accounts are not allowed_
-  * Disallow transactions where the account is a child of one of `50000A`, `50500A`, `50600A`, or `50700A`
+  * Disallow transactions where the account is a child of one of:
+    * `50000A` : Salaries and Wages
+    * `50500A` : Pension Benefits
+    * `50600A` : Retiree Health Benefits
+    * `50700A` : Other Employee Benefits
 * _Purchases to be capitalized must be recorded in PPM._
   * Disallow accounts which are children of `52500B`
 
 ##### COFI Fund Restrictions
 
-Common Operating Funds are distributed to by the budget office.  The funds below may not be used on transactions, but will be expensed to by the central office.  Instead of using one of these funds, boundary systems should use fund `99100` in place of any of the funds below.
+Common Operating Funds are distributed to by the budget office.  The funds below may not be used on expenditures, but will be expensed to by the central office.  Instead of using one of these funds, boundary systems should use fund `13U00` or `13U02` (depending on the college) in place of any of the funds below.
 
 See: <https://financeandbusiness.ucdavis.edu/aggie-enterprise/about/cofi/resources> for more information.
 

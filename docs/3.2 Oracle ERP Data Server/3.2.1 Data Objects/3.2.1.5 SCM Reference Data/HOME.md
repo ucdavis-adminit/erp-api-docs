@@ -127,7 +127,8 @@ Represents an accounting period in the GL module of Oracle Financials.  Used for
 | invoiceNumber         | NonEmptyTrimmedString50  |                |                 |               |  |
 | poNumber              | NonEmptyTrimmedString30  |                |                 |               |  |
 | checkNumber           | NonEmptyTrimmedString50  |                |                 |               |  |
-| paymentAmount         | Long                     |                |                 |               |  |
+| paymentAmount         | Float                    |                |                 |               |  |
+| invoiceAmount         | Float                    |                |                 |               |  |
 | invoiceDate           | Date                     |                |                 |               |  |
 | paymentDate           | Date                     |                |                 |               |  |
 | paymentStatusCode     | NonEmptyTrimmedString1   |                |                 |               |  |
@@ -247,18 +248,19 @@ The Oracle Purchasing category is the conceptual replacement for the KFS Commodi
 
 ##### Properties
 
-| Property Name       | Data Type | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| ------------------- | --------- | :------------: | :-------------: | ------------- | ----- |
-| id                  | Long!     |       Y        |                 |               | Unique identifier of the Category Code |
-| code                | String!   |                |        Y        |               | A category is used to manage the catalog hierarchy. Items are assigned to categories in the catalog. |
-| name                | String!   |                |        Y        |               | Name of the purchasing category.  This is used on the SCM Requisition interface. |
-| description         | String    |                |        Y        |               | Description of the purchasing category. |
-| categoryContentCode | String    |                |                 |               | Category Content Code. |
-| startDateActive     | Date      |                |                 |               | The date from when the value is available for use. |
-| endDateActive       | Date      |                |                 |               | The date till which the value is available for use. |
-| enabled             | Boolean!  |                |        Y        |               | Indicates that the Category is enabled. |
-| lastUpdateDateTime  | DateTime! |                |        Y        |               | Timestamp this record was last updated in the financial system. |
-| lastUpdateUserId    | ErpUserId |                |                 |               | User ID of the person who last updated this record. |
+| Property Name       | Data Type              | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------- | ---------------------- | :------------: | :-------------: | ------------- | ----- |
+| id                  | Long!                  |       Y        |                 |               | Unique identifier of the Category Code |
+| code                | String!                |                |        Y        |               | A category is used to manage the catalog hierarchy. Items are assigned to categories in the catalog. |
+| name                | String!                |                |        Y        |               | Name of the purchasing category.  This is used on the SCM Requisition interface. |
+| description         | String                 |                |        Y        |               | Description of the purchasing category. |
+| categoryContentCode | String                 |                |                 |               | Category Content Code. |
+| startDateActive     | Date                   |                |                 |               | The date from when the value is available for use. |
+| endDateActive       | Date                   |                |                 |               | The date till which the value is available for use. |
+| enabled             | Boolean!               |                |        Y        |               | Indicates that the Category is enabled. |
+| lastUpdateDateTime  | DateTime!              |                |        Y        |               | Timestamp this record was last updated in the financial system. |
+| lastUpdateUserId    | ErpUserId              |                |                 |               | User ID of the person who last updated this record. |
+| expenditureTypes    | [PpmExpenditureType!]! |                |                 |               | Valid Expenditure Types for give purchase Category. |
 
 ##### Linked Data Objects
 

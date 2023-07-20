@@ -413,6 +413,7 @@ The (Natural) Account segment most closely aligns with the KFS Object Code.
 | children           | [ErpAccount!]             |                |                 |               | The ErpAccounts which are the immediate children of this one.<br/>Will be an empty list if the ErpAccount has no children. |
 | hierarchyDepth     | Int                       |                |        Y        |               | Level below the top for a ErpAccount that is part of a reporting hierarchy. |
 | hierarchyLevel     | String                    |                |        Y        |               | Reporting Level designation based on the hierarchy depth. |
+| ppmAllowed         | Boolean!                  |                |                 |               | If true, this natural account is also a PPM Expenditure Type and may be used when creating expenses against PPM-managed projects. |
 | eligibleForUse     | Boolean!                  |                |                 |               | Returns whether this ErpAccount is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the ErpAccount must:<br/>- Be enabled<br/>- Not be summaryOnly<br/>- Have a startDate and endDate range which includes the given accountingDate |
 | purposeRequired    | Boolean!                  |                |                 |               | DEPRECATED - NOT IMPLEMENTED |
 

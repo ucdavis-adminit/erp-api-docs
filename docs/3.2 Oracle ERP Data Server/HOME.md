@@ -435,6 +435,7 @@ Below are some examples of responses from the API.  Successful response data is 
 | `Currency`                   | A field whose value is a Currency: https://en.wikipedia.org/wiki/ISO_4217. |
 | `Date`                       | A date string, such as 2007-12-03, compliant with the `full-date` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. |
 | `DateTime`                   | A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar. |
+| `DateTimeISO`                | A date-time string at UTC, such as 2007-12-03T10:15:30Z, compliant with the `date-time` format outlined in section 5.6 of the RFC 3339 profile of the ISO 8601 standard for representation of dates and times using the Gregorian calendar.This scalar is serialized to a string in ISO 8601 format and parsed from a string in ISO 8601 format. |
 | `DeweyDecimal`               | A field whose value conforms to the standard DeweyDecimal format as specified by the OCLC https://www.oclc.org/content/dam/oclc/dewey/resources/summaries/deweysummaries.pdf |
 | `EmailAddress`               | A field whose value conforms to the standard internet email address format as specified in HTML Spec: https://html.spec.whatwg.org/multipage/input.html#valid-e-mail-address. |
 | `ErpAccountCode`             | Oracle GL Account Segment Code<br/><br/>- All values are exactly 6 characters matching the regex pattern: `[0-9A-Z]{6}`<br/>- Validated against the [`ErpAccount`]({{Types.ErpAccount}}) object. |
@@ -474,6 +475,7 @@ Below are some examples of responses from the API.  Successful response data is 
 | `KfsSubAccountNumber`        | 5-character KFS Sub Account Number, upper-case letters and digits only |
 | `LCCSubclass`                | A field whose value conforms to the Library of Congress Subclass Format ttps://www.loc.gov/catdir/cpso/lcco/ |
 | `LocalDate`                  | A local date string (i.e., with no associated timezone) in `YYYY-MM-DD` format, e.g. `2020-01-01`. |
+| `LocalDateTime`              | A local date-time string (i.e., with no associated timezone) in `YYYY-MM-DDTHH:mm:ss` format, e.g. `2020-01-01T00:00:00`. |
 | `Long`                       | The `BigInt` scalar type represents non-fractional signed whole numeric values. |
 | `NonEmptyString`             | A string that cannot be passed as an empty value |
 | `NonEmptyTrimmedString1`     | String limited to 1 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |

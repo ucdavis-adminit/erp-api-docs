@@ -23,6 +23,8 @@ The Project identifies the planned work or activity to be completed over a perio
 #### Data Source
 
 * Local Table/View: `PPM_PROJECT`
+  * Support Tables:
+    * `ERP_LEGAL_ENTITY`
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
@@ -63,14 +65,15 @@ The Project identifies the planned work or activity to be completed over a perio
 | projectStatus              | NonEmptyTrimmedString80!  |                |                 |               | Project Status: An implementation-defined classification of the status of a project. Typical project statuses are Active and Closed. |
 | projectStatusCode          | NonEmptyTrimmedString30!  |                |        Y        |               | Project Status Code: The current status set on a project. A project status is an implementation-defined classification of the status of a project. Typical project status codes are ACTIVE and CLOSED. |
 | projectOrganizationName    | NonEmptyTrimmedString240  |                |                 |               | Organization: An organizing unit in the internal or external structure of the enterprise. Organization structures provide the framework for performing legal reporting, financial control, and management reporting for the project. |
-| businessUnitName           | NonEmptyTrimmedString240  |                |                 |               | Name of the component of the system that this project belongs to.  There is a separation between sponsored projects managed by CGA, and other managed projects.  The value in this field should align with the sponsoredProject flag. |
-| legalEntityName            | NonEmptyTrimmedString240  |                |                 |               | Legal Entity: Name of the legal entity associated with the project. A legal entity is a recognized party with given rights and responsibilities by legislation. Legal entities generally have the right to own property, the right to trade, the responsibility to repay debt, and the responsibility to account for themselves to company regulators, taxation authorities, and owners according to rules specified in the relevant legislation. |
-| projectTypeName            | String                    |                |                 |               | Project Type Name: String # Max Length: 2000 |
+| businessUnitName           | NonEmptyTrimmedString240! |                |                 |               | Name of the component of the system that this project belongs to.  There is a separation between sponsored projects managed by CGA, and other managed projects.  The value in this field should align with the sponsoredProject flag. |
+| legalEntityName            | NonEmptyTrimmedString240! |                |                 |               | Legal Entity: Name of the legal entity associated with the project. A legal entity is a recognized party with given rights and responsibilities by legislation. Legal entities generally have the right to own property, the right to trade, the responsibility to repay debt, and the responsibility to account for themselves to company regulators, taxation authorities, and owners according to rules specified in the relevant legislation. |
+| legalEntityCode            | ErpEntityCode             |                |                 |               |  |
+| projectTypeName            | String!                   |                |                 |               | Project Type Name: String # Max Length: 2000 |
 | primaryProjectManagerEmail | NonEmptyTrimmedString240  |                |        Y        |               | Project Manager Email: Email of the person who leads the project team and who has the authority and responsibility for meeting the project objectives. |
 | primaryProjectManagerName  | NonEmptyTrimmedString240  |                |                 |               | Project Manager: Name of the person who leads the project team and who has the authority and responsibility for meeting project objectives. |
 | sourceApplicationCode      | NonEmptyTrimmedString30   |                |                 |               | Source Application: The third-party application from which the project originates. |
 | sourceProjectReference     | NonEmptyTrimmedString30   |                |                 |               | Source Reference: The identifier of the project in the external system where it was originally entered. |
-| projectCategory            | NonEmptyTrimmedString30   |                |                 |               | TODO |
+| projectCategory            | NonEmptyTrimmedString30!  |                |                 |               | TODO |
 | sponsoredProject           | Boolean!                  |                |        Y        |               | Sponsored Project Flag: Whether this project is a sponsored project and requires Award and Funding Source segments when assigning costs. |
 | billingEnabled             | Boolean!                  |                |        Y        |               | Billing Enabled Flag: If billing is allowed for this project. |
 | capitalizationEnabled      | Boolean!                  |                |        Y        |               | Capitalization Enabled Flag: If this is a capital project whose costs may need to be capitalized. |
@@ -360,7 +363,10 @@ The Expenditure Type identifies the natural classification of the expense transa
 
 #### Data Source
 
-* Local Table/View: `PPM_EXPENDITURE_TYPE`
+* Local Table/View: `PPM_EXPENDITURE_TYPE_V` (view)
+  * Support Tables:
+    * `PPM_EXPENDITURE_TYPE`
+    * `ERP_ACCOUNT`
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
@@ -381,6 +387,7 @@ The Expenditure Type identifies the natural classification of the expense transa
 | endDate             | LocalDate                 |                |                 |               | Expenditure Type End Date: End date of an expenditure type. |
 | expenditureCategory | NonEmptyTrimmedString240  |                |                 |               | Expenditure Category: Name of the expenditure category. |
 | revenueCategoryCode | NonEmptyTrimmedString30   |                |                 |               | Revenue Category Code: Code of a category grouping of expenditure types by type of revenue. |
+| revenue             | Boolean!                  |                |                 |               | Indicates that this expense type is really a revenue natural account allowed on PPM journals for the purpose of increasing the project budget. |
 | lastUpdateDateTime  | DateTime!                 |                |        Y        |               | The date when the expenditure type was last updated. |
 | lastUpdatedBy       | ErpUserId                 |                |                 |               | The user that last updated the expenditure type. |
 | eligibleForUse      | Boolean!                  |                |                 |               | Returns whether this PpmExpenditureType is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmExpenditureType must:<br/>- Have a startDate and endDate range which includes the given accoutingDate |

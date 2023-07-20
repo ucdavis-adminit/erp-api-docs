@@ -238,7 +238,7 @@ PpmDocumentEntry is used to store the document entries.
 <!--BREAK-->
 ### Data Object: PpmSponsor
 
-SPONSOR
+PPM Sponsor reference for use with sponsored project awards.
 
 #### Access Controls
 
@@ -248,28 +248,43 @@ SPONSOR
 
 * Local Table/View: `PPM_SPONSOR`
 * Data Origin:
-  * System: Oracle BICC
+  * System: Oracle BIPublisher
   * Extract Objects:
-    * View Object: FscmTopModelAM.GmsSetupAM.SponsorPVO
+    * /Custom/Interfaces/Data Extracts/PPM_Sponsor_RPT.xdo
   * Underlying Database Objects:
-    * 
+    * GMS_SPONSORS_VL
+    * GMS_SPONSOR_ACCT_DETAILS_B
+    * HZ_PARTIES
+    * HZ_CUST_ACCOUNTS
 
 ##### Properties
 
-| Property Name        | Data Type                | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| -------------------- | ------------------------ | :------------: | :-------------: | ------------- | ----- |
-| sponsorId            | Long!                    |                |        Y        |               |  |
-| partyId              | Long                     |                |                 |               |  |
-| burdenScheduleId     | Long                     |                |                 |               |  |
-| billToSponsorId      | Long                     |                |                 |               |  |
-| letterOfCreditNumber | NonEmptyTrimmedString240 |                |                 |               |  |
-| isLetterOfCredit     | Boolean                  |                |                 |               |  |
-| isFederal            | Boolean                  |                |        Y        |               |  |
-| statusCode           | NonEmptyTrimmedString30  |                |        Y        |               |  |
-| creationDate         | DateTime                 |                |                 |               |  |
-| lastUpdateDateTime   | DateTime                 |                |        Y        |               |  |
-| lastUpdateUserId     | ErpUserId                |                |                 |               |  |
-| references           | [PpmSponsorReference!]!  |                |                 |               |  |
+| Property Name        | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| -------------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| sponsorId            | Long!                     |                |        Y        |               |  |
+| name                 | NonEmptyTrimmedString240! |                |        Y        |               |  |
+| sponsorNumber        | NonEmptyTrimmedString30!  |                |        Y        |               |  |
+| accountNumber        | NonEmptyTrimmedString240  |                |        Y        |               |  |
+| accountName          | NonEmptyTrimmedString30   |                |        Y        |               |  |
+| letterOfCreditNumber | NonEmptyTrimmedString240  |                |        Y        |               |  |
+| isLetterOfCredit     | Boolean!                  |                |                 |               |  |
+| isFederal            | Boolean!                  |                |        Y        |               |  |
+| address1             | NonEmptyTrimmedString240  |                |                 |               |  |
+| address2             | NonEmptyTrimmedString240  |                |                 |               |  |
+| address3             | NonEmptyTrimmedString240  |                |                 |               |  |
+| address4             | NonEmptyTrimmedString240  |                |                 |               |  |
+| city                 | NonEmptyTrimmedString60   |                |                 |               |  |
+| state                | NonEmptyTrimmedString60   |                |                 |               |  |
+| postalCode           | NonEmptyTrimmedString60   |                |                 |               |  |
+| country              | ErpCountryCode            |                |                 |               |  |
+| references           | [PpmSponsorReference!]!   |                |                 |               |  |
+| creationDate         | DateTime!                 |                |                 |               |  |
+| lastUpdateDateTime   | DateTime!                 |                |        Y        |               |  |
+| lastUpdateUserId     | ErpUserId                 |                |                 |               |  |
+| partyId              | Long!                     |                |                 |               |  |
+| burdenScheduleId     | Long                      |                |                 |               |  |
+| billToSponsorId      | Long                      |                |                 |               |  |
+| statusCode           | NonEmptyTrimmedString30   |                |                 |               |  |
 
 ##### Linked Data Objects
 
@@ -283,6 +298,15 @@ SPONSOR
 
 * **Parameters**
   * `sponsorId : String!`
+* **Returns**
+  * `PpmSponsor`
+
+##### `ppmSponsorByNumber`
+
+> undefined
+
+* **Parameters**
+  * `sponsorNumber : NonEmptyTrimmedString30!`
 * **Returns**
   * `PpmSponsor`
 

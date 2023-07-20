@@ -352,7 +352,7 @@ Invoice status information used to check remaining balances.
 
 | Property Name      | Data Type               | Key Field [^2] | Searchable [^1] | Required Role | Notes |
 | ------------------ | ----------------------- | :------------: | :-------------: | ------------- | ----- |
-| id                 | NonEmptyTrimmedString20 |                |        Y        |               | Value that uniquely identifies the MemoLine by ID |
+| id                 | Long!                   |                |        Y        |               | Value that uniquely identifies the MemoLine by ID |
 | name               | NonEmptyTrimmedString50 |                |        Y        |               | Value that uniquely identifies the MemoLine by name |
 | description        | NonEmptyTrimmedString80 |                |                 |               | Longer description |
 | type               | NonEmptyTrimmedString10 |                |                 |               | Type of the MemoLine |
@@ -418,15 +418,15 @@ Invoice status information used to check remaining balances.
 
 ##### Properties
 
-| Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| partySiteNumber    | NonEmptyTrimmedString50!  |                |        Y        |               | Value that uniquely identifies the PartySite by number |
-| partySiteName      | NonEmptyTrimmedString100! |                |        Y        |               | Value that uniquely identifies the PartySite by name |
-| status             | NonEmptyTrimmedString10   |                |                 |               | Status Code of the PartySite |
-| partySiteId        | Long                      |                |                 |               |  |
-| partyId            | Long                      |                |                 |               |  |
-| locationId         | Long                      |                |                 |               |  |
-| lastUpdateDateTime | DateTime                  |                |                 |               |  |
+| Property Name      | Data Type                | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------ | ------------------------ | :------------: | :-------------: | ------------- | ----- |
+| partySiteNumber    | NonEmptyTrimmedString50! |                |        Y        |               | Value that uniquely identifies the PartySite by number |
+| partySiteName      | NonEmptyTrimmedString100 |                |        Y        |               | Value that uniquely identifies the PartySite by name |
+| status             | NonEmptyTrimmedString10  |                |                 |               | Status Code of the PartySite |
+| partySiteId        | Long                     |                |                 |               |  |
+| partyId            | Long                     |                |                 |               |  |
+| locationId         | Long                     |                |                 |               |  |
+| lastUpdateDateTime | DateTime                 |                |                 |               |  |
 
 ##### Linked Data Objects
 
