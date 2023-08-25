@@ -161,7 +161,7 @@ Known accounting chartstring combinations.
 <!--BREAK-->
 ### Data Object: GlAccountingPeriod
 
-Represents an accounting period in the GL module of Oracle Financials.  Used for validation of submitted journal entry data.
+Represents an accounting period in Oracle Financials.  Used for validation of submitted journal entry data.
 
 #### Access Controls
 
@@ -172,6 +172,7 @@ Represents an accounting period in the GL module of Oracle Financials.  Used for
 * Local Table/View: `GL_PERIOD` (view)
   * Support Tables:
     * `ERP_PERIOD`
+    * `ERP_PERIOD_CUTOFF_DATES`
 * Data Origin:
   * System: Oracle BIPublisher
   * Extract Objects:
@@ -189,17 +190,18 @@ Represents an accounting period in the GL module of Oracle Financials.  Used for
 
 | Property Name         | Data Type                | Key Field [^2] | Searchable [^1] | Required Role | Notes |
 | --------------------- | ------------------------ | :------------: | :-------------: | ------------- | ----- |
-| periodName            | ErpAccountingPeriodName! |                |        Y        |               | The unique name of a GL Accounting Period |
-| periodYear            | PositiveInt!             |                |        Y        |               |  |
-| periodNumber          | PositiveInt!             |                |        Y        |               |  |
-| periodStatus          | ErpPeriodStatus!         |                |        Y        |               |  |
-| adjustmentPeriod      | Boolean!                 |                |        Y        |               |  |
-| startDate             | Date!                    |                |        Y        |               |  |
-| endDate               | Date!                    |                |        Y        |               |  |
-| yearStartDate         | Date!                    |                |                 |               |  |
-| quarterStartDate      | Date!                    |                |                 |               |  |
-| quarterNumber         | PositiveInt!             |                |                 |               |  |
-| effectivePeriodNumber | PositiveInt!             |                |                 |               |  |
+| periodName            | ErpAccountingPeriodName! |                |        Y        |               | The unique name of a ERP Accounting Period |
+| periodYear            | PositiveInt!             |                |        Y        |               | Fiscal year this period belongs to. |
+| periodNumber          | PositiveInt!             |                |        Y        |               | Integer number of the period within the year. |
+| periodStatus          | ErpPeriodStatus!         |                |        Y        |               | Current Status of the Period.  Only Open (O) and Future Enterable (F) are valid on submission of documents. |
+| adjustmentPeriod      | Boolean!                 |                |        Y        |               | Whether this is an period used for adjusting the balances prior to fiscal closing. |
+| startDate             | LocalDate!               |                |        Y        |               | Start date of the period. |
+| endDate               | LocalDate!               |                |        Y        |               | End date of the period. |
+| yearStartDate         | LocalDate!               |                |                 |               | Start date of the fiscal year this period belongs to. |
+| quarterStartDate      | LocalDate!               |                |                 |               | Start date of the fiscal quarter this period belongs to. |
+| quarterNumber         | PositiveInt!             |                |                 |               | Integer number of the period within the fiscal year. |
+| effectivePeriodNumber | PositiveInt!             |                |                 |               | Unique numeric representation of the period used for sorting periods in order. |
+| journalCutoffDate     | LocalDate                |                |                 |               | Last day that journals may be submitted for this accounting period. |
 | lastUpdateDateTime    | DateTime!                |                |        Y        |               |  |
 | lastUpdateUserId      | ErpUserId                |                |                 |               |  |
 

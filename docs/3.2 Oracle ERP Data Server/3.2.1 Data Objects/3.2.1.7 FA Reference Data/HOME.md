@@ -64,7 +64,7 @@
 <!--BREAK-->
 ### Data Object: FaAsset
 
-
+Fixed Asset current state record
 
 #### Access Controls
 
@@ -84,54 +84,64 @@
 
 ##### Properties
 
-| Property Name           | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| ----------------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| assetId                 | Long!                     |                |                 |               | Internal Oracle Identifier for this asset |
-| assetNumber             | NonEmptyTrimmedString30!  |                |        Y        |               | Sequential ID number assigned to the asset and visible within Oracle. |
-| assetTagNumber          | NonEmptyTrimmedString15!  |                |        Y        |               | UC-Assigned Tag Number for the asset |
-| assetType               | NonEmptyTrimmedString15!  |                |        Y        |               |  |
-| assetCategoryId         | Long!                     |                |                 |               |  |
-| description             | NonEmptyTrimmedString80   |                |        Y        |               |  |
-| manufacturerName        | NonEmptyTrimmedString360  |                |                 |               |  |
-| serialNumber            | NonEmptyTrimmedString40   |                |                 |               |  |
-| modelNumber             | NonEmptyTrimmedString40   |                |                 |               |  |
-| minorCategoryCode       | NonEmptyTrimmedString150! |                |        Y        |               |  |
-| campusCode              | NonEmptyTrimmedString150! |                |                 |               |  |
-| buildingCode            | NonEmptyTrimmedString150! |                |        Y        |               |  |
-| roomCode                | NonEmptyTrimmedString150  |                |                 |               |  |
-| alternateAddress        | NonEmptyTrimmedString150  |                |                 |               |  |
-| custodialDivisionCode   | NonEmptyTrimmedString150! |                |        Y        |               |  |
-| custodialDepartmentCode | NonEmptyTrimmedString150! |                |        Y        |               |  |
-| assetRepresentativeName | NonEmptyTrimmedString150  |                |                 |               |  |
-| titleFlag               | Boolean!                  |                |                 |               |  |
-| totalCost               | Float                     |                |                 |               | The current recorded cost of the asset.  See costHistory for a history of cost changes. |
-| acquisitionCode         | NonEmptyTrimmedString150! |                |                 |               |  |
-| primaryFundCode         | NonEmptyTrimmedString150! |                |                 |               |  |
-| equipFundSourceCode     | NonEmptyTrimmedString150! |                |                 |               |  |
-| conditionCode           | NonEmptyTrimmedString150! |                |        Y        |               |  |
-| equipLoanCode           | NonEmptyTrimmedString150  |                |                 |               |  |
-| lastCertificationDate   | LocalDate                 |                |                 |               |  |
-| piName                  | String                    |                |                 |               |  |
-| sponsorName             | NonEmptyTrimmedString150  |                |                 |               |  |
-| loanDetail              | NonEmptyTrimmedString150  |                |                 |               |  |
-| warrantyInfo            | NonEmptyTrimmedString150  |                |                 |               |  |
-| hospitalAssetNumber     | NonEmptyTrimmedString150  |                |                 |               |  |
-| creationDate            | DateTime!                 |                |                 |               |  |
-| lastUpdateUserId        | ErpUserId                 |                |                 |               |  |
-| lastUpdateDateTime      | DateTime!                 |                |        Y        |               |  |
-| acquisitionCodeInfo     | FaAcquisitionCode         |                |                 |               |  |
-| custodialDivisionInfo   | FaCustodialDivision       |                |                 |               |  |
-| custodialDepartmentInfo | FaCustodialDepartment     |                |                 |               |  |
-| campusInfo              | ErpCampus                 |                |                 |               |  |
-| buildingInfo            | ErpBuilding               |                |                 |               |  |
-| roomInfo                | ErpBuildingRoom           |                |                 |               |  |
-| conditionCodeInfo       | FaCondition               |                |                 |               |  |
-| equipFundSourceInfo     | FaFundSource              |                |                 |               |  |
-| equipLoanInfo           | FaLoanCode                |                |                 |               |  |
-| minorCategoryInfo       | FaMinorCategory           |                |                 |               |  |
-| primaryFundInfo         | ErpFundSource             |                |                 |               |  |
-| costHistory             | [FaAssetCostHistory!]!    |                |                 |               |  |
+| Property Name                 | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ----------------------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| assetId                       | Long!                     |                |                 |               | Internal Oracle Identifier for this asset |
+| assetNumber                   | NonEmptyTrimmedString30!  |                |        Y        |               | Sequential ID number assigned to the asset and visible within Oracle. |
+| assetTagNumber                | NonEmptyTrimmedString15!  |                |        Y        |               | UC-Assigned Tag Number for the asset |
+| assetType                     | NonEmptyTrimmedString15!  |                |        Y        |               |  |
+| assetCategoryId               | Long!                     |                |                 |               | Internal identifier for the asset category. |
+| description                   | NonEmptyTrimmedString80   |                |        Y        |               |  |
+| manufacturerName              | NonEmptyTrimmedString360  |                |                 |               |  |
+| serialNumber                  | NonEmptyTrimmedString40   |                |                 |               |  |
+| modelNumber                   | NonEmptyTrimmedString40   |                |                 |               |  |
+| minorCategoryCode             | NonEmptyTrimmedString150! |                |        Y        |               |  |
+| campusCode                    | NonEmptyTrimmedString150! |                |                 |               |  |
+| buildingCode                  | NonEmptyTrimmedString150! |                |        Y        |               |  |
+| roomCode                      | NonEmptyTrimmedString150  |                |                 |               |  |
+| alternateAddress              | NonEmptyTrimmedString150  |                |                 |               |  |
+| custodialDivisionCode         | NonEmptyTrimmedString150! |                |        Y        |               |  |
+| custodialDepartmentCode       | NonEmptyTrimmedString150! |                |        Y        |               |  |
+| assetRepresentativeEmployeeId | UcEmployeeId              |                |        Y        |               |  |
+| assetRepresentativeName       | NonEmptyTrimmedString360  |                |                 |               |  |
+| assetRepresentative           | ErpUser                   |                |                 |               |  |
+| titleFlag                     | Boolean!                  |                |                 |               |  |
+| totalCost                     | Float                     |                |                 |               | The current recorded cost of the asset.  See costHistory for a history of cost changes. |
+| acquisitionCode               | NonEmptyTrimmedString150! |                |                 |               |  |
+| primaryFundCode               | NonEmptyTrimmedString150! |                |                 |               |  |
+| equipFundSourceCode           | NonEmptyTrimmedString150! |                |                 |               |  |
+| conditionCode                 | NonEmptyTrimmedString150! |                |        Y        |               |  |
+| equipLoanCode                 | NonEmptyTrimmedString150  |                |                 |               |  |
+| lastCertificationDate         | LocalDate                 |                |                 |               |  |
+| piEmployeeId                  | UcEmployeeId              |                |        Y        |               |  |
+| piName                        | NonEmptyTrimmedString360  |                |                 |               |  |
+| pi                            | ErpUser                   |                |                 |               |  |
+| sponsorName                   | NonEmptyTrimmedString150  |                |                 |               |  |
+| loanDetail                    | NonEmptyTrimmedString150  |                |                 |               |  |
+| warrantyInfo                  | NonEmptyTrimmedString150  |                |                 |               |  |
+| hospitalAssetNumber           | NonEmptyTrimmedString150  |                |                 |               |  |
+| creationDate                  | DateTime!                 |                |                 |               |  |
+| lastUpdateUserId              | ErpUserId                 |                |                 |               |  |
+| lastUpdateDateTime            | DateTime!                 |                |        Y        |               |  |
+| acquisitionCodeInfo           | FaAcquisitionCode         |                |                 |               |  |
+| custodialDivisionInfo         | FaCustodialDivision       |                |                 |               |  |
+| custodialDepartmentInfo       | FaCustodialDepartment     |                |                 |               |  |
+| campusInfo                    | ErpCampus                 |                |                 |               |  |
+| buildingInfo                  | ErpBuilding               |                |                 |               |  |
+| roomInfo                      | ErpBuildingRoom           |                |                 |               |  |
+| conditionCodeInfo             | FaCondition               |                |                 |               |  |
+| equipFundSourceInfo           | FaFundSource              |                |                 |               |  |
+| equipLoanInfo                 | FaLoanCode                |                |                 |               |  |
+| minorCategoryInfo             | FaMinorCategory           |                |                 |               |  |
+| primaryFundInfo               | ErpFundSource             |                |                 |               |  |
+| costHistory                   | [FaAssetCostHistory!]!    |                |                 |               |  |
 
+* `assetRepresentative` : `ErpUser`
+  * Description of `ErpUser`:
+    * A user as known to the ERP application.
+* `pi` : `ErpUser`
+  * Description of `ErpUser`:
+    * A user as known to the ERP application.
 * `acquisitionCodeInfo` : `FaAcquisitionCode`
 * `custodialDivisionInfo` : `FaCustodialDivision`
 * `custodialDepartmentInfo` : `FaCustodialDepartment`

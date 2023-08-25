@@ -64,7 +64,7 @@ The Project identifies the planned work or activity to be completed over a perio
 | projectCompletionDate      | LocalDate                 |                |        Y        |               | Project Finish Date: The date that work or information tracking completes for a project. |
 | projectStatus              | NonEmptyTrimmedString80!  |                |                 |               | Project Status: An implementation-defined classification of the status of a project. Typical project statuses are Active and Closed. |
 | projectStatusCode          | NonEmptyTrimmedString30!  |                |        Y        |               | Project Status Code: The current status set on a project. A project status is an implementation-defined classification of the status of a project. Typical project status codes are ACTIVE and CLOSED. |
-| projectOrganizationName    | NonEmptyTrimmedString240  |                |                 |               | Organization: An organizing unit in the internal or external structure of the enterprise. Organization structures provide the framework for performing legal reporting, financial control, and management reporting for the project. |
+| projectOrganizationName    | NonEmptyTrimmedString240  |                |        Y        |               | Organization: An organizing unit in the internal or external structure of the enterprise. Organization structures provide the framework for performing legal reporting, financial control, and management reporting for the project. |
 | businessUnitName           | NonEmptyTrimmedString240! |                |                 |               | Name of the component of the system that this project belongs to.  There is a separation between sponsored projects managed by CGA, and other managed projects.  The value in this field should align with the sponsoredProject flag. |
 | legalEntityName            | NonEmptyTrimmedString240! |                |                 |               | Legal Entity: Name of the legal entity associated with the project. A legal entity is a recognized party with given rights and responsibilities by legislation. Legal entities generally have the right to own property, the right to trade, the responsibility to repay debt, and the responsibility to account for themselves to company regulators, taxation authorities, and owners according to rules specified in the relevant legislation. |
 | legalEntityCode            | ErpEntityCode             |                |                 |               |  |
@@ -194,7 +194,7 @@ The Task identifies the activities used to further breakdown a PPM project. Ever
 | parentTaskId             | Long                      |                |                 |               | Parent Task ID: Identifier of the parent task of the task. |
 | topTaskId                | Long                      |                |                 |               | Top Task ID: Identifier of the top task to which the task rolls up. If the task is a top task, the identifier of the top task is same as the identifier of the task. |
 | lastUpdateDateTime       | DateTime!                 |                |        Y        |               | The date when the task was last updated. |
-| lastUpdatedBy            | ErpUserId                 |                |                 |               | The user that last updated the task. |
+| lastUpdateUserId         | ErpUserId                 |                |                 |               | The user that last updated the task. |
 | projectId                | Long!                     |                |        Y        |               | The project that the task is linked to |
 | eligibleForUse           | Boolean!                  |                |                 |               | Returns whether this PpmTask is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmTask must:<br/>- Be chargeable<br/>- Be a lowestLevelTask<br/>- Have a taskStartDate and taskFinishDate range which includes the given accountingDate |
 | glPostingProgramCode     | ErpProgramCode            |                |                 |               | GL Program used during subledger accounting jobs to post GL entries when costs are recorded against this task. |
@@ -389,7 +389,7 @@ The Expenditure Type identifies the natural classification of the expense transa
 | revenueCategoryCode | NonEmptyTrimmedString30   |                |                 |               | Revenue Category Code: Code of a category grouping of expenditure types by type of revenue. |
 | revenue             | Boolean!                  |                |                 |               | Indicates that this expense type is really a revenue natural account allowed on PPM journals for the purpose of increasing the project budget. |
 | lastUpdateDateTime  | DateTime!                 |                |        Y        |               | The date when the expenditure type was last updated. |
-| lastUpdatedBy       | ErpUserId                 |                |                 |               | The user that last updated the expenditure type. |
+| lastUpdateUserId    | ErpUserId                 |                |                 |               | The user that last updated the expenditure type. |
 | eligibleForUse      | Boolean!                  |                |                 |               | Returns whether this PpmExpenditureType is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmExpenditureType must:<br/>- Have a startDate and endDate range which includes the given accoutingDate |
 
 * `eligibleForUse` : `Boolean!`
@@ -510,7 +510,7 @@ The Award Number identifies the number assigned to an award containing funding a
 | awardType                   | NonEmptyTrimmedString30   |                |        Y        |               | Type: Classification of an award, for example, Federal grants or Private grants. |
 | businessUnitName            | NonEmptyTrimmedString100! |                |                 |               | Business Unit: Unit of an enterprise that performs one or many business functions that can be rolled up in a management hierarchy. An award business unit is one within which the award is created. |
 | lastUpdateDateTime          | DateTime!                 |                |        Y        |               | The date when the award was last updated. |
-| lastUpdatedBy               | ErpUserId                 |                |                 |               | The user that last updated the award. |
+| lastUpdateUserId            | ErpUserId                 |                |                 |               | The user that last updated the award. |
 | awardFundingSource          | [PpmFundingSource!]       |                |                 |               | Award Funding Sources: The Award Funding Sources resource is used to view the attributes used to create or update a funding source for the award. |
 | defaultFundingSourceNumber  | PpmFundingSourceNumber    |                |                 |               |  |
 | awardCfda                   | [PpmCfdaAward!]           |                |                 |               |  |
@@ -628,7 +628,7 @@ The Funding Source identifies the name of the sponsor for the external funding s
 | fundingSourceToDate   | LocalDate                 |                |        Y        |               | Funding Source To Date: The date till which the funding source is active. |
 | fundingSourceType     | NonEmptyTrimmedString50   |                |                 |               | The funding source type name. |
 | lastUpdateDateTime    | DateTime!                 |                |        Y        |               | The date when the funding source was last updated. |
-| lastUpdatedBy         | ErpUserId                 |                |                 |               | The user that last updated the funding source. |
+| lastUpdateUserId      | ErpUserId                 |                |                 |               | The user that last updated the funding source. |
 | awardId               | Long!                     |                |        Y        |               | The award id linked to the funding Source |
 | eligibleForUse        | Boolean!                  |                |                 |               | Returns whether this PpmFundingSource is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmFundingSource must:<br/>- Have a fundingSourceFromDate and fundingSourceToDate range which includes the given accountingDate |
 

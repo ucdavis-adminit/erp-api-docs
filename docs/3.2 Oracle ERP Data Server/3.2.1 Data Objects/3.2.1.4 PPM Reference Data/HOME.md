@@ -67,6 +67,92 @@ Needed for to manage grants and contracts for lookup table
 
 
 <!--BREAK-->
+### Data Object: PpmAccountingPeriod
+
+Represents an accounting period in Oracle Financials.  Used for validation of submitted journal entry data.
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `PPM_PERIOD` (view)
+  * Support Tables:
+    * `ERP_PERIOD`
+    * `ERP_PERIOD_CUTOFF_DATES`
+* Data Origin:
+  * System: Oracle BIPublisher
+  * Extract Objects:
+    * Report: GL Period Export
+  * Underlying Database Objects:
+    * GL_LEDGERS_ALL_V (VIEW)
+    * FND_APPLICATION (VIEW)
+    * GL_PERIOD_STATUSES
+    * FND_APPL_TAXONOMY
+    * GL_LEDGERS
+    * FND_LOOKUP_VALUES_B
+    * FND_LOOKUP_VALUES_TL
+
+##### Properties
+
+| Property Name         | Data Type                | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| --------------------- | ------------------------ | :------------: | :-------------: | ------------- | ----- |
+| periodName            | ErpAccountingPeriodName! |                |        Y        |               | The unique name of a ERP Accounting Period |
+| periodYear            | PositiveInt!             |                |        Y        |               | Fiscal year this period belongs to. |
+| periodNumber          | PositiveInt!             |                |        Y        |               | Integer number of the period within the year. |
+| periodStatus          | ErpPeriodStatus!         |                |        Y        |               | Current Status of the Period.  Only Open (O) and Future Enterable (F) are valid on submission of documents. |
+| adjustmentPeriod      | Boolean!                 |                |        Y        |               | Whether this is an period used for adjusting the balances prior to fiscal closing. |
+| startDate             | LocalDate!               |                |        Y        |               | Start date of the period. |
+| endDate               | LocalDate!               |                |        Y        |               | End date of the period. |
+| yearStartDate         | LocalDate!               |                |                 |               | Start date of the fiscal year this period belongs to. |
+| quarterStartDate      | LocalDate!               |                |                 |               | Start date of the fiscal quarter this period belongs to. |
+| quarterNumber         | PositiveInt!             |                |                 |               | Integer number of the period within the fiscal year. |
+| effectivePeriodNumber | PositiveInt!             |                |                 |               | Unique numeric representation of the period used for sorting periods in order. |
+| journalCutoffDate     | LocalDate                |                |                 |               | Last day that journals may be submitted for this accounting period. |
+| lastUpdateDateTime    | DateTime!                |                |        Y        |               |  |
+| lastUpdateUserId      | ErpUserId                |                |                 |               |  |
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+##### `ppmAccountingPeriod`
+
+> Get a single PpmAccountingPeriod by its name.  Returns undefined if does not exist
+
+* **Parameters**
+  * `periodName : String!`
+* **Returns**
+  * `PpmAccountingPeriod`
+
+##### `ppmAccountingPeriodByDate`
+
+> Get a single non-adjustment PpmAccountingPeriod by the given date.  Returns undefined if no period is defined for the given date.
+
+* **Parameters**
+  * `accountingDate : Date!`
+* **Returns**
+  * `PpmAccountingPeriod`
+
+##### `ppmAccountingPeriodSearch`
+
+> Search for PpmAccountingPeriod objects by multiple properties.
+> See
+> See the PpmAccountingPeriodFilterInput type for options.
+
+* **Parameters**
+  * `filter : PpmAccountingPeriodFilterInput!`
+* **Returns**
+  * `PpmAccountingPeriodSearchResults!`
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
 ### Data Object: PpmCfda
 
 CFDA
@@ -150,7 +236,7 @@ CFDAAward
 | id                 | Long!                   |                |                 |               |  |
 | cfda               | NonEmptyTrimmedString30 |                |                 |               |  |
 | awardId            | Long                    |                |                 |               |  |
-| creationFate       | DateTime                |                |                 |               |  |
+| creationDate       | DateTime                |                |                 |               |  |
 | lastUpdateDateTime | DateTime                |                |                 |               |  |
 | lastUpdateUserId   | ErpUserId               |                |                 |               |  |
 
@@ -401,7 +487,7 @@ Needed for to manage Terms and Conditions for lookup table
 | categoryName        | NonEmptyTrimmedString150! |                |        Y        |               | Category Name: The category name of the Term |
 | categoryDescription | NonEmptyTrimmedString240  |                |                 |               | Category Description: The category description of the Term |
 | lastUpdateDateTime  | DateTime                  |                |        Y        |               | The date when the keyword was last updated. |
-| lastUpdatedBy       | ErpUserId                 |                |                 |               | The user that last updated the term. |
+| lastUpdateUserId    | ErpUserId                 |                |                 |               | The user that last updated the term. |
 
 ##### Linked Data Objects
 

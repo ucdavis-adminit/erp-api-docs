@@ -258,14 +258,18 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
 
 #### Overall
 
-* If an accounting period was given, verify that it is open to accept transactions and is not an adjustment period.  (I.e., period 13)
-* If no accounting period given, verify that the period associated with the accounting date is open to accept transactions.
 * Verify that the accounting date, if given, is not in the future.
-* Verify that a non-zero number of journal lines have been provided.
+* If no accounting date is given, set to the current date.
+* Accounting Period Validation
+  * If no accounting period given, derive the period from the accounting date
+  * If an accounting period was given, verify that the accounting date falls within the period.  (Periods align with the calendar months.)
+  * Verify the period is open to accept transactions and is not an adjustment period.  (E.g., period 13)
+* Verify that at least two journal lines have been provided.
 * Verify number of lines `<=` 10000 (Preliminary number - may be adjusted based on performance testing.)
 * Verify that all lines have GL or PPM segment values.
 * Verify no line was given both GL and PPM segments.
-* Verify that the total of debits and credits in the journal balance.
+* Verify that every line has exactly one positive, non-zero amount in the debit or credit amount fields.
+* Verify that the total of debits and credits are equal.
 
 #### GL Transactions
 
@@ -294,7 +298,6 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
 | `INTEXP_ACCT_FUND`   | Commercial Paper and Long-Term Debt Interest expenses (58000C and 58020C and below) must be recorded in an appropriate Debt Service Fund (2400B and below) |
 | `UCDH_BS_DEPT`       | Balance sheet transactions in UCDH Entity 3210 may only be recorded in department 9500000                                                                  |
 | `UCDH_FUND_ENTITY`   | UCD Operating Funds (12000) may only be used within the UCDH Entity 3210                                                                                   |
-| `SOH_DEPT_ENTITY`    | School of Health and School of Nursing departments (430000C and 440000C and below) may only be used with the School of Health entity code                  |
 | `CAP_EXP_SALES_FUND` | Purchases to be Capitalized (52500B and below) may not be recorded on a Sales and Services fund (1210D and below)                                          |
 | `COFI_NO_EXTREVENUE` | External Revenue accounts may not be used with Common University Funds (13U0D and below)                                                                   |
 | `HATCHFUND_PURPOSE`  | ANR Expenses with Hatch Funds (2085C, 2086C, 2087C, 2088C and below) must use Organized Research purpose codes.                                            |
@@ -323,7 +326,7 @@ ORDER BY entity, purpose
 
 #### Entity/Department Restrictions
 
-**TODO: Combinations of Entity and Department Codes may be getting added to Oracle rules.  The mappings _may_ be included, however, the size of the mappings may be too large to actually include in the documentation.**
+Department code use is limited by entity.  Only combinations defined within Oracle are allowed.  The error messages for these types of issues will contain the allowed entity codes.
 
 #### Boundary Application Additional Rules
 

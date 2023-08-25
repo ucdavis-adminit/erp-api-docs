@@ -54,6 +54,9 @@ Contains information about the ERP API server's version.
 #### Data Source
 
 * Local Table/View: `ERP_BUILDING` (view)
+  * Support Tables:
+    * `VALUE_SET_TYPED_VALUES_PVO`
+    * `VALUE_SET_TYPED_VALUES_TL_PVO`
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
@@ -135,6 +138,9 @@ Contains information about the ERP API server's version.
 #### Data Source
 
 * Local Table/View: `ERP_BUILDING_ROOM` (view)
+  * Support Tables:
+    * `VALUE_SET_TYPED_VALUES_PVO`
+    * `VALUE_SET_TYPED_VALUES_TL_PVO`
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
@@ -196,6 +202,9 @@ Contains information about the ERP API server's version.
 #### Data Source
 
 * Local Table/View: `ERP_CAMPUS` (view)
+  * Support Tables:
+    * `VALUE_SET_TYPED_VALUES_PVO`
+    * `VALUE_SET_TYPED_VALUES_TL_PVO`
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
@@ -307,6 +316,9 @@ from advanced security table and formatted for API use.
 #### Data Source
 
 * Local Table/View: `ERP_FUND_SOURCE` (view)
+  * Support Tables:
+    * `VALUE_SET_TYPED_VALUES_PVO`
+    * `VALUE_SET_TYPED_VALUES_TL_PVO`
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
@@ -565,7 +577,7 @@ Locations referenced by Supplier and AR Customer Sites
 <!--BREAK-->
 ### Data Object: ErpUser
 
-Represents one record per fusion system user
+A user as known to the ERP application.
 
 #### Access Controls
 
@@ -576,6 +588,7 @@ Represents one record per fusion system user
 * Local Table/View: `ERP_USER` (view)
   * Support Tables:
     * `PER_USER`
+    * `PER_ALL_PEOPLE_F`
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
@@ -590,18 +603,19 @@ Represents one record per fusion system user
 
 | Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
 | ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| id                 | Long!                     |                |                 |               | Mandatory Primary Key. |
-| userId             | NonEmptyTrimmedString100! |                |        Y        |               | The latest principal username of the user |
-| personId           | Long!                     |                |                 |               |  |
+| id                 | Long!                     |                |                 |               | Internal identifier for the user account. |
+| userId             | ErpUserId!                |                |        Y        |               | User ID used to identify the person in the ERP application.  Matches their UCD computing account. |
+| personId           | Long!                     |                |                 |               | Internal person identifier linked to the user account. |
+| employeeId         | UcEmployeeId!             |                |        Y        |               | UCPath employee ID of the user. |
 | firstName          | NonEmptyTrimmedString150! |                |        Y        |               | Person's First name. |
 | lastName           | NonEmptyTrimmedString150! |                |        Y        |               | Person's Last name. |
-| displayName        | NonEmptyTrimmedString360  |                |        Y        |               | Peron's Display name. |
+| displayName        | NonEmptyTrimmedString360! |                |        Y        |               | Peron's Display name. |
 | email              | ErpEmailAddress           |                |        Y        |               | E-mail address. |
-| assignmentStatus   | NonEmptyTrimmedString30   |                |                 |               |  |
-| assignmentType     | NonEmptyTrimmedString30   |                |                 |               | Identifies the type of record: employee, CWK, applicant or non-workers |
-| active             | Boolean                   |                |                 |               |  |
-| startDate          | Date                      |                |                 |               | The date that the user is active from. |
-| endDate            | Date                      |                |                 |               | The date that the user ceases to be active in fusion. |
+| assignmentStatus   | NonEmptyTrimmedString30   |                |                 |               | Whether their employee assignment is ACTIVE or INACTIVE. |
+| assignmentType     | NonEmptyTrimmedString30   |                |                 |               | Identifies the type of record: employee (E) or Contingent-Worker (C) |
+| active             | Boolean!                  |                |        Y        |               |  |
+| startDate          | LocalDate                 |                |                 |               | The date that the user is active from. |
+| endDate            | LocalDate                 |                |                 |               | The date that the user ceases to be active in fusion. |
 | lastUpdateDateTime | DateTime!                 |                |        Y        |               |  |
 | lastUpdateUserId   | ErpUserId                 |                |                 |               |  |
 
@@ -613,19 +627,37 @@ Represents one record per fusion system user
 
 ##### `erpUser`
 
-> Get a single ErpUser by id.  Returns undefined if does not exist
+> Get a single ErpUser by ID.  Returns undefined if does not exist
 
 * **Parameters**
-  * `id : String!`
+  * `id : Long!`
+* **Returns**
+  * `ErpUser`
+
+##### `erpUserByPersonId`
+
+> Get a single ErpUser by Oracle Person ID.  Returns undefined if does not exist
+
+* **Parameters**
+  * `personId : Long!`
 * **Returns**
   * `ErpUser`
 
 ##### `erpUserByUserId`
 
-> Get a single ErpUser by user id.  Returns undefined if does not exist
+> Get a single ErpUser by user ID.  Returns undefined if does not exist
 
 * **Parameters**
-  * `userId : String!`
+  * `userId : ErpUserId!`
+* **Returns**
+  * `ErpUser`
+
+##### `erpUserByEmployeeId`
+
+> Get a single ErpUser by employee ID.  Returns undefined if does not exist
+
+* **Parameters**
+  * `employeeId : UcEmployeeId!`
 * **Returns**
   * `ErpUser`
 

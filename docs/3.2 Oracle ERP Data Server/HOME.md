@@ -456,7 +456,7 @@ Below are some examples of responses from the API.  Successful response data is 
 | `ErpProjectCode`             | Oracle GL Project Segment Code<br/><br/>- All values are exactly 10 characters matching the regex pattern: `[0-9A-Z]{10}`<br/>- Validated against the [`ErpProject`]({{Types.ErpProject}}) object. |
 | `ErpPurposeCode`             | Oracle GL Purpose Segment Code<br/><br/>- All values are exactly 2 characters matching the regex pattern: `[0-9][0-9A-Z]`<br/>- Validated against the [`ErpPurpose`]({{Types.ErpPurpose}}) object. |
 | `ErpUnitOfMeasureCode`       | Oracle ERP Unit Of Measure Code |
-| `ErpUserId`                  | Oracle User ID: 32 character limit |
+| `ErpUserId`                  | Oracle User ID: 64 character limit |
 | `Float`                      | The `Float` scalar type represents signed double-precision fractional values as specified by [IEEE 754](https://en.wikipedia.org/wiki/IEEE_floating_point). |
 | `GlDescriptionField40`       | 40-character description field limited to letters, numbers, hyphen, underscore, and spaces |
 | `GlJournalCategoryKey`       | General Ledger Journal Category Key<br/><br/>- Limit of 25 characters.<br/>- Validated against the `key` of the [`GlJournalCategory`]({{Types.GlJournalCategory}}).<br/> |
@@ -581,6 +581,15 @@ When the line type is LINE, the value for this column should be REV, UNBILL, UNE
 | `LINE`     | Normal Receivables Line.  Excludes tax, freight, or misc charges. |
 | `TAX`      | Charged Tax Line |
 
+##### `CacheControlScope`
+
+
+
+| Enum Value | Description |
+| ---------- | ----------- |
+| `PRIVATE`  |  |
+| `PUBLIC`   |  |
+
 ##### `ErpCoaHierarchyLevel`
 
 Hierarchy Level Codes used in the financial chartstring structures.  Their meaning within each segment type is determined by chart of accounts design team.
@@ -670,6 +679,7 @@ Status options within the [ActionRequestStatus]({{Types.ActionRequestStatus}}) t
 | `PENDING`   | Request has been submitted to the API, but picked up for processing. |
 | `REJECTED`  | There was a validation error in the request payload data. |
 | `STALE`     | Request never completed within the maximum allowed time. |
+| `VALIDATED` | Request requested validation but no submission.  This indicates the request would have been submitted. |
 | `WARNING`   | There were issues while processing the request.  Some of the submitted data may not be completely imported to the target system.  You should review any output to see if corrective action is required. |
 
 ##### `ScmInvoiceType`
