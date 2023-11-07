@@ -411,13 +411,14 @@ See: <https://financeandbusiness.ucdavis.edu/aggie-enterprise/about/cofi/resourc
 * Expenditure type must be enabled.
 * Accounting date must be within the expenditure type's start and end dates.
 * **Special Case: Revenue Accounts**
-  * PPM Does not allow revenue on transactions.  Special handling has been added to the API to address this through the integration processes.  Specific GL Accounts are allowed to be used on PPM Transactions.  They are NOT set up as PPM Expenditure Types, but an exception is made to the validation rules to allow them to be passed through.
-  * Revenue accounts allowed are children of the parents below:
+  * PPM Does not allow revenue on transactions.  Special handling has been added to address this through the integration processes.  Specific GL Natural Accounts are allowed to be used on PPM transactions by boundary systems.  These are NOT set up as PPM Expenditure Types within Oracle, but an exception is made to the validation rules to allow them to be passed through so that responsive budgetary adjustments may be processed.
+  * Allowed revenue accounts are children of the parents below:
     * `40090C` - Self Supporting Degree Fees
     * `40100C` - Professional Degree Supplemental Tuitions
     * `40200C` - University Extension Program Fees
     * `41000A` - Sales and Services of Educational Activities
     * `48000A` - Non-Capital Private Gifts
+    * `775000` - UCD Recharge Revenue
 
 ##### Award Validation
 
@@ -465,7 +466,7 @@ See: <https://financeandbusiness.ucdavis.edu/aggie-enterprise/about/cofi/resourc
         "glSegments": {
           "entity": "3110",
           "fund": "13U00",
-          "department": "BTTT000",
+          "department": "ADIT000",
           "purpose": "68",
           "account": "390000"
         },
@@ -560,7 +561,7 @@ See: <https://financeandbusiness.ucdavis.edu/aggie-enterprise/about/cofi/resourc
         "glSegments": {
           "entity": "3110",
           "fund": "13U00",
-          "department": "BTTT000",
+          "department": "ADIT000",
           "account": "770000"
         },
         "creditAmount": 500.00,

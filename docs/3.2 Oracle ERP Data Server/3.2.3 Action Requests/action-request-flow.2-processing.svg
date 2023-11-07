@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" contentStyleType="text/css" height="1102px" preserveAspectRatio="none" style="width:1303px;height:1102px;background:#FFFFFF;" version="1.1" viewBox="0 0 1303 1102" width="1303px" zoomAndPan="magnify"><defs/><g><rect height="29.124" style="stroke:#00000000;stroke-width:1.0;fill:none;" width="225" x="535.25" y="10"/><text fill="#000000" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="215" x="540.25" y="29">Processing Inbound Data Request</text><rect fill="#FFF9E5" height="1033.766" style="stroke:#000000;stroke-width:0.5;" width="581" x="114" y="46.124"/><text fill="#000000" font-family="Avenir" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="150" x="329.5" y="59.124">Web Service Components</text><rect fill="#CDD6E0" height="1033.766" style="stroke:#000000;stroke-width:0.5;" width="457.5" x="717" y="46.124"/><text fill="#000000" font-family="Avenir" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="190" x="848.75" y="59.124">Integration Pipeline Components</text><rect fill="#FFF2CC" height="158.28" style="stroke:#1D4776;stroke-width:1.5;" width="469.5" x="711" y="197.13"/><rect fill="#FFF2CC" height="213.77" style="stroke:#1D4776;stroke-width:1.5;" width="565.5" x="711" y="369.41"/><rect fill="#FFF2CC" height="247.384" style="stroke:#1D4776;stroke-width:1.5;" width="585.5" x="701" y="644.304"/><rect fill="#FFF2CC" height="185.94" style="stroke:#1D4776;stroke-width:1.5;" width="565.5" x="711" y="698.748"/><rect fill="#FFF2CC" height="75.078" style="stroke:#1D4776;stroke-width:1.5;" width="469.5" x="711" y="905.688"/><line style="stroke:#1D4776;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="51" x2="51" y1="133.006" y2="997.766"/><line style="stroke:#1D4776;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="184" x2="184" y1="133.006" y2="997.766"/><line style="stroke:#1D4776;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="336" x2="336" y1="133.006" y2="997.766"/><line style="stroke:#1D4776;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="466" x2="466" y1="133.006" y2="997.766"/><line style="stroke:#1D4776;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="605" x2="605" y1="133.006" y2="997.766"/><line style="stroke:#1D4776;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="770" x2="770" y1="133.006" y2="997.766"/><line style="stroke:#1D4776;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="948.5" x2="948.5" y1="133.006" y2="997.766"/><line style="stroke:#1D4776;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="1143.5" x2="1143.5" y1="133.006" y2="997.766"/><line style="stroke:#1D4776;stroke-width:0.5;stroke-dasharray:5.0,5.0;" x1="1228.5" x2="1228.5" y1="133.006" y2="997.766"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="87" x="5" y="127.882">Client System</text><ellipse cx="51.5" cy="62.382" fill="#FFE599" rx="8" ry="8" style="stroke:#033266;stroke-width:0.5;"/><path d="M51.5,70.382 L51.5,97.382 M38.5,78.382 L64.5,78.382 M51.5,97.382 L38.5,112.382 M51.5,97.382 L64.5,112.382 " fill="none" style="stroke:#033266;stroke-width:0.5;"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="87" x="5" y="1010.766">Client System</text><ellipse cx="51.5" cy="1024.39" fill="#FFE599" rx="8" ry="8" style="stroke:#033266;stroke-width:0.5;"/><path d="M51.5,1032.39 L51.5,1059.39 M38.5,1040.39 L64.5,1040.39 M51.5,1059.39 L38.5,1074.39 M51.5,1059.39 L64.5,1074.39 " fill="none" style="stroke:#033266;stroke-width:0.5;"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="126" x="118" y="127.882">WSO2 API Gateway</text><path d="M163.5,85.882 L163.5,109.882 M163.5,97.882 L180.5,97.882 " fill="none" style="stroke:#000000;stroke-width:0.5;"/><ellipse cx="192.5" cy="97.882" fill="#FFE599" rx="12" ry="12" style="stroke:#000000;stroke-width:0.5;"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="126" x="118" y="1010.766">WSO2 API Gateway</text><path d="M163.5,1019.89 L163.5,1043.89 M163.5,1031.89 L180.5,1031.89 " fill="none" style="stroke:#000000;stroke-width:0.5;"/><ellipse cx="192.5" cy="1031.89" fill="#FFE599" rx="12" ry="12" style="stroke:#000000;stroke-width:0.5;"/><rect fill="#FFE599" height="33.124" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:0.5;" width="132" x="270" y="98.882"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="118" x="277" y="119.882">GraphQL Gateway</text><rect fill="#FFE599" height="33.124" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:0.5;" width="132" x="270" y="996.766"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="118" x="277" y="1017.766">GraphQL Gateway</text><rect fill="#FFE599" height="33.124" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:0.5;" width="68" x="432" y="98.882"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="54" x="439" y="119.882">Grouper</text><rect fill="#FFE599" height="33.124" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:0.5;" width="68" x="432" y="996.766"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="54" x="439" y="1017.766">Grouper</text><rect fill="#FFE599" height="33.124" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:0.5;" width="151" x="530" y="98.882"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="137" x="537" y="119.882">GraphQL Data Server</text><rect fill="#FFE599" height="33.124" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:0.5;" width="151" x="530" y="996.766"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="137" x="537" y="1017.766">GraphQL Data Server</text><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="93" x="721" y="127.882">Integration DB</text><path d="M752.5,77.882 C752.5,67.882 770.5,67.882 770.5,67.882 C770.5,67.882 788.5,67.882 788.5,77.882 L788.5,103.882 C788.5,113.882 770.5,113.882 770.5,113.882 C770.5,113.882 752.5,113.882 752.5,103.882 L752.5,77.882 " fill="#FFE599" style="stroke:#000000;stroke-width:1.5;"/><path d="M752.5,77.882 C752.5,87.882 770.5,87.882 770.5,87.882 C770.5,87.882 788.5,87.882 788.5,77.882 " fill="none" style="stroke:#000000;stroke-width:1.5;"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="93" x="721" y="1010.766">Integration DB</text><path d="M752.5,1025.89 C752.5,1015.89 770.5,1015.89 770.5,1015.89 C770.5,1015.89 788.5,1015.89 788.5,1025.89 L788.5,1051.89 C788.5,1061.89 770.5,1061.89 770.5,1061.89 C770.5,1061.89 752.5,1061.89 752.5,1051.89 L752.5,1025.89 " fill="#FFE599" style="stroke:#000000;stroke-width:1.5;"/><path d="M752.5,1025.89 C752.5,1035.89 770.5,1035.89 770.5,1035.89 C770.5,1035.89 788.5,1035.89 788.5,1025.89 " fill="none" style="stroke:#000000;stroke-width:1.5;"/><rect fill="#FFE599" height="33.124" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:0.5;" width="92" x="902.5" y="98.882"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="78" x="909.5" y="119.882">Apache NiFi</text><rect fill="#FFE599" height="33.124" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:0.5;" width="92" x="902.5" y="996.766"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="78" x="909.5" y="1017.766">Apache NiFi</text><path d="M1121.5,103.882 L1165.5,103.882 C1170.5,103.882 1170.5,118.444 1170.5,118.444 C1170.5,118.444 1170.5,133.006 1165.5,133.006 L1121.5,133.006 C1116.5,133.006 1116.5,118.444 1116.5,118.444 C1116.5,118.444 1116.5,103.882 1121.5,103.882 " fill="#FFE599" style="stroke:#000000;stroke-width:0.5;"/><path d="M1165.5,103.882 C1160.5,103.882 1160.5,118.444 1160.5,118.444 C1160.5,133.006 1165.5,133.006 1165.5,133.006 " fill="none" style="stroke:#000000;stroke-width:0.5;"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="34" x="1121.5" y="122.882">Kafka</text><path d="M1121.5,996.766 L1165.5,996.766 C1170.5,996.766 1170.5,1011.328 1170.5,1011.328 C1170.5,1011.328 1170.5,1025.89 1165.5,1025.89 L1121.5,1025.89 C1116.5,1025.89 1116.5,1011.328 1116.5,1011.328 C1116.5,1011.328 1116.5,996.766 1121.5,996.766 " fill="#FFE599" style="stroke:#000000;stroke-width:0.5;"/><path d="M1165.5,996.766 C1160.5,996.766 1160.5,1011.328 1160.5,1011.328 C1160.5,1025.89 1165.5,1025.89 1165.5,1025.89 " fill="none" style="stroke:#000000;stroke-width:0.5;"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="34" x="1121.5" y="1015.766">Kafka</text><rect fill="#FFE599" height="33.124" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:0.5;" width="56" x="1200.5" y="98.882"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="42" x="1207.5" y="119.882">Oracle</text><rect fill="#FFE599" height="33.124" rx="2.5" ry="2.5" style="stroke:#000000;stroke-width:0.5;" width="56" x="1200.5" y="996.766"/><text fill="#002851" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="42" x="1207.5" y="1017.766">Oracle</text><rect fill="#CDD6E0" height="3" style="stroke:#CDD6E0;stroke-width:1.0;" width="1296.5" x="0" y="165.568"/><line style="stroke:#002851;stroke-width:1.0;" x1="0" x2="1296.5" y1="165.568" y2="165.568"/><line style="stroke:#002851;stroke-width:1.0;" x1="0" x2="1296.5" y1="168.568" y2="168.568"/><rect fill="#CDD6E0" height="27.124" style="stroke:#002851;stroke-width:2.0;" width="145" x="575.75" y="153.006"/><text fill="#000000" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="127" x="581.75" y="171.006">Request Submission</text><path d="M711,197.13 L783,197.13 L783,206.888 L773,216.888 L711,216.888 L711,197.13 " fill="#FFF9E5" style="stroke:#1D4776;stroke-width:1.5;"/><rect fill="none" height="158.28" style="stroke:#1D4776;stroke-width:1.5;" width="469.5" x="711" y="197.13"/><text fill="#000000" font-family="Avenir" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="27" x="726" y="211.13">loop</text><text fill="#002851" font-family="Avenir" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="93" x="798" y="210.13">[Every 15 Seconds]</text><polygon fill="#002851" points="781.5,232.574,771.5,236.574,781.5,240.574,777.5,236.574" style="stroke:#002851;stroke-width:1.0;"/><polygon fill="#002851" points="936.5,232.574,946.5,236.574,936.5,240.574,940.5,236.574" style="stroke:#002851;stroke-width:1.0;"/><line style="stroke:#002851;stroke-width:2.0;" x1="775.5" x2="942.5" y1="236.574" y2="236.574"/><text fill="#4C4C4C" font-family="Avenir" font-size="10" font-weight="bold" lengthAdjust="spacing" textLength="6" x="787.5" y="230.914">1</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="111" x="797.5" y="230.914">Checks for new requests</text><path d="M829,249.574 L829,294.574 L1068,294.574 L1068,259.574 L1058,249.574 L829,249.574 " fill="#CDD6E0" style="stroke:#181818;stroke-width:0.5;"/><path d="M1058,249.574 L1058,259.574 L1068,259.574 L1058,249.574 " fill="#CDD6E0" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="Avenir" font-size="13" lengthAdjust="spacing" textLength="214" x="835" y="267.574">NiFi extracts request information and</text><text fill="#000000" font-family="Avenir" font-size="13" lengthAdjust="spacing" textLength="178" x="835" y="285.332">identifies which pipeline to use</text><polygon fill="#002851" points="781.5,315.75,771.5,319.75,781.5,323.75,777.5,319.75" style="stroke:#002851;stroke-width:1.0;"/><line style="stroke:#002851;stroke-width:2.0;" x1="775.5" x2="947.5" y1="319.75" y2="319.75"/><text fill="#4C4C4C" font-family="Avenir" font-size="10" font-weight="bold" lengthAdjust="spacing" textLength="6" x="787.5" y="314.09">2</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="107" x="797.5" y="314.09">Updates Request Status</text><polygon fill="#002851" points="1131.5,343.41,1141.5,347.41,1131.5,351.41,1135.5,347.41" style="stroke:#002851;stroke-width:1.0;"/><line style="stroke:#002851;stroke-width:2.0;" x1="948.5" x2="1137.5" y1="347.41" y2="347.41"/><text fill="#4C4C4C" font-family="Avenir" font-size="10" font-weight="bold" lengthAdjust="spacing" textLength="6" x="955.5" y="341.75">3</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="161" x="965.5" y="341.75">Publishes request into request topic</text><path d="M711,369.41 L914,369.41 L914,379.168 L904,389.168 L711,389.168 L711,369.41 " fill="#FFF9E5" style="stroke:#1D4776;stroke-width:1.5;"/><rect fill="none" height="213.77" style="stroke:#1D4776;stroke-width:1.5;" width="565.5" x="711" y="369.41"/><text fill="#000000" font-family="Avenir" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="158" x="726" y="383.41">For Each Message In Topic</text><polygon fill="#002851" points="959.5,404.828,949.5,408.828,959.5,412.828,955.5,408.828" style="stroke:#002851;stroke-width:1.0;"/><line style="stroke:#002851;stroke-width:2.0;stroke-dasharray:2.0,2.0;" x1="953.5" x2="1142.5" y1="408.828" y2="408.828"/><text fill="#4C4C4C" font-family="Avenir" font-size="10" font-weight="bold" lengthAdjust="spacing" textLength="6" x="965.5" y="403.168">4</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="135" x="975.5" y="403.168">Pulls new requests from Topic</text><path d="M775,421.828 L775,448.828 L1122,448.828 L1122,431.828 L1112,421.828 L775,421.828 " fill="#CDD6E0" style="stroke:#181818;stroke-width:0.5;"/><path d="M1112,421.828 L1112,431.828 L1122,431.828 L1112,421.828 " fill="#CDD6E0" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="Avenir" font-size="13" lengthAdjust="spacing" textLength="326" x="781" y="439.828">validates and prepares request for submission to Oracle</text><polygon fill="#002851" points="781.5,470.246,771.5,474.246,781.5,478.246,777.5,474.246" style="stroke:#002851;stroke-width:1.0;"/><polygon fill="#002851" points="936.5,470.246,946.5,474.246,936.5,478.246,940.5,474.246" style="stroke:#002851;stroke-width:1.0;"/><line style="stroke:#002851;stroke-width:2.0;" x1="775.5" x2="942.5" y1="474.246" y2="474.246"/><text fill="#4C4C4C" font-family="Avenir" font-size="10" font-weight="bold" lengthAdjust="spacing" textLength="6" x="787.5" y="468.586">5</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="133" x="797.5" y="468.586">Validation and Status Updates</text><polygon fill="#002851" points="1216.5,497.906,1226.5,501.906,1216.5,505.906,1220.5,501.906" style="stroke:#002851;stroke-width:1.0;"/><line style="stroke:#002851;stroke-width:2.0;" x1="948.5" x2="1222.5" y1="501.906" y2="501.906"/><text fill="#4C4C4C" font-family="Avenir" font-size="10" font-weight="bold" lengthAdjust="spacing" textLength="6" x="955.5" y="496.246">6</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="143" x="965.5" y="496.246">Formats and submits job to ERP</text><polygon fill="#002851" points="781.5,548.373,771.5,552.373,781.5,556.373,777.5,552.373" style="stroke:#002851;stroke-width:1.0;"/><line style="stroke:#002851;stroke-width:2.0;" x1="775.5" x2="947.5" y1="552.373" y2="552.373"/><text fill="#4C4C4C" font-family="Avenir" font-size="10" font-weight="bold" lengthAdjust="spacing" textLength="6" x="787.5" y="546.713">7</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="91" x="797.5" y="546.713">Saves Oracle Job ID</text><path d="M953,514.906 L953,577.906 L1163,577.906 L1163,524.906 L1153,514.906 L953,514.906 " fill="#CDD6E0" style="stroke:#181818;stroke-width:0.5;"/><path d="M1153,514.906 L1153,524.906 L1163,524.906 L1153,514.906 " fill="#CDD6E0" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="Avenir" font-size="13" lengthAdjust="spacing" textLength="189" x="959" y="532.906">Oracle runs a set of internal jobs</text><text fill="#000000" font-family="Avenir" font-size="13" lengthAdjust="spacing" textLength="185" x="959" y="550.664">and uploads the results as a zip</text><text fill="#000000" font-family="Avenir" font-size="13" lengthAdjust="spacing" textLength="133" x="959" y="568.422">into their UCM system.</text><rect fill="#CDD6E0" height="3" style="stroke:#CDD6E0;stroke-width:1.0;" width="1296.5" x="0" y="612.742"/><line style="stroke:#002851;stroke-width:1.0;" x1="0" x2="1296.5" y1="612.742" y2="612.742"/><line style="stroke:#002851;stroke-width:1.0;" x1="0" x2="1296.5" y1="615.742" y2="615.742"/><rect fill="#CDD6E0" height="27.124" style="stroke:#002851;stroke-width:2.0;" width="185" x="555.75" y="600.18"/><text fill="#000000" font-family="Avenir" font-size="14" font-weight="bold" lengthAdjust="spacing" textLength="167" x="561.75" y="618.18">Request Result Monitoring</text><path d="M701,644.304 L773,644.304 L773,654.062 L763,664.062 L701,664.062 L701,644.304 " fill="#FFF9E5" style="stroke:#1D4776;stroke-width:1.5;"/><rect fill="none" height="247.384" style="stroke:#1D4776;stroke-width:1.5;" width="585.5" x="701" y="644.304"/><text fill="#000000" font-family="Avenir" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="27" x="716" y="658.304">loop</text><text fill="#002851" font-family="Avenir" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="99" x="788" y="657.304">[Every Few Minutes]</text><polygon fill="#002851" points="781.5,679.748,771.5,683.748,781.5,687.748,777.5,683.748" style="stroke:#002851;stroke-width:1.0;"/><polygon fill="#002851" points="936.5,679.748,946.5,683.748,936.5,687.748,940.5,683.748" style="stroke:#002851;stroke-width:1.0;"/><line style="stroke:#002851;stroke-width:2.0;" x1="775.5" x2="942.5" y1="683.748" y2="683.748"/><text fill="#4C4C4C" font-family="Avenir" font-size="10" font-weight="bold" lengthAdjust="spacing" textLength="6" x="787.5" y="678.088">1</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="142" x="797.5" y="678.088">Retrieves list of incomplete jobs</text><path d="M711,698.748 L783,698.748 L783,708.506 L773,718.506 L711,718.506 L711,698.748 " fill="#FFF9E5" style="stroke:#1D4776;stroke-width:1.5;"/><rect fill="none" height="185.94" style="stroke:#1D4776;stroke-width:1.5;" width="565.5" x="711" y="698.748"/><text fill="#000000" font-family="Avenir" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="27" x="726" y="712.748">loop</text><text fill="#002851" font-family="Avenir" font-size="11" font-weight="bold" lengthAdjust="spacing" textLength="72" x="798" y="711.748">[For Each Job]</text><polygon fill="#002851" points="1216.5,734.192,1226.5,738.192,1216.5,742.192,1220.5,738.192" style="stroke:#002851;stroke-width:1.0;"/><line style="stroke:#002851;stroke-width:2.0;" x1="948.5" x2="1222.5" y1="738.192" y2="738.192"/><text fill="#4C4C4C" font-family="Avenir" font-size="10" font-weight="bold" lengthAdjust="spacing" textLength="6" x="955.5" y="732.532">2</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="109" x="965.5" y="732.532">Polls UCM for job results</text><polygon fill="#002851" points="959.5,761.852,949.5,765.852,959.5,769.852,955.5,765.852" style="stroke:#002851;stroke-width:1.0;"/><line style="stroke:#002851;stroke-width:2.0;stroke-dasharray:2.0,2.0;" x1="953.5" x2="1227.5" y1="765.852" y2="765.852"/><text fill="#4C4C4C" font-family="Avenir" font-size="10" font-weight="bold" lengthAdjust="spacing" textLength="6" x="965.5" y="760.192">3</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="110" x="975.5" y="760.192">Returns results if present</text><path d="M885,778.852 L885,823.852 L1012,823.852 L1012,788.852 L1002,778.852 L885,778.852 " fill="#CDD6E0" style="stroke:#181818;stroke-width:0.5;"/><path d="M1002,778.852 L1002,788.852 L1012,788.852 L1002,778.852 " fill="#CDD6E0" style="stroke:#181818;stroke-width:0.5;"/><text fill="#000000" font-family="Avenir" font-size="13" lengthAdjust="spacing" textLength="106" x="891" y="796.852">NiFi parses results</text><text fill="#000000" font-family="Avenir" font-size="13" lengthAdjust="spacing" textLength="92" x="891" y="814.61">to extract status</text><polygon fill="#002851" points="781.5,845.028,771.5,849.028,781.5,853.028,777.5,849.028" style="stroke:#002851;stroke-width:1.0;"/><line style="stroke:#002851;stroke-width:2.0;" x1="775.5" x2="947.5" y1="849.028" y2="849.028"/><text fill="#4C4C4C" font-family="Avenir" font-size="10" font-weight="bold" lengthAdjust="spacing" textLength="6" x="787.5" y="843.368">4</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="80" x="797.5" y="843.368">Saves Job Results</text><polygon fill="#002851" points="1131.5,872.688,1141.5,876.688,1131.5,880.688,1135.5,876.688" style="stroke:#002851;stroke-width:1.0;"/><line style="stroke:#002851;stroke-width:2.0;" x1="948.5" x2="1137.5" y1="876.688" y2="876.688"/><text fill="#4C4C4C" font-family="Avenir" font-size="10" font-weight="bold" lengthAdjust="spacing" textLength="6" x="955.5" y="871.028">5</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="113" x="965.5" y="871.028">Publishes job completion</text><path d="M711,905.688 L964,905.688 L964,915.446 L954,925.446 L711,925.446 L711,905.688 " fill="#FFF9E5" style="stroke:#1D4776;stroke-width:1.5;"/><rect fill="none" height="75.078" style="stroke:#1D4776;stroke-width:1.5;" width="469.5" x="711" y="905.688"/><text fill="#000000" font-family="Avenir" font-size="13" font-weight="bold" lengthAdjust="spacing" textLength="208" x="726" y="919.688">Upon Completion Message Receipt</text><polygon fill="#002851" points="959.5,941.106,949.5,945.106,959.5,949.106,955.5,945.106" style="stroke:#002851;stroke-width:1.0;"/><line style="stroke:#002851;stroke-width:2.0;" x1="953.5" x2="1142.5" y1="945.106" y2="945.106"/><text fill="#4C4C4C" font-family="Avenir" font-size="10" font-weight="bold" lengthAdjust="spacing" textLength="6" x="965.5" y="939.446">6</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="121" x="975.5" y="939.446">Pulls completion messages</text><polygon fill="#002851" points="781.5,968.766,771.5,972.766,781.5,976.766,777.5,972.766" style="stroke:#002851;stroke-width:1.0;"/><line style="stroke:#002851;stroke-width:2.0;" x1="775.5" x2="947.5" y1="972.766" y2="972.766"/><text fill="#4C4C4C" font-family="Avenir" font-size="10" font-weight="bold" lengthAdjust="spacing" textLength="6" x="787.5" y="967.106">7</text><text fill="#4C4C4C" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="144" x="797.5" y="967.106">Saves Response data to request</text><rect height="13.66" style="stroke:#00000000;stroke-width:1.0;fill:none;" width="260" x="517.75" y="1080.89"/><text fill="#888888" font-family="Avenir" font-size="10" lengthAdjust="spacing" textLength="260" x="517.75" y="1090.89">Author: Jonathan Keller 11/2/2020 - Revised: 8/28/2023</text><!--MD5=[60b36da6a6ed0c34ba8e62e80e8cc202]
+@startuml action-request-flow
+
+!include ucd_style.iuml
+
+title Processing Inbound Data Request
+center footer Author: Jonathan Keller 11/2/2020 - Revised: 8/28/2023
+
+actor "Client System" as CS
+box Web Service Components
+  boundary "WSO2 API Gateway" AS WSO2
+  participant "GraphQL Gateway" AS GQLGateway
+  participant Grouper
+  participant "GraphQL Data Server" as GQL
+end box
+box Integration Pipeline Components #CDD6E0
+  database "Integration DB" AS Postgres
+  participant "Apache NiFi" AS NiFi
+  queue Kafka
+end box
+participant "Oracle" AS ERP
+
+== Request Submission ==
+
+autonumber 1
+loop Every 15 Seconds
+  NiFi <-> Postgres : Checks for new requests
+  note over NiFi: NiFi extracts request information and \nidentifies which pipeline to use
+  NiFi -> Postgres : Updates Request Status
+  NiFi -> Kafka : Publishes request into request topic
+end loop
+
+group For Each Message In Topic
+  Kafka - -> NiFi : Pulls new requests from Topic
+  note over NiFi: validates and prepares request for submission to Oracle
+  NiFi <-> Postgres : Validation and Status Updates
+  NiFi -> ERP : Formats and submits job to ERP
+  NiFi -> Postgres : Saves Oracle Job ID
+  note right
+    Oracle runs a set of internal jobs
+    and uploads the results as a zip
+    into their UCM system.
+  end note
+end group
+
+== Request Result Monitoring ==
+
+autonumber 1
+loop Every Few Minutes
+  NiFi <-> Postgres : Retrieves list of incomplete jobs
+  loop For Each Job
+    NiFi -> ERP : Polls UCM for job results
+    ERP - -> NiFi : Returns results if present
+    note over NiFi: NiFi parses results\nto extract status
+    NiFi -> Postgres : Saves Job Results
+    NiFi -> Kafka : Publishes job completion
+  end loop
+end loop
+group Upon Completion Message Receipt
+  Kafka -> NiFi : Pulls completion messages
+  NiFi -> Postgres : Saves Response data to request
+end group
+
+@enduml
+
+@startuml action-request-flow
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+skinparam DefaultFontName Avenir
+
+skinparam activity {
+    BackgroundColor #FFE599
+    BorderColor #033266
+    StartColor #266041
+    FontColor black
+    EndColor #79242F
+}
+
+skinparam actor {
+    BackgroundColor #FFE599
+    BorderColor #033266
+    FontColor #002851
+    FontStyle bold
+}
+
+skinparam arrow {
+    Color #002851
+    FontSize 10
+    FontColor #4C4C4C
+}
+
+skinparam box {
+    Padding 10
+}
+
+skinparam boundary {
+    BorderColor black
+    BackgroundColor #FFE599
+    FontColor #002851
+    FontStyle bold
+}
+
+skinparam cloud {
+    BackgroundColor #6FCFEB
+    BorderColor #003A5D
+}
+
+skinparam collections {
+    BackgroundColor #FFE599
+    BorderColor black
+}
+
+skinparam component {
+    Style uml2
+    FontColor #002851
+    BackgroundColor #CDD6E0
+    BorderColor #002851
+}
+
+skinparam control {
+    BackgroundColor #FFE599
+    BorderColor black
+    FontColor #002851
+    FontStyle bold
+}
+
+skinparam database {
+    BackgroundColor #FFE599
+    BorderColor black
+    FontColor #002851
+    FontStyle bold
+}
+
+skinparam entity {
+    BackgroundColor #FFE599
+    BorderColor black
+    FontColor #002851
+    FontStyle bold
+}
+
+skinparam interface {
+    BackgroundColor black
+    BorderColor #FFBF00
+}
+
+skinparam note {
+    BackgroundColor #CDD6E0
+    BorderColor #1D4776
+}
+
+skinparam package {
+    BackgroundColor #FFF2CC
+}
+
+skinparam participant {
+    BackgroundColor #FFE599
+    BorderColor black
+    Padding 10
+    FontColor #002851
+    FontStyle bold
+}
+
+skinparam queue {
+    BackgroundColor #FFE599
+    BorderColor black
+    FontColor #002851
+    FontStyle bold
+}
+
+skinparam sequence {
+    DividerBorderColor #033266
+    group {
+      BackgroundColor #FFF9E5
+      FontColor #002851
+      BorderColor #1D4776
+    }
+    LifeLineBorderColor #1D4776
+    LifeLineBackgroundColor #FFE599
+    ArrowThickness 2
+    box {
+      FontColor #002851
+      FontStyle bold
+      FontSize 18
+      BackgroundColor #FFF9E5
+      BorderColor black
+    }
+    divider {
+      FontColor black
+      FontStyle bold
+      FontSize 14
+      BackgroundColor #CDD6E0
+      BorderColor #002851
+    }
+}
+
+skinparam swimlane {
+    BorderColor #FFBF00
+    TitleFontStyle bold
+}
+
+title Processing Inbound Data Request
+center footer Author: Jonathan Keller 11/2/2020 - Revised: 8/28/2023
+
+actor "Client System" as CS
+box Web Service Components
+  boundary "WSO2 API Gateway" AS WSO2
+  participant "GraphQL Gateway" AS GQLGateway
+  participant Grouper
+  participant "GraphQL Data Server" as GQL
+end box
+box Integration Pipeline Components #CDD6E0
+  database "Integration DB" AS Postgres
+  participant "Apache NiFi" AS NiFi
+  queue Kafka
+end box
+participant "Oracle" AS ERP
+
+== Request Submission ==
+
+autonumber 1
+loop Every 15 Seconds
+  NiFi <-> Postgres : Checks for new requests
+  note over NiFi: NiFi extracts request information and \nidentifies which pipeline to use
+  NiFi -> Postgres : Updates Request Status
+  NiFi -> Kafka : Publishes request into request topic
+end loop
+
+group For Each Message In Topic
+  Kafka - -> NiFi : Pulls new requests from Topic
+  note over NiFi: validates and prepares request for submission to Oracle
+  NiFi <-> Postgres : Validation and Status Updates
+  NiFi -> ERP : Formats and submits job to ERP
+  NiFi -> Postgres : Saves Oracle Job ID
+  note right
+    Oracle runs a set of internal jobs
+    and uploads the results as a zip
+    into their UCM system.
+  end note
+end group
+
+== Request Result Monitoring ==
+
+autonumber 1
+loop Every Few Minutes
+  NiFi <-> Postgres : Retrieves list of incomplete jobs
+  loop For Each Job
+    NiFi -> ERP : Polls UCM for job results
+    ERP - -> NiFi : Returns results if present
+    note over NiFi: NiFi parses results\nto extract status
+    NiFi -> Postgres : Saves Job Results
+    NiFi -> Kafka : Publishes job completion
+  end loop
+end loop
+group Upon Completion Message Receipt
+  Kafka -> NiFi : Pulls completion messages
+  NiFi -> Postgres : Saves Response data to request
+end group
+
+@enduml
+
+PlantUML version 1.2022.3(Tue Mar 29 09:10:57 PDT 2022)
+(GPL source distribution)
+Java Runtime: OpenJDK Runtime Environment
+JVM: OpenJDK 64-Bit Server VM
+Default Encoding: UTF-8
+Language: en
+Country: US
+--></g></svg>

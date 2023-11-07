@@ -540,8 +540,8 @@ Used on AR Invoices to indicate the type of accounting on a distribution line.
 
 | Enum Value | Description |
 | ---------- | ----------- |
-| `REC`      | Receivable |
-| `REV`      | Revenue |
+| `REC`      | Receivable  |
+| `REV`      | Revenue     |
 
 ##### `ArDistributionAccountClass`
 
@@ -559,8 +559,8 @@ When the line type is LINE, the value for this column should be REV, UNBILL, UNE
 
 | Enum Value | Description |
 | ---------- | ----------- |
-| `REC`      | Receivable |
-| `REV`      | Revenue |
+| `REC`      | Receivable  |
+| `REV`      | Revenue     |
 
 ##### `ArLineType`
 
@@ -568,18 +568,18 @@ When the line type is LINE, the value for this column should be REV, UNBILL, UNE
 
 | Enum Value | Description |
 | ---------- | ----------- |
-| `LINE`     |  |
+| `LINE`     |             |
 
 ##### `ArTransactionType`
 
 
 
-| Enum Value | Description |
-| ---------- | ----------- |
-| `CHARGES`  | Other Charges Line |
-| `FREIGHT`  | Shipping and Handling Charges Line |
+| Enum Value | Description                                                       |
+| ---------- | ----------------------------------------------------------------- |
+| `CHARGES`  | Other Charges Line                                                |
+| `FREIGHT`  | Shipping and Handling Charges Line                                |
 | `LINE`     | Normal Receivables Line.  Excludes tax, freight, or misc charges. |
-| `TAX`      | Charged Tax Line |
+| `TAX`      | Charged Tax Line                                                  |
 
 ##### `CacheControlScope`
 
@@ -587,43 +587,43 @@ When the line type is LINE, the value for this column should be REV, UNBILL, UNE
 
 | Enum Value | Description |
 | ---------- | ----------- |
-| `PRIVATE`  |  |
-| `PUBLIC`   |  |
+| `PRIVATE`  |             |
+| `PUBLIC`   |             |
 
 ##### `ErpCoaHierarchyLevel`
 
 Hierarchy Level Codes used in the financial chartstring structures.  Their meaning within each segment type is determined by chart of accounts design team.
 
-| Enum Value | Description |
-| ---------- | ----------- |
+| Enum Value | Description                                                     |
+| ---------- | --------------------------------------------------------------- |
 | `A`        | Top Level, often defined by UCOP for segments with many values. |
-| `B`        | Second Level, campus-specific, but may be UCOP defined. |
-| `C`        | Third Level: Usually campus-defined values here and below. |
-| `D`        | Fourth Level |
-| `E`        | Fifth Level |
-| `F`        | Sixth Level |
-| `G`        | Seventh Level |
-| `X`        | Top Level, Defined by UCOP, Only used by Account and Project. |
+| `B`        | Second Level, campus-specific, but may be UCOP defined.         |
+| `C`        | Third Level: Usually campus-defined values here and below.      |
+| `D`        | Fourth Level                                                    |
+| `E`        | Fifth Level                                                     |
+| `F`        | Sixth Level                                                     |
+| `G`        | Seventh Level                                                   |
+| `X`        | Top Level, Defined by UCOP, Only used by Account and Project.   |
 
 ##### `ErpCostCenterType`
 
 The type of cost center needed by Oracle to record a transaction.
 
-| Enum Value | Description |
-| ---------- | ----------- |
-| `GL`       | General Ledger Segments: Transaction may be posted directly to the general ledger |
+| Enum Value | Description                                                                                            |
+| ---------- | ------------------------------------------------------------------------------------------------------ |
+| `GL`       | General Ledger Segments: Transaction may be posted directly to the general ledger                      |
 | `POET`     | POET Segments: Transaction belongs to a managed project and must be posted through the PPM sub-ledger. |
 
 ##### `ErpPeriodStatus`
 
 Valid values for an accounting period status.
 
-| Enum Value | Description |
-| ---------- | ----------- |
-| `C`        | Closed |
-| `F`        | Future Enterable |
-| `N`        | Never Opened |
-| `O`        | Open |
+| Enum Value | Description        |
+| ---------- | ------------------ |
+| `C`        | Closed             |
+| `F`        | Future Enterable   |
+| `N`        | Never Opened       |
+| `O`        | Open               |
 | `P`        | Permanently Closed |
 
 ##### `InvoiceType`
@@ -632,9 +632,9 @@ Invoice category used in Payable Payment
 
 | Enum Value   | Description |
 | ------------ | ----------- |
-| `CREDIT`     |  |
-| `PREPAYMENT` |  |
-| `STANDARD`   |  |
+| `CREDIT`     |             |
+| `PREPAYMENT` |             |
+| `STANDARD`   |             |
 
 ##### `PayeeType`
 
@@ -642,45 +642,45 @@ Used on payment API to indicate payment type
 
 | Enum Value | Description |
 | ---------- | ----------- |
-| `EMPLOYEE` |  |
-| `STUDENT`  |  |
-| `SUPPLIER` |  |
+| `EMPLOYEE` |             |
+| `STUDENT`  |             |
+| `SUPPLIER` |             |
 
 ##### `ProcessingCheckpointType`
 
 Type of a given checkpoint in the processing of a request.  Not all request pipelines will utilize all checkpoint types.
 
-| Enum Value | Description |
-| ---------- | ----------- |
+| Enum Value | Description                                                                       |
+| ---------- | --------------------------------------------------------------------------------- |
 | `ERROR`    | Checkpoint is in a path reached after there were validation failures in the data. |
-| `FAILURE`  | Checkpoint is in a path reached though an unexpected procesing failure. |
-| `NORMAL`   | Checkpoint is in the normal successful processing path. |
+| `FAILURE`  | Checkpoint is in a path reached though an unexpected Processing failure.          |
+| `NORMAL`   | Checkpoint is in the normal successful processing path.                           |
 
 ##### `ProcessingResultStatus`
 
 Status of the pipeline request triggered from an API action request.
 
-| Enum Value  | Description |
-| ----------- | ----------- |
+| Enum Value  | Description                                                        |
+| ----------- | ------------------------------------------------------------------ |
 | `ERROR`     | one or more of the jobs resulted in an error and was not processed |
 | `INPROCESS` | data is in pipeline for processing and all jobs have not completed |
-| `PROCESSED` | processing is complete but notifications have not been sent |
-| `SUCCESS`   | all jobs completed successfully |
+| `PROCESSED` | processing is complete but notifications have not been sent        |
+| `SUCCESS`   | all jobs completed successfully                                    |
 
 ##### `RequestStatus`
 
 Status options within the [ActionRequestStatus]({{Types.ActionRequestStatus}}) that reflect the states a request can be in.
 
-| Enum Value  | Description |
-| ----------- | ----------- |
-| `COMPLETE`  | Request has been processed with no significant issues. |
+| Enum Value  | Description                                                                                                                                                                                                                                                  |
+| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `COMPLETE`  | Request has been processed with no significant issues.                                                                                                                                                                                                       |
 | `ERROR`     | There was an error processing the request.  Review the results to determine what corrective action may be required.  In the case that multiple jobs were required to process the request, some may have completed successfully while others may have failed. |
-| `INPROCESS` | Request has been picked up for processing. |
-| `PENDING`   | Request has been submitted to the API, but picked up for processing. |
-| `REJECTED`  | There was a validation error in the request payload data. |
-| `STALE`     | Request never completed within the maximum allowed time. |
-| `VALIDATED` | Request requested validation but no submission.  This indicates the request would have been submitted. |
-| `WARNING`   | There were issues while processing the request.  Some of the submitted data may not be completely imported to the target system.  You should review any output to see if corrective action is required. |
+| `INPROCESS` | Request has been picked up for processing.                                                                                                                                                                                                                   |
+| `PENDING`   | Request has been submitted to the API, but picked up for processing.                                                                                                                                                                                         |
+| `REJECTED`  | There was a validation error in the request payload data.                                                                                                                                                                                                    |
+| `STALE`     | Request never completed within the maximum allowed time.                                                                                                                                                                                                     |
+| `VALIDATED` | Request requested validation but no submission.  This indicates the request would have been submitted.                                                                                                                                                       |
+| `WARNING`   | There were issues while processing the request.  Some of the submitted data may not be completely imported to the target system.  You should review any output to see if corrective action is required.                                                      |
 
 ##### `ScmInvoiceType`
 
@@ -688,10 +688,10 @@ Nature of the invoice when paying one for a PO.  This would drive the natural ac
 
 | Enum Value   | Description |
 | ------------ | ----------- |
-| `CREDIT`     |  |
-| `DEBIT`      |  |
-| `PREPAYMENT` |  |
-| `STANDARD`   |  |
+| `CREDIT`     |             |
+| `DEBIT`      |             |
+| `PREPAYMENT` |             |
+| `STANDARD`   |             |
 
 ##### `ScmLineType`
 
@@ -699,10 +699,10 @@ Nature of the payment for this one.  In general, all lines should be ITEM.
 
 | Enum Value      | Description |
 | --------------- | ----------- |
-| `FREIGHT`       |  |
-| `ITEM`          |  |
-| `MISCELLANEOUS` |  |
-| `TAX`           |  |
+| `FREIGHT`       |             |
+| `ITEM`          |             |
+| `MISCELLANEOUS` |             |
+| `TAX`           |             |
 
 ##### `ScmPurchaseRequisitionLineType`
 
@@ -711,20 +711,20 @@ Used on SCM Requisitions to distinguish between Quantity based line and Fixed Pr
 | Enum Value    | Description |
 | ------------- | ----------- |
 | `Fixed_Price` | Fixed Price |
-| `Quantity`    | Quantity |
+| `Quantity`    | Quantity    |
 
 ##### `ScmSupplierSiteType`
 
 Supplier Site types which can be used to filter sites for a specific purpose.
 
-| Enum Value   | Description |
-| ------------ | ----------- |
-| `PAY`        | May be used on invoices / payments. |
-| `PCARD`      | Used with purchasing card transactions. |
+| Enum Value   | Description                                                                         |
+| ------------ | ----------------------------------------------------------------------------------- |
+| `PAY`        | May be used on invoices / payments.                                                 |
+| `PCARD`      | Used with purchasing card transactions.                                             |
 | `PRIMARYPAY` | Indicates the primary/default site payments should be sent to for a given supplier. |
-| `PURCHASING` | May be used on requisitions. |
-| `RFQ`        | To be used during the RFQ process. |
-| `TAX`        | Used for tax reporting. |
+| `PURCHASING` | May be used on requisitions.                                                        |
+| `RFQ`        | To be used during the RFQ process.                                                  |
+| `TAX`        | Used for tax reporting.                                                             |
 
 
 ![diagram](action-request-flow-summary.svg)

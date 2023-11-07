@@ -68,7 +68,7 @@ It is recommended that you utilize the API documentation and API server playgrou
                 "glSegments": {
                   "entity": "1311",
                   "fund": "13U00",
-                  "department": "BTTT000",
+                  "department": "ADIT000",
                   "account": "770000"
                 },
                 "creditAmount": 500.00,
@@ -118,7 +118,7 @@ Then the contents of the file would be:
         "glSegments": {
           "entity": "1311",
           "fund": "13U00",
-          "department": "BTTT000",
+          "department": "ADIT000",
           "account": "770000"
         },
         "creditAmount": 500.00,

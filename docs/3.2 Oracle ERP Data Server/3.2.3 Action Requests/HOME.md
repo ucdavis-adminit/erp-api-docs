@@ -158,4 +158,8 @@
 | `STALE`     | If Callback URL Provided: Request has been processed, but repeated attempts to contact the callback have failed and no more will be tried.                            |
 
 
-![diagram](action-request-flow.svg)
+![diagram](action-request-flow.1-request.svg)
+
+![diagram](action-request-flow.2-processing.svg)
+
+![diagram](action-request-flow.3-status.svg)
