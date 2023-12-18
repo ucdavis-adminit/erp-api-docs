@@ -261,6 +261,7 @@ The Oracle Purchasing category is the conceptual replacement for the KFS Commodi
 | lastUpdateDateTime  | DateTime!              |                |        Y        |               | Timestamp this record was last updated in the financial system. |
 | lastUpdateUserId    | ErpUserId              |                |                 |               | User ID of the person who last updated this record. |
 | expenditureTypes    | [PpmExpenditureType!]! |                |                 |               | Valid Expenditure Types for give purchase Category. |
+| eligibleForUse      | Boolean!               |                |                 |               |  |
 
 ##### Linked Data Objects
 

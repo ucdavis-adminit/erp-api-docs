@@ -379,9 +379,9 @@ The Expenditure Type identifies the natural classification of the expense transa
 
 | Property Name       | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
 | ------------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| id                  | Long!                     |       Y        |        Y        |               | Expenditure Type ID: Unique identifier of the expenditure type. |
-| name                | NonEmptyTrimmedString240! |                |        Y        |               | Expenditure Type: Name of the expenditure type. |
+| id                  | Long                      |       Y        |        Y        |               | Expenditure Type ID: Unique identifier of the expenditure type.<br/><br/>DEPRECATED: This field is deprecated and will be removed in a future release.  Use the 'code' field instead. |
 | code                | String!                   |                |                 |               | Expenditure Type Code: The code of the Expenditure Type. |
+| name                | NonEmptyTrimmedString240! |                |        Y        |               | Expenditure Type: Name of the expenditure type. |
 | description         | String                    |                |                 |               | Expenditure Type Description: Description of the expenditure type. |
 | startDate           | LocalDate                 |                |                 |               | Expenditure Type Start Date: Start date of an expenditure type. |
 | endDate             | LocalDate                 |                |                 |               | Expenditure Type End Date: End date of an expenditure type. |
@@ -471,6 +471,8 @@ The Award Number identifies the number assigned to an award containing funding a
 
 **Examples:**
 
+
+
 * Award Number values will be Oracle-generated
 
 #### Access Controls
@@ -514,6 +516,8 @@ The Award Number identifies the number assigned to an award containing funding a
 | awardFundingSource          | [PpmFundingSource!]       |                |                 |               | Award Funding Sources: The Award Funding Sources resource is used to view the attributes used to create or update a funding source for the award. |
 | defaultFundingSourceNumber  | PpmFundingSourceNumber    |                |                 |               |  |
 | awardCfda                   | [PpmCfdaAward!]           |                |                 |               |  |
+| glFundCode                  | ErpFundCode               |                |                 |               |  |
+| glPurposeCode               | ErpPurposeCode            |                |                 |               |  |
 | flowThruAmount              | NonNegativeFloat          |                |                 |               |  |
 | flowThruFromDate            | LocalDate                 |                |                 |               |  |
 | flowThruToDate              | LocalDate                 |                |                 |               |  |

@@ -763,32 +763,33 @@ Responses are structured like the following.  Successful response data is wrappe
 
 > where limits noted, values should be trimmed to the given length
 
-| GraphQL Property                                        | Req? | Oracle FBDI Destination                    | GL_INTERFACE Column              |
-| ------------------------------------------------------- | ---- | ------------------------------------------ | -------------------------------- |
-| Constant: `MISCELLANEOUS`                               |      | Transaction Type                           | TRANSACTION_TYPE                 |
-| Constant: `UCD Business Unit`                           |      | Business Unit Name                         | BUSINESS_UNIT                    |
-| Constant: `UCD Miscellaneous Costs`                     |      | Third-Party Application Transaction Source | USER_TRANSACTION_SOURCE          |
-| Constant: `Unaccounted External Transactions`           |      | Document Name                              | DOCUMENT_NAME                    |
-| payload.journalSource                                   |      | Document Entry                             | DOC_ENTRY_NAME                   |
-| _Calculated: see below_                                 | Yes  | Expenditure Batch                          | BATCH_NAME (200)                 |
-| _Calculated: see below_                                 | Yes  | Batch Description                          | BATCH_DESCRIPTION (250)          |
-| payload.accountingDate                                  |      | Expenditure Item Date                      | EXPENDITURE_ITEM_DATE            |
-| payload.journalLines.ppmSegments.project                |      | Project Number                             | PROJECT_NUMBER (10)              |
-| payload.journalLines.ppmSegments.task                   |      | Task Number                                | TASK_NUMBER (100)                |
-| payload.journalLines.ppmSegments.expenditureType (name) |      | Expenditure Type                           | EXPENDITURE_TYPE (240)           |
-| payload.journalLines.ppmSegments.organization (name)    |      | Expenditure Organization                   | ORGANIZATION_NAME (240)          |
-| payload.journalLines.ppmSegments.award                  |      | Contract Number                            | CONTRACT_NUMBER                  |
-| payload.journalLines.ppmSegments.fundingSource          |      | Funding Source Number                      | FUNDING_SOURCE_NUMBER            |
-| Constant: `1.00`                                        |      | Quantity                                   | QUANTITY                         |
-| Constant: `EA`                                          |      | Unit of Measure Code                       | UNIT_OF_MEASURE_NAME             |
-| payload.journalLines.ppmComment                         | Yes  | Expenditure Item Comment                   | EXPENDITURE_COMMENT (240)        |
-| _Calculated: see below_                                 | Yes  | Original Transaction Reference             | ORIG_TRANSACTION_REFERENCE (120) |
-| Constant: `USD`                                         |      | Transaction Currency Code                  | DENOM_CURRENCY_CODE              |
-| payload.journalLines.debitAmount                        | ***  | Raw Cost in Transaction Currency           | DENOM_RAW_COST                   |
-| payload.journalLines.creditAmount                       | ***  | Raw Cost in Transaction Currency           | DENOM_RAW_COST                   |
-| (empty)                                                 |      | Billable                                   | BILLABLE_FLAG                    |
-| (empty)                                                 |      | Capitalizable                              | CAPITALIZABLE_FLAG               |
-| Constant: `PJC_All`                                     |      | Context Category                           | CONTEXT_CATEGORY                 |
+| GraphQL Property                                        | Req? | Oracle FBDI Destination                    | PJC_TXN_XFACE_STAGE_ALL_MISC Column |
+| ------------------------------------------------------- | ---- | ------------------------------------------ | ----------------------------------- |
+| Constant: `MISCELLANEOUS`                               |      | Transaction Type                           | TRANSACTION_TYPE                    |
+| Constant: `UCD Business Unit` / `UCD CGA Business Unit` |      | Business Unit Name                         | BUSINESS_UNIT                       |
+| Constant: `UCD Miscellaneous Costs`                     |      | Third-Party Application Transaction Source | USER_TRANSACTION_SOURCE             |
+| Constant: `Unaccounted External Transactions`           |      | Document Name                              | DOCUMENT_NAME                       |
+| payload.journalSource                                   |      | Document Entry                             | DOC_ENTRY_NAME                      |
+| _Calculated: see below_                                 | Yes  | Expenditure Batch                          | BATCH_NAME (200)                    |
+| _Calculated: see below_                                 | Yes  | Batch Description                          | BATCH_DESCRIPTION (250)             |
+| payload.accountingDate                                  |      | Expenditure Item Date                      | EXPENDITURE_ITEM_DATE               |
+| payload.journalLines.ppmSegments.project                |      | Project Number                             | PROJECT_NUMBER (10)                 |
+| payload.journalLines.ppmSegments.task                   |      | Task Number                                | TASK_NUMBER (100)                   |
+| payload.journalLines.ppmSegments.expenditureType (name) |      | Expenditure Type                           | EXPENDITURE_TYPE (240)              |
+| payload.journalLines.ppmSegments.organization (name)    |      | Expenditure Organization                   | ORGANIZATION_NAME (240)             |
+| payload.journalLines.ppmSegments.award                  |      | Contract Number                            | CONTRACT_NUMBER                     |
+| payload.journalLines.ppmSegments.fundingSource          |      | Funding Source Number                      | FUNDING_SOURCE_NUMBER               |
+| payload.journalLines.debitAmount                        | ***  | Quantity                                   | QUANTITY                            |
+| payload.journalLines.creditAmount                       | ***  | Quantity                                   | QUANTITY                            |
+| Constant: `DOLLARS`                                     |      | Unit of Measure Code                       | UNIT_OF_MEASURE_NAME                |
+| payload.journalLines.ppmComment                         | Yes  | Expenditure Item Comment                   | EXPENDITURE_COMMENT (240)           |
+| _Calculated: see below_                                 | Yes  | Original Transaction Reference             | ORIG_TRANSACTION_REFERENCE (120)    |
+| Constant: `USD`                                         |      | Transaction Currency Code                  | DENOM_CURRENCY_CODE                 |
+| payload.journalLines.debitAmount                        | ***  | Raw Cost in Transaction Currency           | DENOM_RAW_COST                      |
+| payload.journalLines.creditAmount                       | ***  | Raw Cost in Transaction Currency           | DENOM_RAW_COST                      |
+| (empty)                                                 |      | Billable                                   | BILLABLE_FLAG                       |
+| (empty)                                                 |      | Capitalizable                              | CAPITALIZABLE_FLAG                  |
+| Constant: `PJC_All`                                     |      | Context Category                           | CONTEXT_CATEGORY                    |
 
 * **Destination: Expenditure Batch (batch name)**
   * We want to ensure each batch is unique for tracking purposes.
