@@ -418,7 +418,7 @@ See: <https://financeandbusiness.ucdavis.edu/aggie-enterprise/about/cofi/resourc
     * `40200C` - University Extension Program Fees
     * `41000A` - Sales and Services of Educational Activities
     * `48000A` - Non-Capital Private Gifts
-    * `775000` - UCD Recharge Revenue
+    * `77500C` - Internal Recharge Credit Interdepartmental within an Entity
 
 ##### Award Validation
 

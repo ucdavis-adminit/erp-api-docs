@@ -25,7 +25,7 @@ The validations performed on the GL and PPM segments are more limited than those
 
 To maintain the effiency of the integration platform, some limits have been placed on the size of files that can be uploaded.  The limits are based on the design of the system which has been optimized for the smaller payloads common to API usage.
 
-* glJournal Input file size limit: `30 MB`
+* glJournal Input file size limit: `20 MB`
 * Approximate number of lines: `20,000` - `50,000`
   * The actual number of lines will vary by the fields in use on each line and the length of data present in each field on each one.
   * It also will vary greatly by the formatting of the JSON in the file.  It is highly recommended that you remove any whitespace added to the file for readability purposes before uploading.  (In general the removal of indentation of the file will allow you to fit at least `30,000` lines in the file size limit.)
