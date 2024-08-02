@@ -22,9 +22,20 @@ The Project identifies the planned work or activity to be completed over a perio
 
 #### Data Source
 
-* Local Table/View: `PPM_PROJECT`
+* Local Table/View: `PPM_PROJECT_V` (view)
   * Support Tables:
+    * `PPM_PROJECT`
+    * `ERP_ORGANIZATION`
     * `ERP_LEGAL_ENTITY`
+    * `ERP_ENTITY`
+    * `PPM_PROJECT_AWARD`
+    * `PPM_AWARD`
+    * `ERP_CONTRACT`
+    * `ERP_LOOKUP_VALUES`
+    * `XLA_MAPPING_SET_VALUES`
+    * `PPM_FUNDING_SOURCE`
+    * `PPM_PROJECT_PLAN_VERSION`
+    * `PPM_PROJECT`
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
@@ -54,45 +65,74 @@ The Project identifies the planned work or activity to be completed over a perio
 
 ##### Properties
 
-| Property Name              | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| -------------------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| id                         | Long!                     |       Y        |                 |               | Project ID: Unique identifier of the project.  Internal to Oracle. |
-| projectNumber              | PpmProjectNumber!         |                |        Y        |               | Project Number: Number of the project that is being created.  This will match the GL Project used to record costs to the ledger. |
-| name                       | NonEmptyTrimmedString240! |                |        Y        |               | Project Name: Name of the project that is being created. |
-| description                | String                    |                |                 |               | Project Description: A description about the project. This might include high-level information about the work being performed. |
-| projectStartDate           | LocalDate!                |                |        Y        |               | Project Start Date: The date that work or information tracking begins on a project. |
-| projectCompletionDate      | LocalDate                 |                |        Y        |               | Project Finish Date: The date that work or information tracking completes for a project. |
-| projectStatus              | NonEmptyTrimmedString80!  |                |                 |               | Project Status: An implementation-defined classification of the status of a project. Typical project statuses are Active and Closed. |
-| projectStatusCode          | NonEmptyTrimmedString30!  |                |        Y        |               | Project Status Code: The current status set on a project. A project status is an implementation-defined classification of the status of a project. Typical project status codes are ACTIVE and CLOSED. |
-| projectOrganizationName    | NonEmptyTrimmedString240  |                |        Y        |               | Organization: An organizing unit in the internal or external structure of the enterprise. Organization structures provide the framework for performing legal reporting, financial control, and management reporting for the project. |
-| businessUnitName           | NonEmptyTrimmedString240! |                |                 |               | Name of the component of the system that this project belongs to.  There is a separation between sponsored projects managed by CGA, and other managed projects.  The value in this field should align with the sponsoredProject flag. |
-| legalEntityName            | NonEmptyTrimmedString240! |                |                 |               | Legal Entity: Name of the legal entity associated with the project. A legal entity is a recognized party with given rights and responsibilities by legislation. Legal entities generally have the right to own property, the right to trade, the responsibility to repay debt, and the responsibility to account for themselves to company regulators, taxation authorities, and owners according to rules specified in the relevant legislation. |
-| legalEntityCode            | ErpEntityCode             |                |                 |               |  |
-| projectTypeName            | String!                   |                |                 |               | Project Type Name: String # Max Length: 2000 |
-| primaryProjectManagerEmail | NonEmptyTrimmedString240  |                |        Y        |               | Project Manager Email: Email of the person who leads the project team and who has the authority and responsibility for meeting the project objectives. |
-| primaryProjectManagerName  | NonEmptyTrimmedString240  |                |                 |               | Project Manager: Name of the person who leads the project team and who has the authority and responsibility for meeting project objectives. |
-| sourceApplicationCode      | NonEmptyTrimmedString30   |                |                 |               | Source Application: The third-party application from which the project originates. |
-| sourceProjectReference     | NonEmptyTrimmedString30   |                |                 |               | Source Reference: The identifier of the project in the external system where it was originally entered. |
-| projectCategory            | NonEmptyTrimmedString30!  |                |                 |               | TODO |
-| sponsoredProject           | Boolean!                  |                |        Y        |               | Sponsored Project Flag: Whether this project is a sponsored project and requires Award and Funding Source segments when assigning costs. |
-| billingEnabled             | Boolean!                  |                |        Y        |               | Billing Enabled Flag: If billing is allowed for this project. |
-| capitalizationEnabled      | Boolean!                  |                |        Y        |               | Capitalization Enabled Flag: If this is a capital project whose costs may need to be capitalized. |
-| templateProject            | Boolean!                  |                |        Y        |               | Template Project Only Flag: If this project is a template for other projects.  Template projects may not have costs submitted against them. |
-| lastUpdateDateTime         | DateTime!                 |                |        Y        |               | Timestamp this record was last updated in the financial system. |
-| lastUpdateUserId           | ErpUserId                 |                |                 |               | User ID of the person who last updated this record. |
-| projectBudgeted            | Boolean!                  |                |                 |               | is project budgeted by joining to project to project budgeted status view in datasources |
-| tasks                      | [PpmTask!]                |                |                 |               | Tasks: The Task resource includes the attributes that are used to store values while creating or updating project tasks. Tasks are units of project work assigned or performed as part of the duties of a resource. Tasks can be a portion of project work to be performed within a defined period by a specific resource or multiple resources.<br/><br/>By default, this will only list tasks which are allowed to be assigned costs.  If you need to see all tasks, set the property argument to false. |
-| awards                     | [PpmAward!]               |                |                 |               |  |
-| defaultAwardNumber         | PpmAwardNumber            |                |                 |               | For sponsored projects, the default award number that will be expensed if left off of the journal line or distribution. |
-| defaultFundingSourceNumber | PpmFundingSourceNumber    |                |                 |               | For sponsored projects, the default funding source that will be expensed if left off of the journal line or distribution. |
-| eligibleForUse             | Boolean!                  |                |                 |               | Returns whether this PpmProject is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmProject must:<br/>- Have a projectStatusCode of ACTIVE<br/>- Not be a templateProject<br/>- Have a projectStartDate and projectCompletionDate range which includes the given accountingDate |
+| Property Name                  | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| id                             | Long!                     |       Y        |                 |               | Project ID: Unique identifier of the project.  Internal to Oracle. |
+| projectNumber                  | PpmProjectNumber!         |                |        Y        |               | Project Number: Number of the project that is being created.  This will match the GL Project used to record costs to the ledger. |
+| name                           | NonEmptyTrimmedString240! |                |        Y        |               | Project Name: Name of the project that is being created. |
+| description                    | String                    |                |                 |               | Project Description: A description about the project. This might include high-level information about the work being performed. |
+| projectStartDate               | LocalDate!                |                |        Y        |               | Project Start Date: The date that work or information tracking begins on a project. |
+| projectEndDate                 | LocalDate!                |                |                 |               | Project End Date:  The last accounting date for which costs may be charged to the project. |
+| projectCompletionDate          | LocalDate                 |                |        Y        |               | Project Completion Date: The date that work or information tracking completes for a project. |
+| projectStatus                  | NonEmptyTrimmedString80!  |                |                 |               | Project Status: An implementation-defined classification of the status of a project. Typical project statuses are Active and Closed. |
+| projectStatusCode              | NonEmptyTrimmedString30!  |                |        Y        |               | Project Status Code: The current status set on a project. A project status is an implementation-defined classification of the status of a project. Typical project status codes are ACTIVE and CLOSED. |
+| projectOrganizationName        | NonEmptyTrimmedString240  |                |        Y        |               | Organization: An organizing unit in the internal or external structure of the enterprise. Organization structures provide the framework for performing legal reporting, financial control, and management reporting for the project. |
+| businessUnitName               | NonEmptyTrimmedString240! |                |                 |               | Name of the component of the system that this project belongs to.  There is a separation between sponsored projects managed by CGA, and other managed projects.  The value in this field should align with the sponsoredProject flag. |
+| legalEntityName                | NonEmptyTrimmedString240! |                |                 |               | Legal Entity: Name of the legal entity associated with the project. A legal entity is a recognized party with given rights and responsibilities by legislation. Legal entities generally have the right to own property, the right to trade, the responsibility to repay debt, and the responsibility to account for themselves to company regulators, taxation authorities, and owners according to rules specified in the relevant legislation. |
+| legalEntityCode                | ErpEntityCode             |                |                 |               |  |
+| projectType                    | NonEmptyTrimmedString30!  |                |        Y        |               | Project Type - Values:<br/><br/>- Sponsored Capital<br/>- Capital<br/>- Fabrication<br/>- Sponsored<br/>- Sponsored Fabrication<br/>- Internal |
+| projectTypeName                | NonEmptyTrimmedString240! |                |                 |               | Project Type Name: String |
+| sourceApplicationCode          | NonEmptyTrimmedString30   |                |                 |               | Source Application: The third-party application from which the project originates. |
+| sourceProjectReference         | NonEmptyTrimmedString30   |                |                 |               | Source Reference: The identifier of the project in the external system where it was originally entered. |
+| projectCategory                | NonEmptyTrimmedString30!  |                |                 |               |  |
+| sponsoredProject               | Boolean!                  |                |        Y        |               | Sponsored Project Flag: Whether this project is a sponsored project and requires Award and Funding Source segments when assigning costs. |
+| billingEnabled                 | Boolean!                  |                |        Y        |               | Billing Enabled Flag: If billing is allowed for this project. |
+| capitalizationEnabled          | Boolean!                  |                |        Y        |               | Capitalization Enabled Flag: If this is a capital project whose costs may need to be capitalized. |
+| templateProject                | Boolean!                  |                |        Y        |               | Template Project Only Flag: If this project is a template for other projects.  Template projects may not have costs submitted against them. |
+| lastUpdateDateTime             | DateTime!                 |                |        Y        |               | Timestamp this record was last updated in the financial system. |
+| lastUpdateUserId               | ErpUserId                 |                |                 |               | User ID of the person who last updated this record. |
+| projectBudgeted                | Boolean!                  |                |                 |               | Does this project have an established budget.  With a budget, transactions against a project will be rejected. |
+| hasBudgetaryControl            | Boolean!                  |                |                 |               | Whether this project is subject to budgetary control rules. |
+| defaultAwardNumber             | PpmAwardNumber            |                |        Y        |               | For sponsored projects, the default award number that will be expensed if left off of the journal line or distribution. |
+| defaultAwardSponsorAwardNumber | NonEmptyTrimmedString60   |                |        Y        |               | For sponsored projects, the sponsor award number for the default award that will be expensed if left off of the journal line or distribution. |
+| defaultFundingSourceNumber     | PpmFundingSourceNumber    |                |        Y        |               | For sponsored projects, the default funding source that will be expensed if left off of the journal line or distribution. |
+| glInfoAtTaskLevel              | Boolean!                  |                |                 |               | Indicates that the the Fund, Purpose, Program, and Activity GL segments are based on the expensed task.  Those fields will be unset at this level if this flag is true. |
+| glPostingEntityCode            | ErpEntityCode!            |                |                 |               | Entity code used when expenses to this project are applied to the general ledger. |
+| glPostingFundCode              | ErpFundCode               |                |                 |               | Fund code used when expenses to this project are applied to the general ledger. |
+| glPostingDepartmentCode        | ErpDepartmentCode!        |                |                 |               | Financial Department code used when expenses to this project are applied to the general ledger. |
+| glPostingPurposeCode           | ErpPurposeCode            |                |                 |               | Purpose code used when expenses to this project are applied to the general ledger. |
+| glPostingProgramCode           | ErpProgramCode            |                |                 |               | Program code used when expenses to this project are applied to the general ledger. |
+| glPostingProjectCode           | ErpProjectCode!           |                |                 |               | Project code used when expenses to this project are applied to the general ledger. |
+| glPostingActivityCode          | ErpActivityCode           |                |                 |               | Activity code used when expenses to this project are applied to the general ledger. |
+| tasks                          | [PpmTask!]!               |                |                 |               | Tasks: The Task resource includes the attributes that are used to store values while creating or updating project tasks. Tasks are units of project work assigned or performed as part of the duties of a resource. Tasks can be a portion of project work to be performed within a defined period by a specific resource or multiple resources.<br/><br/>By default, this will only list tasks which are allowed to be assigned costs.  If you need to see all tasks, set the property argument to false. |
+| awards                         | [PpmAward!]!              |                |                 |               |  |
+| teamMembers                    | [PpmProjectTeamMember!]!  |                |                 |               | List of the project team members.  If roleName is provided, only team members with that role will be returned. |
+| awardPersonnel                 | [PpmAwardPersonnel!]!     |                |                 |               | List of the award personnel if this is a sponsored project associated with an award.  If roleName is provided, only people with that role will be returned.  Will return an empty list if this is not a sponsored project. |
+| primaryProjectManager          | ErpUser                   |                |                 |               | Person who leads the project team and who has the authority and responsibility for meeting the project objectives |
+| primaryProjectManagerEmail     | NonEmptyTrimmedString240  |                |                 |               | Project Manager Email: Email of the person who leads the project team and who has the authority and responsibility for meeting the project objectives. |
+| primaryProjectManagerName      | NonEmptyTrimmedString240  |                |                 |               | Project Manager: Name of the person who leads the project team and who has the authority and responsibility for meeting project objectives. |
+| eligibleForUse                 | Boolean!                  |                |                 |               | Returns whether this PpmProject is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmProject must:<br/>- Have a projectStatusCode of ACTIVE<br/>- Not be a templateProject<br/>- Have a projectStartDate and projectCompletionDate range which includes the given accountingDate |
 
-* `tasks` : `[PpmTask!]`
+* `tasks` : `[PpmTask!]!`
   * Tasks: The Task resource includes the attributes that are used to store values while creating or updating project tasks. Tasks are units of project work assigned or performed as part of the duties of a resource. Tasks can be a portion of project work to be performed within a defined period by a specific resource or multiple resources.<br/><br/>By default, this will only list tasks which are allowed to be assigned costs.  If you need to see all tasks, set the property argument to false.
   * Arguments:
     * `chargeableOnly` : `Boolean` = true
   * Description of `PpmTask`:
     * The Task identifies the activities used to further breakdown a PPM project. Every project MUST have at least one Task.  The number of tasks will vary by type of project.<br/><br/>--Roll-up relationship to the new Chart of Accounts in the General Ledger:--<br/><br/>- The Task value will NOT roll up to the Chart of Accounts. Task values will only be used in the PPM module.<br/>- Internal rules within the Oracle PPM module will be used to map the task to components of the GL Chart of Accounts which are not directly mapped to other components of the POET(AF) segments.<br/><br/>--Examples:--<br/><br/>- Design<br/>- Construction<br/>- Data Gathering & Analysis
+* `teamMembers` : `[PpmProjectTeamMember!]!`
+  * List of the project team members.  If roleName is provided, only team members with that role will be returned.
+  * Arguments:
+    * `roleName` : `NonEmptyTrimmedString60`
+  * Description of `PpmProjectTeamMember`:
+    * Person Associated with a PPM Project.  Identifies the person and their role on the project.
+* `awardPersonnel` : `[PpmAwardPersonnel!]!`
+  * List of the award personnel if this is a sponsored project associated with an award.  If roleName is provided, only people with that role will be returned.  Will return an empty list if this is not a sponsored project.
+  * Arguments:
+    * `roleName` : `NonEmptyTrimmedString60`
+* `primaryProjectManager` : `ErpUser`
+  * Person who leads the project team and who has the authority and responsibility for meeting the project objectives
+  * Description of `ErpUser`:
+    * A user as known to the ERP application.
 * `eligibleForUse` : `Boolean!`
   * Returns whether this PpmProject is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmProject must:<br/>- Have a projectStatusCode of ACTIVE<br/>- Not be a templateProject<br/>- Have a projectStartDate and projectCompletionDate range which includes the given accountingDate
   * Arguments:
@@ -103,6 +143,25 @@ The Project identifies the planned work or activity to be completed over a perio
 (None)
 
 #### Query Operations
+
+##### `ppmProjectTeamMemberByProjectNumber`
+
+> Pull all active project team members by project number.
+
+* **Parameters**
+  * `projectNumber : PpmProjectNumber!`
+* **Returns**
+  * `[PpmProjectTeamMember!]!`
+
+##### `ppmProjectTeamMemberByProjectAndRole`
+
+> Pull all active project team members by project number and role.
+
+* **Parameters**
+  * `projectNumber : PpmProjectNumber!`
+  * `roleName : NonEmptyTrimmedString240!`
+* **Returns**
+  * `[PpmProjectTeamMember!]!`
 
 ##### `ppmProject`
 
@@ -128,6 +187,26 @@ The Project identifies the planned work or activity to be completed over a perio
 
 * **Parameters**
   * `projectName : String!`
+* **Returns**
+  * `[PpmProject!]!`
+
+##### `ppmProjectByProjectTeamMemberEmployeeId`
+
+> Find PpmProject objects by active team members or award personnel.  Role name is optional.  If not passed then the project is returned if they have any role on the project.
+
+* **Parameters**
+  * `employeeId : UcEmployeeId!`
+  * `roleName : NonEmptyTrimmedString60`
+* **Returns**
+  * `[PpmProject!]!`
+
+##### `ppmProjectByProjectTeamMemberEmail`
+
+> Find PpmProject objects by active team members.  Role name is optional.  If not passed then the project is returned if they have any role on the project.
+
+* **Parameters**
+  * `email : EmailAddress!`
+  * `roleName : NonEmptyTrimmedString60`
 * **Returns**
   * `[PpmProject!]!`
 
@@ -367,6 +446,8 @@ The Expenditure Type identifies the natural classification of the expense transa
   * Support Tables:
     * `PPM_EXPENDITURE_TYPE`
     * `ERP_ACCOUNT`
+    * `PPM_EXP_TYPE_TO_PROJ_TYPE_LOOKUP`
+    * `PPM_EXP_TYPE_TO_PROJ_TYPE_LOOKUP`
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
@@ -377,23 +458,23 @@ The Expenditure Type identifies the natural classification of the expense transa
 
 ##### Properties
 
-| Property Name       | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| ------------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| id                  | Long                      |       Y        |        Y        |               | Expenditure Type ID: Unique identifier of the expenditure type.<br/><br/>DEPRECATED: This field is deprecated and will be removed in a future release.  Use the 'code' field instead. |
-| code                | String!                   |                |                 |               | Expenditure Type Code: The code of the Expenditure Type. |
-| name                | NonEmptyTrimmedString240! |                |        Y        |               | Expenditure Type: Name of the expenditure type. |
-| description         | String                    |                |                 |               | Expenditure Type Description: Description of the expenditure type. |
-| startDate           | LocalDate                 |                |                 |               | Expenditure Type Start Date: Start date of an expenditure type. |
-| endDate             | LocalDate                 |                |                 |               | Expenditure Type End Date: End date of an expenditure type. |
-| expenditureCategory | NonEmptyTrimmedString240  |                |                 |               | Expenditure Category: Name of the expenditure category. |
-| revenueCategoryCode | NonEmptyTrimmedString30   |                |                 |               | Revenue Category Code: Code of a category grouping of expenditure types by type of revenue. |
-| revenue             | Boolean!                  |                |                 |               | Indicates that this expense type is really a revenue natural account allowed on PPM journals for the purpose of increasing the project budget. |
-| lastUpdateDateTime  | DateTime!                 |                |        Y        |               | The date when the expenditure type was last updated. |
-| lastUpdateUserId    | ErpUserId                 |                |                 |               | The user that last updated the expenditure type. |
-| eligibleForUse      | Boolean!                  |                |                 |               | Returns whether this PpmExpenditureType is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmExpenditureType must:<br/>- Have a startDate and endDate range which includes the given accoutingDate |
+| Property Name             | Data Type                   | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------------- | --------------------------- | :------------: | :-------------: | ------------- | ----- |
+| code                      | String!                     |                |        Y        |               | Expenditure Type Code: The code of the Expenditure Type. |
+| name                      | NonEmptyTrimmedString240!   |                |        Y        |               | Expenditure Type: Name of the expenditure type. |
+| description               | String                      |                |                 |               | Expenditure Type Description: Description of the expenditure type. |
+| startDate                 | LocalDate                   |                |                 |               | Expenditure Type Start Date: Start date of an expenditure type. |
+| endDate                   | LocalDate                   |                |                 |               | Expenditure Type End Date: End date of an expenditure type. |
+| expenditureCategory       | NonEmptyTrimmedString240    |                |        Y        |               | Expenditure Category: Name of the expenditure category. |
+| revenueCategoryCode       | NonEmptyTrimmedString30     |                |                 |               | Revenue Category Code: Code of a category grouping of expenditure types by type of revenue. |
+| revenue                   | Boolean!                    |                |        Y        |               | Indicates that this expense type is really a revenue natural account allowed on PPM journals for the purpose of increasing the project budget. |
+| lastUpdateDateTime        | DateTime!                   |                |        Y        |               | The date when the expenditure type was last updated. |
+| lastUpdateUserId          | ErpUserId                   |                |                 |               | The user that last updated the expenditure type. |
+| allowedOnProjectTypeCodes | [NonEmptyTrimmedString30!]! |                |                 |               | Project Type Codes which will accept use of this expenditure type.  If empty, the project type will not be validated against the expense type upon data submission. |
+| eligibleForUse            | Boolean!                    |                |                 |               | Returns whether this PpmExpenditureType is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmExpenditureType must:<br/>- Have a startDate and endDate range which includes the given accountingDate |
 
 * `eligibleForUse` : `Boolean!`
-  * Returns whether this PpmExpenditureType is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmExpenditureType must:<br/>- Have a startDate and endDate range which includes the given accoutingDate
+  * Returns whether this PpmExpenditureType is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmExpenditureType must:<br/>- Have a startDate and endDate range which includes the given accountingDate
   * Arguments:
     * `accountingDate` : `LocalDate`
 
@@ -405,13 +486,19 @@ The Expenditure Type identifies the natural classification of the expense transa
 
 ##### `ppmExpenditureType`
 
-> Get a single PpmExpenditureType by id.  Returns undefined if does not exist.
-> 
-> This ID is an internal tracking number used by the financial system.  It is only used to link between objects internally.
-> Use the ppmExpenditureTypeByName or ppmExpenditureTypeByAccount operations to pull by a unique identifier.
+> Get a single PpmExpenditureType by code.  Returns undefined if does not exist.
 
 * **Parameters**
-  * `id : NumericString!`
+  * `id : String!`
+* **Returns**
+  * `PpmExpenditureType`
+
+##### `ppmExpenditureTypeByCode`
+
+> Get a single PpmExpenditureType by code.  Returns undefined if does not exist
+
+* **Parameters**
+  * `code : String!`
 * **Returns**
   * `PpmExpenditureType`
 
@@ -424,26 +511,14 @@ The Expenditure Type identifies the natural classification of the expense transa
 * **Returns**
   * `PpmExpenditureType!`
 
-##### `ppmExpenditureTypeByCode`
+##### `ppmExpenditureTypeAll`
 
-> Get a single PpmExpenditureType by code.  Returns undefined if does not exist
-
-* **Parameters**
-  * `code : String!`
-* **Returns**
-  * `PpmExpenditureType`
-
-##### `ppmExpenditureTypeByAccount`
-
-> Gets PpmExpenditureTypes by the associated GL Account.  Returns undefined if none is found.
-> 
-> PPM Expense Type names will be the GL Account number plus a description.  This full string must be used in file-based feeds.
-> This method will allow you to obtain the exact string (in the name property) that needs to be included.
+> Get all currently valid PpmExpenditureType objects.
 
 * **Parameters**
-  * `account : ErpAccountCode!`
+  * `sort : [String!]`
 * **Returns**
-  * `PpmExpenditureType`
+  * `[PpmExpenditureType!]!`
 
 ##### `ppmExpenditureTypeSearch`
 
@@ -463,17 +538,7 @@ The Expenditure Type identifies the natural classification of the expense transa
 <!--BREAK-->
 ### Data Object: PpmAward
 
-The Award Number identifies the number assigned to an award containing funding activities.
 
-**Roll-up relationship to the new Chart of Accounts in the General Ledger:**
-
-* The Award Number value will NOT roll up to the Chart of Accounts. Award Number values will only be maintained in the PPM module.
-
-**Examples:**
-
-
-
-* Award Number values will be Oracle-generated
 
 #### Access Controls
 
@@ -486,6 +551,9 @@ The Award Number identifies the number assigned to an award containing funding a
     * `PPM_AWARD`
     * `ERP_CONTRACT`
     * `PPM_PROJECT_AWARD`
+    * `PPM_PROJECT`
+    * `ERP_LOOKUP_VALUES`
+    * ` XLA_MAPPING_SET_VALUES`
 * Data Origin:
   * System: Oracle BICC
   * Extract Objects:
@@ -499,35 +567,43 @@ The Award Number identifies the number assigned to an award containing funding a
 
 | Property Name               | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
 | --------------------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| id                          | Long!                     |       Y        |        Y        |               | Award ID: Unique identifier of the award. |
+| id                          | Long!                     |       Y        |                 |               | Award ID: Internal Unique identifier of the award. |
+| awardNumber                 | NonEmptyTrimmedString60!  |                |        Y        |               | Award number tracked by the sponsor. |
+| ppmAwardNumber              | NonEmptyTrimmedString30!  |                |        Y        |               | Award number used internally to PPM.  Generally of the form K1234567. |
 | name                        | NonEmptyTrimmedString240! |                |        Y        |               | Award Name: Name of the award. |
-| awardNumber                 | NonEmptyTrimmedString30!  |                |        Y        |               |  Award Number: Award number tracked by the sponsor. |
-| awardTypeName               | NonEmptyTrimmedString30!  |                |                 |               | The award type name associated with the award |
 | description                 | NonEmptyTrimmedString240  |                |                 |               | Description: Brief description of the award. |
+| awardStatus                 | PpmAwardStatus            |                |        Y        |               |  |
+| awardType                   | NonEmptyTrimmedString30   |                |        Y        |               | Classification of an award, for example, Federal grants or Private grants.  Used to determine the GL Fund Code. |
+| awardTypeName               | NonEmptyTrimmedString30!  |                |        Y        |               | The award type name associated with the award |
+| awardPurpose                | NonEmptyTrimmedString80   |                |                 |               | Purpose: Code of the award purpose.  Used to determine the GL Purpose Code. |
 | startDate                   | LocalDate                 |                |                 |               | Start Date: Start date of the award. |
 | endDate                     | LocalDate                 |                |                 |               | End Date: End date of the award. |
-| closeDate                   | LocalDate                 |                |                 |               | Close Date: Date past the end date of the award. Transactions for the award can be entered up to this date. |
-| awardOwningOrganizationName | NonEmptyTrimmedString240! |                |                 |               | Award Owning Organization: An organization that owns awards within an enterprise. An organizing unit in the internal or external structure of your enterprise. Organization structures provide the framework for performing legal reporting, financial control, and management reporting for the award. |
-| awardPurpose                | NonEmptyTrimmedString80   |                |                 |               | Purpose: Name of the award purpose. |
-| awardType                   | NonEmptyTrimmedString30   |                |        Y        |               | Type: Classification of an award, for example, Federal grants or Private grants. |
+| closeDate                   | LocalDate                 |                |        Y        |               | Close Date: Date past the end date of the award. Transactions for the award can be entered up to this date. |
+| awardOwningOrganizationName | NonEmptyTrimmedString240! |                |        Y        |               | Award Owning Organization: An organization that owns awards within an enterprise. An organizing unit in the internal or external structure of your enterprise. Organization structures provide the framework for performing legal reporting, financial control, and management reporting for the award. |
 | businessUnitName            | NonEmptyTrimmedString100! |                |                 |               | Business Unit: Unit of an enterprise that performs one or many business functions that can be rolled up in a management hierarchy. An award business unit is one within which the award is created. |
+| legalEntityName             | NonEmptyTrimmedString240  |                |                 |               | Business entity associated with the award. |
 | lastUpdateDateTime          | DateTime!                 |                |        Y        |               | The date when the award was last updated. |
 | lastUpdateUserId            | ErpUserId                 |                |                 |               | The user that last updated the award. |
-| awardFundingSource          | [PpmFundingSource!]       |                |                 |               | Award Funding Sources: The Award Funding Sources resource is used to view the attributes used to create or update a funding source for the award. |
-| defaultFundingSourceNumber  | PpmFundingSourceNumber    |                |                 |               |  |
-| awardCfda                   | [PpmCfdaAward!]           |                |                 |               |  |
-| glFundCode                  | ErpFundCode               |                |                 |               |  |
-| glPurposeCode               | ErpPurposeCode            |                |                 |               |  |
+| awardFundingSource          | [PpmFundingSource!]!      |                |                 |               | Award Funding Sources: The Award Funding Sources resource is used to view the attributes used to create or update a funding source for the award. |
+| defaultFundingSourceNumber  | PpmFundingSourceNumber    |                |                 |               | The default (usually first) funding source attached to the award.  If the funding source is left blank on a transaction, this is the one which will be auto-inserted during processing. |
+| awardCfda                   | [PpmCfdaAward!]!          |                |                 |               | List of CFDA catalog numbers associated with the award.  CFDA numbers are used to identify federal assistance programs. |
+| glFundCode                  | ErpFundCode               |                |                 |               | The GL Fund code which will be used when the Oracle Projects module posts to the General Ledger. |
+| glPurposeCode               | ErpPurposeCode            |                |                 |               | The GL Purpose code which will be used when the Oracle Projects module posts to the General Ledger. |
 | flowThruAmount              | NonNegativeFloat          |                |                 |               |  |
 | flowThruFromDate            | LocalDate                 |                |                 |               |  |
 | flowThruToDate              | LocalDate                 |                |                 |               |  |
-| flowThruPrimarySponsorId    | Long                      |                |                 |               |  |
+| flowThruPrimarySponsorId    | Long                      |                |                 |               | Internal ID of the party associated with the flow-thru activity.  Will be linked to that data if determined necessary and available. |
 | flowThruRefAwardName        | NonEmptyTrimmedString100  |                |                 |               |  |
-| flowThruIsFederal           | Boolean                   |                |                 |               |  |
-| eligibleForUse              | Boolean!                  |                |                 |               | Returns whether this PpmAward is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmAward must:<br/>- Have closeDate after the given accountingDate |
+| flowThruIsFederal           | Boolean!                  |                |                 |               |  |
+| personnel                   | [PpmAwardPersonnel!]!     |                |                 |               | List of personnel associated with the award. |
+| eligibleForUse              | Boolean!                  |                |                 |               | Returns whether this PpmAward is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmAward must:<br/>- Have closeDate after the given accountingDate<br/>- Be active or under amendment |
 
+* `personnel` : `[PpmAwardPersonnel!]!`
+  * List of personnel associated with the award.
+  * Arguments:
+    * `roleName` : `NonEmptyTrimmedString60`
 * `eligibleForUse` : `Boolean!`
-  * Returns whether this PpmAward is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmAward must:<br/>- Have closeDate after the given accountingDate
+  * Returns whether this PpmAward is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmAward must:<br/>- Have closeDate after the given accountingDate<br/>- Be active or under amendment
   * Arguments:
     * `accountingDate` : `LocalDate`
 
@@ -546,34 +622,6 @@ The Award Number identifies the number assigned to an award containing funding a
 * **Returns**
   * `PpmAward`
 
-##### `ppmAwardByName`
-
-> Gets PpmAwards by exact name.  Returns empty list if none are found
-
-* **Parameters**
-  * `name : String!`
-* **Returns**
-  * `[PpmAward!]!`
-
-##### `ppmAwardByNumber`
-
-> Gets PpmAwards by number.  Returns empty if not found
-
-* **Parameters**
-  * `number : String!`
-* **Returns**
-  * `PpmAward`
-
-##### `ppmAwardByProjectAndAwardNumber`
-
-> Gets PpmAwards by projectNumber and awardNumber.  Returns null if not found
-
-* **Parameters**
-  * `projectNumber : String!`
-  * `awardNumber : String!`
-* **Returns**
-  * `PpmAward`
-
 ##### `ppmAwardSearch`
 
 > Search for PpmAward objects by multiple properties.
@@ -584,6 +632,81 @@ The Award Number identifies the number assigned to an award containing funding a
   * `filter : PpmAwardFilterInput!`
 * **Returns**
   * `PpmAwardSearchResults!`
+
+##### `ppmAwardByPpmAwardNumber`
+
+> Find PpmAwards by the Oracle PPM-assigned award number.
+
+* **Parameters**
+  * `ppmAwardNumber : NonEmptyTrimmedString30!`
+* **Returns**
+  * `[PpmAward!]!`
+
+##### `ppmAwardBySponsorAwardNumber`
+
+> Find PpmAwards by the sponsor-assigned award number.
+
+* **Parameters**
+  * `awardNumber : NonEmptyTrimmedString60!`
+* **Returns**
+  * `[PpmAward!]!`
+
+##### `ppmAwardByProjectNumber`
+
+> Find PpmAwards by the project they are associated with.
+
+* **Parameters**
+  * `projectNumber : PpmProjectNumber!`
+* **Returns**
+  * `[PpmAward!]!`
+
+##### `ppmAwardByPersonnelEmployeeId`
+
+> Find PpmAward objects by active personnel.  Role name is optional.  If not passed then the award is returned if the person has any role on the project.
+
+* **Parameters**
+  * `employeeId : UcEmployeeId!`
+  * `roleName : NonEmptyTrimmedString60`
+* **Returns**
+  * `[PpmAward!]!`
+
+##### `ppmAwardByPersonnelEmail`
+
+> Find PpmAward objects by active personnel.  Role name is optional.  If not passed then the award is returned if the person has any role on the project.
+
+* **Parameters**
+  * `email : EmailAddress!`
+  * `roleName : NonEmptyTrimmedString60`
+* **Returns**
+  * `[PpmAward!]!`
+
+##### `ppmAwardByName`
+
+> DEPRECATED - use ppmAwardSearch instead.  Gets PpmAwards by exact name.  Returns empty list if none are found
+
+* **Parameters**
+  * `name : String!`
+* **Returns**
+  * `[PpmAward!]!`
+
+##### `ppmAwardByNumber`
+
+> DEPRECATED - use ppmAwardByPpmAwardNumber instead.  Gets PpmAwards by number.  Returns empty if not found
+
+* **Parameters**
+  * `number : String!`
+* **Returns**
+  * `PpmAward`
+
+##### `ppmAwardByProjectAndAwardNumber`
+
+> DEPRECATED - use ppmAwardSearch instead.  Gets PpmAwards by projectNumber and awardNumber.  Returns null if not found
+
+* **Parameters**
+  * `projectNumber : String!`
+  * `awardNumber : String!`
+* **Returns**
+  * `PpmAward`
 
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.

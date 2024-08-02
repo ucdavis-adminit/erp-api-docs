@@ -606,15 +606,15 @@ A user as known to the ERP application.
 | id                 | Long!                     |                |                 |               | Internal identifier for the user account. |
 | userId             | ErpUserId!                |                |        Y        |               | User ID used to identify the person in the ERP application.  Matches their UCD computing account. |
 | personId           | Long!                     |                |                 |               | Internal person identifier linked to the user account. |
-| employeeId         | UcEmployeeId!             |                |        Y        |               | UCPath employee ID of the user. |
-| firstName          | NonEmptyTrimmedString150! |                |        Y        |               | Person's First name. |
+| employeeId         | UcEmployeeId              |                |        Y        |               | UCPath employee ID of the user. |
+| firstName          | NonEmptyTrimmedString150  |                |        Y        |               | Person's First name. |
 | lastName           | NonEmptyTrimmedString150! |                |        Y        |               | Person's Last name. |
 | displayName        | NonEmptyTrimmedString360! |                |        Y        |               | Peron's Display name. |
 | email              | ErpEmailAddress           |                |        Y        |               | E-mail address. |
 | assignmentStatus   | NonEmptyTrimmedString30   |                |                 |               | Whether their employee assignment is ACTIVE or INACTIVE. |
 | assignmentType     | NonEmptyTrimmedString30   |                |                 |               | Identifies the type of record: employee (E) or Contingent-Worker (C) |
 | active             | Boolean!                  |                |        Y        |               |  |
-| startDate          | LocalDate                 |                |                 |               | The date that the user is active from. |
+| startDate          | LocalDate!                |                |                 |               | The date that the user is active from. |
 | endDate            | LocalDate                 |                |                 |               | The date that the user ceases to be active in fusion. |
 | lastUpdateDateTime | DateTime!                 |                |        Y        |               |  |
 | lastUpdateUserId   | ErpUserId                 |                |                 |               |  |

@@ -157,25 +157,25 @@ The Fund segment most closely aligns with the fund attribute of the KFS Account.
 
 ##### Properties
 
-| Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes                                                                                                                                                                                                                                                                                                                                                  |
-| ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| code               | ErpFundCode!              |       Y        |        Y        |               | Unique identifier of an ErpFund                                                                                                                                                                                                                                                                                                                        |
-| id                 | Long!                     |                |                 |               | Internal numeric identifier of an ErpFund                                                                                                                                                                                                                                                                                                              |
-| name               | NonEmptyTrimmedString240! |                |        Y        |               | Descriptive name of an ErpFund                                                                                                                                                                                                                                                                                                                         |
-| enabled            | Boolean!                  |                |        Y        |               | Whether this ErpFund is presently enabled for use.                                                                                                                                                                                                                                                                                                     |
-| startDate          | LocalDate                 |                |                 |               | The date from when the value is available for use.                                                                                                                                                                                                                                                                                                     |
-| endDate            | LocalDate                 |                |                 |               | The date till which the value is available for use.                                                                                                                                                                                                                                                                                                    |
-| summaryOnly        | Boolean!                  |                |        Y        |               | Indicates that the ErpFund is only used for summarization and may not be used on GL Entries                                                                                                                                                                                                                                                            |
-| securityEnabled    | Boolean!                  |                |                 |               | Indicates that data linked to this ErpFund is protected by row-level security.                                                                                                                                                                                                                                                                         |
-| sortOrder          | PositiveInt               |                |                 |               | The number that indicates the order in which the values appear in the list of values.                                                                                                                                                                                                                                                                  |
-| lastUpdateDateTime | DateTime!                 |                |        Y        |               | Timestamp this record was last updated in the financial system.                                                                                                                                                                                                                                                                                        |
-| lastUpdateUserId   | ErpUserId                 |                |                 |               | User ID of the person who last updated this record.                                                                                                                                                                                                                                                                                                    |
-| parentCode         | ErpFundCode               |                |                 |               | Code of the ErpFund which is the immediate parent of this one.<br/>Will be undefined if the ErpFund has no parent.                                                                                                                                                                                                                                     |
-| parent             | ErpFund                   |                |                 |               | The ErpFund which is the immediate parent of this one.<br/>Will be undefined if the ErpFund has no parent.                                                                                                                                                                                                                                             |
-| children           | [ErpFund!]!               |                |                 |               | The ErpFunds which are the immediate children of this one.<br/>Will be an empty list if the ErpFund has no children.                                                                                                                                                                                                                                   |
-| hierarchyDepth     | Int                       |                |        Y        |               | Level below the top for a ErpFund that is part of a reporting hierarchy.                                                                                                                                                                                                                                                                               |
-| hierarchyLevel     | String                    |                |        Y        |               | Reporting Level designation based on the hierachy depth.                                                                                                                                                                                                                                                                                               |
-| budgeted           | Boolean                   |                |        Y        |               | Whether this fund is used for budgeting purposes.                                                                                                                                                                                                                                                                                                      |
+| Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| code               | ErpFundCode!              |       Y        |        Y        |               | Unique identifier of an ErpFund |
+| id                 | Long!                     |                |                 |               | Internal numeric identifier of an ErpFund |
+| name               | NonEmptyTrimmedString240! |                |        Y        |               | Descriptive name of an ErpFund |
+| enabled            | Boolean!                  |                |        Y        |               | Whether this ErpFund is presently enabled for use. |
+| startDate          | LocalDate                 |                |                 |               | The date from when the value is available for use. |
+| endDate            | LocalDate                 |                |                 |               | The date till which the value is available for use. |
+| summaryOnly        | Boolean!                  |                |        Y        |               | Indicates that the ErpFund is only used for summarization and may not be used on GL Entries |
+| securityEnabled    | Boolean!                  |                |                 |               | Indicates that data linked to this ErpFund is protected by row-level security. |
+| sortOrder          | PositiveInt               |                |                 |               | The number that indicates the order in which the values appear in the list of values. |
+| lastUpdateDateTime | DateTime!                 |                |        Y        |               | Timestamp this record was last updated in the financial system. |
+| lastUpdateUserId   | ErpUserId                 |                |                 |               | User ID of the person who last updated this record. |
+| parentCode         | ErpFundCode               |                |                 |               | Code of the ErpFund which is the immediate parent of this one.<br/>Will be undefined if the ErpFund has no parent. |
+| parent             | ErpFund                   |                |                 |               | The ErpFund which is the immediate parent of this one.<br/>Will be undefined if the ErpFund has no parent. |
+| children           | [ErpFund!]!               |                |                 |               | The ErpFunds which are the immediate children of this one.<br/>Will be an empty list if the ErpFund has no children. |
+| hierarchyDepth     | Int                       |                |        Y        |               | Level below the top for a ErpFund that is part of a reporting hierarchy. |
+| hierarchyLevel     | String                    |                |        Y        |               | Reporting Level designation based on the hierachy depth. |
+| budgeted           | Boolean                   |                |        Y        |               | Whether this fund is used for budgeting purposes. |
 | eligibleForUse     | Boolean!                  |                |                 |               | Returns whether this ErpFund is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the ErpFund must:<br/>- Be enabled<br/>- Not be summaryOnly<br/>- Have a startDate and endDate range which includes the given accountingDate |
 
 * `parent` : `ErpFund`
@@ -190,6 +190,26 @@ The Fund segment most closely aligns with the fund attribute of the KFS Account.
 (None)
 
 #### Query Operations
+
+##### `erpFundSource`
+
+> Get a single ErpFundSource by id.  Returns undefined if does not exist
+
+* **Parameters**
+  * `code : String!`
+* **Returns**
+  * `ErpFundSource`
+
+##### `erpFundSourceSearch`
+
+> Search for ErpFundSource objects by multiple properties.
+> 
+> See the ErpFundSourceFilterInput type for options.
+
+* **Parameters**
+  * `filter : ErpFundSourceFilterInput!`
+* **Returns**
+  * `ErpFundSourceSearchResults!`
 
 ##### `erpFund`
 

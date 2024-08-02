@@ -153,6 +153,58 @@ Represents an accounting period in Oracle Financials.  Used for validation of su
 
 
 <!--BREAK-->
+### Data Object: PpmAwardPersonnel
+
+
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `PPM_AWARD_PERSONNEL`
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+    * View Object: FscmTopModelAM.GmsAwardAM.AwardPersonnelPVO
+  * Underlying Database Objects:
+    * GMS_AWARD_PERSONNEL
+    * GMS_AWARD_EXTERNAL_CONTACTS_V (VIEW)
+    * GMS_INTERNAL_CONTACTS_V (VIEW)
+    * GMS_ROLES_V (VIEW)
+    * GMS_PERSONS
+    * GMS_AWARD_PROJECTS
+
+##### Properties
+
+| Property Name | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| personId      | Long!                     |       Y        |                 |               | Unique identifier of the person.  Internal to Oracle. |
+| employeeId    | UcEmployeeId!             |                |                 |               | UCPath Employee ID of the person associated with the award. |
+| name          | NonEmptyTrimmedString360! |                |                 |               | Display Name of the person associated with the award. |
+| roleName      | NonEmptyTrimmedString240! |                |                 |               | Person's Role on the award.  E.g., Principal Investigator, Grants Administrator, Project Administrator, etc. |
+| email         | EmailAddress!             |                |                 |               | Person's Email Address. |
+| jobTitle      | NonEmptyTrimmedString240! |                |                 |               | Person's Job Title as extracted from UCPath. |
+| creditPercent | NonNegativeFloat          |                |                 |               |  |
+| person        | ErpUser                   |                |                 |               | Person record associated with this team member.  May contain additional information about the person. |
+
+* `person` : `ErpUser`
+  * Person record associated with this team member.  May contain additional information about the person.
+  * Description of `ErpUser`:
+    * A user as known to the ERP application.
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
 ### Data Object: PpmCfda
 
 CFDA
@@ -316,6 +368,77 @@ PpmDocumentEntry is used to store the document entries.
   * `filter : PpmDocumentEntryFilterInput!`
 * **Returns**
   * `PpmDocumentEntrySearchResults!`
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
+### Data Object: PpmProjectTeamMember
+
+Person Associated with a PPM Project.  Identifies the person and their role on the project.
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `PPM_PROJECT_TEAM_MEMBER`
+  * Support Tables:
+    * `PPM_PROJECT`
+* Data Origin:
+  * System: Oracle BIPublisher
+  * Extract Objects:
+    * Report: PPM_Team_Member_Extract_RPT
+  * Underlying Database Objects:
+    * PJF_PROJ_ALL_MEMBERS_V (VIEW)
+    * PJF_PROJ_ROLE_TYPES_V (VIEW)
+    * PER_ALL_PEOPLE_F
+
+##### Properties
+
+| Property Name | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| personId      | Long!                     |       Y        |                 |               | Unique identifier of the person.  Internal to Oracle. |
+| employeeId    | UcEmployeeId!             |                |                 |               | UCPath Employee ID of the person associated with the project. |
+| name          | NonEmptyTrimmedString360! |                |                 |               | Display Name of the person associated with the project. |
+| roleName      | NonEmptyTrimmedString240! |                |                 |               | Person's Role on the project.  E.g., Principal Investigator, Project Administrator, Project Manager, Co-Principal Investigator, etc. |
+| email         | EmailAddress!             |                |                 |               | Person's Email Address. |
+| jobTitle      | NonEmptyTrimmedString240! |                |                 |               | Person's Job Title as extracted from UCPath. |
+| startDate     | LocalDate!                |                |                 |               | Start Date of the person's association with the project. |
+| endDate       | LocalDate                 |                |                 |               | End Date of the person's association with the project.  Usually null for current team members. |
+| person        | ErpUser                   |                |                 |               | Person record associated with this team member.  May contain additional information about the person. |
+
+* `person` : `ErpUser`
+  * Person record associated with this team member.  May contain additional information about the person.
+  * Description of `ErpUser`:
+    * A user as known to the ERP application.
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+##### `ppmProjectTeamMemberByProjectNumber`
+
+> Pull all active project team members by project number.
+
+* **Parameters**
+  * `projectNumber : PpmProjectNumber!`
+* **Returns**
+  * `[PpmProjectTeamMember!]!`
+
+##### `ppmProjectTeamMemberByProjectAndRole`
+
+> Pull all active project team members by project number and role.
+
+* **Parameters**
+  * `projectNumber : PpmProjectNumber!`
+  * `roleName : NonEmptyTrimmedString240!`
+* **Returns**
+  * `[PpmProjectTeamMember!]!`
 
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.

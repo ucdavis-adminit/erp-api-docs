@@ -350,14 +350,21 @@ Invoice status information used to check remaining balances.
 
 ##### Properties
 
-| Property Name      | Data Type               | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| ------------------ | ----------------------- | :------------: | :-------------: | ------------- | ----- |
-| id                 | Long!                   |                |        Y        |               | Value that uniquely identifies the MemoLine by ID |
-| name               | NonEmptyTrimmedString50 |                |        Y        |               | Value that uniquely identifies the MemoLine by name |
-| description        | NonEmptyTrimmedString80 |                |                 |               | Longer description |
-| type               | NonEmptyTrimmedString10 |                |                 |               | Type of the MemoLine |
-| creationDate       | DateTime                |                |                 |               | Date the MemoLine was created |
-| lastUpdateDateTime | DateTime                |                |                 |               | Date/Time last updated |
+| Property Name        | Data Type               | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| -------------------- | ----------------------- | :------------: | :-------------: | ------------- | ----- |
+| id                   | Long!                   |                |        Y        |               | Value that uniquely identifies the MemoLine by ID |
+| name                 | NonEmptyTrimmedString50 |                |        Y        |               | Value that uniquely identifies the MemoLine by name |
+| description          | NonEmptyTrimmedString80 |                |                 |               | Longer description |
+| type                 | NonEmptyTrimmedString10 |                |                 |               | Type of the MemoLine |
+| creationDate         | DateTime                |                |                 |               | Date the MemoLine was created |
+| lastUpdateDateTime   | DateTime                |                |                 |               | Date/Time last updated |
+| revenueChartstring   | GlSegmentString         |                |                 |               | GL Segments String representing the configured Revenue segments for this MemoLine |
+| revenueChartSegments | GlSegments              |                |                 |               | GL Segments representing the configured Revenue segments for this MemoLine |
+
+* `revenueChartSegments` : `GlSegments`
+  * GL Segments representing the configured Revenue segments for this MemoLine
+  * Description of `GlSegments`:
+    * GL segment values as separate fields.
 
 ##### Linked Data Objects
 

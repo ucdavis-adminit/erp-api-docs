@@ -152,9 +152,22 @@ The scope used will be visible in the access token when decoded with JWT:
 
 ### Authorization
 
-!> TODO
+The API uses a role-based access control system.  The roles are assigned to the Consumer ID as needed.  Each operation and data type is linked to one of the roles below.
 
-* roles and descriptions
+| Role                   | Description                                  |
+| ---------------------- | -------------------------------------------- |
+| erp:reader-refdata     | View most reference data                     |
+| erp:reader-supplier    | View data about ERP Suppliers                |
+| erp:reader-customer    | View data on Receivables Customers           |
+| erp:reader-receivable  | Look up status of Receivables                |
+| erp:reader-fixedasset  | View information about ERP Fixed Assets      |
+| erp:reader-role        | View access to ErpUserRole and related types |
+| erp:writer-journal     | Use the glJournalRequest operation           |
+| erp:writer-payment     | Use the scmInvoicePayment operation          |
+| erp:writer-requisition | Use the scmPurchaseRequisition operation     |
+| erp:writer-receivable  | Use the arInvoiceCreate operation            |
+
+<!-- | erp:writer-role        | Use the erpUserRoleRequest operation         | -->
 
 ### Making API Calls
 
@@ -202,7 +215,8 @@ Once connected, your access roles will be determined.  They will identify what o
 
 If you have a need to revoke a token before its expiration time, they can be revoked by calling the following endpoint:
 
-* `https://wso2am-ui-np.aws.ait.ucdavis.edu/oauth2/revoke`
+* Non-Prod: `https://wso2am-ui-np.aws.ait.ucdavis.edu/oauth2/revoke`
+* Prod: `https://wso2am-ui-prd.aws.ait.ucdavis.edu/oauth2/revoke`
 * Method: `POST`
 * Headers:
   * Content-Type: `application/x-www-form-urlencoded`
@@ -332,6 +346,7 @@ Below are some examples of responses from the API.  Successful response data is 
 
 #### Example of Action Request Flow
 
+![diagram](action-request-flow-summary.svg)
 
 
 <!--BREAK-->
@@ -517,7 +532,7 @@ Below are some examples of responses from the API.  Successful response data is 
 | `PpmExpenseTypeCode`         | Oracle PPM Expense Type<br/><br/>The PPM Expense Type will have the same values as the [`ErpAccount`]({{Types.ErpAccount}}).  The expected value by oracle is the code + " - " + name.  This API will accept the code alone by using the first 6 characters of the string and perfoming the needed lookup to obtain the value required by Oracle.<br/><br/>-*Definition:** The Expenditure Type identifies the natural classification of the expense transaction being recorded.<br/><br/>-*Roll-up relationship to the new Chart of Accounts in the General Ledger:**<br/>- The Expenditure Type value will roll up to the (Natural) Account segment in the Chart of Accounts.<br/>- The first 6 characters of the Expenditure Type value will correspond with the (Natural) Account value it rolls up to.<br/> |
 | `PpmFundingSourceNumber`     | Oracle PPM Funding Source Number<br/><br/>The PPM Funding Source Number is a 5-10 character code.  Only required for Sponsored projects (defined as a flag on the [PpmProject]({{Types.PpmProject}})), this identifies the funding to which the expenses are applied.  It will be used to derive the GL Fund segment.  Conversion funding sources will be "K" followed by the 5-character legacy fund code.  All funding sources created in oracle will be based on a system-generated incremental number.<br/><br/>Normally, you will not need to provide this, as most projects will have a single funding source and this will be derived by the API.  File-based submitters will need to look up the default project number from the PpmProject and supply it when the `sponsoredProject` property is true.<br/> |
 | `PpmProjectNumber`           | Oracle Managed Project Number<br/><br/>A 10-character project code which identifies Sponsored Research, a Faculty Portfolio, or a Capital Project.  Values will generally start with a 2 character prefix which identifies their type followed by a system-assigned number.<br/><br/>-*Definition:** The Project identifies the planned work or activity to be completed over a period of time and intended to achieve a particular goal.<br/><br/>-*Roll-up relationship to the new Chart of Accounts (CoA) in the General Ledger:**<br/>- The POET(AF) Project value will roll up to the Project segment of the Chart of Accounts.<br/>- PPM Project values and GL Project segment values will be the same.<br/> |
-| `PpmSegmentString`           | Oracle PPM Combined Segments Chartstring<br/><br/>Must be populated with either the 4 required segments, or all 6 segments.  (Project-Task Number-Expense Organization-Expense Type-Award Number-Funding Source)<br/><br/>- Format Pattern (Required Only): `SP00000001-000001-0000000-000000`<br/>- Format Pattern (Sponsored Projects): `CP00000001-000001-0000000-000000-0000000-00000`<br/>- Format Regex:   `^[0-9A-Z]{10}-[0-9A-Z]{6}-[0-9A-Z]{7}-[0-9A-Z]{6}(-[0-9A-Z]{7}-[0-9A-Z]{5,10})?$`<br/><br/>See documentation on the individual segments for more information:<br/><br/>- [PpmProjectNumber]({{Types.PpmProjectNumber}})<br/>- [PpmExpenseOrganizationCode]({{Types.PpmExpenseOrganizationCode}})<br/>- [PpmExpenseTypeCode]({{Types.PpmExpenseTypeCode}})<br/>- [PpmTaskNumber]({{Types.PpmTaskNumber}})<br/>- [PpmAwardNumber]({{Types.PpmAwardNumber}})<br/>- [PpmFundingSourceNumber]({{Types.PpmFundingSourceNumber}})<br/> |
+| `PpmSegmentString`           | Oracle PPM Combined Segments Chartstring<br/><br/>Must be populated with either the 4 required segments, or all 6 segments.  (Project-Task Number-Expense Organization-Expense Type-Award Number-Funding Source)<br/><br/>- Format Pattern (Required Only): `SP00000001-000001-0000000-000000`<br/>- Format Pattern (Sponsored Projects): `CP00000001-000001-0000000-000000-0000000-00000`<br/>- Format Regex:   `^[0-9A-Z]{10}-[0-9A-Z]{6}-[0-9A-Z]{7}-[0-9A-Z]{6}(-[0-9A-Z]{7}-[0-9A-Za-z]{5,10})?$`<br/><br/>See documentation on the individual segments for more information:<br/><br/>- [PpmProjectNumber]({{Types.PpmProjectNumber}})<br/>- [PpmExpenseOrganizationCode]({{Types.PpmExpenseOrganizationCode}})<br/>- [PpmExpenseTypeCode]({{Types.PpmExpenseTypeCode}})<br/>- [PpmTaskNumber]({{Types.PpmTaskNumber}})<br/>- [PpmAwardNumber]({{Types.PpmAwardNumber}})<br/>- [PpmFundingSourceNumber]({{Types.PpmFundingSourceNumber}})<br/> |
 | `PpmTaskNumber`              | Oracle PPM Project Task<br/><br/>The task number is a 4-character code which identifies an activity within a project.  PPM will internally map this to a combination of other segments during sub-ledger accounting processing to post to the GL.<br/><br/>-*Definition:** The Task identifies the activities used to further breakdown a PPM project. Every project MUST have at least one Task.  The number of tasks will vary by type of project.<br/><br/>-*Roll-up relationship to the new Chart of Accounts in the General Ledger:**<br/>- Task values are exclusively used in the PPM module.<br/>- For Internal Faculty Projects, the Task will identify the Program, Purpose, Fund and Activity segments in the GL, using various PPM mapping rules.<br/> |
 | `ScmAddressLine`             | Oracle SCM Address Line, 240 Character Limit |
 | `ScmName`                    | Oracle SCM Name |
@@ -545,8 +560,8 @@ Used on AR Invoices to indicate the type of accounting on a distribution line.
 
 | Enum Value | Description |
 | ---------- | ----------- |
-| `REC`      | Receivable  |
-| `REV`      | Revenue     |
+| `REC`      | Receivable |
+| `REV`      | Revenue |
 
 ##### `ArDistributionAccountClass`
 
@@ -564,8 +579,8 @@ When the line type is LINE, the value for this column should be REV, UNBILL, UNE
 
 | Enum Value | Description |
 | ---------- | ----------- |
-| `REC`      | Receivable  |
-| `REV`      | Revenue     |
+| `REC`      | Receivable |
+| `REV`      | Revenue |
 
 ##### `ArLineType`
 
@@ -573,18 +588,18 @@ When the line type is LINE, the value for this column should be REV, UNBILL, UNE
 
 | Enum Value | Description |
 | ---------- | ----------- |
-| `LINE`     |             |
+| `LINE`     |  |
 
 ##### `ArTransactionType`
 
 
 
-| Enum Value | Description                                                       |
-| ---------- | ----------------------------------------------------------------- |
-| `CHARGES`  | Other Charges Line                                                |
-| `FREIGHT`  | Shipping and Handling Charges Line                                |
+| Enum Value | Description |
+| ---------- | ----------- |
+| `CHARGES`  | Other Charges Line |
+| `FREIGHT`  | Shipping and Handling Charges Line |
 | `LINE`     | Normal Receivables Line.  Excludes tax, freight, or misc charges. |
-| `TAX`      | Charged Tax Line                                                  |
+| `TAX`      | Charged Tax Line |
 
 ##### `CacheControlScope`
 
@@ -592,43 +607,43 @@ When the line type is LINE, the value for this column should be REV, UNBILL, UNE
 
 | Enum Value | Description |
 | ---------- | ----------- |
-| `PRIVATE`  |             |
-| `PUBLIC`   |             |
+| `PRIVATE`  |  |
+| `PUBLIC`   |  |
 
 ##### `ErpCoaHierarchyLevel`
 
 Hierarchy Level Codes used in the financial chartstring structures.  Their meaning within each segment type is determined by chart of accounts design team.
 
-| Enum Value | Description                                                     |
-| ---------- | --------------------------------------------------------------- |
+| Enum Value | Description |
+| ---------- | ----------- |
 | `A`        | Top Level, often defined by UCOP for segments with many values. |
-| `B`        | Second Level, campus-specific, but may be UCOP defined.         |
-| `C`        | Third Level: Usually campus-defined values here and below.      |
-| `D`        | Fourth Level                                                    |
-| `E`        | Fifth Level                                                     |
-| `F`        | Sixth Level                                                     |
-| `G`        | Seventh Level                                                   |
-| `X`        | Top Level, Defined by UCOP, Only used by Account and Project.   |
+| `B`        | Second Level, campus-specific, but may be UCOP defined. |
+| `C`        | Third Level: Usually campus-defined values here and below. |
+| `D`        | Fourth Level |
+| `E`        | Fifth Level |
+| `F`        | Sixth Level |
+| `G`        | Seventh Level |
+| `X`        | Top Level, Defined by UCOP, Only used by Account and Project. |
 
 ##### `ErpCostCenterType`
 
 The type of cost center needed by Oracle to record a transaction.
 
-| Enum Value | Description                                                                                            |
-| ---------- | ------------------------------------------------------------------------------------------------------ |
-| `GL`       | General Ledger Segments: Transaction may be posted directly to the general ledger                      |
+| Enum Value | Description |
+| ---------- | ----------- |
+| `GL`       | General Ledger Segments: Transaction may be posted directly to the general ledger |
 | `POET`     | POET Segments: Transaction belongs to a managed project and must be posted through the PPM sub-ledger. |
 
 ##### `ErpPeriodStatus`
 
 Valid values for an accounting period status.
 
-| Enum Value | Description        |
-| ---------- | ------------------ |
-| `C`        | Closed             |
-| `F`        | Future Enterable   |
-| `N`        | Never Opened       |
-| `O`        | Open               |
+| Enum Value | Description |
+| ---------- | ----------- |
+| `C`        | Closed |
+| `F`        | Future Enterable |
+| `N`        | Never Opened |
+| `O`        | Open |
 | `P`        | Permanently Closed |
 
 ##### `InvoiceType`
@@ -637,9 +652,9 @@ Invoice category used in Payable Payment
 
 | Enum Value   | Description |
 | ------------ | ----------- |
-| `CREDIT`     |             |
-| `PREPAYMENT` |             |
-| `STANDARD`   |             |
+| `CREDIT`     |  |
+| `PREPAYMENT` |  |
+| `STANDARD`   |  |
 
 ##### `PayeeType`
 
@@ -647,45 +662,67 @@ Used on payment API to indicate payment type
 
 | Enum Value | Description |
 | ---------- | ----------- |
-| `EMPLOYEE` |             |
-| `STUDENT`  |             |
-| `SUPPLIER` |             |
+| `EMPLOYEE` |  |
+| `STUDENT`  |  |
+| `SUPPLIER` |  |
+
+##### `PpmAwardStatus`
+
+The Award Number identifies the number assigned to an award containing funding activities.
+
+**Roll-up relationship to the new Chart of Accounts in the General Ledger:**
+
+* The Award Number value will NOT roll up to the Chart of Accounts. Award Number values will only be maintained in the PPM module.
+
+**Examples:**
+
+* Award Number values will be Oracle-generated
+
+| Enum Value        | Description |
+| ----------------- | ----------- |
+| `ACTIVE`          | Award is active and can be used for transactions. |
+| `CANCELED`        | Award was canceled and can not be used for transactions. |
+| `CLOSED`          | Award has been closed and can not be used for transactions. |
+| `DRAFT`           | Award has not been finalized and is still in draft status. |
+| `EXPIRED`         | Award has ended but has not been closed for transactions. |
+| `HOLD`            | Award funding is on hold. |
+| `UNDER_AMENDMENT` | Award is being amended but might still be able to be used for transactions. |
 
 ##### `ProcessingCheckpointType`
 
 Type of a given checkpoint in the processing of a request.  Not all request pipelines will utilize all checkpoint types.
 
-| Enum Value | Description                                                                       |
-| ---------- | --------------------------------------------------------------------------------- |
+| Enum Value | Description |
+| ---------- | ----------- |
 | `ERROR`    | Checkpoint is in a path reached after there were validation failures in the data. |
-| `FAILURE`  | Checkpoint is in a path reached though an unexpected procesing failure.           |
-| `NORMAL`   | Checkpoint is in the normal successful processing path.                           |
+| `FAILURE`  | Checkpoint is in a path reached though an unexpected procesing failure. |
+| `NORMAL`   | Checkpoint is in the normal successful processing path. |
 
 ##### `ProcessingResultStatus`
 
 Status of the pipeline request triggered from an API action request.
 
-| Enum Value  | Description                                                        |
-| ----------- | ------------------------------------------------------------------ |
+| Enum Value  | Description |
+| ----------- | ----------- |
 | `ERROR`     | one or more of the jobs resulted in an error and was not processed |
 | `INPROCESS` | data is in pipeline for processing and all jobs have not completed |
-| `PROCESSED` | processing is complete but notifications have not been sent        |
-| `SUCCESS`   | all jobs completed successfully                                    |
+| `PROCESSED` | processing is complete but notifications have not been sent |
+| `SUCCESS`   | all jobs completed successfully |
 
 ##### `RequestStatus`
 
 Status options within the [ActionRequestStatus]({{Types.ActionRequestStatus}}) that reflect the states a request can be in.
 
-| Enum Value  | Description                                                                                                                                                                                                                                                  |
-| ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `COMPLETE`  | Request has been processed with no significant issues.                                                                                                                                                                                                       |
+| Enum Value  | Description |
+| ----------- | ----------- |
+| `COMPLETE`  | Request has been processed with no significant issues. |
 | `ERROR`     | There was an error processing the request.  Review the results to determine what corrective action may be required.  In the case that multiple jobs were required to process the request, some may have completed successfully while others may have failed. |
-| `INPROCESS` | Request has been picked up for processing.                                                                                                                                                                                                                   |
-| `PENDING`   | Request has been submitted to the API, but picked up for processing.                                                                                                                                                                                         |
-| `REJECTED`  | There was a validation error in the request payload data.                                                                                                                                                                                                    |
-| `STALE`     | Request never completed within the maximum allowed time.                                                                                                                                                                                                     |
-| `VALIDATED` | Request requested validation but no submission.  This indicates the request would have been submitted.                                                                                                                                                       |
-| `WARNING`   | There were issues while processing the request.  Some of the submitted data may not be completely imported to the target system.  You should review any output to see if corrective action is required.                                                      |
+| `INPROCESS` | Request has been picked up for processing. |
+| `PENDING`   | Request has been submitted to the API, but picked up for processing. |
+| `REJECTED`  | There was a validation error in the request payload data. |
+| `STALE`     | Request never completed within the maximum allowed time. |
+| `VALIDATED` | Request requested validation but no submission.  This indicates the request would have been submitted. |
+| `WARNING`   | There were issues while processing the request.  Some of the submitted data may not be completely imported to the target system.  You should review any output to see if corrective action is required. |
 
 ##### `ScmInvoiceType`
 
@@ -693,10 +730,10 @@ Nature of the invoice when paying one for a PO.  This would drive the natural ac
 
 | Enum Value   | Description |
 | ------------ | ----------- |
-| `CREDIT`     |             |
-| `DEBIT`      |             |
-| `PREPAYMENT` |             |
-| `STANDARD`   |             |
+| `CREDIT`     |  |
+| `DEBIT`      |  |
+| `PREPAYMENT` |  |
+| `STANDARD`   |  |
 
 ##### `ScmLineType`
 
@@ -704,10 +741,10 @@ Nature of the payment for this one.  In general, all lines should be ITEM.
 
 | Enum Value      | Description |
 | --------------- | ----------- |
-| `FREIGHT`       |             |
-| `ITEM`          |             |
-| `MISCELLANEOUS` |             |
-| `TAX`           |             |
+| `FREIGHT`       |  |
+| `ITEM`          |  |
+| `MISCELLANEOUS` |  |
+| `TAX`           |  |
 
 ##### `ScmPurchaseRequisitionLineType`
 
@@ -716,20 +753,17 @@ Used on SCM Requisitions to distinguish between Quantity based line and Fixed Pr
 | Enum Value    | Description |
 | ------------- | ----------- |
 | `Fixed_Price` | Fixed Price |
-| `Quantity`    | Quantity    |
+| `Quantity`    | Quantity |
 
 ##### `ScmSupplierSiteType`
 
 Supplier Site types which can be used to filter sites for a specific purpose.
 
-| Enum Value   | Description                                                                         |
-| ------------ | ----------------------------------------------------------------------------------- |
-| `PAY`        | May be used on invoices / payments.                                                 |
-| `PCARD`      | Used with purchasing card transactions.                                             |
+| Enum Value   | Description |
+| ------------ | ----------- |
+| `PAY`        | May be used on invoices / payments. |
+| `PCARD`      | Used with purchasing card transactions. |
 | `PRIMARYPAY` | Indicates the primary/default site payments should be sent to for a given supplier. |
-| `PURCHASING` | May be used on requisitions.                                                        |
-| `RFQ`        | To be used during the RFQ process.                                                  |
-| `TAX`        | Used for tax reporting.                                                             |
-
-
-![diagram](action-request-flow-summary.svg)
+| `PURCHASING` | May be used on requisitions. |
+| `RFQ`        | To be used during the RFQ process. |
+| `TAX`        | Used for tax reporting. |
