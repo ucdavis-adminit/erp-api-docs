@@ -150,6 +150,86 @@ Represents an accounting period in the GL module of Oracle Financials.  Used for
 
 
 <!--BREAK-->
+### Data Object: ScmAgreement
+
+Represents a purchasing agreement within the financial system.
+
+#### Access Controls
+
+* Required Role: ``
+
+#### Data Source
+
+* Local Table/View: `undefined`
+
+##### Properties
+
+| Property Name        | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| -------------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| agreementNumber      | NonEmptyTrimmedString30!  |                |        Y        |               | Assigned identifier for the agreement.  User during communications and in requisition creation. |
+| supplierNumber       | NonEmptyTrimmedString30!  |                |        Y        |               | Identifier of the supplier associated with this agreement. |
+| supplierName         | NonEmptyTrimmedString360! |                |        Y        |               | Default/main name of the supplier. |
+| supplierSiteCode     | NonEmptyTrimmedString15   |                |                 |               | Site code representing the particular location of the supplier associated with this agreement. |
+| documentStatus       | NonEmptyTrimmedString30!  |                |        Y        |               | Status of the underlying document for this agreement in the financial system. |
+| startDate            | LocalDate                 |                |                 |               | Effective date of the agreement. |
+| endDate              | LocalDate                 |                |                 |               | End date of the agreement. |
+| agreementTotalAmount | NonNegativeFloat!         |                |                 |               | Total amount of the agreement.  This is the maximum amount that can be spent under this agreement. |
+| amountReleased       | NonNegativeFloat!         |                |                 |               | Amount of the agreement that has been used to date on purchase orders. |
+| agreementAmountLimit | NonNegativeFloat          |                |                 |               | Maximum amount that the agreement total amount can be increased to without additional approvals. |
+| comments             | NonEmptyTrimmedString240  |                |                 |               | Comments about the agreement. |
+| lastUpdateDateTime   | DateTime!                 |                |        Y        |               | Timestamp this record was last updated in the financial system. |
+| lastUpdateUserId     | ErpUserId                 |                |                 |               | User ID of the person who last updated this record. |
+| supplierId           | Long!                     |                |                 |               |  |
+| supplierSiteId       | Long!                     |                |                 |               |  |
+| supplier             | ScmSupplier               |                |                 |               |  |
+| supplierSite         | ScmSupplierSite           |                |                 |               |  |
+
+* `supplier` : `ScmSupplier`
+  * Description of `ScmSupplier`:
+    * A defined supplier of goods or services in the ERP system.<br/><br/>Each supplier may have multiple sites at which they do business.  It is necessary to identify both the supplier and site when submitting a payment.<br/><br/>Supplier in Oracle replaces Vendor in KFS.
+* `supplierSite` : `ScmSupplierSite`
+  * Description of `ScmSupplierSite`:
+    * Supplier Site represents a business location referenced when making orders or payments to the supplier.
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+##### `scmAgreement`
+
+> Get a single ScmAgreement by agreement number.  Returns undefined if does not exist
+
+* **Parameters**
+  * `agreementNumber : NonEmptyTrimmedString30!`
+* **Returns**
+  * `ScmAgreement`
+
+##### `scmAgreementBySupplier`
+
+> Get ScmAgreements by supplier number.  Returns an empty list if none exist
+
+* **Parameters**
+  * `supplierNumber : NonEmptyTrimmedString30!`
+* **Returns**
+  * `[ScmAgreement!]!`
+
+##### `scmAgreementSearch`
+
+> Search for ScmAgreement objects by multiple properties.
+> See the ScmAgreementFilterInput type for options.
+
+* **Parameters**
+  * `filter : ScmAgreementFilterInput!`
+* **Returns**
+  * `ScmAgreementSearchResults!`
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
 ### Data Object: ScmPaymentTerm
 
 

@@ -514,6 +514,7 @@ Below are some examples of responses from the API.  Successful response data is 
 | `NonEmptyTrimmedString255`   | String limited to 255 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString3`     | String limited to 3 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString30`    | Trimmed String limited to 30 characters. |
+| `NonEmptyTrimmedString300`   | String limited to 300 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString32`    | String limited to 32 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString320`   | String limited to 320 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString360`   | String limited to 360 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
@@ -634,6 +635,15 @@ The type of cost center needed by Oracle to record a transaction.
 | `GL`       | General Ledger Segments: Transaction may be posted directly to the general ledger |
 | `POET`     | POET Segments: Transaction belongs to a managed project and must be posted through the PPM sub-ledger. |
 
+##### `ErpFavoritesCostCenterChangeResult`
+
+
+
+| Enum Value | Description |
+| ---------- | ----------- |
+| `FAILURE`  |  |
+| `SUCCESS`  |  |
+
 ##### `ErpPeriodStatus`
 
 Valid values for an accounting period status.
@@ -645,6 +655,41 @@ Valid values for an accounting period status.
 | `N`        | Never Opened |
 | `O`        | Open |
 | `P`        | Permanently Closed |
+
+##### `ErpUserRoleDataAccessType`
+
+
+
+| Enum Value                            | Description |
+| ------------------------------------- | ----------- |
+| `Academic_Organization`               |  |
+| `Academic_Organization_by_Campus`     |  |
+| `All`                                 |  |
+| `Asset_book`                          |  |
+| `Award_Organization_Hierarchy`        |  |
+| `Business_unit`                       |  |
+| `Campus`                              |  |
+| `Collaboration_document`              |  |
+| `Control_budget`                      |  |
+| `Cost_organization`                   |  |
+| `Data_access_set`                     |  |
+| `Intercompany_organization`           |  |
+| `Inventory_organization`              |  |
+| `Item_organization`                   |  |
+| `Ledger`                              |  |
+| `Legal_entity`                        |  |
+| `Manufacturing_plant`                 |  |
+| `Project_organization_classification` |  |
+| `Reference_data_set`                  |  |
+
+##### `ErpUserRoleRequestType`
+
+
+
+| Enum Value | Description |
+| ---------- | ----------- |
+| `ADD`      |  |
+| `REMOVE`   |  |
 
 ##### `InvoiceType`
 
