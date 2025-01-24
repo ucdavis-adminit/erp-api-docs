@@ -1,0 +1,25 @@
+{
+  "type": "record",
+  "name": "ucpath_i303_employee_bank_accounts",
+  "namespace": "edu.ucdavis.adminit",
+  "doc": "Note that all dates are MMDDYYYY format",
+  "fields": [
+    { "name": "BUSINESS_UNIT",    "type": [ "null", "string" ] },
+    { "name": "EMPLID",           "type": [ "null", "string" ] },
+    { "name": "NAME",             "type": [ "null", "string" ] },
+    { "name": "LAST_HIRE_DT",     "type": [ "null", "string" ] },
+    { "name": "LAST_UPDATE_DATE", "type": [ "null", "string" ] },
+    { "name": "PRENOTE_STATUS",   "type": [ "null", "string" ] },
+    { "name": "EFFDT",            "type": [ "null", "string" ] },
+    { "name": "BANK_CD",          "type": [ "null", "string" ] },
+    { "name": "ACCOUNT_NUM",      "type": [ "null", "string" ] },
+    { "name": "ACCOUNT_TYPE",     "type": [ "null", "string" ] },
+    { "name": "EMPL_STATUS",      "type": [ "null", "string" ] },
+    { "name": "DEPT_ID",          "type": [ "null", "string" ] },
+    { "name": "ADDRESS1",         "type": [ "null", "string" ] },
+    { "name": "ADDRESS2",         "type": [ "null", "string" ] },
+    { "name": "CITY",             "type": [ "null", "string" ] },
+    { "name": "STATE",            "type": [ "null", "string" ] },
+    { "name": "POSTAL",           "type": [ "null", "string" ] }
+  ]
+}

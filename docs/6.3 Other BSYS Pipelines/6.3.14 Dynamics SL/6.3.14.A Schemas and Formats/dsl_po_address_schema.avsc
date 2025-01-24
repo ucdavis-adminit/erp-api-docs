@@ -1,0 +1,233 @@
+{
+  "type": "record",
+  "name": "DslPoAddress",
+  "doc": "This spec maps to the POAddress in the DSL MSSQL DB",
+  "namespace": "edu.ucdavis.adminit",
+  "fields": [
+    {
+      "name": "Addr1",
+      "type": "string"
+    },
+    {
+      "name": "Addr2",
+      "type": "string"
+    },
+    {
+      "name": "Attn",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "City",
+      "type": "string"
+    },
+    {
+      "name": "Country",
+      "type": "string"
+    },
+    {
+      "name": "Crtd_DateTime",
+      "type": "string"
+    },
+    {
+      "name": "Crtd_Prog",
+      "type": "string",
+      "default": "NIFI"
+    },
+    {
+      "name": "Crtd_User",
+      "type": "string",
+      "default": "NIFI"
+    },
+    {
+      "name": "Descr",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "EmailAddr",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "Fax",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "LUpd_DateTime",
+      "type": "string",
+      "default": "0"
+    },
+    {
+      "name": "LUpd_Prog",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "LUpd_User",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "Name",
+      "type": "string"
+    },
+    {
+      "name": "NoteID",
+      "type": "int",
+      "default": 0
+    },
+    {
+      "name": "OrdFromId",
+      "type": "string"
+    },
+    {
+      "name": "Phone",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "S4Future01",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "S4Future02",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "S4Future03",
+      "type": "float",
+      "default": 0
+    },
+    {
+      "name": "S4Future04",
+      "type": "float",
+      "default": 0
+    },
+    {
+      "name": "S4Future05",
+      "type": "float",
+      "default": 0
+    },
+    {
+      "name": "S4Future06",
+      "type": "float",
+      "default": 0
+    },
+    {
+      "name": "S4Future07",
+      "type": "string",
+      "default": "0"
+    },
+    {
+      "name": "S4Future08",
+      "type": "string",
+      "default": "0"
+    },
+    {
+      "name": "S4Future09",
+      "type": "int",
+      "default": 0
+    },
+    {
+      "name": "S4Future10",
+      "type": "int",
+      "default": 0
+    },
+    {
+      "name": "S4Future11",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "S4Future12",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "State",
+      "type": "string"
+    },
+    {
+      "name": "TaxId00",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "TaxId01",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "TaxId02",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "TaxId03",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "TaxLocId",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "TaxRegNbr",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "User1",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "User2",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "User3",
+      "type": "float",
+      "default": 0
+    },
+    {
+      "name": "User4",
+      "type": "float",
+      "default": 0
+    },
+    {
+      "name": "User5",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "User6",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "User7",
+      "type": "string",
+      "default": "0"
+    },
+    {
+      "name": "User8",
+      "type": "string",
+      "default": "0"
+    },
+    {
+      "name": "VendId",
+      "type": "string"
+    },
+    {
+      "name": "Zip",
+      "type": "string"
+    }
+  ]
+}

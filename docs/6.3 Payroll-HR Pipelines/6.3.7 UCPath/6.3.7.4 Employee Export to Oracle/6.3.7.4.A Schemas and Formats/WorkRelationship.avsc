@@ -1,0 +1,75 @@
+{
+  "type": "record",
+  "name": "oracle_hdl_workRelationship",
+  "namespace": "edu.ucdavis.adminit",
+  "fields": [
+    {
+      "name": "OperationType",
+      "type": "string",
+      "default": "MERGE"
+    },
+    {
+      "name": "HdlRecordType",
+      "type": "string",
+      "default": "WorkRelationship"
+    },
+    {
+      "name": "SourceSystemOwner",
+      "type": "string",
+      "default": "UCPATH"
+    },
+    {
+      "name": "SourceSystemId",
+      "type": "string"
+    },
+    {
+      "name": "PersonId",
+      "type": "string"
+    },
+    {
+      "name": "WorkerType",
+      "type": "string"
+    },
+    {
+      "name": "ActionCode",
+      "type": "string"
+    },
+    {
+      "name": "PrimaryFlag",
+      "type": "string",
+      "default": "Y"
+    },
+    {
+      "name": "DateStart",
+      "type": "string"
+    },
+    {
+      "name": "NewStartDate",
+      "type": "string"
+    },
+    {
+      "name": "ActualTerminationDate",
+      "type": "string"
+    },
+    {
+      "name": "LastWorkingDate",
+      "type": "string"
+    },
+    {
+      "name": "RevokeUserAccess",
+      "type": "string"
+    },
+    {
+      "name": "ReasonCode",
+      "type": "string"
+    },
+    {
+      "name": "LegalEmployerName",
+      "type": "string"
+    },
+    {
+      "name": "TerminateWorkRelationshipFlag",
+      "type": "string"
+    }
+  ]
+}

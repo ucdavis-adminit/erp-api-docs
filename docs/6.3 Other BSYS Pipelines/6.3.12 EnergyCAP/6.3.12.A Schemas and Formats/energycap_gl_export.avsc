@@ -1,0 +1,432 @@
+{
+  "type": "record",
+  "name": "EnergyCAPGLExport",
+  "doc": "EnergyCAP GL Export schema.",
+  "namespace": "edu.ucdavis.adminit",
+  "fields": [
+	{
+		"name": "BillSummary_L1",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSBillID",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSCostCenter",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSCostCenterCode",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSParentCostCenter",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSParentCostCenterCode",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSAccount",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSStartDate",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSEndDate",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSExported",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSExportedDate",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSTotalCost",
+		"type": ["null", "double"]
+	},
+	{
+		"name": "BSVendor",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSBillPeriod",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSBillYear",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSBatch",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSAcctPeriod",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSAcctYear",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSControlCode",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSDueDate",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSEstimated",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSInvoiceNumber",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSNextReading",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSStatementDate",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSObservationMethodID",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSAccountServiceAddress",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSAccountActive",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSCreateDate",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSModifyDate",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSModifiedbyCode",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSExportedbyCode",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSApprovedByCode",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSCreatedByCode",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSGlexportedbyCode",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSModifiedbyName",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSExportedbyName",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSApprovedByName",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSCreatedByName",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSGlexportedbyName",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSApproveDate",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSTransrefnum",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSGlexported",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSGlexportdate",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSFromvendor",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSObservationMethodcode",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "BSObservationMethodinfo",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "ASAccountID",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "ASStartDate",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "ASEndDate",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "ASAccountCode",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "ASAccountDisplay",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "ASVendorID",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "ASVendor",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "ASRollup",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "ASActiveFlag",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "ASDepositAmount",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "ASActline1",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "ASActcity",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "ASActstate",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "ASActzip",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "MSPlaceID",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "MSPlaceCode",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "MSPlaceDisplay",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "MSPlaceType",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "MSMeterID",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "MSMeterCode",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "MSMeterInfo",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "MSCost",
+		"type": ["null", "double"]
+	},
+	{
+		"name": "MSUse",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "MSDemand",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "MSUseUnit",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "MSDemandUnit",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "MSCostPerUnit",
+		"type": ["null", "double"]
+	},
+	{
+		"name": "MSRateCode",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "MSRateName",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "MSMeterAddressline1",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "MSMeterAddresscity",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "MSMeterAddressstate",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "MSMeterAddresszip",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "MSPlaceAddressline1",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "MSPlaceAddresscity",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "MSPlaceAddressstate",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "MSPlaceAddresszip",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "MSMeterCommodity",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "GSCode",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "GSSubcode01",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "GSSubcode02",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "GSSubcode03",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "GSSubcode04",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "GSSubcode05",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "GSSubcode06",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "GSSubcode07",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "GSSubcode08",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "GSSubcode09",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "GSSubcode10",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "GSSubcode11",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "GSSubcode12",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "GSSubcode13",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "GSSubcode14",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "GSSubcode15",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "GSSubcode16",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "GSSubcode17",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "GSSubcode18",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "GSSubcode19",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "GSSubcode20",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "GSCost",
+		"type": ["null", "double"]
+	}
+  ]
+}

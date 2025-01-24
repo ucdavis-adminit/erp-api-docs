@@ -1,0 +1,248 @@
+{
+  "type": "record",
+  "name": "FacilitiesLinkBuilding",
+  "doc": "FacilitiesLink Building schema.",
+  "namespace": "edu.ucdavis.adminit",
+  "fields": [
+  	{
+		"name": "id",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "buildingKey",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "assetNumber",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "primaryDisplayName",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "active",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "officialName",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "facilitiesCode",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "ucdhsBuildingNumber",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "location",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "affiliation",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "category",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "primaryUsage",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "address",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "city",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "county",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "state",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "zip",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "countryCode",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "addressCode",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "occupied",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "onOffCampus",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "cefaName",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "cefaFireResistConsTypeCode",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "planning",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "condition",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "defaultOmpEligibility",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "ompEligibilityMethod",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "ompEligibilitySummary",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "ownership",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "floors",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "height",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "footprint",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "perimeter",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "basicGross",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "cuGross",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "circulation",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "custodial",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "mechanical",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "parking",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "toilet",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "nonAssignableSquareFootage",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "assignableSquareFootage",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "spaceCount",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "netUsable",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "structural",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "outsideGross",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "relatedGross",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "maintainedGross",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "janitorized",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "constructed",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "renovated",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "vacated",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "demolished",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "kmlLongitudeLatitude",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "cifsLongitudeLatitude",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "latitude",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "longitude",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "effectiveDate",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "endDate",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "modifiedDate",
+		"type": ["null", "string"]
+	}
+  ]
+}

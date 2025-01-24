@@ -1,0 +1,33 @@
+ {
+  "type": "record",
+  "name": "UCPath_I101_Department_B2",
+  "doc": "UCPath I101 Department B2 schema",
+  "namespace": "edu.ucdavis.adminit",
+  "fields": [
+    {
+      "name": "SETID",
+      "type": "string"
+    },
+
+    {
+      "name": "DEPTID",
+      "type": "string"
+    },
+    {
+      "name": "EFFDT",
+      "type": "string"
+    },
+    {
+      "name": "UC_DEPTID_ROLLUP",
+      "type": "string"
+    },
+    {
+      "name": "UC_SAU",
+      "type": "string"
+    },
+    {
+     "name": "UC_LOC",
+     "type": "string"
+    }
+  ]
+}

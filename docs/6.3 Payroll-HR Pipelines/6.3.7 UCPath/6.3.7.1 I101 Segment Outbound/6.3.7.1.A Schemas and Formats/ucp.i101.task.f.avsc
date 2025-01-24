@@ -1,0 +1,38 @@
+{
+  "type": "record",
+  "name": "UCPath_I101_Task",
+  "doc": "UCPath I101 Task schema",
+  "namespace": "edu.ucdavis.adminit",
+  "fields": [
+    {
+      "name": "SETID",
+      "type": "string"
+    },
+
+    {
+      "name": "PRODUCT",
+      "type": "string"
+    },
+    {
+      "name": "EFFDT",
+      "type": "string"
+    },
+    {
+      "name": "EFF_STATUS",
+      "type": "string"
+    },
+    {
+      "name": "DESCR",
+      "type": "string"
+    },
+    {
+     "name": "DESCRSHORT",
+     "type": "string"
+    },
+
+    {
+      "name": "ACCOUNTING_OWNER",
+      "type": "string"
+    }
+  ]
+}

@@ -1,0 +1,56 @@
+{
+  "type": "record",
+  "name": "EPMJob",
+  "doc": "EPM Job schema",
+  "namespace": "edu.ucdavis.adminit",
+  "fields": [
+    {
+      "name": "JOB",
+      "type": "string"
+    },
+    {
+      "name": "PARENT",
+      "type": "string"
+    },
+    {
+      "name": "ALIAS_DEFAULT",
+      "type": "string"
+    },
+    {
+      "name": "VALID_FOR_CONSOLIDATION",
+      "type": "string"
+    },
+    {
+      "name": "DATA_STORAGE",
+      "type": "string"
+    },
+    {
+      "name": "DATA_TYPE",
+      "type": "string"
+    },
+    {
+      "name": "PLAN_TYPE_OEP_WFP",
+      "type": "string"
+    },
+    {
+      "name": "AGGREGATION_OEP_WFP",
+      "type": "string"
+    },
+    {
+      "name": "PLAN_TYPE_OEP_WFSC",
+      "type": "string"
+    },
+    {
+      "name": "AGGREGATION_OEP_WFSC",
+      "type": "string"
+    },
+    {
+        "name": "PLAN_TYPE_OEP_REP",
+        "type": "string"
+    },
+    {
+      "name": "AGGREGATION_OEP_REP",
+      "type": "string"
+    }
+  ]
+}

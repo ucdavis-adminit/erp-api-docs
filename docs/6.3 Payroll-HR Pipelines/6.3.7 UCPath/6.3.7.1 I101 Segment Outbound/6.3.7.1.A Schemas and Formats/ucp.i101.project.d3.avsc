@@ -1,0 +1,92 @@
+{
+  "type": "record",
+  "name": "UCPath_I101_PROJECT_D3",
+  "doc": "UCPath I101 Project D3 schema",
+  "namespace": "edu.ucdavis.adminit",
+  "fields": [
+    {
+      "name": "BUSINESS_UNIT",
+      "type": "string"
+    },
+    {
+      "name": "PROJECT_ID",
+      "type": "string"
+    },
+    {
+      "name": "EFFDT",
+      "type": "string"
+    },
+    {
+      "name": "EFSEQ",
+      "type": "int"
+    },
+    {
+      "name": "UC_EVERIFY",
+      "type": "string"
+    },
+    {
+      "name": "UC_FEDERAL",
+      "type": "string"
+    },
+    {
+     "name": "UC_SPONSORED",
+     "type": "string"
+    },
+    {
+     "name": "UC_STATE_FUND",
+     "type": "string"
+    },
+    {
+     "name": "UC_GENERAL",
+     "type": "string"
+    },
+    {
+     "name": "UC_SPONSOR_NAME",
+     "type": "string"
+    },
+    {
+     "name": "UC_PROJ_END_DT",
+     "type": "string"
+    },
+    {
+     "name": "UC_PROJ_TYPE_ENCUM",
+     "type": "string"
+    },
+    {
+     "name": "UC_ATTRIBUTE1",
+     "type": "string"
+    },
+    {
+     "name": "UC_ATTRIBUTE2",
+     "type": "string"
+    },
+    {
+     "name": "UC_ATTRIBUTE3",
+     "type": "string"
+    },
+    {
+     "name": "UC_CAPTYPE",
+     "type": "string"
+    },
+    {
+       "name": "UC_AWARD_TYPE",
+       "type": "string"
+    },
+    {
+     "name": "UC_FED_FLOW_THRU",
+     "type": "string"
+    },
+    {
+      "name": "UC_SPONSOR_TYPE_OT",
+      "type": "string"
+    },
+    {
+       "name": "filler4",
+       "type": "string"
+    },
+    {
+       "name": "filler5",
+       "type": "string"
+    }
+  ]
+}

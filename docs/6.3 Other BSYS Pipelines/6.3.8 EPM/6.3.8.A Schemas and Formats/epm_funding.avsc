@@ -1,0 +1,48 @@
+{
+  "type": "record",
+  "name": "EPMFunding",
+  "doc": "EPM Funding schema",
+  "namespace": "edu.ucdavis.adminit",
+  "fields": [
+    {
+      "name": "JOB",
+      "type": "string"
+    },
+    {
+      "name": "DEPARTMENT",
+      "type": "string"
+    },
+    {
+      "name": "FUND",
+      "type": "string"
+    },
+    {
+      "name": "PROJECT",
+      "type": "string"
+    },
+    {
+      "name": "PURPOSE",
+      "type": "string"
+    },
+    {
+      "name": "ACTIVITY",
+      "type": "string"
+    },
+    {
+      "name": "HEAD_COUNT",
+      "type": "string"
+    },
+    {
+      "name": "FTE_COUNT",
+      "type": "int"
+    },
+    {
+      "name": "EMPLOYEE",
+      "type": "float"
+    },
+    {
+      "name": "UNION_CD",
+      "type": "string"
+    }
+  ]
+}

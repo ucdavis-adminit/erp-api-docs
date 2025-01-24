@@ -1,0 +1,24 @@
+{
+  "type": "record",
+  "name": "concur_list",
+  "doc": "Concur List Import Format.  Field headers contain underscores which must be replaced with spaces before creation of the final file.",
+  "namespace": "edu.ucdavis.adminit",
+  "fields": [
+    { "name": "List_Name",           "type": "string" },
+    { "name": "List_Category_Name",  "type": "string" },
+    { "name": "Level_01_Code",       "type": "string" },
+    { "name": "Level_02_Code",       "type": [ "string", "null" ] },
+    { "name": "Level_03_Code",       "type": [ "string", "null" ] },
+    { "name": "Level_04_Code",       "type": [ "string", "null" ] },
+    { "name": "Level_05_Code",       "type": [ "string", "null" ] },
+    { "name": "Level_06_Code",       "type": [ "string", "null" ] },
+    { "name": "Level_07_Code",       "type": [ "string", "null" ] },
+    { "name": "Level_08_Code",       "type": [ "string", "null" ] },
+    { "name": "Level_09_Code",       "type": [ "string", "null" ] },
+    { "name": "Level_10_Code",       "type": [ "string", "null" ] },
+    { "name": "Value",               "type": "string", "doc": "Name of the item referenced by the code set above."},
+    { "name": "Start_Date",          "type": [ "string", "null" ] },
+    { "name": "End_Date",            "type": [ "string", "null" ] },
+    { "name": "Delete_List_Item",    "type": "string", "default": "N" }
+  ]
+}

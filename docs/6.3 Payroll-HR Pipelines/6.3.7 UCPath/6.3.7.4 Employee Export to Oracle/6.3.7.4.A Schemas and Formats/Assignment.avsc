@@ -1,0 +1,94 @@
+{
+  "type": "record",
+  "name": "oracle_hdl_assignment",
+  "namespace": "edu.ucdavis.adminit",
+  "fields": [
+    {
+      "name": "OperationType",
+      "type": "string",
+      "default": "MERGE"
+    },
+    {
+      "name": "HdlRecordType",
+      "type": "string",
+      "default": "Assignment"
+    },
+    {
+      "name": "SourceSystemOwner",
+      "type": "string",
+      "default": "UCPATH"
+    },
+    {
+      "name": "SourceSystemId",
+      "type": "string"
+    },
+    {
+      "name": "PersonId",
+      "type": "string"
+    },
+    {
+      "name": "WorkTermsAssignmentId",
+      "type": "string"
+    },
+    {
+      "name": "EffectiveStartDate",
+      "type": "string"
+    },
+    {
+      "name": "EffectiveEndDate",
+      "type": "string"
+    },
+    {
+      "name": "AssignmentNumber",
+      "type": "string"
+    },
+    {
+      "name": "EffectiveSequence",
+      "type": "int",
+      "default" : 1
+    },    
+    {
+      "name": "JobCode",
+      "type": "string"
+    },    
+    {
+      "name": "DepartmentName",
+      "type": "string"
+    },    
+    {
+      "name": "LocationCode",
+      "type": "int"
+    },
+    {
+      "name": "AssignmentStatusTypeCode",
+      "type": "string"
+    },
+    {
+      "name": "PrimaryAssignmentFlag",
+      "type": "string",
+      "default": "Y"
+    },
+    {
+      "name": "AssignmentType",
+      "type": "string"
+    },
+    {
+      "name": "DefaultExpenseAccount",
+      "type": "string"
+    },
+    {
+      "name": "BusinessUnitShortCode",
+      "type": "string",
+      "default": "UCD Business Unit"
+    },
+    {
+      "name": "ActionCode",
+      "type": "string"
+    },
+    {
+      "name": "EffectiveLatestChange",
+      "type": "string",
+      "default": "Y"
+    }
+  ]
+}

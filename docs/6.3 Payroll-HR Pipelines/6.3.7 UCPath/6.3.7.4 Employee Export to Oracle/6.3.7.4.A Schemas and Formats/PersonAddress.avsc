@@ -1,0 +1,68 @@
+{
+  "type": "record",
+  "name": "oracle_hdl_personAddress",
+  "namespace": "edu.ucdavis.adminit",
+  "fields": [
+    {
+      "name": "OperationType",
+      "type": "string",
+      "default": "MERGE"
+    },
+    {
+      "name": "HdlRecordType",
+      "type": "string",
+      "default": "PersonAddress"
+    },
+    {
+      "name": "SourceSystemOwner",
+      "type": "string",
+      "default": "UCPATH"
+    },
+    {
+      "name": "SourceSystemId",
+      "type": "string"
+    },
+    {
+      "name": "PersonId",
+      "type": "string"
+    },
+    {
+      "name": "AddressType",
+      "type": "string",
+      "default": "MAIL"
+    },
+    {
+      "name": "AddressLine1",
+      "type": "string",
+      "default": "One Shields Avenue"
+    },
+    {
+      "name": "TownOrCity",
+      "type": "string",
+      "default": "Davis"
+    },
+    {
+      "name": "Region2",
+      "type": "string",
+      "default": "CA"
+    },
+    {
+      "name": "PostalCode",
+      "type": "string",
+      "default": "95616"
+    },
+    {
+      "name": "Country",
+      "type": "string",
+      "default": "US"
+    },
+    {
+      "name": "EffectiveStartDate",
+      "type": "string"
+    },
+    {
+      "name": "EffectiveEndDate",
+      "type": "string"
+    }
+  ]
+}

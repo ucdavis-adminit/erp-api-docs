@@ -1,0 +1,60 @@
+	{
+	  "type": "record",
+	  "name": "FleetFocusM5BillingTransaction",
+	  "doc": "FleetFocusM5BillingTransaction",
+	  "namespace": "edu.ucdavis.adminit",
+	  "fields": [
+		{
+			"name": "expenseAccount",
+			"type": ["null", "string"]
+		},
+		{
+			"name": "revenueAccount",
+			"type": ["null", "string"]
+		},
+		{
+			"name": "billAmount",
+			"type": ["null", "double"]
+		},
+		{
+			"name": "lineDescription",
+			"type": ["null", "string"]
+		},
+		{
+			"name": "udfNumeric1Quantity",
+			"type": ["null", "string"]
+		},		
+		{
+			"name": "udfNumeric2UnitAmount",
+			"type": ["null", "string"]
+		},
+		{
+			"name": "udfDate1StartDate",
+			"type": ["null", "string"]
+		},		
+		{
+			"name": "udfDate2EndDate",
+			"type": ["null", "string"]
+		},		
+		{
+			"name": "udfString1UnitType",
+			"type": ["null", "string"]
+		},		
+		{
+			"name": "udfString2Category",
+			"type": ["null", "string"]
+		},		
+		{
+			"name": "udfString3Identifier",
+			"type": ["null", "string"]
+		},		
+		{
+			"name": "udfString4IdentifierType",
+			"type": ["null", "string"]
+		},		
+		{
+			"name": "udfString5Vehicle",
+			"type": ["null", "string"]
+		}		
+	  ]
+	}

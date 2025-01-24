@@ -298,7 +298,7 @@ While lines with `glSegments` and `ppmSegments` are posted to different ledgers,
 | `INTEXP_ACCT_FUND`   | Commercial Paper and Long-Term Debt Interest expenses (58000C and 58020C and below) must be recorded in an appropriate Debt Service Fund (2400B and below) |
 | `UCDH_BS_DEPT`       | Balance sheet transactions in UCDH Entity 3210 may only be recorded in department 9500000                                                                  |
 | `UCDH_FUND_ENTITY`   | UCD Operating Funds (12000) may only be used within the UCDH Entity 3210                                                                                   |
-| `CAP_EXP_SALES_FUND` | Purchases to be Capitalized (52500B and below) may not be recorded on a Sales and Services fund (1210D and below)                                          |
+| `CAP_EXP_SALES_FUND` | Purchases to be Capitalized (52500B and below) may not be recorded on a Sales and Services fund (12100)                                                    |
 | `COFI_NO_EXTREVENUE` | External Revenue accounts may not be used with Common University Funds (13U0D and below)                                                                   |
 | `HATCHFUND_PURPOSE`  | ANR Expenses with Hatch Funds (2085C, 2086C, 2087C, 2088C and below) must use Organized Research purpose codes.                                            |
 | `SMITHFUND_PURPOSE`  | ANR (Entity 3310) Smith Lever Federal Appropriations (2090C and below) must only be used for Public Service purposes (62)                                  |

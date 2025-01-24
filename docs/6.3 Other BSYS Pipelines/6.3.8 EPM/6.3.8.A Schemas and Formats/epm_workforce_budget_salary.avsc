@@ -1,0 +1,29 @@
+
+{
+  "type": "record",
+  "name": "EPM_WF_Budget_Salary",
+  "doc": "EPM Workforce Budget - Salary schema",
+  "namespace": "edu.ucdavis.adminit",
+  "fields": [
+    {
+      "name": "JOB",
+      "type": "string"
+    },
+    {
+      "name": "DATA_LOAD_CUBE_NAME",
+      "type": "string"
+    },
+    {
+      "name": "POINT_OF_VIEW",
+      "type": "string"
+    },
+    {
+      "name": "OWP_VALUE",
+      "type": "float"
+    },
+    {
+      "name": "OWP_SALARY_BASIS",
+      "type": "string"
+    }
+  ]
+}

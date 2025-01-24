@@ -1,0 +1,20 @@
+{
+  "type": "record",
+  "name": "OracleSCMFixedAssetValueSetValueRESTAPI",
+  "doc": "Oracle SCM Fixed Asset Location Value Set Value schema used for the Oracle REST API.",
+  "namespace": "edu.ucdavis.adminit",
+  "fields": [ 
+	{
+		"name": "Value",
+		"type": ["string"]
+	},	
+	{
+		"name": "Description",
+		"type": ["null", "string"]
+	},
+	{
+		"name": "EndDateActive",
+		"type": ["null", "string"]
+	}
+  ]
+}

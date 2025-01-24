@@ -1,0 +1,171 @@
+{
+  "type": "record",
+  "name": "lawson_transaction",
+  "namespace": "edu.ucdavis.adminit",
+  "fields": [
+    {
+      "name": "Run_Group",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    {
+      "name": "Sequence_Number",
+      "type": "string"
+    },
+    {
+      "name": "Company",
+      "type": "null"
+    },
+    {
+      "name": "Old_Company",
+      "type": "string"
+    },
+    {
+      "name": "Old_Account_Number",
+      "type": "string"
+    },
+    {
+      "name": "Source_Code",
+      "type": "string",
+      "default": "OR"
+    },
+    {
+      "name": "Trans_Date",
+      "type": "string",
+      "doc": "format: yyyymmdd"
+    },
+    {
+      "name": "Reference",
+      "type": "null"
+    },
+    {
+      "name": "Description",
+      "type": "string"
+    },
+    {
+      "name": "Currency_Code",
+      "type": "string",
+      "default": "USD"
+    },
+    {
+      "name": "Units_Amount",
+      "type": "null"
+    },
+    {
+      "name": "Transaction_Amount",
+      "type": "double"
+    },
+    {
+      "name": "Base_Amount",
+      "type": "double"
+    },
+    {
+      "name": "Base_Rate",
+      "type": "null"
+    },
+    {
+      "name": "System",
+      "type": "string",
+      "default": "GL"
+    },
+    {
+      "name": "Program_Code",
+      "type": "null"
+    },
+    {
+      "name": "Auto_Reverse",
+      "type": "null"
+    },
+    {
+      "name": "Posting_Date",
+      "type": "string",
+      "doc": "format: yyyymmdd"
+    },
+    {
+      "name": "Activity",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    {
+      "name": "Account_Category",
+      "type": "null"
+    },
+    {
+      "name": "Document_Number",
+      "type": "null"
+    },
+    {
+      "name": "To_Base_Amount",
+      "type": "null"
+    },
+    {
+      "name": "Effect_Date",
+      "type": "null"
+    },
+    {
+      "name": "Journal_Book_Number",
+      "type": "null"
+    },
+    {
+      "name": "Attribute_Value_1",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    {
+      "name": "Attribute_Value_2",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    {
+      "name": "Attribute_Value_3",
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    {
+      "name": "Journal_Book_Sequence_Number",
+      "type": "null"
+    },
+    {
+      "name": "Negative_Adjustment",
+      "type": "null"
+    },
+    {
+      "name": "User_Analysis",
+      "type": "null"
+    },
+    {
+      "name": "Report_Currency_One_Amount",
+      "type": "null"
+    },
+    {
+      "name": "Exchange_Rate_One",
+      "type": "null"
+    },
+    {
+      "name": "Decimal_One",
+      "type": "null"
+    },
+    {
+      "name": "Report_Currency_Two_Amount",
+      "type": "null"
+    },
+    {
+      "name": "Exchange_Rate_Two",
+      "type": "null"
+    },
+    {
+      "name": "Decimal_Two",
+      "type": "null"
+    }
+  ]
+}

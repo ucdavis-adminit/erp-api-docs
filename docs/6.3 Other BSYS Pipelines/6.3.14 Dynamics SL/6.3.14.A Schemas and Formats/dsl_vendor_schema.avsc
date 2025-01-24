@@ -1,0 +1,466 @@
+{
+  "type": "record",
+  "name": "DslVendor",
+  "doc": "This spec maps to the Vendor in the DSL MSSQL DB",
+  "namespace": "edu.ucdavis.adminit",
+  "fields": [
+    {
+      "name": "Addr1",
+      "type": "string"
+    },
+    {
+      "name": "Addr2",
+      "type": "string"
+    },
+    {
+      "name": "APAcct",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "APSub",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "Attn",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "BkupWthld",
+      "type": "int",
+      "default": 0
+    },
+    {
+      "name": "City",
+      "type": "string"
+    },
+    {
+      "name": "ClassID",
+      "type": "string",
+      "default": "AEVEN"
+    },
+    {
+      "name": "ContTwc1099",
+      "type": "int",
+      "default": 0
+    },
+    {
+      "name": "Country",
+      "type": "string"
+    },
+    {
+      "name": "Crtd_DateTime",
+      "type": "string"
+    },
+    {
+      "name": "Crtd_Prog",
+      "type": "string",
+      "default": "NIFI"
+    },
+    {
+      "name": "Crtd_User",
+      "type": "string",
+      "default": "NIFI"
+    },
+    {
+      "name": "Curr1099Yr",
+      "type": "string",
+      "default": "2016"
+    },
+    {
+      "name": "CuryId",
+      "type": "string",
+      "default": "USD"
+    },
+    {
+      "name": "CuryRateType",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "DfltBox",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "DfltOrdFromId",
+      "type": "string",
+      "default": "DEFAULT"
+    },
+    {
+      "name": "DfltPurchaseType",
+      "type": "string",
+      "default": "GP"
+    },
+    {
+      "name": "DirectDeposit",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "DocPublishingFlag",
+      "type": "string",
+      "default": "N"
+    },
+    {
+      "name": "EMailAddr",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "ExcludeFreight",
+      "type": "string",
+      "default": "0"
+    },
+    {
+      "name": "ExpAcct",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "ExpSub",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "Fax",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "LCCode",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "LUpd_DateTime",
+      "type": "string",
+      "default": "0"
+    },
+    {
+      "name": "LUpd_Prog",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "LUpd_User",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "MultiChk",
+      "type": "int",
+      "default": 0
+    },
+    {
+      "name": "Name",
+      "type": "string"
+    },
+    {
+      "name": "Next1099Yr",
+      "type": "string",
+      "default": "2017"
+    },
+    {
+      "name": "NoteID",
+      "type": "int",
+      "default": 0
+    },
+    {
+      "name": "PayDateDflt",
+      "type": "string",
+      "default": "D"
+    },
+    {
+      "name": "PerNbr",
+      "type": "string"
+    },
+    {
+      "name": "Phone",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "PmtMethod",
+      "type": "string",
+      "default": "C"
+    },
+    {
+      "name": "PPayAcct",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "PPaySub",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "RcptPctAct",
+      "type": "string",
+      "default": "N"
+    },
+    {
+      "name": "RcptPctMax",
+      "type": "int",
+      "default": 0
+    },
+    {
+      "name": "RcptPctMin",
+      "type": "int",
+      "default": 0
+    },
+    {
+      "name": "RecipientName2",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "RemitAddr1",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "RemitAddr2",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "RemitAttn",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "RemitCity",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "RemitCountry",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "RemitFax",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "RemitName",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "RemitPhone",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "RemitSalut",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "RemitState",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "RemitZip",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "ReqBkupWthld",
+      "type": "int",
+      "default": 0
+    },
+    {
+      "name": "S4Future01",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "S4Future02",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "S4Future03",
+      "type": "float",
+      "default": 0
+    },
+    {
+      "name": "S4Future04",
+      "type": "float",
+      "default": 0
+    },
+    {
+      "name": "S4Future05",
+      "type": "float",
+      "default": 0
+    },
+    {
+      "name": "S4Future06",
+      "type": "float",
+      "default": 0
+    },
+    {
+      "name": "S4Future07",
+      "type": "string",
+      "default": "0"
+    },
+    {
+      "name": "S4Future08",
+      "type": "string",
+      "default": "0"
+    },
+    {
+      "name": "S4Future09",
+      "type": "int",
+      "default": 0
+    },
+    {
+      "name": "S4Future10",
+      "type": "int",
+      "default": 0
+    },
+    {
+      "name": "S4Future11",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "S4Future12",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "Salut",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "State",
+      "type": "string"
+    },
+    {
+      "name": "Status",
+      "type": "string"
+    },
+    {
+      "name": "TaxDflt",
+      "type": "string",
+      "default": "V"
+    },
+    {
+      "name": "TaxId00",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "TaxId01",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "TaxId02",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "TaxId03",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "TaxLocId",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "TaxPost",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "TaxRegNbr",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "Terms",
+      "type": "string"
+    },
+    {
+      "name": "TIN",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "TINNAME",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "User1",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "User2",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "User3",
+      "type": "float",
+      "default": 0
+    },
+    {
+      "name": "User4",
+      "type": "float",
+      "default": 0
+    },
+    {
+      "name": "User5",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "User6",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "User7",
+      "type": "string",
+      "default": "0"
+    },
+    {
+      "name": "User8",
+      "type": "string",
+      "default": "0"
+    },
+    {
+      "name": "Vend1099",
+      "type": "int",
+      "default": 0
+    },
+    {
+      "name": "Vend1099AddrType",
+      "type": "string",
+      "default": ""
+    },
+    {
+      "name": "VendId",
+      "type": "string"
+    },
+    {
+      "name": "Zip",
+      "type": "string"
+    }
+  ]
+}

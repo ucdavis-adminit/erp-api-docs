@@ -1,0 +1,87 @@
+{
+  "type": "record",
+  "name": "oracle_hdl_workTerms",
+  "namespace": "edu.ucdavis.adminit",
+  "fields": [
+    {
+      "name": "OperationType",
+      "type": "string",
+      "default": "MERGE"
+    },
+    {
+      "name": "HdlRecordType",
+      "type": "string",
+      "default": "WorkTerms"
+    },
+    {
+      "name": "SourceSystemOwner",
+      "type": "string",
+      "default": "UCPATH"
+    },
+    {
+      "name": "SourceSystemId",
+      "type": "string"
+    },
+    {
+      "name": "PersonId",
+      "type": "string"
+    },
+    {
+      "name": "ActionCode",
+      "type": "string"
+    },
+    {
+      "name": "ReasonCode",
+      "type": "string"
+    },
+    {
+      "name": "EffectiveStartDate",
+      "type": "string"
+    },
+    {
+      "name": "EffectiveEndDate",
+      "type": "string"
+    },
+    {
+      "name": "PrimaryWorkTermsFlag",
+      "type": "string",
+      "default" : "Y"
+    },
+    {
+      "name": "PositionOverrideFlag",
+      "type": "string",
+      "default" : "N"
+    },    
+    {
+      "name": "EffectiveSequence",
+      "type": "int",
+      "default" : 1
+    },    
+    {
+      "name": "EffectiveLatestChange",
+      "type": "string",
+      "default" : "Y"
+    },    
+    {
+      "name": "AssignmentStatusTypeCode",
+      "type": "string"
+    },
+    {
+      "name": "AssignmentType",
+      "type": "string"
+    },
+    {
+      "name": "BusinessUnitShortCode",
+      "type": "string",
+      "default": "UCD Business Unit"
+    },
+    {
+      "name": "LegalEmployerName",
+      "type": "string"
+    },
+    {
+      "name": "PeriodOfServiceId",
+      "type": "string"
+    }
+  ]
+}

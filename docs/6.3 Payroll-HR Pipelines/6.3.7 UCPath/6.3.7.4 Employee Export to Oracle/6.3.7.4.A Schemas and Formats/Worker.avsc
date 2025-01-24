@@ -1,0 +1,46 @@
+{
+  "type": "record",
+  "name": "oracle_hdl_worker",
+  "namespace": "edu.ucdavis.adminit",
+  "fields": [
+    {
+      "name": "OperationType",
+      "type": "string",
+      "default": "MERGE"
+    },
+    {
+      "name": "HdlRecordType",
+      "type": "string",
+      "default": "Worker"
+    },
+    {
+      "name": "SourceSystemOwner",
+      "type": "string",
+      "default": "UCPATH"
+    },
+    {
+      "name": "SourceSystemId",
+      "type": "string"
+    },
+    {
+      "name": "EffectiveStartDate",
+      "type": "string"
+    },
+    {
+      "name": "EffectiveEndDate",
+      "type": "string"
+    },
+    {
+      "name": "PersonNumber",
+      "type": "string"
+    },
+    {
+      "name": "StartDate",
+      "type": "string"
+    },
+    {
+      "name": "ActionCode",
+      "type": "string"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+	{
+	  "type": "record",
+	  "name": "FleetFocusM5FiscalCalendar",
+	  "doc": "FleetFocusM5FiscalCalendar",
+	  "namespace": "edu.ucdavis.adminit",
+	  "fields": [
+		{
+			"name": "COMPANY",
+			"type": ["null", "string"]
+		},
+		{
+			"name": "FISC_PD",
+			"type": ["null", "string"]
+		},
+		{
+			"name": "BILL_CLOSE_DT",
+			"type": ["null", "string"]
+		},
+		{
+			"name": "BILL_RUN_DT",
+			"type": ["null", "string"]
+		},
+		{
+			"name": "CLOSE_DATE",
+			"type": ["null", "string"]
+		},		
+		{
+			"name": "CON_FROM_DT",
+			"type": ["null", "string"]
+		},
+		{
+			"name": "LOGIN_ID_CLOSE",
+			"type": ["null", "string"]
+		},		
+		{
+			"name": "LOGIN_ID_RUN",
+			"type": ["null", "string"]
+		},		
+		{
+			"name": "PROC_OPN_WO_FL",
+			"type": ["null", "string"]
+		},		
+		{
+			"name": "QUARTER",
+			"type": ["null", "string"]
+		},		
+		{
+			"name": "REP_FROM_DT",
+			"type": ["null", "string"]
+		},		
+		{
+			"name": "START_DATE",
+			"type": ["null", "string"]
+		},		
+		{
+			"name": "USG_FROM_DT",
+			"type": ["null", "string"]
+		},		
+		{
+			"name": "CHANGE_LOGIN_USER",
+			"type": ["null", "string"]
+		},		
+		{
+			"name": "MAINT_LOCK",
+			"type": ["null", "string"]
+		},		
+		{
+			"name": "CHANGE_DT",
+			"type": ["null", "string"]
+		},		
+		{
+			"name": "days_in_period",
+			"type": ["null", "string"]
+		}					
+	  ]
+	}
