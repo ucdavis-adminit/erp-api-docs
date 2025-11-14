@@ -202,17 +202,6 @@ The Project identifies the planned work or activity to be completed over a perio
 * **Returns**
   * `PpmProjectSearchResults!`
 
-##### `ppmProjectByProjectPersonIdentifier`
-
-> undefined
-
-* **Parameters**
-  * `personIdentifier : String!`
-  * `roleName : String`
-  * `searchProjectTeamOnly : Boolean`
-* **Returns**
-  * `[PpmProject!]!`
-
 ##### `ppmProjectTeamMemberByProjectNumber`
 
 > Pull all active project team members by project number.
@@ -611,7 +600,6 @@ The Expenditure Type identifies the natural classification of the expense transa
 | preAwardDate                 | LocalDate                 |                |                 |               |  |
 | validateStatus               | PpmValidateStatus         |                |                 |               |  |
 | eligibleForUse               | Boolean!                  |                |                 |               | Returns whether this PpmAward is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmAward must:<br/>- Have closeDate after the given accountingDate<br/>- Be active or under amendment |
-| references                   | [PpmAwardReference!]!     |                |                 |               |  |
 
 * `personnel` : `[PpmAwardPersonnel!]!`
   * List of personnel associated with the award.
@@ -692,16 +680,6 @@ The Expenditure Type identifies the natural classification of the expense transa
 * **Parameters**
   * `email : EmailAddress!`
   * `roleName : NonEmptyTrimmedString60`
-* **Returns**
-  * `[PpmAward!]!`
-
-##### `ppmAwardByAwardPersonIdentifier`
-
-> undefined
-
-* **Parameters**
-  * `personIdentifier : String!`
-  * `roleName : String`
 * **Returns**
   * `[PpmAward!]!`
 

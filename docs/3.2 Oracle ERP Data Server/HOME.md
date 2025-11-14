@@ -488,11 +488,6 @@ Below are some examples of responses from the API.  Successful response data is 
 | `IP`                         | A field whose value is either an IPv4 or IPv6 address: https://en.wikipedia.org/wiki/IP_address. |
 | `IPCPatent`                  | A field whose value is an IPC Class Symbol within the International Patent Classification System: https://www.wipo.int/classifications/ipc/en/ |
 | `JWT`                        | A field whose value is a JSON Web Token (JWT): https://jwt.io/introduction. |
-| `KfsAccountNumber`           | 7-character KFS Account Number, upper-case letters and digits only |
-| `KfsChartCode`               | 1-character KFS Chart Code.  Must be one of 3, L, H, S, P, M, N |
-| `KfsOrgCode`                 | 4-character KFS Org Code, upper-case letters and digits only |
-| `KfsProjectCode`             | 10-character KFS Project Code, upper-case letters and digits only |
-| `KfsSubAccountNumber`        | 5-character KFS Sub Account Number, upper-case letters and digits only |
 | `LCCSubclass`                | A field whose value conforms to the Library of Congress Subclass Format ttps://www.loc.gov/catdir/cpso/lcco/ |
 | `LocalDate`                  | A local date string (i.e., with no associated timezone) in `YYYY-MM-DD` format, e.g. `2020-01-01`. |
 | `LocalDateTime`              | A local date-time string (i.e., with no associated timezone) in `YYYY-MM-DDTHH:mm:ss` format, e.g. `2020-01-01T00:00:00`. |
@@ -520,7 +515,6 @@ Below are some examples of responses from the API.  Successful response data is 
 | `NonEmptyTrimmedString360`   | String limited to 360 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString4`     | String limited to 4 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString40`    | String limited to 40 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
-| `NonEmptyTrimmedString4000`  | String limited to 4000 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString50`    | String limited to 50 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString60`    | String limited to 60 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString80`    | String limited to 80 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
@@ -627,15 +621,6 @@ Hierarchy Level Codes used in the financial chartstring structures.  Their meani
 | `F`        | Sixth Level |
 | `G`        | Seventh Level |
 | `X`        | Top Level, Defined by UCOP, Only used by Account and Project. |
-
-##### `ErpCostCenterType`
-
-The type of cost center needed by Oracle to record a transaction.
-
-| Enum Value | Description |
-| ---------- | ----------- |
-| `GL`       | General Ledger Segments: Transaction may be posted directly to the general ledger |
-| `POET`     | POET Segments: Transaction belongs to a managed project and must be posted through the PPM sub-ledger. |
 
 ##### `ErpFavoritesCostCenterChangeResult`
 

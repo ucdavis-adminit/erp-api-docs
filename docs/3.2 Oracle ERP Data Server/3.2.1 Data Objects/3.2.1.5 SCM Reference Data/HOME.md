@@ -183,7 +183,7 @@ A defined poHeader
 
 * `supplier` : `ScmSupplier!`
   * Description of `ScmSupplier`:
-    * A defined supplier of goods or services in the ERP system.<br/><br/>Each supplier may have multiple sites at which they do business.  It is necessary to identify both the supplier and site when submitting a payment.<br/><br/>Supplier in Oracle replaces Vendor in KFS.
+    * A defined supplier of goods or services in the ERP system.<br/><br/>Each supplier may have multiple sites at which they do business.  It is necessary to identify both the supplier and site when submitting a payment.
 
 ##### Linked Data Objects
 
@@ -299,8 +299,8 @@ Represents a purchasing agreement within the financial system.
 | documentStatus       | NonEmptyTrimmedString30!  |                |        Y        |               | Status of the underlying document for this agreement in the financial system. |
 | startDate            | LocalDate                 |                |                 |               | Effective date of the agreement. |
 | endDate              | LocalDate                 |                |                 |               | End date of the agreement. |
-| agreementTotalAmount | NonNegativeFloat!         |                |                 |               | Total amount of the agreement.  This is the maximum amount that can be spent under this agreement. |
-| amountReleased       | NonNegativeFloat!         |                |                 |               | Amount of the agreement that has been used to date on purchase orders. |
+| agreementTotalAmount | NonNegativeFloat          |                |                 |               | Total amount of the agreement.  This is the maximum amount that can be spent under this agreement. |
+| amountReleased       | NonNegativeFloat          |                |                 |               | Amount of the agreement that has been used to date on purchase orders. |
 | agreementAmountLimit | NonNegativeFloat          |                |                 |               | Maximum amount that the agreement total amount can be increased to without additional approvals. |
 | comments             | NonEmptyTrimmedString240  |                |                 |               | Comments about the agreement. |
 | lastUpdateDateTime   | DateTime!                 |                |        Y        |               | Timestamp this record was last updated in the financial system. |
@@ -312,7 +312,7 @@ Represents a purchasing agreement within the financial system.
 
 * `supplier` : `ScmSupplier`
   * Description of `ScmSupplier`:
-    * A defined supplier of goods or services in the ERP system.<br/><br/>Each supplier may have multiple sites at which they do business.  It is necessary to identify both the supplier and site when submitting a payment.<br/><br/>Supplier in Oracle replaces Vendor in KFS.
+    * A defined supplier of goods or services in the ERP system.<br/><br/>Each supplier may have multiple sites at which they do business.  It is necessary to identify both the supplier and site when submitting a payment.
 * `supplierSite` : `ScmSupplierSite`
   * Description of `ScmSupplierSite`:
     * Supplier Site represents a business location referenced when making orders or payments to the supplier.
@@ -436,8 +436,6 @@ Represents a purchasing agreement within the financial system.
 
 The SCM purchasing category represent the type of item being paid for on an invoice payment.
 
-The Oracle Purchasing category is the conceptual replacement for the KFS Commodity Code.
-
 #### Access Controls
 
 * Required Role: `erp:reader-supplier`
@@ -523,8 +521,6 @@ A defined supplier of goods or services in the ERP system.
 
 Each supplier may have multiple sites at which they do business.  It is necessary to identify both the supplier and site when submitting a payment.
 
-Supplier in Oracle replaces Vendor in KFS.
-
 #### Access Controls
 
 * Required Role: `erp:reader-supplier`
@@ -544,7 +540,7 @@ Supplier in Oracle replaces Vendor in KFS.
 | Property Name            | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
 | ------------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
 | supplierId               | Long!                     |                |                 |               | Value that uniquely identifies the supplier internally to Oracle. |
-| supplierNumber           | NonEmptyTrimmedString30!  |                |        Y        |               | Unique ID for the supplier used to reference it within the UI and in interfaces.  This largely corresponds to the Vendor ID in KFS. |
+| supplierNumber           | NonEmptyTrimmedString30!  |                |        Y        |               | Unique ID for the supplier used to reference it within the UI and in interfaces. |
 | name                     | NonEmptyTrimmedString360! |                |        Y        |               | Supplier: Name of the supplier. |
 | aliasName                | NonEmptyTrimmedString360  |                |        Y        |               | Alias: Alternate internal name for used for the supplier. |
 | alternateName            | NonEmptyTrimmedString360  |                |        Y        |               | Alternate Name: Alternate name of the supplier. |

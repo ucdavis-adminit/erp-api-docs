@@ -484,6 +484,40 @@ Person Associated with a PPM Project.  Identifies the person and their role on t
 
 
 <!--BREAK-->
+### Data Object: PpmSegmentNames
+
+
+
+#### Access Controls
+
+* Required Role: ``
+
+#### Data Source
+
+* Local Table/View: `undefined`
+
+##### Properties
+
+| Property Name       | Data Type | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------- | --------- | :------------: | :-------------: | ------------- | ----- |
+| projectName         | String    |                |                 |               |  |
+| taskName            | String    |                |                 |               |  |
+| organizationName    | String    |                |                 |               |  |
+| expenditureTypeName | String    |                |                 |               |  |
+| awardName           | String    |                |                 |               |  |
+| fundingSourceName   | String    |                |                 |               |  |
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
 ### Data Object: PpmSponsor
 
 PPM Sponsor reference for use with sponsored project awards.

@@ -766,7 +766,6 @@ A user as known to the ERP application.
 | lastUpdateDateTime | DateTime!                 |                |        Y        |               |  |
 | lastUpdateUserId   | ErpUserId                 |                |                 |               |  |
 | userRoles          | [ErpUserRole!]!           |                |                 |               | List of roles assigned to the user.  By default includes only the current and active roles.  Use includeInactive to include all role memberships ever assigned to the person. |
-| employee           | Employee                  |                |                 |               | Employee record from UCPath associated with the employee ID for this user. |
 
 * `userRoles` : `[ErpUserRole!]!`
   * List of roles assigned to the user.  By default includes only the current and active roles.  Use includeInactive to include all role memberships ever assigned to the person.
@@ -774,8 +773,6 @@ A user as known to the ERP application.
     * `includeInactive` : `Boolean` = false
   * Description of `ErpUserRole`:
     * Association between a user account and role in the Oracle application.
-* `employee` : `Employee`
-  * Employee record from UCPath associated with the employee ID for this user.
 
 ##### Linked Data Objects
 

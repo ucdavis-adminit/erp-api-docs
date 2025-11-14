@@ -9,9 +9,6 @@ The balancing segment designation in Oracle Financials Cloud allows for net posi
 
 Entities at all levels have unique reporting and/or external auditing needs that can only be met with an Entity level designation (e.g., UC Davis Health).
 
-**FAU Value Comparison:**
-The Entity segment most closely aligns with the KFS Chart (e.g. 3, H, L, P).
-
 #### Access Controls
 
 * Required Role: `erp:reader-refdata`
@@ -125,9 +122,6 @@ Funds provide a method of tracking funding resources whose use is limited by don
 The balancing segment designation in Oracle Financials Cloud allows for net position (e.g., fund balance) to be calculated at the Fund level.
 
 In most cases, Fund activity will be presented in the general ledger in summary and the Fund values will be shared amongst Financial Departments. For example, all Financial Departments will share one Restricted Expendable Federal Contracts fund. The detailed transactional information related to each federally sponsored project within this fund will be tracked using the PPM module.
-
-**FAU Value Comparison:**
-The Fund segment most closely aligns with the fund attribute of the KFS Account.
 
 #### Access Controls
 
@@ -255,9 +249,6 @@ Financial Department is often known as the "cost center" or "department". This f
 - An ongoing business objective and operational function with no planned end date (enabling historical trend analysis + long-range planning)
 
 - Identifiable, permanently funded employees and generally an allocation of physical space
-
-**FAU Value Comparison:**
-Due to significant variations in departments' financial structure in KFS, it is not possible to align the Financial Department segment with  specific KFS values.
 
 **Access Roles: erp:reader-refdata**
 
@@ -387,15 +378,9 @@ Due to significant variations in departments' financial structure in KFS, it is 
 <!--BREAK-->
 ### Data Object: ErpAccount
 
-For clarity between the CoA Account segment and the current KFS Account, we will refer to the CoA segment as "Natural Account", a commonly used accounting term.
-
 The (Natural) Account segment categorizes the nature of the transaction being recorded. The transaction is either revenue-producing, an expenditure, an asset that is owned, or a liability that is owed. Additionally, Account maintains Net Position for Entities and Funds.
 
 (Natural) Account values will generally be shared across Financial Departments to provide consistency in operational and management reporting for UC Davis.
-
-**FAU Value Comparison:**
-
-The (Natural) Account segment most closely aligns with the KFS Object Code.
 
 #### Access Controls
 
@@ -509,10 +494,6 @@ The (Natural) Account segment most closely aligns with the KFS Object Code.
 The Purpose segment tracks the purpose of the transaction, such as NACUBO-defined functional expense classification and mission.
 
 NACUBO classification data is utilized for far-reaching external reporting (e.g., institution ranking). This field is also essential for compliance with federal cost principles and financial statement reporting requiring expenditures be displayed by functional class.
-
-**FAU Value Comparison:**
-
-The Purpose segment most closely aligns with the HEFC (Higher Ed. Function Code) attribute of the KFS Account.
 
 #### Access Controls
 
@@ -651,9 +632,6 @@ Program values are determined by both UCOP and UC Davis.
   * International/ Study Abroad Programs
   * Housing Services Programs
 
-**FAU Value Comparison:**
-Due to significant variations in how departments track programs in KFS, it is not possible to align the Program segment with a KFS value.
-
 #### Access Controls
 
 * Required Role: `erp:reader-refdata`
@@ -773,10 +751,6 @@ PPM Projects - Generally, a body of work, often supported by a contract, with co
 - Managed under the terms and conditions of a contract.
 - Supported by multi-funding sources.
 - Supports reporting across fiscal years.
-
-**FAU Value Comparison:**
-
-Due to significant variations in how departments track projects in KFS, it is not possible to align the Project segment with a KFS value.
 
 #### Access Controls
 
@@ -898,10 +872,6 @@ Activity values are assigned by UC Davis.
 - Recruitment & Relocation
 - Student Organizations & Sports Clubs
 - Campus-wide Activities (e.g. Picnic Day)
-
-**FAU Value Comparison:**
-
-Due to significant variations in how departments track activities in KFS, it is not possible to align the Activity segment with a KFS value.
 
 #### Access Controls
 
