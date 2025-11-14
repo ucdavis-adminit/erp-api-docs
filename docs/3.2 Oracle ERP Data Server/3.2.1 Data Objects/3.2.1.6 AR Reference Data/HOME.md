@@ -171,25 +171,6 @@ This is due to the potentially sensitive nature of this information.
 
 #### Query Operations
 
-##### `arCustomerAccountSite`
-
-> Get a single ArCustomerAccountSite by custAccountSiteId.  Returns undefined if does not exist
-
-* **Parameters**
-  * `custAccountSiteId : String!`
-* **Returns**
-  * `ArCustomerAccountSite`
-
-##### `arCustomerAccountSiteSearch`
-
-> Search for ArCustomerAccountSite objects by multiple properties.
-> See the ArCustomerAccountSiteFilterInput type for options.
-
-* **Parameters**
-  * `filter : ArCustomerAccountSiteFilterInput!`
-* **Returns**
-  * `ArCustomerAccountSiteSearchResults!`
-
 ##### `arCustomerAccount`
 
 > Get a single ArCustomerAccount by accountNumber.  Returns undefined if does not exist
@@ -217,6 +198,25 @@ This is due to the potentially sensitive nature of this information.
   * `filter : ArCustomerAccountFilterInput!`
 * **Returns**
   * `ArCustomerAccountSearchResults!`
+
+##### `arCustomerAccountSite`
+
+> Get a single ArCustomerAccountSite by custAccountSiteId.  Returns undefined if does not exist
+
+* **Parameters**
+  * `custAccountSiteId : String!`
+* **Returns**
+  * `ArCustomerAccountSite`
+
+##### `arCustomerAccountSiteSearch`
+
+> Search for ArCustomerAccountSite objects by multiple properties.
+> See the ArCustomerAccountSiteFilterInput type for options.
+
+* **Parameters**
+  * `filter : ArCustomerAccountSiteFilterInput!`
+* **Returns**
+  * `ArCustomerAccountSiteSearchResults!`
 
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
@@ -315,15 +315,6 @@ Invoice status information used to check remaining balances.
 (None)
 
 #### Query Operations
-
-##### `arInvoiceSummary`
-
-> Using the provided transaction number, check on the status of the given invoice.  Returns null if the transaction number is unknown.
-
-* **Parameters**
-  * `transactionNumber : String!`
-* **Returns**
-  * `ArInvoiceSummary`
 
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.

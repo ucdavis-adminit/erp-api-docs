@@ -96,22 +96,23 @@ Represents an accounting period in Oracle Financials.  Used for validation of su
 
 ##### Properties
 
-| Property Name         | Data Type                | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| --------------------- | ------------------------ | :------------: | :-------------: | ------------- | ----- |
-| periodName            | ErpAccountingPeriodName! |                |        Y        |               | The unique name of a ERP Accounting Period |
-| periodYear            | PositiveInt!             |                |        Y        |               | Fiscal year this period belongs to. |
-| periodNumber          | PositiveInt!             |                |        Y        |               | Integer number of the period within the year. |
-| periodStatus          | ErpPeriodStatus!         |                |        Y        |               | Current Status of the Period.  Only Open (O) and Future Enterable (F) are valid on submission of documents. |
-| adjustmentPeriod      | Boolean!                 |                |        Y        |               | Whether this is an period used for adjusting the balances prior to fiscal closing. |
-| startDate             | LocalDate!               |                |        Y        |               | Start date of the period. |
-| endDate               | LocalDate!               |                |        Y        |               | End date of the period. |
-| yearStartDate         | LocalDate!               |                |                 |               | Start date of the fiscal year this period belongs to. |
-| quarterStartDate      | LocalDate!               |                |                 |               | Start date of the fiscal quarter this period belongs to. |
-| quarterNumber         | PositiveInt!             |                |                 |               | Integer number of the period within the fiscal year. |
-| effectivePeriodNumber | PositiveInt!             |                |                 |               | Unique numeric representation of the period used for sorting periods in order. |
-| journalCutoffDate     | LocalDate                |                |                 |               | Last day that journals may be submitted for this accounting period. |
-| lastUpdateDateTime    | DateTime!                |                |        Y        |               |  |
-| lastUpdateUserId      | ErpUserId                |                |                 |               |  |
+| Property Name             | Data Type                | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------------- | ------------------------ | :------------: | :-------------: | ------------- | ----- |
+| periodName                | ErpAccountingPeriodName! |                |        Y        |               | The unique name of a ERP Accounting Period |
+| periodYear                | PositiveInt!             |                |        Y        |               | Fiscal year this period belongs to. |
+| periodNumber              | PositiveInt!             |                |        Y        |               | Integer number of the period within the year. |
+| periodStatus              | ErpPeriodStatus!         |                |        Y        |               | Current Status of the Period.  Only Open (O) and Future Enterable (F) are valid on submission of documents. |
+| adjustmentPeriod          | Boolean!                 |                |        Y        |               | Whether this is an period used for adjusting the balances prior to fiscal closing. |
+| startDate                 | LocalDate!               |                |        Y        |               | Start date of the period. |
+| endDate                   | LocalDate!               |                |        Y        |               | End date of the period. |
+| yearStartDate             | LocalDate!               |                |                 |               | Start date of the fiscal year this period belongs to. |
+| quarterStartDate          | LocalDate!               |                |                 |               | Start date of the fiscal quarter this period belongs to. |
+| quarterNumber             | PositiveInt!             |                |                 |               | Integer number of the period within the fiscal year. |
+| effectivePeriodNumber     | PositiveInt!             |                |                 |               | Unique numeric representation of the period used for sorting periods in order. |
+| journalCutoffDate         | LocalDate                |                |                 |               | Last day that journals may be submitted for this accounting period. |
+| lastUpdateDateTime        | DateTime!                |                |        Y        |               |  |
+| lastUpdateUserId          | ErpUserId                |                |                 |               |  |
+| extendedJournalCutoffDate | LocalDate                |                |                 |               | Last day that journals may be submitted for this accounting period by central Finance systems. |
 
 ##### Linked Data Objects
 
@@ -186,6 +187,8 @@ Represents an accounting period in Oracle Financials.  Used for validation of su
 | roleName      | NonEmptyTrimmedString240! |                |                 |               | Person's Role on the award.  E.g., Principal Investigator, Grants Administrator, Project Administrator, etc. |
 | email         | EmailAddress!             |                |                 |               | Person's Email Address. |
 | jobTitle      | NonEmptyTrimmedString240! |                |                 |               | Person's Job Title as extracted from UCPath. |
+| startDate     | LocalDate!                |                |                 |               | Start Date of the person's association with the award. |
+| endDate       | LocalDate                 |                |                 |               | End Date of the person's association with the award.  Usually null for current personnel. |
 | creditPercent | NonNegativeFloat          |                |                 |               |  |
 | person        | ErpUser                   |                |                 |               | Person record associated with this team member.  May contain additional information about the person. |
 
@@ -193,6 +196,42 @@ Represents an accounting period in Oracle Financials.  Used for validation of su
   * Person record associated with this team member.  May contain additional information about the person.
   * Description of `ErpUser`:
     * A user as known to the ERP application.
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
+### Data Object: PpmAwardReference
+
+AWARD REFERENCE
+
+#### Access Controls
+
+* Required Role: ``
+
+#### Data Source
+
+* Local Table/View: `undefined`
+
+##### Properties
+
+| Property Name      | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------------ | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| id                 | Long!                     |                |                 |               |  |
+| awardId            | Long!                     |                |                 |               |  |
+| referenceId        | Long!                     |                |                 |               |  |
+| referenceValue     | NonEmptyTrimmedString300  |                |                 |               |  |
+| referenceComment   | NonEmptyTrimmedString4000 |                |                 |               |  |
+| referenceName      | NonEmptyTrimmedString80   |                |                 |               |  |
+| lastUpdateDateTime | DateTime!                 |                |                 |               |  |
+| lastUpdateUserId   | ErpUserId                 |                |                 |               |  |
 
 ##### Linked Data Objects
 

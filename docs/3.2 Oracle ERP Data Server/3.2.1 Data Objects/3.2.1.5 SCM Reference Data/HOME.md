@@ -150,6 +150,132 @@ Represents an accounting period in the GL module of Oracle Financials.  Used for
 
 
 <!--BREAK-->
+### Data Object: PoHeader
+
+A defined poHeader
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `PO_HEADER`
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+    * FscmTopModelAM.PrcExtractAM.PoBiccExtractAM.PurchasingDocumentHeaderExtractPVO
+  * Underlying Database Objects:
+    * PO_HEADERS_ALL
+
+##### Properties
+
+| Property Name     | Data Type                | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ----------------- | ------------------------ | :------------: | :-------------: | ------------- | ----- |
+| poHeaderId        | Long!                    |                |                 |               | Unique po header identifier. |
+| supplierId        | Long                     |                |        Y        |               |  |
+| supplierSiteId    | Long                     |                |                 |               |  |
+| poNumber          | NonEmptyTrimmedString30  |                |                 |               |  |
+| vendorOrderNumber | NonEmptyTrimmedString25  |                |        Y        |               |  |
+| documentStatus    | NonEmptyTrimmedString255 |                |        Y        |               |  |
+| supplier          | ScmSupplier!             |                |                 |               |  |
+| poLines           | [PoLine!]!               |                |                 |               |  |
+
+* `supplier` : `ScmSupplier!`
+  * Description of `ScmSupplier`:
+    * A defined supplier of goods or services in the ERP system.<br/><br/>Each supplier may have multiple sites at which they do business.  It is necessary to identify both the supplier and site when submitting a payment.<br/><br/>Supplier in Oracle replaces Vendor in KFS.
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
+### Data Object: PoLine
+
+
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `PO_LINES_ALL` (view)
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+    * FscmTopModelAM.PrcExtractAM.PoBiccExtractAM.PurchasingDocumentLineExtractPVO
+  * Underlying Database Objects:
+
+##### Properties
+
+| Property Name | Data Type               | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------- | ----------------------- | :------------: | :-------------: | ------------- | ----- |
+| poLineId      | Long!                   |                |                 |               |  |
+| poHeaderId    | Long!                   |                |                 |               |  |
+| lineStatus    | NonEmptyTrimmedString25 |                |                 |               |  |
+| lineTypeId    | Long!                   |                |                 |               |  |
+| lineNumber    | Int!                    |                |                 |               |  |
+| itemId        | Long                    |                |                 |               |  |
+| categoryId    | Long                    |                |                 |               |  |
+| uomCode       | NonEmptyTrimmedString3  |                |                 |               |  |
+| lineType      | PoLineType!             |                |                 |               |  |
+
+* `lineType` : `PoLineType!`
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
+### Data Object: PoLineType
+
+
+
+#### Access Controls
+
+* Required Role: `erp:reader-refdata`
+
+#### Data Source
+
+* Local Table/View: `PO_LINE_TYPES` (view)
+* Data Origin:
+  * System: Oracle BICC
+  * Extract Objects:
+    * FscmTopModelAM.PrcExtractAM.PoBiccExtractAM.PurchasingLineTypeTranslationExtractPVO
+  * Underlying Database Objects:
+
+##### Properties
+
+| Property Name | Data Type                | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ------------- | ------------------------ | :------------: | :-------------: | ------------- | ----- |
+| id            | Long!                    |                |                 |               |  |
+| code          | NonEmptyTrimmedString30! |                |                 |               |  |
+| name          | NonEmptyTrimmedString240 |                |                 |               |  |
+
+##### Linked Data Objects
+
+(None)
+
+#### Query Operations
+
+[^1]: Searchable attributes are available as part of the general search filter input.
+[^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
+
+
+<!--BREAK-->
 ### Data Object: ScmAgreement
 
 Represents a purchasing agreement within the financial system.

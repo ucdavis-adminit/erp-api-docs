@@ -144,25 +144,6 @@ The Project identifies the planned work or activity to be completed over a perio
 
 #### Query Operations
 
-##### `ppmProjectTeamMemberByProjectNumber`
-
-> Pull all active project team members by project number.
-
-* **Parameters**
-  * `projectNumber : PpmProjectNumber!`
-* **Returns**
-  * `[PpmProjectTeamMember!]!`
-
-##### `ppmProjectTeamMemberByProjectAndRole`
-
-> Pull all active project team members by project number and role.
-
-* **Parameters**
-  * `projectNumber : PpmProjectNumber!`
-  * `roleName : NonEmptyTrimmedString240!`
-* **Returns**
-  * `[PpmProjectTeamMember!]!`
-
 ##### `ppmProject`
 
 > Get a single PpmProject by code.  Returns undefined if does not exist
@@ -220,6 +201,36 @@ The Project identifies the planned work or activity to be completed over a perio
   * `filter : PpmProjectFilterInput!`
 * **Returns**
   * `PpmProjectSearchResults!`
+
+##### `ppmProjectByProjectPersonIdentifier`
+
+> undefined
+
+* **Parameters**
+  * `personIdentifier : String!`
+  * `roleName : String`
+  * `searchProjectTeamOnly : Boolean`
+* **Returns**
+  * `[PpmProject!]!`
+
+##### `ppmProjectTeamMemberByProjectNumber`
+
+> Pull all active project team members by project number.
+
+* **Parameters**
+  * `projectNumber : PpmProjectNumber!`
+* **Returns**
+  * `[PpmProjectTeamMember!]!`
+
+##### `ppmProjectTeamMemberByProjectAndRole`
+
+> Pull all active project team members by project number and role.
+
+* **Parameters**
+  * `projectNumber : PpmProjectNumber!`
+  * `roleName : NonEmptyTrimmedString240!`
+* **Returns**
+  * `[PpmProjectTeamMember!]!`
 
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
@@ -565,38 +576,42 @@ The Expenditure Type identifies the natural classification of the expense transa
 
 ##### Properties
 
-| Property Name               | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
-| --------------------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
-| id                          | Long!                     |       Y        |                 |               | Award ID: Internal Unique identifier of the award. |
-| awardNumber                 | NonEmptyTrimmedString60!  |                |        Y        |               | Award number tracked by the sponsor. |
-| ppmAwardNumber              | NonEmptyTrimmedString30!  |                |        Y        |               | Award number used internally to PPM.  Generally of the form K1234567. |
-| name                        | NonEmptyTrimmedString240! |                |        Y        |               | Award Name: Name of the award. |
-| description                 | NonEmptyTrimmedString240  |                |                 |               | Description: Brief description of the award. |
-| awardStatus                 | PpmAwardStatus            |                |        Y        |               |  |
-| awardType                   | NonEmptyTrimmedString30   |                |        Y        |               | Classification of an award, for example, Federal grants or Private grants.  Used to determine the GL Fund Code. |
-| awardTypeName               | NonEmptyTrimmedString30!  |                |        Y        |               | The award type name associated with the award |
-| awardPurpose                | NonEmptyTrimmedString80   |                |                 |               | Purpose: Code of the award purpose.  Used to determine the GL Purpose Code. |
-| startDate                   | LocalDate                 |                |                 |               | Start Date: Start date of the award. |
-| endDate                     | LocalDate                 |                |                 |               | End Date: End date of the award. |
-| closeDate                   | LocalDate                 |                |        Y        |               | Close Date: Date past the end date of the award. Transactions for the award can be entered up to this date. |
-| awardOwningOrganizationName | NonEmptyTrimmedString240! |                |        Y        |               | Award Owning Organization: An organization that owns awards within an enterprise. An organizing unit in the internal or external structure of your enterprise. Organization structures provide the framework for performing legal reporting, financial control, and management reporting for the award. |
-| businessUnitName            | NonEmptyTrimmedString100! |                |                 |               | Business Unit: Unit of an enterprise that performs one or many business functions that can be rolled up in a management hierarchy. An award business unit is one within which the award is created. |
-| legalEntityName             | NonEmptyTrimmedString240  |                |                 |               | Business entity associated with the award. |
-| lastUpdateDateTime          | DateTime!                 |                |        Y        |               | The date when the award was last updated. |
-| lastUpdateUserId            | ErpUserId                 |                |                 |               | The user that last updated the award. |
-| awardFundingSource          | [PpmFundingSource!]!      |                |                 |               | Award Funding Sources: The Award Funding Sources resource is used to view the attributes used to create or update a funding source for the award. |
-| defaultFundingSourceNumber  | PpmFundingSourceNumber    |                |                 |               | The default (usually first) funding source attached to the award.  If the funding source is left blank on a transaction, this is the one which will be auto-inserted during processing. |
-| awardCfda                   | [PpmCfdaAward!]!          |                |                 |               | List of CFDA catalog numbers associated with the award.  CFDA numbers are used to identify federal assistance programs. |
-| glFundCode                  | ErpFundCode               |                |                 |               | The GL Fund code which will be used when the Oracle Projects module posts to the General Ledger. |
-| glPurposeCode               | ErpPurposeCode            |                |                 |               | The GL Purpose code which will be used when the Oracle Projects module posts to the General Ledger. |
-| flowThruAmount              | NonNegativeFloat          |                |                 |               |  |
-| flowThruFromDate            | LocalDate                 |                |                 |               |  |
-| flowThruToDate              | LocalDate                 |                |                 |               |  |
-| flowThruPrimarySponsorId    | Long                      |                |                 |               | Internal ID of the party associated with the flow-thru activity.  Will be linked to that data if determined necessary and available. |
-| flowThruRefAwardName        | NonEmptyTrimmedString100  |                |                 |               |  |
-| flowThruIsFederal           | Boolean!                  |                |                 |               |  |
-| personnel                   | [PpmAwardPersonnel!]!     |                |                 |               | List of personnel associated with the award. |
-| eligibleForUse              | Boolean!                  |                |                 |               | Returns whether this PpmAward is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmAward must:<br/>- Have closeDate after the given accountingDate<br/>- Be active or under amendment |
+| Property Name                | Data Type                 | Key Field [^2] | Searchable [^1] | Required Role | Notes |
+| ---------------------------- | ------------------------- | :------------: | :-------------: | ------------- | ----- |
+| id                           | Long!                     |       Y        |                 |               | Award ID: Internal Unique identifier of the award. |
+| awardNumber                  | NonEmptyTrimmedString60!  |                |        Y        |               | Award number tracked by the sponsor. |
+| ppmAwardNumber               | NonEmptyTrimmedString30!  |                |        Y        |               | Award number used internally to PPM.  Generally of the form K1234567. |
+| name                         | NonEmptyTrimmedString240! |                |        Y        |               | Award Name: Name of the award. |
+| description                  | NonEmptyTrimmedString240  |                |                 |               | Description: Brief description of the award. |
+| awardStatus                  | PpmAwardStatus            |                |        Y        |               |  |
+| awardType                    | NonEmptyTrimmedString30   |                |        Y        |               | Classification of an award, for example, Federal grants or Private grants.  Used to determine the GL Fund Code. |
+| awardTypeName                | NonEmptyTrimmedString30!  |                |        Y        |               | The award type name associated with the award |
+| awardPurpose                 | NonEmptyTrimmedString80   |                |                 |               | Purpose: Code of the award purpose.  Used to determine the GL Purpose Code. |
+| startDate                    | LocalDate                 |                |                 |               | Start Date: Start date of the award. |
+| endDate                      | LocalDate                 |                |                 |               | End Date: End date of the award. |
+| closeDate                    | LocalDate                 |                |        Y        |               | Close Date: Date past the end date of the award. Transactions for the award can be entered up to this date. |
+| awardOwningOrganizationName  | NonEmptyTrimmedString240! |                |        Y        |               | Award Owning Organization: An organization that owns awards within an enterprise. An organizing unit in the internal or external structure of your enterprise. Organization structures provide the framework for performing legal reporting, financial control, and management reporting for the award. |
+| businessUnitName             | NonEmptyTrimmedString100! |                |                 |               | Business Unit: Unit of an enterprise that performs one or many business functions that can be rolled up in a management hierarchy. An award business unit is one within which the award is created. |
+| legalEntityName              | NonEmptyTrimmedString240  |                |                 |               | Business entity associated with the award. |
+| lastUpdateDateTime           | DateTime!                 |                |        Y        |               | The date when the award was last updated. |
+| lastUpdateUserId             | ErpUserId                 |                |                 |               | The user that last updated the award. |
+| awardFundingSource           | [PpmFundingSource!]!      |                |                 |               | Award Funding Sources: The Award Funding Sources resource is used to view the attributes used to create or update a funding source for the award. |
+| defaultFundingSourceNumber   | PpmFundingSourceNumber    |                |                 |               | The default (usually first) funding source attached to the award.  If the funding source is left blank on a transaction, this is the one which will be auto-inserted during processing. |
+| awardCfda                    | [PpmCfdaAward!]!          |                |                 |               | List of CFDA catalog numbers associated with the award.  CFDA numbers are used to identify federal assistance programs. |
+| glFundCode                   | ErpFundCode               |                |                 |               | The GL Fund code which will be used when the Oracle Projects module posts to the General Ledger. |
+| glPurposeCode                | ErpPurposeCode            |                |                 |               | The GL Purpose code which will be used when the Oracle Projects module posts to the General Ledger. |
+| flowThruAmount               | NonNegativeFloat          |                |                 |               |  |
+| flowThruFromDate             | LocalDate                 |                |                 |               |  |
+| flowThruToDate               | LocalDate                 |                |                 |               |  |
+| flowThruPrimarySponsorId     | Long                      |                |                 |               | Internal ID of the party associated with the flow-thru activity.  Will be linked to that data if determined necessary and available. |
+| flowThruRefAwardName         | NonEmptyTrimmedString100  |                |                 |               |  |
+| flowThruIsFederal            | Boolean!                  |                |                 |               |  |
+| personnel                    | [PpmAwardPersonnel!]!     |                |                 |               | List of personnel associated with the award. |
+| preAwardSpendingAllowedYesNo | YesNo                     |                |                 |               | String with possible values of Y or N for Yes and No.  May be blank. |
+| preAwardDate                 | LocalDate                 |                |                 |               |  |
+| validateStatus               | PpmValidateStatus         |                |                 |               |  |
+| eligibleForUse               | Boolean!                  |                |                 |               | Returns whether this PpmAward is valid to use on transactional documents for the given accounting date.  If not provided, the date will be defaulted to the current date.<br/><br/>To be eligible for use, the PpmAward must:<br/>- Have closeDate after the given accountingDate<br/>- Be active or under amendment |
+| references                   | [PpmAwardReference!]!     |                |                 |               |  |
 
 * `personnel` : `[PpmAwardPersonnel!]!`
   * List of personnel associated with the award.
@@ -677,6 +692,16 @@ The Expenditure Type identifies the natural classification of the expense transa
 * **Parameters**
   * `email : EmailAddress!`
   * `roleName : NonEmptyTrimmedString60`
+* **Returns**
+  * `[PpmAward!]!`
+
+##### `ppmAwardByAwardPersonIdentifier`
+
+> undefined
+
+* **Parameters**
+  * `personIdentifier : String!`
+  * `roleName : String`
 * **Returns**
   * `[PpmAward!]!`
 

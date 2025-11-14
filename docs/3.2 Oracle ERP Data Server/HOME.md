@@ -520,6 +520,7 @@ Below are some examples of responses from the API.  Successful response data is 
 | `NonEmptyTrimmedString360`   | String limited to 360 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString4`     | String limited to 4 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString40`    | String limited to 40 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
+| `NonEmptyTrimmedString4000`  | String limited to 4000 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString50`    | String limited to 50 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString60`    | String limited to 60 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
 | `NonEmptyTrimmedString80`    | String limited to 80 characters.  Whitespace will be trimmed from both ends of the string when passing in both directions.  In the case that source data to be returned by the API exceeds this length, it will be truncated. |
@@ -548,6 +549,7 @@ Below are some examples of responses from the API.  Successful response data is 
 | `UnsignedInt`                | Integers that will have a value of 0 or more. |
 | `URL`                        | A field whose value conforms to the standard URL format as specified in RFC3986: https://www.ietf.org/rfc/rfc3986.txt. |
 | `UUID`                       | A field whose value is a generic Universally Unique Identifier: https://en.wikipedia.org/wiki/Universally_unique_identifier. |
+| `YesNo`                      | String with possible values of Y or N for Yes and No.  May be blank. |
 
 
 
@@ -665,22 +667,22 @@ Valid values for an accounting period status.
 | `Academic_Organization`               |  |
 | `Academic_Organization_by_Campus`     |  |
 | `All`                                 |  |
-| `Asset_book`                          |  |
+| `Asset_Book`                          |  |
 | `Award_Organization_Hierarchy`        |  |
-| `Business_unit`                       |  |
+| `Business_Unit`                       |  |
 | `Campus`                              |  |
-| `Collaboration_document`              |  |
-| `Control_budget`                      |  |
-| `Cost_organization`                   |  |
-| `Data_access_set`                     |  |
-| `Intercompany_organization`           |  |
-| `Inventory_organization`              |  |
-| `Item_organization`                   |  |
+| `Collaboration_Document`              |  |
+| `Control_Budget`                      |  |
+| `Cost_Organization`                   |  |
+| `Data_Access_Set`                     |  |
+| `Intercompany_Organization`           |  |
+| `Inventory_Organization`              |  |
+| `Item_Organization`                   |  |
 | `Ledger`                              |  |
-| `Legal_entity`                        |  |
-| `Manufacturing_plant`                 |  |
-| `Project_organization_classification` |  |
-| `Reference_data_set`                  |  |
+| `Legal_Entity`                        |  |
+| `Manufacturing_Plant`                 |  |
+| `Project_Organization_Classification` |  |
+| `Reference_Data_Set`                  |  |
 
 ##### `ErpUserRoleRequestType`
 
@@ -732,6 +734,18 @@ The Award Number identifies the number assigned to an award containing funding a
 | `EXPIRED`         | Award has ended but has not been closed for transactions. |
 | `HOLD`            | Award funding is on hold. |
 | `UNDER_AMENDMENT` | Award is being amended but might still be able to be used for transactions. |
+
+##### `PpmValidateStatus`
+
+
+
+| Enum Value | Description |
+| ---------- | ----------- |
+| `C`        | Clean |
+| `Email`    | Error |
+| `N`        | Not validated |
+| `P`        | Pending Calendar Update |
+| `W`        | Warning |
 
 ##### `ProcessingCheckpointType`
 

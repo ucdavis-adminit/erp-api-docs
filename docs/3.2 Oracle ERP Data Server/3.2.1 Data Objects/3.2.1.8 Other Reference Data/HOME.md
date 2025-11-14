@@ -82,26 +82,6 @@ Contains information about the ERP API server's version.
 
 #### Query Operations
 
-##### `erpBuildingRoom`
-
-> Get a single ErpBuildingRoom by id.  Returns undefined if does not exist
-
-* **Parameters**
-  * `code : String!`
-* **Returns**
-  * `ErpBuildingRoom`
-
-##### `erpBuildingRoomSearch`
-
-> Search for ErpBuildingRoom objects by multiple properties.
-> 
-> See the ErpBuildingRoomFilterInput type for options.
-
-* **Parameters**
-  * `filter : ErpBuildingRoomFilterInput!`
-* **Returns**
-  * `ErpBuildingRoomSearchResults!`
-
 ##### `erpBuilding`
 
 > Get a single ErpBuilding by id.  Returns undefined if does not exist
@@ -121,6 +101,26 @@ Contains information about the ERP API server's version.
   * `filter : ErpBuildingFilterInput!`
 * **Returns**
   * `ErpBuildingSearchResults!`
+
+##### `erpBuildingRoom`
+
+> Get a single ErpBuildingRoom by id.  Returns undefined if does not exist
+
+* **Parameters**
+  * `code : String!`
+* **Returns**
+  * `ErpBuildingRoom`
+
+##### `erpBuildingRoomSearch`
+
+> Search for ErpBuildingRoom objects by multiple properties.
+> 
+> See the ErpBuildingRoomFilterInput type for options.
+
+* **Parameters**
+  * `filter : ErpBuildingRoomFilterInput!`
+* **Returns**
+  * `ErpBuildingRoomSearchResults!`
 
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
@@ -766,6 +766,7 @@ A user as known to the ERP application.
 | lastUpdateDateTime | DateTime!                 |                |        Y        |               |  |
 | lastUpdateUserId   | ErpUserId                 |                |                 |               |  |
 | userRoles          | [ErpUserRole!]!           |                |                 |               | List of roles assigned to the user.  By default includes only the current and active roles.  Use includeInactive to include all role memberships ever assigned to the person. |
+| employee           | Employee                  |                |                 |               | Employee record from UCPath associated with the employee ID for this user. |
 
 * `userRoles` : `[ErpUserRole!]!`
   * List of roles assigned to the user.  By default includes only the current and active roles.  Use includeInactive to include all role memberships ever assigned to the person.
@@ -773,6 +774,8 @@ A user as known to the ERP application.
     * `includeInactive` : `Boolean` = false
   * Description of `ErpUserRole`:
     * Association between a user account and role in the Oracle application.
+* `employee` : `Employee`
+  * Employee record from UCPath associated with the employee ID for this user.
 
 ##### Linked Data Objects
 
@@ -780,44 +783,89 @@ A user as known to the ERP application.
 
 #### Query Operations
 
-##### `erpUserRoleDataAccess`
+##### `erpUser`
 
-> Get a single ErpUserRoleDataAccess by ID.  Returns undefined if does not exist
+> Get a single ErpUser by ID.  Returns undefined if does not exist
 
 * **Parameters**
   * `id : Long!`
 * **Returns**
-  * `ErpUserRoleDataAccess`
+  * `ErpUser`
 
-##### `erpUserRoleDataAccessByUserId`
+##### `erpUserByPersonId`
 
-> Get ErpUserRoleDataAccess records by user ID.  Only returns current and active user data security records.
+> Get a single ErpUser by Oracle Person ID.  Returns undefined if does not exist
+
+* **Parameters**
+  * `personId : Long!`
+* **Returns**
+  * `ErpUser`
+
+##### `erpUserByUserId`
+
+> Get a single ErpUser by user ID.  Returns undefined if does not exist
 
 * **Parameters**
   * `userId : ErpUserId!`
 * **Returns**
-  * `[ErpUserRoleDataAccess!]!`
+  * `ErpUser`
 
-##### `erpUserRoleDataAccessByUserIdAndRole`
+##### `erpUserByEmployeeId`
 
-> Get ErpUserRoleDataAccess records by user ID and role code or name.  Only returns current and active user data security records.
+> Get a single ErpUser by employee ID.  Returns undefined if does not exist
 
 * **Parameters**
-  * `userId : ErpUserId!`
-  * `roleCodeOrName : NonEmptyTrimmedString100!`
+  * `employeeId : UcEmployeeId!`
 * **Returns**
-  * `[ErpUserRoleDataAccess!]!`
+  * `ErpUser`
 
-##### `erpUserRoleDataAccessSearch`
+##### `erpUserSearch`
 
-> Search for ErpUserRoleDataAccess objects by multiple properties.
+> Search for ErpUser objects by multiple properties.
 > See
-> See the ErpUserRoleDataAccessFilterInput type for options.
+> See the ErpUserFilterInput type for options.
 
 * **Parameters**
-  * `filter : ErpUserRoleDataAccessFilterInput!`
+  * `filter : ErpUserFilterInput!`
 * **Returns**
-  * `ErpUserRoleDataAccessSearchResults!`
+  * `ErpUserSearchResults!`
+
+##### `erpUserApprovalGroupByUserId`
+
+> Get ErpUserApprovalGroups by user ID.  Only returns current and active records.
+
+* **Parameters**
+  * `userId : ErpUserId!`
+* **Returns**
+  * `[ErpUserApprovalGroup!]!`
+
+##### `erpUserApprovalGroupByGroupName`
+
+> Get ErpUserApprovalGroups by a group name.  Only returns current and active records.
+
+* **Parameters**
+  * `approvalGroupName : NonEmptyTrimmedString80!`
+* **Returns**
+  * `[ErpUserApprovalGroup!]!`
+
+##### `erpUserApprovalGroupAll`
+
+> Get all ErpUserApprovalGroups.  Only returns current and active records.
+
+* **Parameters**
+* **Returns**
+  * `[ErpUserApprovalGroup!]!`
+
+##### `erpUserApprovalGroupSearch`
+
+> Search for ErpUserApprovalGroup objects by multiple properties.
+> See
+> See the ErpUserApprovalGroupFilterInput type for options.
+
+* **Parameters**
+  * `filter : ErpUserApprovalGroupFilterInput!`
+* **Returns**
+  * `ErpUserApprovalGroupSearchResults!`
 
 ##### `erpUserRole`
 
@@ -894,89 +942,44 @@ A user as known to the ERP application.
 * **Returns**
   * `[ErpUserRoleRequestStatusOutput!]!`
 
-##### `erpUserApprovalGroupByUserId`
+##### `erpUserRoleDataAccess`
 
-> Get ErpUserApprovalGroups by user ID.  Only returns current and active records.
-
-* **Parameters**
-  * `userId : ErpUserId!`
-* **Returns**
-  * `[ErpUserApprovalGroup!]!`
-
-##### `erpUserApprovalGroupByGroupName`
-
-> Get ErpUserApprovalGroups by a group name.  Only returns current and active records.
-
-* **Parameters**
-  * `approvalGroupName : NonEmptyTrimmedString80!`
-* **Returns**
-  * `[ErpUserApprovalGroup!]!`
-
-##### `erpUserApprovalGroupAll`
-
-> Get all ErpUserApprovalGroups.  Only returns current and active records.
-
-* **Parameters**
-* **Returns**
-  * `[ErpUserApprovalGroup!]!`
-
-##### `erpUserApprovalGroupSearch`
-
-> Search for ErpUserApprovalGroup objects by multiple properties.
-> See
-> See the ErpUserApprovalGroupFilterInput type for options.
-
-* **Parameters**
-  * `filter : ErpUserApprovalGroupFilterInput!`
-* **Returns**
-  * `ErpUserApprovalGroupSearchResults!`
-
-##### `erpUser`
-
-> Get a single ErpUser by ID.  Returns undefined if does not exist
+> Get a single ErpUserRoleDataAccess by ID.  Returns undefined if does not exist
 
 * **Parameters**
   * `id : Long!`
 * **Returns**
-  * `ErpUser`
+  * `ErpUserRoleDataAccess`
 
-##### `erpUserByPersonId`
+##### `erpUserRoleDataAccessByUserId`
 
-> Get a single ErpUser by Oracle Person ID.  Returns undefined if does not exist
-
-* **Parameters**
-  * `personId : Long!`
-* **Returns**
-  * `ErpUser`
-
-##### `erpUserByUserId`
-
-> Get a single ErpUser by user ID.  Returns undefined if does not exist
+> Get ErpUserRoleDataAccess records by user ID.  Only returns current and active user data security records.
 
 * **Parameters**
   * `userId : ErpUserId!`
 * **Returns**
-  * `ErpUser`
+  * `[ErpUserRoleDataAccess!]!`
 
-##### `erpUserByEmployeeId`
+##### `erpUserRoleDataAccessByUserIdAndRole`
 
-> Get a single ErpUser by employee ID.  Returns undefined if does not exist
+> Get ErpUserRoleDataAccess records by user ID and role code or name.  Only returns current and active user data security records.
 
 * **Parameters**
-  * `employeeId : UcEmployeeId!`
+  * `userId : ErpUserId!`
+  * `roleCodeOrName : NonEmptyTrimmedString100!`
 * **Returns**
-  * `ErpUser`
+  * `[ErpUserRoleDataAccess!]!`
 
-##### `erpUserSearch`
+##### `erpUserRoleDataAccessSearch`
 
-> Search for ErpUser objects by multiple properties.
+> Search for ErpUserRoleDataAccess objects by multiple properties.
 > See
-> See the ErpUserFilterInput type for options.
+> See the ErpUserRoleDataAccessFilterInput type for options.
 
 * **Parameters**
-  * `filter : ErpUserFilterInput!`
+  * `filter : ErpUserRoleDataAccessFilterInput!`
 * **Returns**
-  * `ErpUserSearchResults!`
+  * `ErpUserRoleDataAccessSearchResults!`
 
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
@@ -1098,45 +1101,6 @@ Association between a user account and role in the Oracle application.
 
 #### Query Operations
 
-##### `erpUserRoleDataAccess`
-
-> Get a single ErpUserRoleDataAccess by ID.  Returns undefined if does not exist
-
-* **Parameters**
-  * `id : Long!`
-* **Returns**
-  * `ErpUserRoleDataAccess`
-
-##### `erpUserRoleDataAccessByUserId`
-
-> Get ErpUserRoleDataAccess records by user ID.  Only returns current and active user data security records.
-
-* **Parameters**
-  * `userId : ErpUserId!`
-* **Returns**
-  * `[ErpUserRoleDataAccess!]!`
-
-##### `erpUserRoleDataAccessByUserIdAndRole`
-
-> Get ErpUserRoleDataAccess records by user ID and role code or name.  Only returns current and active user data security records.
-
-* **Parameters**
-  * `userId : ErpUserId!`
-  * `roleCodeOrName : NonEmptyTrimmedString100!`
-* **Returns**
-  * `[ErpUserRoleDataAccess!]!`
-
-##### `erpUserRoleDataAccessSearch`
-
-> Search for ErpUserRoleDataAccess objects by multiple properties.
-> See
-> See the ErpUserRoleDataAccessFilterInput type for options.
-
-* **Parameters**
-  * `filter : ErpUserRoleDataAccessFilterInput!`
-* **Returns**
-  * `ErpUserRoleDataAccessSearchResults!`
-
 ##### `erpUserRole`
 
 > Get a single ErpUserRole by ID.  Returns undefined if does not exist
@@ -1211,6 +1175,45 @@ Association between a user account and role in the Oracle application.
   * `batchId : UUID!`
 * **Returns**
   * `[ErpUserRoleRequestStatusOutput!]!`
+
+##### `erpUserRoleDataAccess`
+
+> Get a single ErpUserRoleDataAccess by ID.  Returns undefined if does not exist
+
+* **Parameters**
+  * `id : Long!`
+* **Returns**
+  * `ErpUserRoleDataAccess`
+
+##### `erpUserRoleDataAccessByUserId`
+
+> Get ErpUserRoleDataAccess records by user ID.  Only returns current and active user data security records.
+
+* **Parameters**
+  * `userId : ErpUserId!`
+* **Returns**
+  * `[ErpUserRoleDataAccess!]!`
+
+##### `erpUserRoleDataAccessByUserIdAndRole`
+
+> Get ErpUserRoleDataAccess records by user ID and role code or name.  Only returns current and active user data security records.
+
+* **Parameters**
+  * `userId : ErpUserId!`
+  * `roleCodeOrName : NonEmptyTrimmedString100!`
+* **Returns**
+  * `[ErpUserRoleDataAccess!]!`
+
+##### `erpUserRoleDataAccessSearch`
+
+> Search for ErpUserRoleDataAccess objects by multiple properties.
+> See
+> See the ErpUserRoleDataAccessFilterInput type for options.
+
+* **Parameters**
+  * `filter : ErpUserRoleDataAccessFilterInput!`
+* **Returns**
+  * `ErpUserRoleDataAccessSearchResults!`
 
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.

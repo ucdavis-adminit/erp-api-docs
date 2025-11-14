@@ -160,26 +160,6 @@ Fixed Asset current state record
 
 #### Query Operations
 
-##### `faAssetCategory`
-
-> Get a single FaAssetCategory by id.  Returns undefined if does not exist
-
-* **Parameters**
-  * `id : String!`
-* **Returns**
-  * `FaAssetCategory`
-
-##### `faAssetCategorySearch`
-
-> Search for FaAssetCategory objects by multiple properties.
-> 
-> See the FaAssetCategoryFilterInput type for options.
-
-* **Parameters**
-  * `filter : FaAssetCategoryFilterInput!`
-* **Returns**
-  * `FaAssetCategorySearchResults!`
-
 ##### `faAsset`
 
 > Get a single FaAsset by id.  Returns undefined if does not exist
@@ -217,6 +197,26 @@ Fixed Asset current state record
   * `assetNumber : String!`
 * **Returns**
   * `FaAsset`
+
+##### `faAssetCategory`
+
+> Get a single FaAssetCategory by id.  Returns undefined if does not exist
+
+* **Parameters**
+  * `id : String!`
+* **Returns**
+  * `FaAssetCategory`
+
+##### `faAssetCategorySearch`
+
+> Search for FaAssetCategory objects by multiple properties.
+> 
+> See the FaAssetCategoryFilterInput type for options.
+
+* **Parameters**
+  * `filter : FaAssetCategoryFilterInput!`
+* **Returns**
+  * `FaAssetCategorySearchResults!`
 
 [^1]: Searchable attributes are available as part of the general search filter input.
 [^2]: Key fields are considered unique identifiers for a data type and can be used to retrieve single records via dedicated operations.
